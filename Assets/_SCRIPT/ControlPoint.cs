@@ -26,7 +26,7 @@ public class ControlPoint : MonoBehaviour
             {
                 yRot = -35f;
             }
-            transform.rotation = Quaternion.Euler(xRot, yRot, 0f);
+            transform.rotation = Quaternion.Euler(0f, yRot, 0f);
             line.gameObject.SetActive(true);
             line.SetPosition(0,transform.position);
             line.SetPosition(1, transform.position + transform.forward * 4f);
