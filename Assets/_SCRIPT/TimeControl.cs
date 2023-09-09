@@ -6,55 +6,63 @@ using UnityEngine.Rendering.Universal;
 public class TimeControl : MonoBehaviour
 {
     private float originalTimeScale;
-    private float slowdownFactor = 0.5f;
-    private float slowdownDuration = 1.0f;
-    private bool isSlowed = false;
+    private float slowdownFactor = 0.2f; // Adjust this value to control the slowdown effect.
+    private float slowdownDuration = 1.0f; // Adjust this value for the duration of slowdown.
+    private bool isSlowed = false; // Tracks whether time is currently slowed down.
 
     private Volume volume; // Reference to the URP Volume component.
     private VolumeProfile normalProfile; // The original profile.
     public VolumeProfile slowedProfile; // Assign the slowed down profile in the Inspector.
 
-    void Start()
+    private void Start()
     {
+        // Initialize originalTimeScale and get references to the Volume components.
         originalTimeScale = Time.timeScale;
         volume = GetComponent<Volume>();
         normalProfile = volume.profile;
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (isSlowed)
-            {
-                // If time is already slowed, restore the original time scale and profile.
-                Time.timeScale = originalTimeScale;
-                volume.profile = normalProfile;
-                isSlowed = false;
-            }
-            else
-            {
-                // If time is not slowed, initiate the slowdown.
-                StartCoroutine(SlowDownTime());
-                isSlowed = true;
-            }
+            ToggleSlowMotion(); // Check for spacebar input to toggle slow motion.
         }
     }
 
-    IEnumerator SlowDownTime()
+    private void ToggleSlowMotion()
     {
+        if (isSlowed)
+        {
+            ResumeNormalTime(); // If time is already slowed, restore normal time.
+        }
+        else
+        {
+            SlowDownTime(); // If time is not slowed, initiate slow motion.
+        }
+    }
+
+    private void SlowDownTime()
+    {
+        // Set time scale to slow motion, apply the slowed profile, and start a coroutine to return to normal time.
         Time.timeScale = slowdownFactor;
-
-        // Apply the slowed profile when time is slowed down.
         volume.profile = slowedProfile;
+        isSlowed = true;
+        StartCoroutine(WaitAndResumeTime());
+    }
 
-        // Wait for the specified duration.
-        yield return new WaitForSeconds(slowdownDuration);
-
-        // If you want time to return to normal automatically after the duration,
-        // you can remove the following line and let it return to normal in Update.
+    private void ResumeNormalTime()
+    {
+        // Restore normal time scale and the normal profile.
         Time.timeScale = originalTimeScale;
         volume.profile = normalProfile;
         isSlowed = false;
+    }
+
+    private IEnumerator WaitAndResumeTime()
+    {
+        // Wait for the specified duration and then resume normal time.
+        yield return new WaitForSeconds(slowdownDuration);
+        ResumeNormalTime();
     }
 }
