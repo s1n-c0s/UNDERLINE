@@ -7,6 +7,7 @@ public class WhiteBallController : MonoBehaviour
     private Vector3 targetPosition;
     private bool isAiming = false;
     private bool isMoving = false;
+    private Collider whiteBallCollider; // Reference to the white ball's collider
 
     public float maxPower = 20f;
     public float powerMultiplier = 5f;
@@ -18,6 +19,9 @@ public class WhiteBallController : MonoBehaviour
         rb.freezeRotation = true; // Freeze rotation to prevent rolling
         startPosition = transform.position;
         targetPosition = startPosition;
+
+        // Get a reference to the white ball's collider
+        whiteBallCollider = GetComponent<Collider>();
     }
 
     void Update()
@@ -26,8 +30,15 @@ public class WhiteBallController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                // Start aiming when the left mouse button is pressed
-                isAiming = true;
+                // Check if the mouse click is on the white ball's collider
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (whiteBallCollider.Raycast(ray, out hit, Mathf.Infinity))
+                {
+                    // Start aiming when the left mouse button is pressed on the white ball
+                    isAiming = true;
+                }
             }
 
             if (isAiming)
@@ -70,6 +81,9 @@ public class WhiteBallController : MonoBehaviour
 
                 // Indicate that the ball is moving
                 isMoving = true;
+
+                // Allow rotation again
+                rb.freezeRotation = false;
             }
         }
         else
