@@ -70,9 +70,6 @@ public class WhiteBallController : MonoBehaviour
 
                 // Indicate that the ball is moving
                 isMoving = true;
-
-                // Allow rotation again
-                rb.freezeRotation = false;
             }
         }
         else
