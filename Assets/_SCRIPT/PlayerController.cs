@@ -44,6 +44,12 @@ public class WhiteBallController : MonoBehaviour
 
                 // Visualize the target position (you can remove this for the final game)
                 Debug.DrawLine(targetPosition, targetPosition + Vector3.up, Color.red);
+
+                // Calculate rotation to face the opposite direction of the cursor
+                Vector3 lookDirection = startPosition - targetPosition;
+                lookDirection.y = 0f; // Keep the rotation in the horizontal plane
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+                transform.rotation = targetRotation;
             }
 
             if (Input.GetMouseButtonUp(0) && isAiming)
@@ -64,6 +70,9 @@ public class WhiteBallController : MonoBehaviour
 
                 // Indicate that the ball is moving
                 isMoving = true;
+
+                // Allow rotation again
+                rb.freezeRotation = false;
             }
         }
         else
@@ -73,12 +82,6 @@ public class WhiteBallController : MonoBehaviour
             {
                 isMoving = false;
                 rb.freezeRotation = true; // Freeze rotation again
-            }
-            else
-            {
-                // Update the rotation to face the direction of movement
-                Quaternion lookRotation = Quaternion.LookRotation(rb.velocity);
-                transform.rotation = Quaternion.Euler(0f, lookRotation.eulerAngles.y, 0f);
             }
         }
     }
