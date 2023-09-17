@@ -58,4 +58,10 @@ public class IPanelManager : MonoBehaviour
             previousPanel.SetActive(true);
         }
     }
+    
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("quit game");
+    }
 }
