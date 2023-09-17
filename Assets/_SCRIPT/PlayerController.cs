@@ -1,17 +1,20 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class WhiteBallController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
     private Vector3 startPosition;
     private Vector3 targetPosition;
     private bool isAiming = false;
     private bool isMoving = false;
-    private Collider whiteBallCollider; // Reference to the white ball's collider
+    private Collider playerCollider; // Reference to the player's collider
 
     public float maxPower = 20f;
     public float powerMultiplier = 5f;
-    public float stopThreshold = 0.1f; // Adjust this threshold for when the ball is considered stopped
+    public float stopThreshold = 0.1f; // Adjust this threshold for when the player is considered stopped
+
+    // Adjust this value to control the angular damping when aiming
+    public float aimingAngularDamping = 10f;
 
     void Start()
     {
@@ -20,8 +23,8 @@ public class WhiteBallController : MonoBehaviour
         startPosition = transform.position;
         targetPosition = startPosition;
 
-        // Get a reference to the white ball's collider
-        whiteBallCollider = GetComponent<Collider>();
+        // Get a reference to the player's collider
+        playerCollider = GetComponent<Collider>();
     }
 
     void Update()
@@ -30,14 +33,17 @@ public class WhiteBallController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                // Check if the mouse click is on the white ball's collider
+                // Check if the mouse click is on the player's collider
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
-                if (whiteBallCollider.Raycast(ray, out hit, Mathf.Infinity))
+                if (playerCollider.Raycast(ray, out hit, Mathf.Infinity))
                 {
-                    // Start aiming when the left mouse button is pressed on the white ball
+                    // Start aiming when the left mouse button is pressed on the player
                     isAiming = true;
+
+                    // Update the start position to the current position
+                    startPosition = transform.position;
                 }
             }
 
@@ -61,11 +67,14 @@ public class WhiteBallController : MonoBehaviour
                 lookDirection.y = 0f; // Keep the rotation in the horizontal plane
                 Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
                 transform.rotation = targetRotation;
+
+                // Apply angular damping when aiming to prevent excessive rotation
+                rb.angularDrag = aimingAngularDamping;
             }
 
             if (Input.GetMouseButtonUp(0) && isAiming)
             {
-                // Shoot the ball in the opposite direction when the left mouse button is released
+                // Shoot the player in the opposite direction when the left mouse button is released
                 Vector3 shootDirection = startPosition - targetPosition;
                 shootDirection.y = 0; // Ensure the shot stays in the same plane as the table
 
@@ -73,22 +82,19 @@ public class WhiteBallController : MonoBehaviour
 
                 rb.AddForce(shootDirection.normalized * power, ForceMode.Impulse);
 
-                // Update the start position to the current position
-                startPosition = transform.position;
-
                 // Reset the aiming flag
                 isAiming = false;
 
-                // Indicate that the ball is moving
+                // Indicate that the player is moving
                 isMoving = true;
 
-                // Allow rotation again
-                rb.freezeRotation = false;
+                // Restore the angular drag to its default value
+                rb.angularDrag = 0f;
             }
         }
         else
         {
-            // Check if the ball has stopped moving
+            // Check if the player has stopped moving
             if (rb.velocity.magnitude < stopThreshold)
             {
                 isMoving = false;
