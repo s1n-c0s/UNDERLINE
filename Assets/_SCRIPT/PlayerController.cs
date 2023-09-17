@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -6,7 +8,6 @@ public class PlayerController : MonoBehaviour
     private Vector3 startPosition;
     private Vector3 targetPosition;
     private bool isAiming = false;
-    private bool isMoving = false;
     private Collider playerCollider; // Reference to the player's collider
 
     public float maxPower = 20f;
@@ -15,6 +16,9 @@ public class PlayerController : MonoBehaviour
 
     // Adjust this value to control the angular damping when aiming
     public float aimingAngularDamping = 10f;
+
+    // Add a property to check if the player is moving
+    public bool IsMoving { get; private set; }
 
     void Start()
     {
@@ -29,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!isMoving)
+        if (!IsMoving)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -86,7 +90,7 @@ public class PlayerController : MonoBehaviour
                 isAiming = false;
 
                 // Indicate that the player is moving
-                isMoving = true;
+                IsMoving = true;
 
                 // Restore the angular drag to its default value
                 rb.angularDrag = 0f;
@@ -97,7 +101,7 @@ public class PlayerController : MonoBehaviour
             // Check if the player has stopped moving
             if (rb.velocity.magnitude < stopThreshold)
             {
-                isMoving = false;
+                IsMoving = false;
                 rb.freezeRotation = true; // Freeze rotation again
             }
         }
