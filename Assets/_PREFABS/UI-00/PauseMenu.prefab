@@ -586,33 +586,23 @@ PrefabInstance:
       objectReference: {fileID: 4049414983326802264}
     - target: {fileID: 8298138133178462135, guid: c724ef60eebd52c4f960b0d62e554ecf,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8298138133178462135, guid: c724ef60eebd52c4f960b0d62e554ecf,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8298138133178462135, guid: c724ef60eebd52c4f960b0d62e554ecf,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8298138133178462135, guid: c724ef60eebd52c4f960b0d62e554ecf,
-        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ActivatePanel
+      value: OpenSettingsPanel
       objectReference: {fileID: 0}
     - target: {fileID: 8298138133178462135, guid: c724ef60eebd52c4f960b0d62e554ecf,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: IPanelManager, Assembly-CSharp
+      value: IPauseMenu, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8298138133178462135, guid: c724ef60eebd52c4f960b0d62e554ecf,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -750,36 +740,6 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
       objectReference: {fileID: 8028449686847605767}
-    - target: {fileID: 1448968324671394526, guid: 8ef2b7eae40b66a4ea50cf4669436047,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1448968324671394526, guid: 8ef2b7eae40b66a4ea50cf4669436047,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1448968324671394526, guid: 8ef2b7eae40b66a4ea50cf4669436047,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1448968324671394526, guid: 8ef2b7eae40b66a4ea50cf4669436047,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: QuitGame
-      objectReference: {fileID: 0}
-    - target: {fileID: 1448968324671394526, guid: 8ef2b7eae40b66a4ea50cf4669436047,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: IPanelManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1448968324671394526, guid: 8ef2b7eae40b66a4ea50cf4669436047,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 3266653964934600972, guid: 8ef2b7eae40b66a4ea50cf4669436047,
         type: 3}
       propertyPath: m_Name
@@ -826,6 +786,26 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
       objectReference: {fileID: 8028449686847605767}
+    - target: {fileID: 2514371722981258267, guid: 95be6fb6554b7a44baa725e7843b50db,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2514371722981258267, guid: 95be6fb6554b7a44baa725e7843b50db,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2514371722981258267, guid: 95be6fb6554b7a44baa725e7843b50db,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RestartGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 2514371722981258267, guid: 95be6fb6554b7a44baa725e7843b50db,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: IPauseMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 2861607585931850800, guid: 95be6fb6554b7a44baa725e7843b50db,
         type: 3}
       propertyPath: m_Name
