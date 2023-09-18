@@ -1,28 +1,63 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // Import the TextMeshPro namespace
+using TMPro;
+using System.Collections.Generic;
 
-public class GameSettingsMenu : MonoBehaviour
+public class ISettingsMenu : MonoBehaviour
 {
     public TMP_Dropdown resolutionDropdown;
     public TMP_Dropdown screenModeDropdown;
     public Slider musicVolumeSlider;
 
-    private Resolution[] resolutions;
+    private List<Resolution> validResolutions;
 
     private void Start()
     {
-        // Populate the resolution dropdown
-        resolutions = Screen.resolutions;
-        resolutionDropdown.ClearOptions();
+        // Get a list of valid resolutions for the screen
+        validResolutions = new List<Resolution>();
+        Resolution currentResolution = Screen.currentResolution;
 
-        foreach (var resolution in resolutions)
+        foreach (Resolution resolution in Screen.resolutions)
         {
-            TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData(resolution.width + "x" + resolution.height);
-            resolutionDropdown.options.Add(option);
+            if (resolution.width >= 800 && resolution.height >= 600 && resolution.refreshRate == currentResolution.refreshRate)
+            {
+                validResolutions.Add(resolution);
+            }
         }
 
+        // Populate the resolution dropdown with valid resolutions
+        resolutionDropdown.ClearOptions();
+        List<string> resolutionOptions = new List<string>();
+
+        int currentResolutionIndex = 0;
+        for (int i = 0; i < validResolutions.Count; i++)
+        {
+            Resolution resolution = validResolutions[i];
+            string resolutionOption = resolution.width + "x" + resolution.height;
+
+            if (resolution.width == currentResolution.width && resolution.height == currentResolution.height)
+            {
+                currentResolutionIndex = i;
+            }
+
+            resolutionOptions.Add(resolutionOption);
+        }
+
+        resolutionDropdown.AddOptions(resolutionOptions);
+        resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+
+        // Populate the screen mode dropdown
+        screenModeDropdown.ClearOptions();
+        List<string> screenModeOptions = new List<string>
+        {
+            "Fullscreen",
+            "Windowed"
+        };
+
+        screenModeDropdown.AddOptions(screenModeOptions);
+        screenModeDropdown.value = Screen.fullScreen ? 0 : 1;
+        screenModeDropdown.RefreshShownValue();
 
         // Add listener for resolution change
         resolutionDropdown.onValueChanged.AddListener(ChangeResolution);
@@ -37,7 +72,7 @@ public class GameSettingsMenu : MonoBehaviour
     private void ChangeResolution(int index)
     {
         // Change the game's resolution
-        Resolution selectedResolution = resolutions[index];
+        Resolution selectedResolution = validResolutions[index];
         Screen.SetResolution(selectedResolution.width, selectedResolution.height, Screen.fullScreen);
     }
 

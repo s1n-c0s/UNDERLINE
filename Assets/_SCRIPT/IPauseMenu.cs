@@ -9,6 +9,7 @@ public class IPauseMenu : MonoBehaviour
 
     private void Start()
     {
+        SetTimeScaleAndPause(false);
         DeactivateAllMenus();
     }
 

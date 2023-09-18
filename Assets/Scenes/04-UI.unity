@@ -362,7 +362,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 1
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -787,7 +787,6 @@ MonoBehaviour:
   - {fileID: 1763343760}
   - {fileID: 7158970909609383050}
   - {fileID: 1680310480}
-  usePauseSystem: 0
 --- !u!224 &1469631272 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4191121048534039094, guid: 7682208ad07dfb4488966f6945b24cec,
@@ -1101,6 +1100,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 708093019}
+    - target: {fileID: 5904232841352977973, guid: 7682208ad07dfb4488966f6945b24cec,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Distant
+      objectReference: {fileID: 0}
     - target: {fileID: 6468255299881071562, guid: 7682208ad07dfb4488966f6945b24cec,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

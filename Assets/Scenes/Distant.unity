@@ -1206,6 +1206,7 @@ GameObject:
   m_Component:
   - component: {fileID: 560706606}
   - component: {fileID: 560706607}
+  - component: {fileID: 560706608}
   m_Layer: 5
   m_Name: PanelManager
   m_TagString: Untagged
@@ -1242,6 +1243,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1762227836}
   settingsPanel: {fileID: 1523720574}
+--- !u!114 &560706608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560706605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36e9496a1a49d094f87249882f3d1575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &570305929
 GameObject:
   m_ObjectHideFlags: 0
@@ -2027,6 +2040,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3095392}
     m_Modifications:
+    - target: {fileID: 170155986637661717, guid: 717714f2f2cea5b4dbd69704d26971ad,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 560706608}
     - target: {fileID: 869671475740148886, guid: 717714f2f2cea5b4dbd69704d26971ad,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
