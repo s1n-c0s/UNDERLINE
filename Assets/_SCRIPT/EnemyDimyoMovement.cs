@@ -1,15 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
-
 
 public class EnemyDimyoMovement : MonoBehaviour
 {
     private Transform playerTransform; // Reference to the player's transform
     private bool isPlayerHit = false;
     private bool isPlayerMoving = false; // Variable to track player movement
-    private float currentRotation = 0f; // Current rotation of the enemy
-    public float rotationSpeed = 90f; // Rotation speed in degrees per second
+    private bool isRotating = false; // Variable to track if the enemy is currently rotating
+    private float rotationSpeed = 90f; // Rotation speed in degrees per second
+    private float maxRotation = 90f; // Maximum rotation in degrees
 
     void Start()
     {
@@ -24,22 +24,30 @@ public class EnemyDimyoMovement : MonoBehaviour
             // Check if the player is moving
             CheckPlayerMovement();
 
-            // Rotate the enemy if the player is moving
-            if (isPlayerMoving)
+            // Rotate the enemy if the player is moving and is not currently rotating
+            if (isPlayerMoving && !isRotating)
             {
-                // Rotate the enemy continuously by adding rotationSpeed * Time.deltaTime
-                currentRotation += rotationSpeed * Time.deltaTime;
-
-                // If the enemy has completed a full rotation (360 degrees), reset the rotation
-                if (currentRotation >= 360f)
-                {
-                    currentRotation -= 360f;
-                }
-
-                // Apply the rotation
-                transform.rotation = Quaternion.Euler(0f, currentRotation, 0f);
+                // Start rotating
+                StartCoroutine(RotateEnemyCoroutine());
             }
         }
+    }
+
+    // Coroutine to rotate the enemy by 90 degrees
+    IEnumerator RotateEnemyCoroutine()
+    {
+        isRotating = true; // Set the rotating flag to true
+        float startRotation = transform.rotation.eulerAngles.y;
+        float targetRotation = startRotation + maxRotation;
+
+        while (transform.rotation.eulerAngles.y < targetRotation)
+        {
+            float newRotation = Mathf.MoveTowardsAngle(transform.rotation.eulerAngles.y, targetRotation, rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Euler(0f, newRotation, 0f);
+            yield return null;
+        }
+
+        isRotating = false; // Set the rotating flag to false when the rotation is complete
     }
 
     // Function to handle player hits
