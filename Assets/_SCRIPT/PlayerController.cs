@@ -1,20 +1,27 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("****Player Controller****")]
     private Rigidbody rb;
     private Vector3 startPosition;
     private Vector3 targetPosition;
     private bool isAiming = false;
-    private bool isMoving = false;
-    private Collider playerCollider; // Reference to the player's collider
-
+    private Collider playerCollider; 
     public float maxPower = 20f;
     public float powerMultiplier = 5f;
     public float stopThreshold = 0.1f; // Adjust this threshold for when the player is considered stopped
-
-    // Adjust this value to control the angular damping when aiming
     public float aimingAngularDamping = 10f;
+    public bool IsMoving { get; private set; }
+
+    [Header("****Line Render****")]
+    public LineRenderer lineRenderer;
+    public Transform launchPoint;
+    public float launchSpeed = 10f;
+    public int linePoints = 20;
+    public float timeIntervalinPoints = 0.1f;
 
     void Start()
     {
@@ -29,7 +36,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!isMoving)
+        if (!IsMoving)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -70,6 +77,8 @@ public class PlayerController : MonoBehaviour
 
                 // Apply angular damping when aiming to prevent excessive rotation
                 rb.angularDrag = aimingAngularDamping;
+                
+                DrawTrajectory();
             }
 
             if (Input.GetMouseButtonUp(0) && isAiming)
@@ -86,7 +95,7 @@ public class PlayerController : MonoBehaviour
                 isAiming = false;
 
                 // Indicate that the player is moving
-                isMoving = true;
+                IsMoving = true;
 
                 // Restore the angular drag to its default value
                 rb.angularDrag = 0f;
@@ -97,9 +106,32 @@ public class PlayerController : MonoBehaviour
             // Check if the player has stopped moving
             if (rb.velocity.magnitude < stopThreshold)
             {
-                isMoving = false;
+                IsMoving = false;
                 rb.freezeRotation = true; // Freeze rotation again
             }
+        }
+    }
+
+    void DrawTrajectory()
+    {
+        Vector3 origin = launchPoint.position;
+        Vector3 startVelocity = launchSpeed * launchPoint.forward;
+
+        lineRenderer.positionCount = linePoints;
+
+        float time = 0;
+
+        for (int i = 0; i < linePoints; i++)
+        {
+            var x = origin.x + startVelocity.x * time;
+            var y = origin.y + startVelocity.y * time - 0.5f * Mathf.Abs(Physics.gravity.y) * time * time;
+            var z = origin.z + startVelocity.z * time;
+
+            Vector3 point = new Vector3(x, y, z);
+
+            lineRenderer.SetPosition(i, point);
+
+            time += timeIntervalinPoints;
         }
     }
 }
