@@ -1,10 +1,51 @@
-﻿using System.Collections;
+﻿/*using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+
+public class LineRendererController : MonoBehaviour
+{
+    public LineRenderer lineRenderer;
+    public Transform playerTransform; // ตำแหน่งของตัวละคร
+    public float maxDistance = 5f; // ระยะสูงสุดที่ Line Renderer จะแสดง
+
+    void Update()
+    {
+        // ดำเนินการเฉพาะเมื่อคลิกเม้าส์
+        if (Input.GetMouseButton(0))
+        {
+            // ดำเนินการเฉพาะเมื่อ Line Renderer มีการเปิดใช้งาน
+            if (!lineRenderer.enabled)
+            {
+                lineRenderer.enabled = true;
+            }
+
+            // คำนวณระยะทางระหว่างตัวละครกับตำแหน่งเม้าส์
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10f));
+            float distance = Vector3.Distance(playerTransform.position, mousePosition);
+
+            // จำกัดระยะทางไม่เกิน maxDistance
+            if (distance > maxDistance)
+            {
+                distance = maxDistance;
+            }
+
+            // อัพเดทขนาดของ Line Renderer
+            lineRenderer.SetPosition(0, playerTransform.position);
+            lineRenderer.SetPosition(1, playerTransform.position + playerTransform.forward * distance);
+        }
+        else
+        {
+            // ปิด Line Renderer เมื่อไม่คลิกเม้าส์
+            lineRenderer.enabled = false;
+        }
+    }
+}*/
+
+/*using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("****Player Controller****")]
     private Rigidbody rb;
     private Vector3 startPosition;
     private Vector3 targetPosition;
@@ -16,13 +57,9 @@ public class PlayerController : MonoBehaviour
     public float aimingAngularDamping = 10f;
     public bool IsMoving { get; private set; }
 
-    [Header("****Line Render****")]
-    public LineRenderer lineRenderer;
-    public Transform launchPoint;
-    public float launchSpeed = 10f;
-    public int linePoints = 20;
-    public float timeIntervalinPoints = 0.1f;
-    public float maxDistance = 170f;
+    [Header("****Trail Renderer****")]
+    public TrailRenderer trailRenderer;
+    public float trailTime = 1f; // Trail display time
 
     void Start()
     {
@@ -33,8 +70,10 @@ public class PlayerController : MonoBehaviour
 
         // Get a reference to the player's collider
         playerCollider = GetComponent<Collider>();
-    }
 
+        // Disable Trail Renderer initially
+        trailRenderer.emitting = false;
+    }
 
     void Update()
     {
@@ -53,6 +92,10 @@ public class PlayerController : MonoBehaviour
 
                     // Update the start position to the current position
                     startPosition = transform.position;
+
+                    // Start creating the trail
+                    trailRenderer.Clear();
+                    trailRenderer.emitting = true;
                 }
             }
 
@@ -80,8 +123,8 @@ public class PlayerController : MonoBehaviour
                 // Apply angular damping when aiming to prevent excessive rotation
                 rb.angularDrag = aimingAngularDamping;
 
-                // Draw the trajectory
-                DrawTrajectory();
+                // Calculate and display the trajectory
+                CalculateAndDisplayTrajectory();
             }
 
             if (Input.GetMouseButtonUp(0) && isAiming)
@@ -102,6 +145,9 @@ public class PlayerController : MonoBehaviour
 
                 // Restore the angular drag to its default value
                 rb.angularDrag = 0f;
+
+                // Stop creating the trail after a certain time
+                StartCoroutine(StopTrail());
             }
         }
         else
@@ -114,52 +160,45 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    void DrawTrajectory()
+
+    void CalculateAndDisplayTrajectory()
     {
-        Vector3 origin = launchPoint.position;
-        Vector3 startVelocity1 = launchSpeed * launchPoint.forward;
-        Vector3 startVelocity2 = -launchSpeed * launchPoint.forward *6/2; // ปรับให้แกนปลายของ Line Renderer พุ่งออกไปข้างหน้า
+      
+        Vector3 origin = launchPoint.position; // ตำแหน่งเริ่มต้น
+        Vector3 velocity = launchPoint.forward * launchSpeed; // ความเร็วเริ่มต้น
+        Vector3 currentPosition = origin;
+        float timeStep = timeIntervalinPoints; // ช่วงเวลาระหว่างจุด
+        int index = 0;
 
-        lineRenderer.positionCount = linePoints * 2;
+    // ล้างเส้นทาง trail ก่อนเริ่มใหม่
+     trailRenderer.Clear();
 
-        float timeInterval = timeIntervalinPoints / linePoints;
-        float time = 0;
-
-        for (int i = 0; i < linePoints; i++)
+        while (index < linePoints)
         {
-            var x1 = origin.x + startVelocity1.x * time;
-            var y1 = origin.y + startVelocity1.y * time - 0.5f * Mathf.Abs(Physics.gravity.y) * time * time;
-            var z1 = origin.z + startVelocity1.z * time;
+            // คำนวณตำแหน่งใหม่ของจุด
+            currentPosition += velocity * timeStep;
 
-            var x2 = origin.x + startVelocity2.x * time;
-            var y2 = origin.y + startVelocity2.y * time - 0.5f * Mathf.Abs(Physics.gravity.y) * time * time;
-            var z2 = origin.z + startVelocity2.z * time;
+            // นำตำแหน่งใหม่ไปแสดงบน Trail Renderer
+            trailRenderer.AddPosition(currentPosition);
 
-            Vector3 point1 = new Vector3(x1, y1, z1);
-            Vector3 point2 = new Vector3(x2, y2, z2);
-
-            // คำนวณระยะทางจากตัวละครไปยังจุดปลายทางที่ผู้เล่นลากเม้าส์
-            float distanceToTarget = Vector3.Distance(origin, targetPosition);
-            float distanceToPoint1 = Vector3.Distance(origin, point1);
-            float distanceToPoint2 = Vector3.Distance(origin, point2);
-
-            /*if (distanceToPoint1 > distanceToTarget)
+            // หยุดหากเส้นทางเกินระยะทางที่ต้องการแสดง
+            if (Vector3.Distance(origin, currentPosition) > maxDistance)
             {
-                // ตัดส่วนที่เกินระยะทางที่ผู้เล่นลากเม้าส์ออก
-                point1 = origin + (point1 - origin).normalized * distanceToTarget;
-            }*/
-
-            if (distanceToPoint2 > distanceToTarget)
-            {
-                // ตัดส่วนที่เกินระยะทางที่ผู้เล่นลากเม้าส์ออก
-                point2 = origin + (point2 - origin).normalized * distanceToTarget;
-                
+                break;
             }
 
-            lineRenderer.SetPosition(i * 2, point1);
-            lineRenderer.SetPosition(i * 2 + 1, point2);
+            // อัปเดตช่วงเวลา
+            timeStep += timeIntervalinPoints;
+            index++;
 
-            time += timeInterval;
         }
     }
-}
+
+    IEnumerator StopTrail()
+    {
+        yield return new WaitForSeconds(trailTime);
+
+        // Stop creating the trail
+        trailRenderer.emitting = false;
+    }
+}*/
