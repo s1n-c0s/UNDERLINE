@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     public bool IsMoving { get; private set; }
 
     [Header("****Line Render****")]
-    public LineRenderer lineRenderer;
+    public LineRenderer _lineRenderer;
     public Transform launchPoint;
     public float launchSpeed = 10f;
     public int linePoints = 20;
@@ -82,6 +82,7 @@ public class PlayerController : MonoBehaviour
 
                 // Draw the trajectory
                 DrawTrajectory();
+                _lineRenderer.enabled = true;
             }
 
             if (Input.GetMouseButtonUp(0) && isAiming)
@@ -112,6 +113,9 @@ public class PlayerController : MonoBehaviour
                 IsMoving = false;
                 rb.freezeRotation = true; // Freeze rotation again
             }
+
+            //Destroy(_lineRenderer);
+            _lineRenderer.enabled = false;
         }
     }
     void DrawTrajectory()
@@ -120,7 +124,7 @@ public class PlayerController : MonoBehaviour
         Vector3 startVelocity1 = launchSpeed * launchPoint.forward;
         Vector3 startVelocity2 = -launchSpeed * launchPoint.forward *6/2; // ปรับให้แกนปลายของ Line Renderer พุ่งออกไปข้างหน้า
 
-        lineRenderer.positionCount = linePoints * 2;
+        _lineRenderer.positionCount = linePoints * 2;
 
         float timeInterval = timeIntervalinPoints / linePoints;
         float time = 0;
@@ -156,8 +160,8 @@ public class PlayerController : MonoBehaviour
                 
             }
 
-            lineRenderer.SetPosition(i * 2, point1);
-            lineRenderer.SetPosition(i * 2 + 1, point2);
+            _lineRenderer.SetPosition(i * 2, point1);
+            _lineRenderer.SetPosition(i * 2 + 1, point2);
 
             time += timeInterval;
         }
