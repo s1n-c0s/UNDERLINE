@@ -4,11 +4,11 @@ public class enemyDestroy : MonoBehaviour
 {
     //public GameObject objectToDestroy;
 
-    private void OnTriggerEnter(Collider Player)
+    private void OnTriggerEnter(Collider other)
     {
-        if (Player.CompareTag("Player"))
+        if (other.CompareTag("Enemy"))
         {
-            Destroy(gameObject);
+            Destroy(other.gameObject);
         }
     }
 }
