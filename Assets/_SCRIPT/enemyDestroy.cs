@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DestroyOnCollision : MonoBehaviour
+public class enemyDestroy : MonoBehaviour
 {
     //public GameObject objectToDestroy;
 
