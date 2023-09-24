@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDimyoRollTime : MonoBehaviour
+public class enemyDimyoRollTime : MonoBehaviour
 {
     public float rotationAngle = 90f; // องศาที่จะหมุน
     public float delayBetweenRotations = 1f; // ระยะเวลาหยุดหมุน
