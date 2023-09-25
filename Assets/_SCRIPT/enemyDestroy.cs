@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class enemyDestroy : MonoBehaviour
 {
-    //public GameObject objectToDestroy;
+    public GameObject objectToDestroy;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Player"))
         {
-            Destroy(other.gameObject);
+            Destroy(this.gameObject);
+            Destroy(objectToDestroy);
         }
     }
 }
