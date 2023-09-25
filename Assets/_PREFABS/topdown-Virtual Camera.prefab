@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 7854002581423328435}
   - component: {fileID: 4807300965411040288}
   m_Layer: 0
-  m_Name: Virtual Camera
+  m_Name: topdown-Virtual Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,14 +113,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6828312989496312102}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.29450575, y: -0.64152306, z: 0.29296765, w: 0.644891}
+  m_LocalRotation: {x: 0.3837868, y: -0.34810233, z: 0.1589697, w: 0.8403934}
   m_LocalPosition: {x: 18.336182, y: 22.560698, z: 0.63398594}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2082303154548916684}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 49.09, y: -89.7, z: 0}
+  m_LocalEulerAnglesHint: {x: 49.09, y: -45, z: 0}
 --- !u!114 &4807300965411040288
 MonoBehaviour:
   m_ObjectHideFlags: 0
