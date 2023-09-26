@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8378151589295215728}
   - component: {fileID: 8439115204568246548}
+  - component: {fileID: 6633779303583798633}
   - component: {fileID: 4446216770283867164}
   - component: {fileID: 6168418088058611014}
   - component: {fileID: 6372522719978164187}
@@ -90,6 +91,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.0117466, y: 3.8121004, z: 2.1519387}
   m_Center: {x: 0, y: 1.9127765, z: 0}
+--- !u!114 &6633779303583798633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3375307613194460096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85a92cb263e6a6646ad0904a40c0c97d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToDestroy: {fileID: 0}
+  playerController: {fileID: 0}
 --- !u!114 &4446216770283867164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,11 +122,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   detectedEnemyCount: 0
+  enemyWasDestroyed: 0
   canOpenPortal: 0
   portal: {fileID: 0}
-  playerController: {fileID: 6168418088058611014}
-  runningScore: 0
-  scoreUI: {fileID: 0}
 --- !u!114 &6168418088058611014
 MonoBehaviour:
   m_ObjectHideFlags: 0

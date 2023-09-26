@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
                 if (playerCollider.Raycast(ray, out hit, Mathf.Infinity))
                 {
-                    isRunning = true; // เปลี่ยน jump เป็น run หรือพุ่งตัวในภาษาอังกฤษ
+                    isRunning = true; 
                     startPosition = transform.position;
                 }
             }
@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
                 Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
                 transform.rotation = targetRotation;
 
-                rb.angularDrag = runningAngularDamping; // เปลี่ยน jumpAngularDamping เป็น runningAngularDamping
+                rb.angularDrag = runningAngularDamping; 
 
                 DrawTrajectory();
                 _lineRenderer.enabled = true;
@@ -79,20 +79,20 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetMouseButtonUp(0) && isRunning)
             {
-                Vector3 runDirection = startPosition - targetPosition; // เปลี่ยน jumpDirection เป็น runDirection
+                Vector3 runDirection = startPosition - targetPosition; 
                 runDirection.y = 0;
 
                 float power = Mathf.Clamp(runDirection.magnitude * powerMultiplier, 0f, maxPower);
 
                 rb.AddForce(runDirection.normalized * power, ForceMode.Impulse);
 
-                isRunning = false; // เปลี่ยน jump เป็น run หรือพุ่งตัวในภาษาอังกฤษ
+                isRunning = false; 
                 IsMoving = true;
                 runsRemaining--;
 
                 if (runsRemaining <= 0)
                 {
-                    isRunning = false; // เปลี่ยน jump เป็น run หรือพุ่งตัวในภาษาอังกฤษ
+                    isRunning = false; 
                 }
 
                 rb.angularDrag = 0f;
@@ -107,6 +107,8 @@ public class PlayerController : MonoBehaviour
             }
 
             _lineRenderer.enabled = false;
+
+         
         }
     }
     void DrawTrajectory()
@@ -156,5 +158,14 @@ public class PlayerController : MonoBehaviour
 
             time += timeInterval;
         }
+    }
+    public void IncreaseRunsRemaining()
+    {
+        runsRemaining++;
+    }
+
+    public void DecreaseRunsRemaining(int amount)
+    {
+        runsRemaining -= amount;
     }
 }

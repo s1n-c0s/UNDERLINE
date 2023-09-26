@@ -1,124 +1,30 @@
 ﻿/*using UnityEngine;
-using UnityEngine.UI;
-
-public class ScoreManager : MonoBehaviour
-{
-    [Header("****First Score****")]
-    private PlayerController playerController;
-    public Text FirstScore;
-    private int freeScore = 10;
-    private int langKoon;
-    private int firstScore;
-
-    [Header("****First Score****")]
-    public GameObject Pass;
-    private bool hasPassed = false;
-
-    *//*[Header("****Secound Score****")]
-    private EnemyDetector enemyDetector; 
-    public Text SecoundScore;
-    private int allEnemiesinlevel;
-    private int enemyWasDestroy = 0;
-    private int secoundScore;*//*
-
-
-
-    void Start()
-    {
-        playerController = GetComponent<PlayerController>();
-        //enemyDetector = GetComponent<EnemyDetector>();
-
-        langKoon = playerController.runsRemaining * 30;
-        firstScore = langKoon + freeScore;
-
-        // ให้ allEnemiesinlevel เท่ากับ detectedEnemyCount จาก EnemyDetector
-        //allEnemiesinlevel = enemyDetector.detectedEnemyCount;
-
-        UpdateScore();
-    }
-
-    void Update()
-    {
-        int currentRunsRemaining = playerController.runsRemaining;
-
-        if (currentRunsRemaining < langKoon)
-        {
-            langKoon = currentRunsRemaining * 30;
-            firstScore = langKoon + freeScore;
-            UpdateScore();
-        }
-
-       
-
-        // เช็คเงื่อนไขเพื่อคำนวณค่า secoundScore โดยใช้ค่าจาก enemyWasDestroy และ allEnemiesinlevel
-        *//*if (allEnemiesinlevel > 0)
-        {
-            if (enemyWasDestroy < allEnemiesinlevel / 2)
-            {
-                secoundScore = 1;
-            }
-            else if (enemyWasDestroy == allEnemiesinlevel / 2)
-            {
-                secoundScore = 31;
-            }
-            else if (enemyWasDestroy > allEnemiesinlevel / 2)
-            {
-                secoundScore = 60;
-            }
-        }
-
-        // อัปเดตค่า enemyWasDestroy จาก EnemyDetector
-        //enemyWasDestroy = enemyDetector.enemyWasDestroyed;
-
-        // อัปเดตคะแนน
-        UpdateScore();*//*
-
-
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player") && !hasEnteredCollider)
-        {
-            hasEnteredCollider = true;
-            UpdateScore();
-        }
-    }
-
-
-    void UpdateScore()
-    {
-        FirstScore.text = "Score: " + firstScore;
-        //SecoundScore.text = "Score: " + secoundScore;
-    }
-}*//*
-
-
-
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
-    [Header("****First Score****")]
-    private PlayerController playerController;
-    public Text FirstScore;
-    //public Text SecoundScore;
-    private int freeScore = 10;
-    private int langKoon;
-    public int firstScore;
+    [Header("****Running Points****")]
+    private PlayerController playerController; //ยืม component runsRemaining ให้คะแนนการยิงน้อบ แต่ไม่ใช้ละ
+    public Text RunningScore;
+    public int runScore;
 
-    [Header("****Enemy Detector****")]
-    public GameObject Pass;
+    //public Text SecoundScore;
+    //private int freeScore = 10;
+    //private int langKoon;
+
+
+    [Header("****Enemy Detector****")] // อาจจะไม่ใช้
+    public int maxEnemies;
     private EnemyDetector enemyDetector;
 
+    //public GameObject Pass;
     *//*[Header("****Secound Score****")]
     private EnemyDetector enemyDetector;
     private int allEnemiesinlevel;
     private int enemyWasDestroy = 0;
-    private int secoundScore;*//*
-
+    private int secoundScore;
+*//*
 
 
     void Start()
@@ -126,10 +32,12 @@ public class ScoreManager : MonoBehaviour
 
         enemyDetector = GetComponent<EnemyDetector>();
         playerController = GetComponent<PlayerController>();
-        //enemyDetector = GetComponent<EnemyDetector>();
 
-        langKoon = playerController.runsRemaining * 10;
-        firstScore = langKoon + freeScore;
+        runScore = playerController.runsRemaining;
+        
+
+        *//*langKoon = playerController.runsRemaining * 10; //ใช้คำนวนคะแนนการยิง
+        firstScore = langKoon + freeScore;*//*
 
         // ให้ allEnemiesinlevel เท่ากับ detectedEnemyCount จาก EnemyDetector
         //allEnemiesinlevel = enemyDetector.detectedEnemyCount;
@@ -139,14 +47,24 @@ public class ScoreManager : MonoBehaviour
 
     void Update()
     {
-        int currentRunsRemaining = playerController.runsRemaining;
+        maxEnemies = enemyDetector.detectedEnemyCount;
+        *//*int currentRunsRemaining = playerController.runsRemaining;
 
         if (currentRunsRemaining < langKoon)
         {
             langKoon = currentRunsRemaining * 10;
             firstScore = langKoon + freeScore;
             //UpdateScore();
+        } จนถึงตรงนี้คือสมการคำนวนการยิง*//*
+
+        if (maxEnemies != 0 )
+        {
+            
         }
+
+
+
+
 
         // เช็คเงื่อนไขเพื่อคำนวณค่า secoundScore โดยใช้ค่าจาก enemyWasDestroy และ allEnemiesinlevel
         *//*if (allEnemiesinlevel > 0)
@@ -163,22 +81,29 @@ public class ScoreManager : MonoBehaviour
             {
                 secoundScore = 60;
             }
-        }
+        }*//*
 
         // อัปเดตค่า enemyWasDestroy จาก EnemyDetector
         //enemyWasDestroy = enemyDetector.enemyWasDestroyed;
 
         // อัปเดตคะแนน
-        UpdateScore();*//*
+
+
+
+        
+
+
+        UpdateScore();
 
 
     }
 
-    *//*void UpdateScore()
+    void UpdateScore()
     {
-        FirstScore.text = "Score: " + firstScore;
+        RunningScore.text = "Score: " + runScore;
         //SecoundScore.text = "Score: " + secoundScore;
-    }*//*
+    }
+}
 
 
-}*/
+*/
