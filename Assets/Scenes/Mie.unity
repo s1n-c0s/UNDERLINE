@@ -3593,8 +3593,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 16.63808, y: 1, z: 14.039949}
-  m_Center: {x: 7.8190403, y: 0, z: -6.5199747}
+  m_Size: {x: 6.214446, y: 7.2500744, z: 1.0333939}
+  m_Center: {x: -0.79029894, y: 2.7782698, z: -0.01669693}
 --- !u!4 &2029524899
 Transform:
   m_ObjectHideFlags: 0
@@ -3604,7 +3604,7 @@ Transform:
   m_GameObject: {fileID: 2029524896}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.76, y: 0.7258055, z: 8.39}
+  m_LocalPosition: {x: -0.87, y: 0.7258055, z: 16.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4242,6 +4242,11 @@ PrefabInstance:
       propertyPath: portal
       value: 
       objectReference: {fileID: 2029524896}
+    - target: {fileID: 3220502131544954719, guid: 150e7aa4a638ad949ae4b63f8216a9fc,
+        type: 3}
+      propertyPath: detectionRadius
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 3685622425419313051, guid: 150e7aa4a638ad949ae4b63f8216a9fc,
         type: 3}
       propertyPath: m_Name

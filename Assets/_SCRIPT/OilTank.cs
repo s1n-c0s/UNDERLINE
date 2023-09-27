@@ -10,6 +10,7 @@ public class OilTank: MonoBehaviour
     public float upforce = 1.0f;
     public GameObject expposionPrefab;
 
+    public Color explosionColor = Color.yellow;
 
     private void Start()
     {
@@ -54,6 +55,11 @@ public class OilTank: MonoBehaviour
 
         // ทำลาย game object นี้
         Destroy(gameObject);
+    }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = explosionColor; // ตั้งสีเพื่อแสดงรัศมีระเบิด
+        Gizmos.DrawWireSphere(transform.position, radius); // วาดรูปร่างรัศมีระเบิด
     }
 }
 
