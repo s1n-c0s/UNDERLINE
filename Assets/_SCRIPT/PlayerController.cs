@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
     public float maxDistance = 170f;
     private EnemyDetector enemyDetector;
     //private ScoreManager scoreManager;
+    
+    [Header("****Respawn Player****")]
+    private Vector3 lastStartPosition;
 
     void Start()
     {
@@ -35,6 +38,7 @@ public class PlayerController : MonoBehaviour
         playerCollider = GetComponent<Collider>();
         enemyDetector = GetComponent<EnemyDetector>();
         //scoreManager = GetComponent<ScoreManager>();
+        lastStartPosition = startPosition;
     }
 
     void Update()
@@ -45,6 +49,7 @@ public class PlayerController : MonoBehaviour
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
+                lastStartPosition = transform.position;
 
                 if (playerCollider.Raycast(ray, out hit, Mathf.Infinity))
                 {
@@ -167,5 +172,10 @@ public class PlayerController : MonoBehaviour
     public void DecreaseRunsRemaining(int amount)
     {
         runsRemaining -= amount;
+    }
+    public void Respawn()
+    {
+        transform.position = lastStartPosition;
+        
     }
 }

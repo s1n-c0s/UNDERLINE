@@ -37,19 +37,22 @@ public class OilTank: MonoBehaviour
     {
         Vector3 explosionPosition = bomb.transform.position;
         Collider[] colliders = Physics.OverlapSphere(explosionPosition, radius);
+
         foreach (Collider hit in colliders)
         {
-           if (hit.CompareTag("Player") || hit.CompareTag("Enemy"))
+            if (hit.CompareTag("Player") || hit.CompareTag("Enemy"))
             {
-                // ถ้ามี tag เป็น "Enemy" ก็ทำการทำลาย object นี้
+                // ถ้ามี tag เป็น "Enemy" หรือ "Player" ก็ทำการทำลาย object นี้
                 Instantiate(expposionPrefab, hit.transform.position, hit.transform.rotation);
                 Destroy(hit.gameObject);
             }
-
-            Rigidbody rb = hit.GetComponent<Rigidbody>();
-            if (rb != null)
+            else
             {
-                rb.AddExplosionForce(power, explosionPosition, radius, upforce, ForceMode.Impulse);
+                Rigidbody rb = hit.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.AddExplosionForce(power, explosionPosition, radius, upforce, ForceMode.Impulse);
+                }
             }
         }
 

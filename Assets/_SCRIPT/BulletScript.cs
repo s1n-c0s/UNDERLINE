@@ -13,11 +13,13 @@ public class BulletScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // ตรวจสอบว่ากระสุนสามารถทำลาย game object ที่มี tag "Player" หรือไม่
+        // ตรวจสอบว่ากระสุนสามารถทำลาย game object ที่มี tag "Enemy" หรือไม่
         if (canDamage && other.CompareTag("Enemy"))
         {
-            // ทำลาย game object ที่มี tag "Player"
+            // ทำลาย game object ที่มี tag "Enemy"
             Destroy(other.gameObject);
+            Debug.Log("Shuriken");
+
         }
 
         // ทำลายกระสุนหลังจากชน
