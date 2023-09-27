@@ -4,28 +4,33 @@ using UnityEngine;
 
 public class Shuriken : MonoBehaviour
 {
-    public GameObject bulletPrefab;
-    public Transform shootPoint;
+    public GameObject bulletPrefab; // ออบเจ็กต์กระสุนที่จะยิง
+    public float bulletSpeed = 5f; // ความเร็วของกระสุน
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Shuriken"))
+        // ตรวจสอบว่า game object ที่ชนมี tag "Player" หรือไม่
+        if (other.CompareTag("Player"))
         {
-            StartCoroutine(ShootBullets());
-        }
-    }
+            // ให้หาตำแหน่งของผู้เล่น
+            Vector3 playerPosition = other.transform.position;
 
-    IEnumerator ShootBullets()
-    {
-        // สร้างกระสุน 8 ลูกและยิงออกไปรอบตัวเอง
-        for (int i = 0; i < 8; i++)
-        {
-            GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity);
-            // ตั้งความเร็วและทิศทางของกระสุน
-            Rigidbody rb = bullet.GetComponent<Rigidbody>();
-            rb.velocity = transform.forward * 10f; // แก้ตามความเหมาะสม
-            Destroy(bullet, 2f); // ลบกระสุนหลังจาก 2 วินาที
-            yield return new WaitForSeconds(0.2f); // รอ 0.2 วินาทีระหว่างการยิงกระสุน
+            // ทำการยิงกระสุน 8 ลูกทันที
+            for (int i = 0; i < 8; i++)
+            {
+                // สร้างออบเจ็กต์กระสุนที่ตำแหน่งของผู้เล่น
+                GameObject bullet = Instantiate(bulletPrefab, playerPosition, Quaternion.identity);
+
+                // หมุนออบเจ็กต์กระสุนเพื่อให้กระสุนถูกยิงไปทุกทิศทาง
+                float angle = i * 45f;
+                bullet.transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+                // กำหนดความเร็วให้กับกระสุน
+                bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
+
+                // ทำลายกระสุนหลังจากเวลาที่กำหนด (เช่น 0.5 วินาที)
+                Destroy(bullet, 0.5f);
+            }
         }
     }
 }
