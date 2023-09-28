@@ -3,7 +3,7 @@ using UnityEngine;
 public class enemyDestroy : MonoBehaviour
 {
     //public GameObject objectToDestroy;
-    public PlayerController playerController;
+    private PlayerController playerController;
 
     private void Start()
     {
@@ -17,7 +17,7 @@ public class enemyDestroy : MonoBehaviour
             Destroy(other.gameObject);
             //Destroy(objectToDestroy);
             playerController.IncreaseRunsRemaining();
-            Debug.Log("incr");
+            Debug.Log("Increase");
         }
     }
 }
