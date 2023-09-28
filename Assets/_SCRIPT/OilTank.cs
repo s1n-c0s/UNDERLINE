@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OilTank: MonoBehaviour
+public class OilTank : MonoBehaviour
 {
     public GameObject bomb;
     public float power = 10.0f;
@@ -46,26 +46,20 @@ public class OilTank: MonoBehaviour
                 Instantiate(expposionPrefab, hit.transform.position, hit.transform.rotation);
                 Destroy(hit.gameObject);
             }
-            else
-            {
-                Rigidbody rb = hit.GetComponent<Rigidbody>();
-                if (rb != null)
-                {
-                    rb.AddExplosionForce(power, explosionPosition, radius, upforce, ForceMode.Impulse);
-                }
-            }
+
+            // ไม่ต้องสร้าง explosion force หรือทำลาย game object ที่ไม่ใช่ "Enemy" หรือ "Player"
         }
 
         // ทำลาย game object นี้
         Destroy(gameObject);
     }
+
     void OnDrawGizmos()
     {
         Gizmos.color = explosionColor; // ตั้งสีเพื่อแสดงรัศมีระเบิด
         Gizmos.DrawWireSphere(transform.position, radius); // วาดรูปร่างรัศมีระเบิด
     }
 }
-
 
 
 
