@@ -261,6 +261,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1518477889419750770, guid: 1a50697405c808a4c91521607567896c,
     type: 3}
   bulletSpeed: 5
+  bulletSpawnRadius: 3
+  timeForDestroy: 0.5
+  numBullets: 8
 --- !u!1 &4305632854249182359
 GameObject:
   m_ObjectHideFlags: 0
