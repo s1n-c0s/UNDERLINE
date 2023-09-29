@@ -1,65 +1,73 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SamuraiMovement : MonoBehaviour
 {
-    public Transform[] waypoints;
-    public float movementSpeed = 5.0f;
-    public float stopDuration = 3.0f;
+    public float moveSpeed = 5.0f;
+    public float stopDuration = 2.0f;
 
-    private int currentWaypointIndex = 0;
-    private float timeSinceLastStop = 0.0f;
-    private bool isMovingForward = true;
+    [SerializeField] private Vector3 startPoint = new Vector3(-5.0f, 0.0f, 0.0f);
+    [SerializeField] private Vector3 endPoint = new Vector3(5.0f, 0.0f, 0.0f);
+
+    private Vector3 target;
+    private bool isMoving = true;
+
+    public bool canOpenKatana = false;
+    public GameObject katana;
+
+    private void Start()
+    {
+        target = endPoint; // เริ่มจากจุดสุดท้าย
+    }
 
     private void Update()
     {
-        // Check if there are waypoints defined
-        if (waypoints.Length == 0)
+        if (isMoving)
         {
-            Debug.LogError("No waypoints assigned to the enemy.");
-            return;
-        }
+            // ย้ายศัตรูไปที่เป้าหมาย (แก้ไขเพื่อให้เคลื่อนที่แค่แกน X)
+            Vector3 newPosition = new Vector3(target.x, transform.position.y, transform.position.z);
+            transform.position = Vector3.MoveTowards(transform.position, newPosition, moveSpeed * Time.deltaTime);
 
-        // Calculate direction to the current waypoint
-        Vector3 direction = (waypoints[currentWaypointIndex].position - transform.position).normalized;
-
-        // Move the enemy
-        transform.Translate(direction * movementSpeed * Time.deltaTime);
-
-        // Check if the enemy has reached the current waypoint
-        if (Vector3.Distance(transform.position, waypoints[currentWaypointIndex].position) < 0.1f)
-        {
-            // Stop for the specified duration
-            if (timeSinceLastStop < stopDuration)
+            // เมื่อ Samurai ถึงเป้าหมายแล้วหยุด
+            if (transform.position == newPosition)
             {
-                timeSinceLastStop += Time.deltaTime;
-            }
-            else
-            {
-                timeSinceLastStop = 0.0f;
-                NextWaypoint();
+                // หยุดเคลื่อนที่ไป 2 วินาที
+                isMoving = false;
+                OpenKatana();
+                StartCoroutine(WaitAndRotate());
             }
         }
     }
 
-    private void NextWaypoint()
+    private System.Collections.IEnumerator WaitAndRotate()
     {
-        if (isMovingForward)
-        {
-            currentWaypointIndex++;
-            if (currentWaypointIndex >= waypoints.Length)
-            {
-                currentWaypointIndex = waypoints.Length - 1;
-                isMovingForward = false;
-            }
-        }
+        // รอเวลาหยุด
+        yield return new WaitForSeconds(stopDuration);
+
+        // เปลี่ยนเป้าหมาย
+        if (target == startPoint)
+            target = endPoint;
         else
-        {
-            currentWaypointIndex--;
-            if (currentWaypointIndex < 0)
-            {
-                currentWaypointIndex = 0;
-                isMovingForward = true;
-            }
-        }
+            target = startPoint;
+
+        // หมุน 180 องศาเมื่อเดินกลับที่จุดเริ่มต้นหรือจุดสุดท้าย
+        transform.Rotate(Vector3.up, 180.0f);
+
+        // รีเซ็ตเพื่อเริ่มเคลื่อนที่ใหม่
+        isMoving = true;
+
+        // ปิด Katana เมื่อเริ่มเคลื่อนที่อีกครั้ง
+        CloseKatana();
+    }
+
+    public void OpenKatana()
+    {
+        canOpenKatana = true;
+        katana.SetActive(canOpenKatana);
+    }
+
+    public void CloseKatana()
+    {
+        canOpenKatana = false;
+        katana.SetActive(canOpenKatana);
     }
 }

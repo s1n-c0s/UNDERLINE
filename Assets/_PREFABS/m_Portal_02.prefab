@@ -464,6 +464,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1431431000206889515}
   - component: {fileID: 2828954980758192061}
+  - component: {fileID: 2429107589296994171}
   m_Layer: 0
   m_Name: Potal
   m_TagString: Untagged
@@ -507,3 +508,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5.9703264, y: 7.4051003, z: 6.002342}
   m_Center: {x: 0.24483252, y: 3.2025502, z: 0.58117294}
+--- !u!114 &2429107589296994171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7123822740134817516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 582d5dae7f370794b9f2009ef947b27a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: 
