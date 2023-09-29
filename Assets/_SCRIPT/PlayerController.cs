@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public float powerMultiplier = 5f;
     public float stopThreshold = 0.1f;
     public float runningAngularDamping = 10f;
+
+    public TextMeshProUGUI runsRemainingText;
     public bool IsMoving { get; private set; }
 
     public LineRenderer _lineRenderer;
@@ -37,10 +41,12 @@ public class PlayerController : MonoBehaviour
         playerCollider = GetComponent<Collider>();
         enemyDetector = GetComponent<EnemyDetector>();
         lastStartPosition = startPosition;
+        UpdateRunsRemainingText();
     }
 
     void Update()
     {
+        UpdateRunsRemainingText();
         if (runsRemaining > 0 && !IsMoving)
         {
             HandleRunningInput();
@@ -211,6 +217,16 @@ public class PlayerController : MonoBehaviour
     public void DecreaseRunsRemaining(int amount)
     {
         runsRemaining -= amount;
+    }
+
+    void UpdateRunsRemainingText()
+    {
+        // Check if runsRemainingText and playerController are not null
+        if (runsRemainingText != null )
+        {
+            // Update the TextMeshPro text with the value of runsRemaining
+            runsRemainingText.text = "Runs Remaining: " + runsRemaining.ToString();
+        }
     }
 
     public void Respawn()
