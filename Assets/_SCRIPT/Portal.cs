@@ -2,66 +2,37 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    public GameObject destinationObject; // GameObject ของประตูปลายทาง
-    private bool isTeleporting;
-
-    private void OnEnable()
-    {
-        // Ensure that isTeleporting is reset when the script is re-enabled
-        isTeleporting = false;
-    }
+    public GameObject connectedPortal;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !isTeleporting)
-        {
-            isTeleporting = true;
-            TeleportPlayer(other.gameObject);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
         if (other.CompareTag("Player"))
         {
-            isTeleporting = false;
+            TeleportPlayer(other.gameObject);
         }
     }
 
     private void TeleportPlayer(GameObject player)
     {
-        if (destinationObject == null)
-        {
-            Debug.LogError("Destination portal not set for " + gameObject.name);
-            return;
-        }
+        Vector3 playerPosition = player.transform.position;
+        Vector3 playerVelocity = player.GetComponent<Rigidbody>().velocity;
 
-        // Get the position and forward direction of the destination object
-        Vector3 destinationPosition = destinationObject.transform.position;
-        Vector3 destinationForward = destinationObject.transform.forward;
+        player.transform.position = connectedPortal.transform.position;
 
-        // Preserve the player's velocity
-        Rigidbody playerRigidbody = player.GetComponent<Rigidbody>();
-        Vector3 originalVelocity = playerRigidbody.velocity;
+        UpdatePlayerRotation(player, connectedPortal.transform, playerVelocity);
 
-        // Teleport the player to the destination position
-        player.transform.position = destinationPosition;
-
-        // Calculate the rotation to align the player with the portal's forward direction
-        Quaternion rotationToAlign = Quaternion.FromToRotation(player.transform.forward, destinationForward);
-
-        // Apply the rotation to the player
-        player.transform.rotation = rotationToAlign * player.transform.rotation;
-
-        // Adjust the velocity direction without changing its magnitude
-        playerRigidbody.velocity = rotationToAlign * originalVelocity;
-
-        // Allow the player to teleport again after a short delay
-        Invoke("ResetTeleportFlag", 0.5f);
+        player.GetComponent<Rigidbody>().velocity = connectedPortal.transform.TransformVector(playerVelocity);
     }
 
-    private void ResetTeleportFlag()
+    private void UpdatePlayerRotation(GameObject player, Transform destinationPortal, Vector3 playerVelocity)
     {
-        isTeleporting = false;
+        Quaternion portalRotationDifference = destinationPortal.rotation * Quaternion.Inverse(transform.rotation);
+
+        player.transform.rotation = portalRotationDifference * player.transform.rotation;
+
+        Vector3 newForward = destinationPortal.TransformVector(playerVelocity.normalized);
+        newForward.y = 0f;
+
+        player.transform.forward = newForward;
     }
 }
