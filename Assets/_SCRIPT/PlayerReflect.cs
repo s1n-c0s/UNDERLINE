@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerReflect : MonoBehaviour
@@ -12,17 +9,21 @@ public class PlayerReflect : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
-    
-    // Update is called once per frame
-    void Update()
+
+    private void Update()
     {
         lastVelocity = rb.velocity;
     }
 
     private void OnCollisionEnter(Collision other)
     {
+        ReflectVelocity(other.contacts[0].normal);
+    }
+
+    private void ReflectVelocity(Vector3 normal)
+    {
         var speed = lastVelocity.magnitude;
-        var direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
+        var direction = Vector3.Reflect(lastVelocity.normalized, normal);
 
         rb.velocity = direction * Mathf.Max(speed, 0f);
 
