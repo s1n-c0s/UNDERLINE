@@ -25,6 +25,9 @@ public class PlayerReflect : MonoBehaviour
         var speed = lastVelocity.magnitude;
         var direction = Vector3.Reflect(lastVelocity.normalized, normal);
 
+        // Only change the forward direction without affecting the up direction
+        direction.y = transform.forward.y;
+
         rb.velocity = direction * Mathf.Max(speed, 0f);
 
         // Make the player face in the reflection direction
