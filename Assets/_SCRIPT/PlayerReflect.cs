@@ -10,27 +10,33 @@ public class PlayerReflect : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
+        // Record the velocity in FixedUpdate for accurate physics calculations
         lastVelocity = rb.velocity;
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        ReflectVelocity(other.contacts[0].normal);
+        if (other.collider.CompareTag("Wall"))
+        {
+            ReflectVelocity(other.contacts[0].normal);
+        }
+
     }
 
     private void ReflectVelocity(Vector3 normal)
     {
+        // Calculate the reflection direction while preserving speed
         var speed = lastVelocity.magnitude;
         var direction = Vector3.Reflect(lastVelocity.normalized, normal);
 
         // Only change the forward direction without affecting the up direction
-        direction.y = transform.forward.y;
+        direction = Vector3.ProjectOnPlane(direction, transform.up).normalized;
 
-        rb.velocity = direction * Mathf.Max(speed, 0f);
+        rb.velocity = direction * speed;
 
         // Make the player face in the reflection direction
-        transform.LookAt(transform.position + direction);
+        transform.rotation = Quaternion.LookRotation(direction, transform.up);
     }
 }

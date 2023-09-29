@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 lastStartPosition;
 
+    private bool isGrounded; // To track if the character is grounded
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -47,6 +49,9 @@ public class PlayerController : MonoBehaviour
         {
             HandleNotRunning();
         }
+
+        // Check if the character is grounded
+        CheckGrounded();
     }
 
     void HandleRunningInput()
@@ -78,7 +83,6 @@ public class PlayerController : MonoBehaviour
             startPosition = transform.position;
         }
     }
-
     void HandleRunning()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -184,6 +188,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void CheckGrounded()
+    {
+        // Perform a raycast downwards to check for ground
+        RaycastHit hit;
+        float raycastDistance = 1.0f; // Adjust this based on your character's size
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, raycastDistance);
+
+        // If not grounded, move the character up slightly to keep them grounded
+        if (!isGrounded)
+        {
+            Vector3 newPosition = transform.position;
+            newPosition.y = hit.point.y + 0.05f; // Adjust this value as needed
+            transform.position = newPosition;
+        }
+    }
     public void IncreaseRunsRemaining()
     {
         runsRemaining++;
