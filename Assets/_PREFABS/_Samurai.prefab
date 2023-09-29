@@ -145,8 +145,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8378151589295215728}
-  - component: {fileID: 6418156319152879944}
-  - component: {fileID: 6003634701003003829}
+  - component: {fileID: 8817478745773030901}
   - component: {fileID: 7669517549103795560}
   - component: {fileID: 1523748344413495420}
   - component: {fileID: 7109603789362938336}
@@ -174,7 +173,7 @@ Transform:
   - {fileID: 6079027986581187715}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6418156319152879944
+--- !u!114 &8817478745773030901
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,23 +182,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3375307613194460096}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39ab13afeb7c86748a726db45b17a44b, type: 3}
+  m_Script: {fileID: 11500000, guid: f91cc09bbd089774ca1ff2cbd731a61c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationAngle: 90
-  delayBetweenRotations: 1.5
---- !u!114 &6003634701003003829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3375307613194460096}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49ea2c8203b678242a2b7464b3076608, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  waypoints: []
+  movementSpeed: 5
+  stopDuration: 3
 --- !u!54 &7669517549103795560
 Rigidbody:
   m_ObjectHideFlags: 0
