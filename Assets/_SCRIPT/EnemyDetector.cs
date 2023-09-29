@@ -21,7 +21,7 @@ public class EnemyDetector : MonoBehaviour
 
     [Header("****UI****")]
     public TextMeshProUGUI detectedEnemyText;
-    public TextMeshProUGUI potalText;
+    public TextMeshProUGUI portalText;
 
     private void Start()
     {
@@ -84,14 +84,14 @@ public class EnemyDetector : MonoBehaviour
             if (canOpenPortal == true)
             {
                 portal.SetActive(true);
-                potalText.text = "Potal Open";
+                portalText.text = "Portal Open";
             }
         }
         else
         {
             canOpenPortal = false;
             portal.SetActive(false);
-            potalText.text = "Potal Close";
+            portalText.text = "Portal Close";
         }
     }
 

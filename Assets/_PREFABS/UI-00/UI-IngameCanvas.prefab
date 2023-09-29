@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e93fa480c8b364a84ccca52fe50792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalTime: 4
+  totalTime: 120
   timeText: {fileID: 5499477549423508784}
   gameOverUI: {fileID: 5860701844622133878}
   pauseMenuScript: {fileID: 2688841599349490809}
@@ -115,7 +115,7 @@ RectTransform:
   - {fileID: 5766960151038343768}
   - {fileID: 709713689801888781}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -6.816, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -947,6 +947,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7796001284065317921}
     m_Modifications:
+    - target: {fileID: 2353512640374651802, guid: 1882390206e7d7f41a1c7f17eefe584a,
+        type: 3}
+      propertyPath: m_Name
+      value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745632923955668685, guid: 1882390206e7d7f41a1c7f17eefe584a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745632923955668685, guid: 1882390206e7d7f41a1c7f17eefe584a,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3960683062186511458, guid: 1882390206e7d7f41a1c7f17eefe584a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3960683062186511458, guid: 1882390206e7d7f41a1c7f17eefe584a,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3960683062186511458, guid: 1882390206e7d7f41a1c7f17eefe584a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3960683062186511458, guid: 1882390206e7d7f41a1c7f17eefe584a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4480995371510460205, guid: 1882390206e7d7f41a1c7f17eefe584a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1047,10 +1082,65 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5666914741914108080, guid: 1882390206e7d7f41a1c7f17eefe584a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5666914741914108080, guid: 1882390206e7d7f41a1c7f17eefe584a,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5666914741914108080, guid: 1882390206e7d7f41a1c7f17eefe584a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5666914741914108080, guid: 1882390206e7d7f41a1c7f17eefe584a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673940865014275342, guid: 1882390206e7d7f41a1c7f17eefe584a,
+        type: 3}
+      propertyPath: m_text
+      value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851007565728341111, guid: 1882390206e7d7f41a1c7f17eefe584a,
+        type: 3}
+      propertyPath: m_text
+      value: EnemyCount
+      objectReference: {fileID: 0}
+    - target: {fileID: 6503586422093885996, guid: 1882390206e7d7f41a1c7f17eefe584a,
+        type: 3}
+      propertyPath: m_text
+      value: '@Run'
+      objectReference: {fileID: 0}
     - target: {fileID: 6713194063915109669, guid: 1882390206e7d7f41a1c7f17eefe584a,
         type: 3}
       propertyPath: m_Name
       value: GameplayPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 7461576048448929920, guid: 1882390206e7d7f41a1c7f17eefe584a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7461576048448929920, guid: 1882390206e7d7f41a1c7f17eefe584a,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7461576048448929920, guid: 1882390206e7d7f41a1c7f17eefe584a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7461576048448929920, guid: 1882390206e7d7f41a1c7f17eefe584a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
