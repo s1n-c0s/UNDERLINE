@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using TMPro;
 
 public class EnemyDetector : MonoBehaviour
 {
@@ -17,17 +19,23 @@ public class EnemyDetector : MonoBehaviour
     public GameObject portal;
     private PlayerController playerController;
 
+    [Header("****UI****")]
+    public TextMeshProUGUI detectedEnemyText;
+    public TextMeshProUGUI potalText;
+
     private void Start()
     {
         playerController = GetComponent<PlayerController>();
         DetectEnemies();
         OpenPortal();
+        UpdateDetectedEnemyText();
     }
 
     private void Update()
     {
         DetectEnemies();
         OpenPortal();
+        UpdateDetectedEnemyText();
     }
 
     private void DetectEnemies()
@@ -76,12 +84,23 @@ public class EnemyDetector : MonoBehaviour
             if (canOpenPortal == true)
             {
                 portal.SetActive(true);
+                potalText.text = "Potal Open";
             }
         }
         else
         {
             canOpenPortal = false;
             portal.SetActive(false);
+            potalText.text = "Potal Close";
+        }
+    }
+
+    private void UpdateDetectedEnemyText()
+    {
+        // ตั้งค่าข้อความ UI Text ให้แสดง detectedEnemyCount
+        if (detectedEnemyText != null)
+        {
+            detectedEnemyText.text = "Detected Enemies: " + detectedEnemyCount;
         }
     }
 
