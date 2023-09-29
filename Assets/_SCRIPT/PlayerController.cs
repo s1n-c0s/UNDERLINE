@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -7,14 +6,15 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private Vector3 startPosition;
     private Vector3 targetPosition;
-    private bool isRunning = false; // เปลี่ยน jump เป็น run หรือพุ่งตัวในภาษาอังกฤษ
+    private bool isRunning = false;
     private Collider playerCollider;
+    private EnemyDetector enemyDetector;
 
-    public int runsRemaining = 3; // แก้ชื่อตัวแปรเป็น runsRemaining
+    public int runsRemaining = 3;
     public float maxPower = 20f;
     public float powerMultiplier = 5f;
     public float stopThreshold = 0.1f;
-    public float runningAngularDamping = 10f; // เปลี่ยน jumpAngularDamping เป็น runningAngularDamping
+    public float runningAngularDamping = 10f;
     public bool IsMoving { get; private set; }
 
     public LineRenderer _lineRenderer;
@@ -23,10 +23,7 @@ public class PlayerController : MonoBehaviour
     public int linePoints = 20;
     public float timeIntervalinPoints = 0.1f;
     public float maxDistance = 170f;
-    private EnemyDetector enemyDetector;
-    //private ScoreManager scoreManager;
-    
-    [Header("****Respawn Player****")]
+
     private Vector3 lastStartPosition;
 
     void Start()
@@ -37,7 +34,6 @@ public class PlayerController : MonoBehaviour
         targetPosition = startPosition;
         playerCollider = GetComponent<Collider>();
         enemyDetector = GetComponent<EnemyDetector>();
-        //scoreManager = GetComponent<ScoreManager>();
         lastStartPosition = startPosition;
     }
 
@@ -45,77 +41,100 @@ public class PlayerController : MonoBehaviour
     {
         if (runsRemaining > 0 && !IsMoving)
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                lastStartPosition = transform.position;
-
-                if (playerCollider.Raycast(ray, out hit, Mathf.Infinity))
-                {
-                    isRunning = true; 
-                    startPosition = transform.position;
-                }
-            }
-
-            if (isRunning)
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                Plane tablePlane = new Plane(Vector3.up, startPosition);
-
-                float hitDistance;
-                if (tablePlane.Raycast(ray, out hitDistance))
-                {
-                    targetPosition = ray.GetPoint(hitDistance);
-                }
-
-                Debug.DrawLine(targetPosition, targetPosition + Vector3.up, Color.red);
-
-                Vector3 lookDirection = startPosition - targetPosition;
-                lookDirection.y = 0f;
-                Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
-                transform.rotation = targetRotation;
-
-                rb.angularDrag = runningAngularDamping; 
-
-                DrawTrajectory();
-                _lineRenderer.enabled = true;
-            }
-
-            if (Input.GetMouseButtonUp(0) && isRunning)
-            {
-                Vector3 runDirection = startPosition - targetPosition; 
-                runDirection.y = 0;
-
-                float power = Mathf.Clamp(runDirection.magnitude * powerMultiplier, 0f, maxPower);
-
-                rb.AddForce(runDirection.normalized * power, ForceMode.Impulse);
-
-                isRunning = false; 
-                IsMoving = true;
-                runsRemaining--;
-
-                if (runsRemaining <= 0)
-                {
-                    isRunning = false; 
-                }
-
-                rb.angularDrag = 0f;
-            }
+            HandleRunningInput();
         }
         else
         {
-            if (rb.velocity.magnitude < stopThreshold)
-            {
-                IsMoving = false;
-                rb.freezeRotation = true;
-            }
-
-            _lineRenderer.enabled = false;
-
-         
+            HandleNotRunning();
         }
     }
+
+    void HandleRunningInput()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            HandleMouseDown();
+        }
+
+        if (isRunning)
+        {
+            HandleRunning();
+        }
+
+        if (Input.GetMouseButtonUp(0) && isRunning)
+        {
+            HandleMouseUp();
+        }
+    }
+
+    void HandleMouseDown()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (playerCollider.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            isRunning = true;
+            startPosition = transform.position;
+        }
+    }
+
+    void HandleRunning()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane tablePlane = new Plane(Vector3.up, startPosition);
+
+        float hitDistance;
+        if (tablePlane.Raycast(ray, out hitDistance))
+        {
+            targetPosition = ray.GetPoint(hitDistance);
+        }
+
+        Debug.DrawLine(targetPosition, targetPosition + Vector3.up, Color.red);
+
+        Vector3 lookDirection = startPosition - targetPosition;
+        lookDirection.y = 0f;
+        Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+        transform.rotation = targetRotation;
+
+        rb.angularDrag = runningAngularDamping;
+
+        DrawTrajectory();
+        _lineRenderer.enabled = true;
+    }
+
+    void HandleMouseUp()
+    {
+        Vector3 runDirection = startPosition - targetPosition;
+        runDirection.y = 0;
+
+        float power = Mathf.Clamp(runDirection.magnitude * powerMultiplier, 0f, maxPower);
+
+        rb.AddForce(runDirection.normalized * power, ForceMode.Impulse);
+
+        isRunning = false;
+        IsMoving = true;
+        runsRemaining--;
+
+        if (runsRemaining <= 0)
+        {
+            isRunning = false;
+        }
+
+        rb.angularDrag = 0f;
+    }
+
+    void HandleNotRunning()
+    {
+        if (rb.velocity.magnitude < stopThreshold)
+        {
+            IsMoving = false;
+            rb.freezeRotation = true;
+        }
+
+        _lineRenderer.enabled = false;
+    }
+
     void DrawTrajectory()
     {
         Vector3 origin = launchPoint.position;
@@ -164,6 +183,7 @@ public class PlayerController : MonoBehaviour
             time += timeInterval;
         }
     }
+
     public void IncreaseRunsRemaining()
     {
         runsRemaining++;
@@ -173,9 +193,9 @@ public class PlayerController : MonoBehaviour
     {
         runsRemaining -= amount;
     }
+
     public void Respawn()
     {
         transform.position = lastStartPosition;
-        
     }
 }
