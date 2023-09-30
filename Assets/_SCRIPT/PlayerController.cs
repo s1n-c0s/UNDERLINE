@@ -240,7 +240,7 @@ public class PlayerController : MonoBehaviour
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
@@ -248,6 +248,9 @@ public class PlayerController : MonoBehaviour
     private Vector3 targetPosition;
     private bool isRunning = false; // เปลี่ยน jump เป็น run หรือพุ่งตัวในภาษาอังกฤษ
     private Collider playerCollider;
+    public TextMeshProUGUI runsRemainingText;
+
+    
 
     public int runsRemaining = 3; // แก้ชื่อตัวแปรเป็น runsRemaining
     public float maxPower = 20f;
@@ -278,10 +281,12 @@ public class PlayerController : MonoBehaviour
         enemyDetector = GetComponent<EnemyDetector>();
         //scoreManager = GetComponent<ScoreManager>();
         lastStartPosition = startPosition;
+        UpdateRunsRemainingText();
     }
 
     void Update()
     {
+        UpdateRunsRemainingText();
         if (runsRemaining > 0 && !IsMoving)
         {
             if (Input.GetMouseButtonDown(0))
@@ -295,6 +300,7 @@ public class PlayerController : MonoBehaviour
                     isRunning = true;
                     startPosition = transform.position;
                 }
+                
             }
 
             if (isRunning)
@@ -401,6 +407,15 @@ public class PlayerController : MonoBehaviour
             _lineRenderer.SetPosition(i * 2 + 1, point2);
 
             time += timeInterval;
+        }
+    }
+    void UpdateRunsRemainingText()
+    {
+        // Check if runsRemainingText and playerController are not null
+        if (runsRemainingText != null)
+        {
+            // Update the TextMeshPro text with the value of runsRemaining
+            runsRemainingText.text = "Runs Remaining: " + runsRemaining.ToString();
         }
     }
     public void IncreaseRunsRemaining()

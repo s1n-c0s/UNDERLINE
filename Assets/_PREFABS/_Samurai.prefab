@@ -5010,10 +5010,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8378151589295215728}
-  - component: {fileID: 8817478745773030901}
   - component: {fileID: 7669517549103795560}
   - component: {fileID: 1523748344413495420}
-  - component: {fileID: 7109603789362938336}
   m_Layer: 6
   m_Name: _Samurai
   m_TagString: Enemy
@@ -5038,22 +5036,6 @@ Transform:
   - {fileID: 6079027986581187715}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8817478745773030901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3375307613194460096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f91cc09bbd089774ca1ff2cbd731a61c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  stopDuration: 3
-  canOpenKatana: 0
-  katana: {fileID: 808066268967339990}
 --- !u!54 &7669517549103795560
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5096,7 +5078,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -5104,29 +5086,6 @@ CapsuleCollider:
   m_Height: 3.780831
   m_Direction: 1
   m_Center: {x: -1.4540324e-10, y: 1.8556083, z: 0.066444635}
---- !u!136 &7109603789362938336
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3375307613194460096}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.347879
-  m_Height: 2.6957588
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.3762578, z: 0}
 --- !u!1 &4825108346829621693
 GameObject:
   m_ObjectHideFlags: 0

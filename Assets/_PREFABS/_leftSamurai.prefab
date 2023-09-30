@@ -134,7 +134,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -245,8 +245,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.8466146, y: 12.483709, z: 4.7776027}
+  m_Center: {x: 0.9233085, y: 4.2166066, z: 4.357}
 --- !u!1 &6528066509665336488
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +299,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -5182,7 +5182,6 @@ GameObject:
   - component: {fileID: 5257376845410075721}
   - component: {fileID: 1990356717035099788}
   - component: {fileID: 3701197223364189477}
-  - component: {fileID: 1138932601630901872}
   m_Layer: 6
   m_Name: _leftSamurai
   m_TagString: Enemy
@@ -5248,29 +5247,6 @@ CapsuleCollider:
   m_Height: 3.780831
   m_Direction: 1
   m_Center: {x: -1.4540324e-10, y: 1.8556083, z: 0.066444635}
---- !u!136 &1138932601630901872
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8136710068891359694}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.347879
-  m_Height: 2.6957588
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.3762578, z: 0}
 --- !u!1001 &584615876309928398
 PrefabInstance:
   m_ObjectHideFlags: 0
