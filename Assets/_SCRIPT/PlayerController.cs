@@ -1,5 +1,7 @@
 ﻿/*using System.Collections;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public float powerMultiplier = 5f;
     public float stopThreshold = 0.1f;
     public float runningAngularDamping = 10f;
+
+    public TextMeshProUGUI runsRemainingText;
     public bool IsMoving { get; private set; }
 
     public LineRenderer _lineRenderer;
@@ -26,6 +30,8 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 lastStartPosition;
 
+    private bool isGrounded; // To track if the character is grounded
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -35,10 +41,12 @@ public class PlayerController : MonoBehaviour
         playerCollider = GetComponent<Collider>();
         enemyDetector = GetComponent<EnemyDetector>();
         lastStartPosition = startPosition;
+        UpdateRunsRemainingText();
     }
 
     void Update()
     {
+        UpdateRunsRemainingText();
         if (runsRemaining > 0 && !IsMoving)
         {
             HandleRunningInput();
@@ -47,6 +55,9 @@ public class PlayerController : MonoBehaviour
         {
             HandleNotRunning();
         }
+
+        // Check if the character is grounded
+        CheckGrounded();
     }
 
     void HandleRunningInput()
@@ -78,7 +89,6 @@ public class PlayerController : MonoBehaviour
             startPosition = transform.position;
         }
     }
-
     void HandleRunning()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -184,6 +194,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void CheckGrounded()
+    {
+        // Perform a raycast downwards to check for ground
+        RaycastHit hit;
+        float raycastDistance = 1.0f; // Adjust this based on your character's size
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, raycastDistance);
+
+        // If not grounded, move the character up slightly to keep them grounded
+        if (!isGrounded)
+        {
+            Vector3 newPosition = transform.position;
+            newPosition.y = hit.point.y + 0.05f; // Adjust this value as needed
+            transform.position = newPosition;
+        }
+    }
     public void IncreaseRunsRemaining()
     {
         runsRemaining++;
@@ -192,6 +217,16 @@ public class PlayerController : MonoBehaviour
     public void DecreaseRunsRemaining(int amount)
     {
         runsRemaining -= amount;
+    }
+
+    void UpdateRunsRemainingText()
+    {
+        // Check if runsRemainingText and playerController are not null
+        if (runsRemainingText != null )
+        {
+            // Update the TextMeshPro text with the value of runsRemaining
+            runsRemainingText.text = "Runs Remaining: " + runsRemaining.ToString();
+        }
     }
 
     public void Respawn()

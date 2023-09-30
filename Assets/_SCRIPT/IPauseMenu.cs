@@ -1,21 +1,34 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class IPauseMenu : MonoBehaviour
 {
     private bool isPaused = false;
-    public GameObject pauseMenu;
-    public GameObject settingsPanel;
+    private bool isGameOver = false; // Added flag to track game over state
+    public List<GameObject> panels;  // List of panels to manage
+    private GameObject activePanel;  // Currently active panel
+
+    private TimeLimitController timeLimitController; // Reference to the TimeLimitController
 
     private void Start()
     {
         SetTimeScaleAndPause(false);
         DeactivateAllMenus();
+
+        // Find and assign the TimeLimitController reference
+        timeLimitController = FindObjectOfType<TimeLimitController>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        // Update isGameOver from TimeLimitController
+        if (timeLimitController != null)
+        {
+            isGameOver = timeLimitController.IsGameOver;
+        }
+
+        if (!isGameOver && Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePauseMenu();
         }
@@ -36,7 +49,7 @@ public class IPauseMenu : MonoBehaviour
     private void PauseGame()
     {
         SetTimeScaleAndPause(true);
-        ActivateMenu(pauseMenu);
+        ActivateMenu(panels[0]);  // Assuming the first panel is the pause menu
     }
 
     public void ResumeGame()
@@ -48,13 +61,13 @@ public class IPauseMenu : MonoBehaviour
     public void OpenSettingsPanel()
     {
         DeactivateAllMenus();
-        ActivateMenu(settingsPanel);
+        ActivateMenu(panels[1]);  // Assuming the second panel is the settings panel
     }
 
     public void BackToPauseMenu()
     {
         DeactivateAllMenus();
-        ActivateMenu(pauseMenu);
+        ActivateMenu(panels[0]);  // Assuming the first panel is the pause menu
     }
 
     public void RestartGame()
@@ -69,7 +82,7 @@ public class IPauseMenu : MonoBehaviour
         Debug.Log("Quit game");
     }
 
-    private void SetTimeScaleAndPause(bool pause)
+    public void SetTimeScaleAndPause(bool pause)
     {
         Time.timeScale = pause ? 0 : 1;
         isPaused = pause;
@@ -77,12 +90,17 @@ public class IPauseMenu : MonoBehaviour
 
     private void DeactivateAllMenus()
     {
-        pauseMenu.SetActive(false);
-        settingsPanel.SetActive(false);
+        foreach (GameObject panel in panels)
+        {
+            panel.SetActive(false);
+        }
+        activePanel = null;
     }
 
     private void ActivateMenu(GameObject menu)
     {
+        DeactivateAllMenus();
         menu.SetActive(true);
+        activePanel = menu;
     }
 }
