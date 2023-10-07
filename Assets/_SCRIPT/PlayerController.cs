@@ -100,6 +100,14 @@ public class PlayerController : MonoBehaviour
             targetPosition = ray.GetPoint(hitDistance);
         }
 
+        // Restrict the target position within a specific radius
+        float maxDragRadius = 5f; // Adjust this value to your desired radius
+        Vector3 playerToTarget = targetPosition - startPosition;
+        if (playerToTarget.magnitude > maxDragRadius)
+        {
+            targetPosition = startPosition + playerToTarget.normalized * maxDragRadius;
+        }
+
         Debug.DrawLine(targetPosition, targetPosition + Vector3.up, Color.red);
 
         Vector3 lookDirection = startPosition - targetPosition;
@@ -118,7 +126,10 @@ public class PlayerController : MonoBehaviour
         Vector3 runDirection = startPosition - targetPosition;
         runDirection.y = 0;
 
-        float power = Mathf.Clamp(runDirection.magnitude * powerMultiplier, 0f, maxPower);
+        // Calculate power based on the distance within maxDragRadius
+        float maxDragRadius = 5f; // Adjust this value to your desired radius
+        float normalizedDistance = Mathf.Clamp01(runDirection.magnitude / maxDragRadius);
+        float power = Mathf.Lerp(0f, maxPower, normalizedDistance);
 
         rb.AddForce(runDirection.normalized * power, ForceMode.Impulse);
 
@@ -133,6 +144,8 @@ public class PlayerController : MonoBehaviour
 
         rb.angularDrag = 0f;
     }
+
+
 
     void HandleNotRunning()
     {
@@ -201,13 +214,13 @@ public class PlayerController : MonoBehaviour
         float raycastDistance = 1.0f; // Adjust this based on your character's size
         isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, raycastDistance);
 
-        // If not grounded, move the character up slightly to keep them grounded
+        /*// If not grounded, move the character up slightly to keep them grounded
         if (!isGrounded)
         {
             Vector3 newPosition = transform.position;
             newPosition.y = hit.point.y + 0.05f; // Adjust this value as needed
             transform.position = newPosition;
-        }
+        }*/
     }
     public void IncreaseRunsRemaining()
     {
