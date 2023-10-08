@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
+using System.Text;
 
 public class PlayerController : MonoBehaviour
 {
@@ -32,6 +32,11 @@ public class PlayerController : MonoBehaviour
 
     private bool isGrounded; // To track if the character is grounded
 
+    private Camera mainCamera;
+    private Transform playerTransform;
+
+    private StringBuilder sb = new StringBuilder();
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -42,11 +47,15 @@ public class PlayerController : MonoBehaviour
         enemyDetector = GetComponent<EnemyDetector>();
         lastStartPosition = startPosition;
         UpdateRunsRemainingText();
+
+        mainCamera = Camera.main;
+        playerTransform = transform;
     }
 
     void Update()
     {
         UpdateRunsRemainingText();
+
         if (runsRemaining > 0 && !IsMoving)
         {
             HandleRunningInput();
@@ -58,6 +67,11 @@ public class PlayerController : MonoBehaviour
 
         // Check if the character is grounded
         CheckGrounded();
+    }
+
+    void FixedUpdate()
+    {
+        // Physics-related operations can go here
     }
 
     void HandleRunningInput()
@@ -80,18 +94,19 @@ public class PlayerController : MonoBehaviour
 
     void HandleMouseDown()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
         if (playerCollider.Raycast(ray, out hit, Mathf.Infinity))
         {
             isRunning = true;
-            startPosition = transform.position;
+            startPosition = playerTransform.position;
         }
     }
+
     void HandleRunning()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         Plane tablePlane = new Plane(Vector3.up, startPosition);
 
         float hitDistance;
@@ -100,8 +115,7 @@ public class PlayerController : MonoBehaviour
             targetPosition = ray.GetPoint(hitDistance);
         }
 
-        // Restrict the target position within a specific radius
-        float maxDragRadius = 5f; // Adjust this value to your desired radius
+        float maxDragRadius = 5f;
         Vector3 playerToTarget = targetPosition - startPosition;
         if (playerToTarget.magnitude > maxDragRadius)
         {
@@ -113,7 +127,7 @@ public class PlayerController : MonoBehaviour
         Vector3 lookDirection = startPosition - targetPosition;
         lookDirection.y = 0f;
         Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
-        transform.rotation = targetRotation;
+        playerTransform.rotation = targetRotation;
 
         rb.angularDrag = runningAngularDamping;
 
@@ -126,8 +140,7 @@ public class PlayerController : MonoBehaviour
         Vector3 runDirection = startPosition - targetPosition;
         runDirection.y = 0;
 
-        // Calculate power based on the distance within maxDragRadius
-        float maxDragRadius = 5f; // Adjust this value to your desired radius
+        float maxDragRadius = 5f;
         float normalizedDistance = Mathf.Clamp01(runDirection.magnitude / maxDragRadius);
         float power = Mathf.Lerp(0f, maxPower, normalizedDistance);
 
@@ -145,8 +158,6 @@ public class PlayerController : MonoBehaviour
         rb.angularDrag = 0f;
     }
 
-
-
     void HandleNotRunning()
     {
         if (rb.velocity.magnitude < stopThreshold)
@@ -162,7 +173,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 origin = launchPoint.position;
         Vector3 startVelocity1 = launchSpeed * launchPoint.forward;
-        Vector3 startVelocity2 = -launchSpeed * launchPoint.forward * 6 / 2; // ปรับให้แกนปลายของ Line Renderer พุ่งออกไปข้างหน้า
+        Vector3 startVelocity2 = -launchSpeed * launchPoint.forward * 6 / 2;
 
         _lineRenderer.positionCount = linePoints * 2;
 
@@ -182,22 +193,12 @@ public class PlayerController : MonoBehaviour
             Vector3 point1 = new Vector3(x1, y1, z1);
             Vector3 point2 = new Vector3(x2, y2, z2);
 
-            // คำนวณระยะทางจากตัวละครไปยังจุดปลายทางที่ผู้เล่นลากเม้าส์
             float distanceToTarget = Vector3.Distance(origin, targetPosition);
-            float distanceToPoint1 = Vector3.Distance(origin, point1);
             float distanceToPoint2 = Vector3.Distance(origin, point2);
-
-            /*if (distanceToPoint1 > distanceToTarget)
-            {
-                // ตัดส่วนที่เกินระยะทางที่ผู้เล่นลากเม้าส์ออก
-                point1 = origin + (point1 - origin).normalized * distanceToTarget;
-            }*/
 
             if (distanceToPoint2 > distanceToTarget)
             {
-                // ตัดส่วนที่เกินระยะทางที่ผู้เล่นลากเม้าส์ออก
                 point2 = origin + (point2 - origin).normalized * distanceToTarget;
-
             }
 
             _lineRenderer.SetPosition(i * 2, point1);
@@ -209,19 +210,11 @@ public class PlayerController : MonoBehaviour
 
     void CheckGrounded()
     {
-        // Perform a raycast downwards to check for ground
         RaycastHit hit;
-        float raycastDistance = 1.0f; // Adjust this based on your character's size
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, raycastDistance);
-
-        /*// If not grounded, move the character up slightly to keep them grounded
-        if (!isGrounded)
-        {
-            Vector3 newPosition = transform.position;
-            newPosition.y = hit.point.y + 0.05f; // Adjust this value as needed
-            transform.position = newPosition;
-        }*/
+        float raycastDistance = 1.0f;
+        isGrounded = Physics.Raycast(playerTransform.position, Vector3.down, out hit, raycastDistance);
     }
+
     public void IncreaseRunsRemaining()
     {
         runsRemaining++;
@@ -234,16 +227,16 @@ public class PlayerController : MonoBehaviour
 
     void UpdateRunsRemainingText()
     {
-        // Check if runsRemainingText and playerController are not null
-        if (runsRemainingText != null )
+        if (runsRemainingText != null)
         {
-            // Update the TextMeshPro text with the value of runsRemaining
-            runsRemainingText.text = "Runs Remaining: " + runsRemaining.ToString();
+            sb.Clear();
+            sb.Append("Runs Remaining: ").Append(runsRemaining);
+            runsRemainingText.text = sb.ToString();
         }
     }
 
     public void Respawn()
     {
-        transform.position = lastStartPosition;
+        playerTransform.position = lastStartPosition;
     }
 }
