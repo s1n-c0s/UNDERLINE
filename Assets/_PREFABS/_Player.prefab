@@ -118,10 +118,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runsRemaining: 3
-  maxPower: 30
+  maxPower: 60
   powerMultiplier: 5
   stopThreshold: 0.1
   runningAngularDamping: 10
+  runsRemainingText: {fileID: 0}
   _lineRenderer: {fileID: 6372522719978164187}
   launchPoint: {fileID: 5543933769647250355}
   launchSpeed: 50
