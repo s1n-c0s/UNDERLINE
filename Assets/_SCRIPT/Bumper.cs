@@ -13,7 +13,7 @@ public class Bumper : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.collider.CompareTag("Player"))
+        if (other.collider.CompareTag("Player") || other.collider.CompareTag("Enemy"))
         {
             rb.AddForce((other.transform.position - transform.position) * impulseForce * rb.mass, ForceMode.Impulse);
         }
