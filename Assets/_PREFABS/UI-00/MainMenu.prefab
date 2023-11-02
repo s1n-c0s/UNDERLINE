@@ -122,11 +122,11 @@ RectTransform:
   - {fileID: 2949268616061246508}
   m_Father: {fileID: 1162988595423013318}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 210.4422, y: 237.8232}
-  m_Pivot: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -0.000061035156, y: 0}
+  m_SizeDelta: {x: 210.44214, y: 237.8232}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &5095726059028771218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding:
     m_Left: 0
-    m_Right: 0
+    m_Right: 200
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
@@ -911,7 +911,7 @@ PrefabInstance:
     - target: {fileID: 8689370397286620128, guid: da3247bf55acb9d418afeb7ec48ab417,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: testEnvironment
+      value: Prototype1
       objectReference: {fileID: 0}
     - target: {fileID: 8689370397286620128, guid: da3247bf55acb9d418afeb7ec48ab417,
         type: 3}
