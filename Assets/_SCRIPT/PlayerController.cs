@@ -5,6 +5,7 @@ using System.Text;
 
 public class PlayerController : MonoBehaviour
 {
+    private HealthSystem _healthSystem;
     private Rigidbody rb;
     private Vector3 startPosition;
     private Vector3 targetPosition;
@@ -39,6 +40,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        _healthSystem = GetComponent<HealthSystem>();
+        
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         startPosition = transform.position;
@@ -148,7 +151,8 @@ public class PlayerController : MonoBehaviour
 
         isRunning = false;
         IsMoving = true;
-        runsRemaining--;
+        //runsRemaining--;
+        _healthSystem.TakeDamage(1);
 
         if (runsRemaining <= 0)
         {
@@ -217,7 +221,8 @@ public class PlayerController : MonoBehaviour
 
     public void IncreaseRunsRemaining()
     {
-        runsRemaining++;
+        _healthSystem.Heal(1);
+        //runsRemaining++;
     }
 
     public void DecreaseRunsRemaining(int amount)
@@ -229,6 +234,8 @@ public class PlayerController : MonoBehaviour
     {
         if (runsRemainingText != null)
         {
+            runsRemaining = _healthSystem.GetCurrentHealth();
+            
             sb.Clear();
             sb.Append("Runs Remaining: ").Append(runsRemaining);
             runsRemainingText.text = sb.ToString();
