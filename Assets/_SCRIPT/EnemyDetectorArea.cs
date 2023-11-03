@@ -6,7 +6,7 @@ public class EnemyDetectorArea : MonoBehaviour
 {
     public TextMeshProUGUI enemyCountText;
     private BoxCollider boxCollider;
-    private int enemyCount = 0; // This will keep track of the number of enemies in the detection area
+    public int enemyCount; // This will keep track of the number of enemies in the detection area
 
     private void Start()
     {
@@ -17,7 +17,7 @@ public class EnemyDetectorArea : MonoBehaviour
         enemyCountText.text = "Enemies: " + enemyCount; // Display initial count
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         enemyCountText.text = "Enemies: " + enemyCount;
     }
