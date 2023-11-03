@@ -6,20 +6,21 @@ public class EnemyDetectorArea : MonoBehaviour
 {
     public TextMeshProUGUI enemyCountText;
     private BoxCollider boxCollider;
-    private int enemyCount = 0; // This will keep track of the number of enemies in the detection area
+    public int enemyCount; // This will keep track of the number of enemies in the detection area
 
     private void Start()
     {
         boxCollider = GetComponent<BoxCollider>();
         boxCollider.isTrigger = true;
+        //enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        
         enemyCountText.text = "Enemies: " + enemyCount; // Display initial count
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         enemyCountText.text = "Enemies: " + enemyCount;
     }
-    
 
     private void OnTriggerEnter(Collider other)
     {
