@@ -12,6 +12,8 @@ public class EnemyDetectorArea : MonoBehaviour
     {
         boxCollider = GetComponent<BoxCollider>();
         boxCollider.isTrigger = true;
+        //enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        
         enemyCountText.text = "Enemies: " + enemyCount; // Display initial count
     }
 
@@ -19,7 +21,6 @@ public class EnemyDetectorArea : MonoBehaviour
     {
         enemyCountText.text = "Enemies: " + enemyCount;
     }
-    
 
     private void OnTriggerEnter(Collider other)
     {
