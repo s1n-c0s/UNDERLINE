@@ -110,6 +110,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 907f9219b82226d4cb28838c5645fcaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyDetectorArea: {fileID: 0}
+  fx_die: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a, type: 3}
   maxHealth: 10
 --- !u!114 &6168418088058611014
 MonoBehaviour:
@@ -123,8 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2909279cbfb89f84fa4ddef8f9748c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthSystem: {fileID: 0}
-  _checkpoint: {fileID: 0}
   runsRemaining: 10
   maxPower: 60
   powerMultiplier: 5

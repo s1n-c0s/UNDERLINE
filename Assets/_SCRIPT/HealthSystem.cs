@@ -1,8 +1,10 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
     public EnemyDetectorArea _enemyDetectorArea;
+    public ParticleSystem fx_die;
     
     public int maxHealth = 100;
     private int currentHealth;
@@ -12,7 +14,6 @@ public class HealthSystem : MonoBehaviour
         currentHealth = maxHealth;
         
         _enemyDetectorArea = GameObject.FindGameObjectWithTag("EnemyDetector").GetComponent<EnemyDetectorArea>();
-        
     }
 
     public void TakeDamage(int damage)
@@ -52,14 +53,16 @@ public class HealthSystem : MonoBehaviour
             // update enemy count
             _enemyDetectorArea.DecreseEnemy();
         }
-        
-        if (gameObject.CompareTag("Player"))
-        {
-                
-        }
 
+        // Instantiate the particle effect
+        ParticleSystem fxInstance = Instantiate(fx_die, transform.position, quaternion.identity);
+
+        // Destroy the particle effect after 5 seconds
+        Destroy(fxInstance.gameObject, 5f);
+        
         // destroy the enemy object
         Destroy(gameObject);
+        
     }
 
     public int GetCurrentHealth()
