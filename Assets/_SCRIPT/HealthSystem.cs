@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
+    public EnemyDetectorArea _enemyDetectorArea;
     public int maxHealth = 100;
     private int currentHealth;
 
@@ -17,7 +18,8 @@ public class HealthSystem : MonoBehaviour
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            Destroy(gameObject);
+            Die();
+            /*Destroy(gameObject);*/
             //Debug.Log("Character is dead.");
         }
     }
@@ -30,6 +32,19 @@ public class HealthSystem : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+    }
+    
+    public void Die()
+    {
+        // other code for handling death
+        if (gameObject.CompareTag("Enemy"))
+        {
+            // update enemy count
+            _enemyDetectorArea.DecreseEnemy();
+        }
+
+        // destroy the enemy object
+        Destroy(gameObject);
     }
 
     public int GetCurrentHealth()

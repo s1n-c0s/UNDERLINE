@@ -21,7 +21,8 @@ public class BoundingArea : MonoBehaviour
         
         if(other.CompareTag("Enemy"))
         {
-            other.gameObject.GetComponent<HealthSystem>().TakeDamage(50);
+            //other.gameObject.GetComponent<HealthSystem>().TakeDamage(50);
+            other.gameObject.GetComponent<HealthSystem>().Die();
         }
     }
 }
