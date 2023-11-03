@@ -215,7 +215,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 907f9219b82226d4cb28838c5645fcaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
+  _enemyDetectorArea: {fileID: 0}
+  maxHealth: 3
 --- !u!114 &4023769007800556470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,6 +407,7 @@ GameObject:
   - component: {fileID: 3390329461428681263}
   - component: {fileID: 1463678339332930432}
   - component: {fileID: 4594467022940943020}
+  - component: {fileID: 3701270977781943481}
   m_Layer: 0
   m_Name: Model
   m_TagString: Wall
@@ -467,6 +469,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   impulseForce: 15
+--- !u!114 &3701270977781943481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7145124437054524216}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 907f9219b82226d4cb28838c5645fcaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyDetectorArea: {fileID: 0}
+  maxHealth: 3
 --- !u!1001 &4751256084838969849
 PrefabInstance:
   m_ObjectHideFlags: 0
