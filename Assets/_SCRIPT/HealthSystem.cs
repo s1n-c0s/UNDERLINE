@@ -9,6 +9,8 @@ public class HealthSystem : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+        
+        //_enemyDetectorArea = GameObject.FindGameObjectWithTag("EnemyDectector").GetComponent<EnemyDetectorArea>();
     }
 
     public void TakeDamage(int damage)
