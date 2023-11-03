@@ -10,7 +10,7 @@ public class jumpPad : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Check if the object that entered the trigger is the player or has a specific tag.
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player")|| other.CompareTag("Enemy"))
         {
             Rigidbody playerRigidbody = other.GetComponent<Rigidbody>();
             if (playerRigidbody != null)
