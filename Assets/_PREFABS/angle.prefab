@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 685755421210113594}
   - component: {fileID: 56320229439375578}
   - component: {fileID: 1926094899148940538}
+  - component: {fileID: 493367534373618173}
   m_Layer: 0
   m_Name: GameObject
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,13 +27,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5448301684483724233}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6515334, y: -0.27658597, z: -0.27738172, w: 0.6496644}
-  m_LocalPosition: {x: 5.271677, y: 1.27635, z: -9.122631}
+  m_LocalRotation: {x: 0.66103274, y: -0.25318518, z: -0.2539136, w: 0.6591365}
+  m_LocalPosition: {x: 5.2883906, y: 1.5451965, z: -9.121862}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7821221912668785095}
-  m_LocalEulerAnglesHint: {x: 136.123, y: 89.842, z: 89.772}
+  m_LocalEulerAnglesHint: {x: 132.026, y: 89.817, z: 89.754}
 --- !u!65 &56320229439375578
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -52,8 +53,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 9.127111, y: 4.1012597, z: 4.54284}
-  m_Center: {x: -2.8631165, y: 3.3595066, z: 2.4914446}
+  m_Size: {x: 8.949457, y: 12.092737, z: 4.742156}
+  m_Center: {x: -2.74305, y: 7.355246, z: 2.3917863}
 --- !u!114 &1926094899148940538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,6 +68,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   impulseForce: 10
+--- !u!54 &493367534373618173
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5448301684483724233}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &6873896291710541881
 GameObject:
   m_ObjectHideFlags: 0
@@ -84,7 +112,7 @@ GameObject:
   - component: {fileID: 3538282916774185561}
   m_Layer: 0
   m_Name: angle
-  m_TagString: Wall
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -283,10 +311,8 @@ MonoBehaviour:
   m_VersionIndex: 1812
   m_IsSelectable: 1
   m_SelectedFaces: 
-  m_SelectedEdges:
-  - a: 4
-    b: 6
-  m_SelectedVertices: 0400000006000000
+  m_SelectedEdges: []
+  m_SelectedVertices: 
 --- !u!114 &5858401320888036178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,7 +360,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fb4a297455b32864baa0802de7d3018e, type: 2}
+  - {fileID: 2100000, guid: 42c968cb1d107af499e6ce9f619f8718, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
