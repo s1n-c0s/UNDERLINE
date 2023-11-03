@@ -6,6 +6,8 @@ using System.Text;
 public class PlayerController : MonoBehaviour
 {
     private HealthSystem _healthSystem;
+    private Checkpoint _checkpoint;
+    
     private Rigidbody rb;
     private Vector3 startPosition;
     private Vector3 targetPosition;
@@ -41,6 +43,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _healthSystem = GetComponent<HealthSystem>();
+        _checkpoint = GetComponent<Checkpoint>();
         
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -48,7 +51,7 @@ public class PlayerController : MonoBehaviour
         targetPosition = startPosition;
         playerCollider = GetComponent<Collider>();
         enemyDetector = GetComponent<EnemyDetector>();
-        lastStartPosition = startPosition;
+        //lastStartPosition = startPosition;
         UpdateRunsRemainingText();
 
         mainCamera = Camera.main;
@@ -82,6 +85,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             HandleMouseDown();
+            _checkpoint.SetCheckpointPosition();
         }
 
         if (isRunning)
@@ -244,6 +248,9 @@ public class PlayerController : MonoBehaviour
 
     public void Respawn()
     {
-        playerTransform.position = lastStartPosition;
+        //playerTransform.position = lastStartPosition;
+        transform.position = _checkpoint.GetLastCheckpointPosition();
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
 }

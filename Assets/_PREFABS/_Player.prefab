@@ -43,9 +43,10 @@ GameObject:
   - component: {fileID: 8378151589295215728}
   - component: {fileID: 7328202003289419911}
   - component: {fileID: 5070158653847375716}
-  - component: {fileID: 6633779303583798633}
   - component: {fileID: 6168418088058611014}
+  - component: {fileID: 6633779303583798633}
   - component: {fileID: 3787548944662405222}
+  - component: {fileID: 3438137685412226217}
   - component: {fileID: 6372522719978164187}
   - component: {fileID: 1621556112100868850}
   m_Layer: 3
@@ -110,18 +111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 10
---- !u!114 &6633779303583798633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3375307613194460096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85a92cb263e6a6646ad0904a40c0c97d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6168418088058611014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,6 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2909279cbfb89f84fa4ddef8f9748c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _healthSystem: {fileID: 0}
+  _checkpoint: {fileID: 0}
   runsRemaining: 10
   maxPower: 60
   powerMultiplier: 5
@@ -146,6 +137,18 @@ MonoBehaviour:
   linePoints: 2
   timeIntervalinPoints: 0.1
   maxDistance: 170
+--- !u!114 &6633779303583798633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3375307613194460096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85a92cb263e6a6646ad0904a40c0c97d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3787548944662405222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +159,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6cac1114b833a447ad42121661a2631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3438137685412226217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3375307613194460096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af4db98af4f1ece40bde1a5588bff500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!120 &6372522719978164187
