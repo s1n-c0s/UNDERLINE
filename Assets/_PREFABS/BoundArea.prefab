@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1622337226893918416}
   m_Layer: 0
   m_Name: BoundArea
-  m_TagString: Untagged
+  m_TagString: EnemyDetector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -80,3 +80,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc24da5744804614fa3f059a7da01af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyCountText: {fileID: 0}
+  enemyCount: 0

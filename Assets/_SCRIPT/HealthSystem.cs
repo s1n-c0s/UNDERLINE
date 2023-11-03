@@ -3,6 +3,7 @@ using UnityEngine;
 public class HealthSystem : MonoBehaviour
 {
     public EnemyDetectorArea _enemyDetectorArea;
+    
     public int maxHealth = 100;
     private int currentHealth;
 
@@ -10,20 +11,27 @@ public class HealthSystem : MonoBehaviour
     {
         currentHealth = maxHealth;
         
-        //_enemyDetectorArea = GameObject.FindGameObjectWithTag("EnemyDectector").GetComponent<EnemyDetectorArea>();
+        _enemyDetectorArea = GameObject.FindGameObjectWithTag("EnemyDetector").GetComponent<EnemyDetectorArea>();
+        
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 )
         {
             currentHealth = 0;
             Die();
             /*Destroy(gameObject);*/
             //Debug.Log("Character is dead.");
         }
+
+        /*if (currentHealth < 0 && gameObject.CompareTag("Player"))
+        {
+            currentHealth = 0;
+            Die();
+        }*/
     }
 
     public void Heal(int heal)
@@ -43,6 +51,11 @@ public class HealthSystem : MonoBehaviour
         {
             // update enemy count
             _enemyDetectorArea.DecreseEnemy();
+        }
+        
+        if (gameObject.CompareTag("Player"))
+        {
+                
         }
 
         // destroy the enemy object
