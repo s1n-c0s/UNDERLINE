@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6589769783608241210}
   - component: {fileID: 6033007843542669618}
   - component: {fileID: 5482276131382873793}
+  - component: {fileID: 1622337226893918416}
   m_Layer: 0
   m_Name: BoundArea
   m_TagString: Untagged
@@ -67,3 +68,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   falldamage: 3
+--- !u!114 &1622337226893918416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 454491531932429841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc24da5744804614fa3f059a7da01af1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
