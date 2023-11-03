@@ -14,7 +14,7 @@ public class enemyDestroy : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            Destroy(other.gameObject);
+            //Destroy(other.gameObject);
             //Destroy(objectToDestroy);
             playerController.IncreaseRunsRemaining();
             Debug.Log("Increase");
