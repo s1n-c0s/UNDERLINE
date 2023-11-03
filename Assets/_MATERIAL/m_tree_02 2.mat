@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: m_tree_02
+  m_Name: m_tree_02 2
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 2100000, guid: 92e277b984dcc9d4882b0e9aab0a6815, type: 2}
   m_ModifiedSerializedProperties: 2
@@ -59,5 +59,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats: []
-    m_Colors: []
+    m_Colors:
+    - _BaseColor: {r: 0.6313726, g: 0.50065607, b: 0.39607844, a: 1}
+    - _Color: {r: 0.6313726, g: 0.500656, b: 0.3960784, a: 1}
   m_BuildTextureStacks: []
