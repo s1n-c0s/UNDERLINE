@@ -148,7 +148,6 @@ GameObject:
   - component: {fileID: 1008926587486845209}
   - component: {fileID: 3630290042868622373}
   - component: {fileID: 8110572103044074650}
-  - component: {fileID: 8804335937157961929}
   - component: {fileID: 6126313909278026300}
   m_Layer: 6
   m_Name: _Shuriken
@@ -230,29 +229,6 @@ CapsuleCollider:
   m_Height: 3.6201553
   m_Direction: 1
   m_Center: {x: 0, y: 1.7686958, z: 0}
---- !u!136 &8804335937157961929
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3170215824040620203}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.83535707
-  m_Height: 3.6201553
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.7686958, z: 0}
 --- !u!54 &6126313909278026300
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -289,6 +265,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 778757040212295442}
+  - component: {fileID: 3368089469679576943}
   m_Layer: 0
   m_Name: Model
   m_TagString: Enemy
@@ -314,6 +291,29 @@ Transform:
   - {fileID: 6856246454915076620}
   m_Father: {fileID: 2859514596765078686}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &3368089469679576943
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4305632854249182359}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.83535707
+  m_Height: 3.6201553
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.7686958, z: 0}
 --- !u!1 &5853107820495131230
 GameObject:
   m_ObjectHideFlags: 0
