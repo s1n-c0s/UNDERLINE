@@ -39,10 +39,13 @@ public class Shuriken : MonoBehaviour
     }
 }*/
 
+using System;
 using UnityEngine;
 
 public class Shuriken : MonoBehaviour
 {
+    private HealthSystem _HealthSystem;
+    
     public GameObject bulletPrefab;
     public float bulletSpeed = 5f;
     public float bulletSpawnRadius = 3f;
@@ -50,10 +53,17 @@ public class Shuriken : MonoBehaviour
     public int numBullets = 8;
     public float heightOffset = 2f; // ปรับค่านี้เพื่อยิงขึ้นหรือลงมากขึ้น
 
+    private void Start()
+    {
+        _HealthSystem = GetComponent<HealthSystem>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") || other.CompareTag("Shuriken"))
         {
+            _HealthSystem.TakeDamage(1);
+                
             Vector3 targetPosition = other.transform.position;
             // นำ Y ของ targetPosition ขึ้นสูงขึ้น เช่น 2 เมตร
             targetPosition.y += 2.0f;
@@ -78,7 +88,7 @@ public class Shuriken : MonoBehaviour
                 Destroy(bullet, timeForDestroy);
             }
 
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 } 
