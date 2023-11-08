@@ -22,7 +22,7 @@ public class IStageClearManager : MonoBehaviour
     
     void Update()
     {
-        if (!isGameClear && _enemyDetectorArea.enemyCount == 0)
+        if (!isGameClear && _enemyDetectorArea.GetCurrentEnemy() == 0)
         {
             GameClear();
         }
