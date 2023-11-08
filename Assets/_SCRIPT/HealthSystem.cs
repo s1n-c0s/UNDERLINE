@@ -61,8 +61,10 @@ public class HealthSystem : MonoBehaviour
         Destroy(fxInstance.gameObject, 5f);
         
         // destroy the enemy object
-        Destroy(gameObject);
-        
+        if (!gameObject.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+        }
     }
 
     public int GetCurrentHealth()

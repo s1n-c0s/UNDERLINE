@@ -167,7 +167,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleNotRunning()
     {
-        if (rb.velocity.magnitude < stopThreshold && IsMoving && rb.velocity != Vector3.zero)
+        if (rb.velocity.magnitude < stopThreshold && IsMoving)
         {
             IsMoving = false;
             rb.freezeRotation = true;
@@ -225,6 +225,7 @@ public class PlayerController : MonoBehaviour
     public void IncreaseRunsRemaining()
     {
         _healthSystem.Heal(1);
+        Debug.Log("Cost+1 :"+_healthSystem.GetCurrentHealth());
         //runsRemaining++;
     }
 
@@ -233,7 +234,7 @@ public class PlayerController : MonoBehaviour
         if (runsRemaining > 0)
         {
             _healthSystem.TakeDamage(1);
-            Debug.Log("Cost-1");
+            Debug.Log("Cost-1 :"+_healthSystem.GetCurrentHealth());
             UpdateRunsRemainingText();
         }
         else
