@@ -51,7 +51,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.burst": {
-      "version": "1.8.7",
+      "version": "1.8.9",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -69,7 +69,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.collab-proxy": {
-      "version": "2.0.7",
+      "version": "2.2.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -87,7 +87,7 @@
       "depth": 0,
       "source": "builtin",
       "dependencies": {
-        "com.unity.timeline": "1.7.5",
+        "com.unity.timeline": "1.7.6",
         "com.unity.sequences": "2.0.1",
         "com.unity.formats.fbx": "4.2.1",
         "com.unity.formats.alembic": "2.3.2",
@@ -100,8 +100,8 @@
       "depth": 0,
       "source": "builtin",
       "dependencies": {
-        "com.unity.probuilder": "5.1.0",
-        "com.unity.polybrush": "1.1.4",
+        "com.unity.probuilder": "5.2.0",
+        "com.unity.polybrush": "1.1.5",
         "com.unity.formats.fbx": "4.2.1",
         "com.unity.terrain-tools": "5.0.1"
       }
@@ -137,7 +137,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.18",
+      "version": "2.0.21",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -153,7 +153,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.inputsystem": {
-      "version": "1.6.3",
+      "version": "1.7.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -176,7 +176,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.polybrush": {
-      "version": "1.1.4",
+      "version": "1.1.5",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -185,7 +185,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.probuilder": {
-      "version": "5.1.0",
+      "version": "5.2.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -219,7 +219,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
-      "version": "14.0.8",
+      "version": "14.0.9",
       "depth": 1,
       "source": "builtin",
       "dependencies": {
@@ -230,14 +230,14 @@
       }
     },
     "com.unity.render-pipelines.universal": {
-      "version": "14.0.8",
+      "version": "14.0.9",
       "depth": 0,
       "source": "builtin",
       "dependencies": {
         "com.unity.mathematics": "1.2.1",
-        "com.unity.burst": "1.8.4",
-        "com.unity.render-pipelines.core": "14.0.8",
-        "com.unity.shadergraph": "14.0.8"
+        "com.unity.burst": "1.8.9",
+        "com.unity.render-pipelines.core": "14.0.9",
+        "com.unity.shadergraph": "14.0.9"
       }
     },
     "com.unity.searcher": {
@@ -271,7 +271,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.services.core": {
-      "version": "1.10.1",
+      "version": "1.11.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -289,11 +289,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.shadergraph": {
-      "version": "14.0.8",
+      "version": "14.0.9",
       "depth": 1,
       "source": "builtin",
       "dependencies": {
-        "com.unity.render-pipelines.core": "14.0.8",
+        "com.unity.render-pipelines.core": "14.0.9",
         "com.unity.searcher": "4.9.2"
       }
     },
@@ -328,7 +328,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.7.5",
+      "version": "1.7.6",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -349,16 +349,16 @@
       }
     },
     "com.unity.visualeffectgraph": {
-      "version": "14.0.8",
+      "version": "14.0.9",
       "depth": 0,
       "source": "builtin",
       "dependencies": {
-        "com.unity.shadergraph": "14.0.8",
-        "com.unity.render-pipelines.core": "14.0.8"
+        "com.unity.shadergraph": "14.0.9",
+        "com.unity.render-pipelines.core": "14.0.9"
       }
     },
     "com.unity.visualscripting": {
-      "version": "1.8.0",
+      "version": "1.9.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {
