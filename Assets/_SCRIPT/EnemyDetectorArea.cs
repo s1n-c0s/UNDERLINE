@@ -1,62 +1,61 @@
-using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using System.Linq;
 
 public class EnemyDetectorArea : MonoBehaviour
 {
     public TextMeshProUGUI enemyCountText;
     private BoxCollider boxCollider;
-    public int enemyCount; // This will keep track of the number of enemies in the detection area
+    private HashSet<Collider> detectedEnemies = new HashSet<Collider>();
 
     private void Start()
     {
         boxCollider = GetComponent<BoxCollider>();
         boxCollider.isTrigger = true;
-        //enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
-        
-        enemyCountText.text = "Enemies: " + enemyCount; // Display initial count
+        UpdateEnemyCountText(); // Display initial count
     }
 
     private void Update()
     {
-        enemyCountText.text = "Enemies: " + enemyCount;
+        UpdateEnemyCountText();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            enemyCount++;
-            //Debug.Log("Enemy entered detection area. Total enemies: " + enemyCount);
+            detectedEnemies.Add(other);
+            UpdateEnemyCountText();
         }
-        
-        /*if (other.CompareTag("Enemy")) 
-        {
-            enemyCount++;
-            Debug.Log("Enemy entered detection area. Total enemies: " + enemyCount);
-        }*/
-    }
-    
-    public void DecreseEnemy()
-    {
-        if (enemyCount > 0)
-        {
-            enemyCount--;
-        }
-        /*enemyCountText.text = "Enemies: " + enemyCount;*/
-    }
-    
-    public int GetCurrentEnemy()
-    {
-        return enemyCount;
     }
 
-    /*private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Enemy")) 
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && detectedEnemies.Contains(other))
         {
-            enemyCount--;
-            Debug.Log("Enemy left detection area. Total enemies: " + enemyCount);
+            detectedEnemies.Remove(other);
+            UpdateEnemyCountText();
         }
-    }*/
+    }
+
+    public void DecreaseEnemy()
+    {
+        if (detectedEnemies.Count > 0)
+        {
+            var firstEnemy = detectedEnemies.First();
+            detectedEnemies.Remove(firstEnemy);
+            UpdateEnemyCountText();
+        }
+    }
+
+    private void UpdateEnemyCountText()
+    {
+        enemyCountText.text = "Enemies: " + detectedEnemies.Count;
+    }
+
+    public int GetCurrentEnemy()
+    {
+        return detectedEnemies.Count;
+    }
 }
