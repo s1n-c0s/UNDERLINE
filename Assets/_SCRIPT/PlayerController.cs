@@ -167,7 +167,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleNotRunning()
     {
-        if (rb.velocity.magnitude < stopThreshold)
+        if (rb.velocity.magnitude < stopThreshold && IsMoving && rb.velocity != Vector3.zero)
         {
             IsMoving = false;
             rb.freezeRotation = true;
@@ -230,8 +230,17 @@ public class PlayerController : MonoBehaviour
 
     public void DecreaseRunsRemaining()
     {
-        _healthSystem.TakeDamage(1);
-        Debug.Log("Cost-1");
+        if (runsRemaining > 0)
+        {
+            _healthSystem.TakeDamage(1);
+            Debug.Log("Cost-1");
+            UpdateRunsRemainingText();
+        }
+        else
+        {
+            // If runs remaining is already zero, you may want to handle this case accordingly
+            Debug.Log("No runs remaining!");
+        }
     }
 
     void UpdateRunsRemainingText()
