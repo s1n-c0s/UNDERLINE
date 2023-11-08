@@ -7,7 +7,14 @@ public class enemyDestroy : MonoBehaviour
 
     private void Start()
     {
-        playerController = GetComponent<PlayerController>();
+        if (gameObject.CompareTag("Player"))
+        {
+            playerController = GetComponent<PlayerController>();
+        }
+        else
+        {
+            playerController = null;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -16,8 +23,11 @@ public class enemyDestroy : MonoBehaviour
         {
             //Destroy(other.gameObject);
             //Destroy(objectToDestroy);
-            playerController.IncreaseRunsRemaining();
-            Debug.Log("Increase");
+            if (other.GetComponent<HealthSystem>().GetCurrentHealth() == 0)
+            {
+                playerController.IncreaseRunsRemaining();
+                Debug.Log("Heal + 1");
+            }
         }
     }
 }
