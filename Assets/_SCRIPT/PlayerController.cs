@@ -156,7 +156,6 @@ public class PlayerController : MonoBehaviour
         isRunning = false;
         IsMoving = true;
         //runsRemaining--;
-        _healthSystem.TakeDamage(1);
 
         if (runsRemaining <= 0)
         {
@@ -172,8 +171,8 @@ public class PlayerController : MonoBehaviour
         {
             IsMoving = false;
             rb.freezeRotation = true;
+            DecreaseRunsRemaining();
         }
-
         _lineRenderer.enabled = false;
     }
 
@@ -229,9 +228,10 @@ public class PlayerController : MonoBehaviour
         //runsRemaining++;
     }
 
-    public void DecreaseRunsRemaining(int amount)
+    public void DecreaseRunsRemaining()
     {
-        runsRemaining -= amount;
+        _healthSystem.TakeDamage(1);
+        Debug.Log("Cost-1");
     }
 
     void UpdateRunsRemainingText()
