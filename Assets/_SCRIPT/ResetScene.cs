@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,5 +12,10 @@ public class ResetScene : MonoBehaviour
             // Reload the current scene.
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+    }
+
+    public void Reset()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
