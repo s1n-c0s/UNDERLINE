@@ -7,7 +7,7 @@ using UnityEngine.SocialPlatforms.Impl;
 public class ActiveUI : MonoBehaviour
 {
     public Text activeUI;
-    private bool isEnterZone = false;
+    //private bool isEnterZone = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,13 +20,13 @@ public class ActiveUI : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            isEnterZone = true;
+            //isEnterZone = true;
             activeUI.gameObject.SetActive(true);
             //UpdateScore();
         }
         else
         {
-            isEnterZone = false; 
+            //isEnterZone = false; 
             activeUI.gameObject.SetActive(false);
 
         }

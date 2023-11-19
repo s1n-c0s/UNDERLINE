@@ -19,7 +19,7 @@ public class ISettingsMenu : MonoBehaviour
 
         foreach (Resolution resolution in Screen.resolutions)
         {
-            if (resolution.width >= 1280 && resolution.height >= 720 && resolution.refreshRate == currentResolution.refreshRate)
+            if (resolution.width >= 1280 && resolution.height >= 720 /*&& resolution.refreshRate == currentResolution.refreshRate*/)
             {
                 validResolutions.Add(resolution);
             }
