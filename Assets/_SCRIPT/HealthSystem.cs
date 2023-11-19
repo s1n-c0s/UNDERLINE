@@ -1,5 +1,6 @@
 using Unity.Mathematics;
 using UnityEngine;
+using Lean.Pool;
 
 public class HealthSystem : MonoBehaviour
 {
@@ -55,10 +56,10 @@ public class HealthSystem : MonoBehaviour
         }
 
         // Instantiate the particle effect
-        ParticleSystem fxInstance = Instantiate(fx_die, transform.position, quaternion.identity);
+        ParticleSystem fxInstance = LeanPool.Spawn(fx_die, Vector3.up + transform.position, quaternion.identity);
 
         // Destroy the particle effect after 5 seconds
-        Destroy(fxInstance.gameObject, 5f);
+        LeanPool.Despawn(fxInstance.gameObject, 5f);
         
         // destroy the enemy object
         if (!gameObject.CompareTag("Player"))
