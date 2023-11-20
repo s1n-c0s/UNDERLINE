@@ -27,13 +27,18 @@ public class HitFlashDamage : MonoBehaviour
         }
     }*/
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") || other.CompareTag("Enemy"))
         {
-            /*FlashStart();*/
+            /*FlashStart();#1#
             StartCoroutine(EFlash());
         }
+    }*/
+
+    public void playHitModelFX()
+    {
+        StartCoroutine(EFlash());
     }
 
     void FlashStart()
