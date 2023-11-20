@@ -31,7 +31,8 @@ public class HitFlashDamage : MonoBehaviour
     {
         if (other.CompareTag("Player") || other.CompareTag("Enemy"))
         {
-            FlashStart();
+            /*FlashStart();*/
+            StartCoroutine(EFlash());
         }
     }
 
@@ -43,6 +44,13 @@ public class HitFlashDamage : MonoBehaviour
 
     void FlashStop()
     {
+        _meshRenderer.material.color = originColor;
+    }
+
+    IEnumerator EFlash()
+    {
+        _meshRenderer.material.color = flashColor;
+        yield return new WaitForSeconds(timeFade);
         _meshRenderer.material.color = originColor;
     }
 }
