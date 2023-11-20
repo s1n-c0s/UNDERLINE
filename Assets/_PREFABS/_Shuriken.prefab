@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 2859514596765078686}
   - component: {fileID: 1008926587486845209}
   - component: {fileID: 3630290042868622373}
+  - component: {fileID: 4488579509618094578}
   - component: {fileID: 8110572103044074650}
   - component: {fileID: 6126313909278026300}
   m_Layer: 6
@@ -277,7 +278,7 @@ MonoBehaviour:
   bulletSpawnRadius: 3
   timeForDestroy: 2
   numBullets: 8
-  heightOffset: 2
+  heightOffset: 1
 --- !u!114 &3630290042868622373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,9 +291,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 907f9219b82226d4cb28838c5645fcaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _HitFlash: {fileID: 4488579509618094578}
   _enemyDetectorArea: {fileID: 0}
   fx_die: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a, type: 3}
   maxHealth: 1
+--- !u!114 &4488579509618094578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3170215824040620203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89ffd46db5100e347a0c71a802d05389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _model: {fileID: 5853107820495131230}
+  flashColor: {r: 1, g: 0.003921569, b: 0.003921569, a: 0.972549}
+  timeFade: 0.15
 --- !u!136 &8110572103044074650
 CapsuleCollider:
   m_ObjectHideFlags: 0
