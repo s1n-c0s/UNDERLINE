@@ -4,6 +4,7 @@ using Lean.Pool;
 
 public class HealthSystem : MonoBehaviour
 {
+    public HitFlashDamage _HitFlash;
     public EnemyDetectorArea _enemyDetectorArea;
     public ParticleSystem fx_die;
     
@@ -13,13 +14,19 @@ public class HealthSystem : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        
+
+        _HitFlash = GetComponent<HitFlashDamage>();
         _enemyDetectorArea = GameObject.FindGameObjectWithTag("EnemyDetector").GetComponent<EnemyDetectorArea>();
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+
+        if (gameObject.CompareTag("Enemy"))
+        {
+            _HitFlash.playHitModelFX();
+        }
 
         if (currentHealth <= 0 )
         {
@@ -38,12 +45,15 @@ public class HealthSystem : MonoBehaviour
 
     public void Heal(int heal)
     {
-        currentHealth += heal;
+        if (currentHealth < maxHealth)
+        {
+            currentHealth += heal;
+        }
         
-        if (currentHealth > maxHealth)
+        /*if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
-        }
+        }*/
     }
     
     public void Die()
