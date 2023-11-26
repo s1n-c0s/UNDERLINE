@@ -62,7 +62,7 @@ public class HealthSystem : MonoBehaviour
         if (gameObject.CompareTag("Enemy"))
         {
             // update enemy count
-            _enemyDetectorArea.DecreaseEnemy();
+            _enemyDetectorArea.DecreaseEnemy(gameObject);
         }
 
         // Instantiate the particle effect

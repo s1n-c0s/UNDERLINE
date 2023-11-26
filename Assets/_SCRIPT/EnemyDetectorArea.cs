@@ -7,7 +7,7 @@ public class EnemyDetectorArea : MonoBehaviour
 {
     public TextMeshProUGUI enemyCountText;
     private BoxCollider boxCollider;
-    private HashSet<Collider> detectedEnemies = new HashSet<Collider>();
+    private List<GameObject> detectedEnemies = new List<GameObject>();
 
     private void Start()
     {
@@ -25,26 +25,25 @@ public class EnemyDetectorArea : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            detectedEnemies.Add(other);
+            detectedEnemies.Add(other.gameObject);
             UpdateEnemyCountText();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && detectedEnemies.Contains(other))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && detectedEnemies.Contains(other.gameObject))
         {
-            detectedEnemies.Remove(other);
+            detectedEnemies.Remove(other.gameObject);
             UpdateEnemyCountText();
         }
     }
 
-    public void DecreaseEnemy()
+    public void DecreaseEnemy(GameObject enemy)
     {
-        if (detectedEnemies.Count > 0)
+        if (detectedEnemies.Contains(enemy))
         {
-            var firstEnemy = detectedEnemies.First();
-            detectedEnemies.Remove(firstEnemy);
+            detectedEnemies.Remove(enemy);
             UpdateEnemyCountText();
         }
     }
@@ -57,5 +56,10 @@ public class EnemyDetectorArea : MonoBehaviour
     public int GetCurrentEnemy()
     {
         return detectedEnemies.Count;
+    }
+
+    public GameObject[] GetDetectedEnemiesArray()
+    {
+        return detectedEnemies.ToArray();
     }
 }
