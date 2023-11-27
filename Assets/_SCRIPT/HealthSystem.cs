@@ -9,11 +9,14 @@ public class HealthSystem : MonoBehaviour
     public ParticleSystem fx_die;
     
     public int maxHealth = 100;
-    private int currentHealth;
+    public int currentHealth;
 
     void Start()
     {
-        currentHealth = maxHealth;
+        if (currentHealth == 0) 
+        {
+            currentHealth = maxHealth;
+        }
 
         _HitFlash = GetComponent<HitFlashDamage>();
         _enemyDetectorArea = GameObject.FindGameObjectWithTag("EnemyDetector").GetComponent<EnemyDetectorArea>();
