@@ -69,10 +69,13 @@ public class HealthSystem : MonoBehaviour
         }
 
         // Instantiate the particle effect
-        ParticleSystem fxInstance = LeanPool.Spawn(fx_die, Vector3.up + transform.position, quaternion.identity);
+        if (fx_die != null)
+        {
+            ParticleSystem fxInstance = LeanPool.Spawn(fx_die, Vector3.up + transform.position, quaternion.identity);
 
-        // Destroy the particle effect after 5 seconds
-        LeanPool.Despawn(fxInstance.gameObject, 3f);
+            // Destroy the particle effect after 5 seconds
+            LeanPool.Despawn(fxInstance.gameObject, 3f);
+        }
         
         // destroy the enemy object
         if (!gameObject.CompareTag("Player"))
