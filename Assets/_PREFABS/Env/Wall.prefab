@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 2947298665847094817}
   - component: {fileID: 2202291665573800175}
   - component: {fileID: 2155265854246175242}
-  - component: {fileID: 1772578147527116655}
+  - component: {fileID: 2299754281560593223}
   m_Layer: 0
   m_Name: g_wall_01
   m_TagString: Wall
@@ -197,24 +197,24 @@ MonoBehaviour:
   m_Positions:
   - {x: -1, y: -1, z: 25}
   - {x: 1, y: -1, z: 25}
-  - {x: -1, y: 1, z: 25}
-  - {x: 1, y: 1, z: 25}
+  - {x: -1, y: 4, z: 25}
+  - {x: 1, y: 4, z: 25}
   - {x: 1, y: -1, z: 25}
   - {x: 1, y: -1, z: -25}
-  - {x: 1, y: 1, z: 25}
-  - {x: 1, y: 1, z: -25}
+  - {x: 1, y: 4, z: 25}
+  - {x: 1, y: 4, z: -25}
   - {x: 1, y: -1, z: -25}
   - {x: -1, y: -1, z: -25}
-  - {x: 1, y: 1, z: -25}
-  - {x: -1, y: 1, z: -25}
+  - {x: 1, y: 4, z: -25}
+  - {x: -1, y: 4, z: -25}
   - {x: -1, y: -1, z: -25}
   - {x: -1, y: -1, z: 25}
-  - {x: -1, y: 1, z: -25}
-  - {x: -1, y: 1, z: 25}
-  - {x: -1, y: 1, z: 25}
-  - {x: 1, y: 1, z: 25}
-  - {x: -1, y: 1, z: -25}
-  - {x: 1, y: 1, z: -25}
+  - {x: -1, y: 4, z: -25}
+  - {x: -1, y: 4, z: 25}
+  - {x: -1, y: 4, z: 25}
+  - {x: 1, y: 4, z: 25}
+  - {x: -1, y: 4, z: -25}
+  - {x: 1, y: 4, z: -25}
   - {x: -1, y: -1, z: -25}
   - {x: 1, y: -1, z: -25}
   - {x: -1, y: -1, z: 25}
@@ -222,20 +222,20 @@ MonoBehaviour:
   m_Textures0:
   - {x: 1, y: -1}
   - {x: -1, y: -1}
-  - {x: 1, y: 1}
-  - {x: -1, y: 1}
+  - {x: 1, y: 4}
+  - {x: -1, y: 4}
   - {x: 25, y: -1}
   - {x: -25, y: -1}
-  - {x: 25, y: 1}
-  - {x: -25, y: 1}
+  - {x: 25, y: 4}
+  - {x: -25, y: 4}
   - {x: 1, y: -1}
   - {x: -1, y: -1}
-  - {x: 1, y: 1}
-  - {x: -1, y: 1}
+  - {x: 1, y: 4}
+  - {x: -1, y: 4}
   - {x: 25, y: -1}
   - {x: -25, y: -1}
-  - {x: 25, y: 1}
-  - {x: -25, y: 1}
+  - {x: 25, y: 4}
+  - {x: -25, y: 4}
   - {x: -1, y: 25}
   - {x: 1, y: 25}
   - {x: -1, y: -25}
@@ -280,7 +280,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1787
+  m_VersionIndex: 1947
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -320,7 +320,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2279019194168431341}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -363,7 +363,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2279019194168431341}
   m_Mesh: {fileID: 0}
---- !u!65 &1772578147527116655
+--- !u!65 &2299754281560593223
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -382,5 +382,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 2, z: 50}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2, y: 5, z: 50}
+  m_Center: {x: 0, y: 1.5, z: 0}
