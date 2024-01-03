@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
 
     public enum GameState
     {
-        MainMenu,
         Playing,
         Clear,
         GameOver
@@ -25,23 +24,13 @@ public class GameManager : MonoBehaviour
     public GameState CurrentGameState { get; private set; }
 
     private float countdownTimer;
-    private const float CountdownDuration = 3f;
-
-    private float clearCheckInterval = 1f;
-    private float clearCheckTimer;
-
-    private void Awake()
-    {
-        //InitializeSingleton();
-        SetGameState(GameState.MainMenu);
-    }
-
+    private const float CountdownDuration = 2f;
+    
+    private float delayBeforeWinCheck = 2f; // Adjust the delay as needed
+    
     private void Start()
     {
-        if (isPlaying)
-        {
-            StartGame();
-        }
+        CurrentGameState = GameState.Playing;
     }
 
     private void LateUpdate()
@@ -53,24 +42,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void InitializeSingleton()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
     public void StartGame()
     {
         SetGameState(GameState.Playing);
         ResetCountdownTimer();
-        ResetClearCheckTimer();
     }
 
     public void RestartGame()
@@ -90,33 +65,32 @@ public class GameManager : MonoBehaviour
 
         switch (newGameState)
         {
+            case GameState.Playing:
+                Debug.Log("Playing");
+                isPlaying = true;
+                break;
             case GameState.Clear:
                 Debug.Log("Game Clear");
                 ShowEffect(VFXclear);
+                isPlaying = false;
                 break;
 
             case GameState.GameOver:
                 Debug.Log("Game Over");
                 ShowEffect(VFXgameover);
+                isPlaying = false;
                 break;
         }
     }
 
     private void isKillAllEnemy()
     {
-        if (enemyDetectorArea.GetCurrentEnemy() == 0)
+        // Delay the win check
+        delayBeforeWinCheck -= Time.deltaTime;
+    
+        if (delayBeforeWinCheck <= 0f && enemyDetectorArea.GetCurrentEnemy() == 0)
         {
             SetGameState(GameState.Clear);
-            ResetClearCheckTimer();
-        }
-        else
-        {
-            // Check for clear state at specified intervals
-            clearCheckTimer -= Time.deltaTime;
-            if (clearCheckTimer <= 0f)
-            {
-                ResetClearCheckTimer();
-            }
         }
     }
 
@@ -146,12 +120,7 @@ public class GameManager : MonoBehaviour
     {
         countdownTimer = CountdownDuration;
     }
-
-    private void ResetClearCheckTimer()
-    {
-        clearCheckTimer = clearCheckInterval;
-    }
-
+    
     private void ShowEffect(GameObject effectPrefab)
     {
         if (effectPrefab != null)
