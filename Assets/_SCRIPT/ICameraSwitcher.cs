@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class ICameraSwitcher : MonoBehaviour
 {
+    [SerializeField] private Cinemachine.CinemachineVirtualCamera PlayerfollowCamera;
     public List<GameObject> cameras; // List of cameras to switch between
     private int currentCameraIndex = 0;
 
     private void Start()
     {
+        findPlayer(GameObject.FindGameObjectWithTag("Player"));
         // Disable all cameras except the initial one
         for (int i = 0; i < cameras.Count; i++)
         {
@@ -30,5 +32,10 @@ public class ICameraSwitcher : MonoBehaviour
             // Enable the new current camera
             cameras[currentCameraIndex].gameObject.SetActive(true);
         }
+    }
+    
+    public void findPlayer(GameObject player)
+    {
+        PlayerfollowCamera.Follow = player.transform;
     }
 }

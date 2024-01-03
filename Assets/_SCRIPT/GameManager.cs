@@ -47,18 +47,7 @@ public class GameManager : MonoBehaviour
         SetGameState(GameState.Playing);
         ResetCountdownTimer();
     }
-
-    public void RestartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        StartGame();
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
-
+    
     public void SetGameState(GameState newGameState)
     {
         CurrentGameState = newGameState;
