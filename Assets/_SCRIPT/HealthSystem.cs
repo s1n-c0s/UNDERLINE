@@ -1,4 +1,3 @@
-using Unity.Mathematics;
 using UnityEngine;
 using Lean.Pool;
 
@@ -61,31 +60,32 @@ public class HealthSystem : MonoBehaviour
     
     public void Die()
     {
-        // other code for handling death
-        if (gameObject.CompareTag("Enemy"))
+        switch (gameObject.tag)
         {
-            // update enemy count
-            _enemyDetectorArea.DecreaseEnemy(gameObject);
-        }
+            case "Player":
+                break;
+            case "Enemy":
+                // update enemy count
+                _enemyDetectorArea.DecreaseEnemy(gameObject);
+                Destroy(gameObject);
+            
+                ParticleSystem fxInstance = LeanPool.Spawn(fx_die, Vector3.up + transform.position, Quaternion.identity);
 
-        // Instantiate the particle effect
-        if (fx_die != null)
-        {
-            ParticleSystem fxInstance = LeanPool.Spawn(fx_die, Vector3.up + transform.position, quaternion.identity);
-
-            // Destroy the particle effect after 5 seconds
-            LeanPool.Despawn(fxInstance.gameObject, 3f);
-        }
-        
-        // destroy the enemy object
-        if (!gameObject.CompareTag("Player"))
-        {
-            Destroy(gameObject);
+                // Destroy the particle effect after 5 seconds
+                LeanPool.Despawn(fxInstance, 3f);
+                break;
+            default:
+                break;
         }
     }
 
     public int GetCurrentHealth()
     {
         return currentHealth;
+    }
+
+    public void ResetHp()
+    {
+        currentHealth = maxHealth;
     }
 }
