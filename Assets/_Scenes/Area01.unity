@@ -14048,6 +14048,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b25c5406b31774d9bd884a17ed8a26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerfollowCamera: {fileID: 8158229603002296366}
   cameras:
   - {fileID: 9097331193741506755}
   - {fileID: 4281724019176460767}
@@ -14416,6 +14417,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c67cf92428b9c7b49a0409ee4479fee0, type: 3}
+--- !u!114 &8158229603002296366 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2136116724550974585, guid: c67cf92428b9c7b49a0409ee4479fee0,
+    type: 3}
+  m_PrefabInstance: {fileID: 8158229603002296365}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4281724019176460767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9097331193741506755 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4639877292469634665, guid: e831e66fc40a056438389cee43453185,
