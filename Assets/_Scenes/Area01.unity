@@ -10591,6 +10591,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1a77437f5bb5364cab4575a5a7e6f1d, type: 3}
+--- !u!1 &1482856148 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3375307613194460096, guid: 3e029ad99fe82e24782fde3ba3f82ccb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2081543225618737114}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1487597432
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14020,6 +14026,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2204069391483840307}
+  - component: {fileID: 4372885215582781065}
   - component: {fileID: 2839008299086564348}
   - component: {fileID: 4372885215582781064}
   m_Layer: 0
@@ -14044,6 +14051,23 @@ MonoBehaviour:
   cameras:
   - {fileID: 9097331193741506755}
   - {fileID: 4281724019176460767}
+--- !u!114 &4372885215582781065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4349125366913925696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a65696f7ad46fc142bdb4cc4483e1adf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VFXclear: {fileID: 0}
+  VFXgameover: {fileID: 0}
+  player: {fileID: 1482856148}
+  enemyDetectorArea: {fileID: 243746492}
+  isPlaying: 1
 --- !u!1001 &5039524819508818101
 PrefabInstance:
   m_ObjectHideFlags: 0
