@@ -118,9 +118,10 @@ public class GameManager : MonoBehaviour
     
     private void UI_introFade()
     {
+        _introPanel.gameObject.SetActive(true);
         _introPanel.DOFade(1, 1f)
             .OnComplete(() => _introPanel.DOFade(0f, 1f)
                 .OnComplete(() => _introPanel.gameObject.SetActive(false)));
-        _ingamePanel.DOFade(1f, 1f);
+        _ingamePanel.DOFade(1f, 2f);
     }
 }
