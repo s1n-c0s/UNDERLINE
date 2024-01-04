@@ -13,12 +13,12 @@ public class EnemyDetectorArea : MonoBehaviour
     {
         boxCollider = GetComponent<BoxCollider>();
         boxCollider.isTrigger = true;
-        UpdateEnemyCountText(); // Display initial count
+        //UpdateEnemyCountText(); // Display initial count
     }
 
     private void Update()
     {
-        UpdateEnemyCountText();
+        //UpdateEnemyCountText();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,7 +26,7 @@ public class EnemyDetectorArea : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             detectedEnemies.Add(other.gameObject);
-            UpdateEnemyCountText();
+            //UpdateEnemyCountText();
         }
     }
 
@@ -35,7 +35,7 @@ public class EnemyDetectorArea : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && detectedEnemies.Contains(other.gameObject))
         {
             detectedEnemies.Remove(other.gameObject);
-            UpdateEnemyCountText();
+            //UpdateEnemyCountText();
         }
     }
 
@@ -44,13 +44,16 @@ public class EnemyDetectorArea : MonoBehaviour
         if (detectedEnemies.Contains(enemy))
         {
             detectedEnemies.Remove(enemy);
-            UpdateEnemyCountText();
+            //UpdateEnemyCountText();
         }
     }
 
     private void UpdateEnemyCountText()
     {
-        enemyCountText.text = "Enemies: " + detectedEnemies.Count;
+        if (enemyCountText != null)
+        {
+            enemyCountText.text = "Enemies: " + detectedEnemies.Count;
+        }
     }
 
     public int GetCurrentEnemy()

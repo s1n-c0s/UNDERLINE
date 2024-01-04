@@ -18,7 +18,7 @@ public class HealthSystem : MonoBehaviour
         }
 
         _HitFlash = GetComponent<HitFlashDamage>();
-        _enemyDetectorArea = GameObject.FindGameObjectWithTag("EnemyDetector").GetComponent<EnemyDetectorArea>();
+        _enemyDetectorArea = GameObject.FindObjectOfType<EnemyDetectorArea>();
     }
 
     public void TakeDamage(int damage)

@@ -1,5 +1,5 @@
+using DG.Tweening;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Lean.Pool;
 
 public class GameManager : MonoBehaviour
@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     public EnemyDetectorArea enemyDetectorArea;
     public bool isPlaying;
 
+    [SerializeField] private CanvasGroup _introPanel;
+    [SerializeField] private CanvasGroup _ingamePanel;
+        
     public enum GameState
     {
         Playing,
@@ -31,6 +34,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         CurrentGameState = GameState.Playing;
+        UI_introFade();
+        /*_introPanel.DOFade(1, 1f).OnComplete(() => _introPanel.DOFade(0f,1f).OnComplete(() 
+            => _introPanel.gameObject.SetActive(false)));*/
+        ResetCountdownTimer();
     }
 
     private void LateUpdate()
@@ -40,12 +47,6 @@ public class GameManager : MonoBehaviour
             isKillAllEnemy();
             CheckPlayerHealth();
         }
-    }
-
-    public void StartGame()
-    {
-        SetGameState(GameState.Playing);
-        ResetCountdownTimer();
     }
     
     public void SetGameState(GameState newGameState)
@@ -60,13 +61,13 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Clear:
                 Debug.Log("Game Clear");
-                ShowEffect(VFXclear);
+                //Show(VFXclear);
                 isPlaying = false;
                 break;
 
             case GameState.GameOver:
                 Debug.Log("Game Over");
-                ShowEffect(VFXgameover);
+                //Show(VFXgameover);
                 isPlaying = false;
                 break;
         }
@@ -110,12 +111,16 @@ public class GameManager : MonoBehaviour
         countdownTimer = CountdownDuration;
     }
     
-    private void ShowEffect(GameObject effectPrefab)
+    private void Show(GameObject gameObject)
     {
-        if (effectPrefab != null)
-        {
-            // Your code to show the effect (e.g., activating VFXclear or VFXgameover)
-            effectPrefab.SetActive(true);
-        }
+        gameObject.SetActive(true);
+    }
+    
+    private void UI_introFade()
+    {
+        _introPanel.DOFade(1, 1f)
+            .OnComplete(() => _introPanel.DOFade(0f, 1f)
+                .OnComplete(() => _introPanel.gameObject.SetActive(false)));
+        _ingamePanel.DOFade(1f, 1f);
     }
 }
