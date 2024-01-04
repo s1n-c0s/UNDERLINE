@@ -50,7 +50,10 @@ public class EnemyDetectorArea : MonoBehaviour
 
     private void UpdateEnemyCountText()
     {
-        enemyCountText.text = "Enemies: " + detectedEnemies.Count;
+        if (enemyCountText != null)
+        {
+            enemyCountText.text = "Enemies: " + detectedEnemies.Count;
+        }
     }
 
     public int GetCurrentEnemy()
