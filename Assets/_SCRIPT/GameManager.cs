@@ -6,8 +6,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public GameObject VFXclear;
-    public GameObject VFXgameover;
+    public GameObject gameclearFX;
+    [SerializeField] private CanvasGroup _gameclearUI; 
+    
+    public GameObject gameoverFX;
+    [SerializeField] private CanvasGroup _gameoverUI;
 
     public GameObject player;
     public EnemyDetectorArea enemyDetectorArea;
@@ -33,8 +36,10 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
+        Clear_UI();
         CurrentGameState = GameState.Playing;
         UI_introFade();
+        
         /*_introPanel.DOFade(1, 1f).OnComplete(() => _introPanel.DOFade(0f,1f).OnComplete(() 
             => _introPanel.gameObject.SetActive(false)));*/
         ResetCountdownTimer();
@@ -62,12 +67,14 @@ public class GameManager : MonoBehaviour
             case GameState.Clear:
                 Debug.Log("Game Clear");
                 //Show(VFXclear);
+                UI_gameEnd(_gameclearUI);
                 isPlaying = false;
                 break;
 
             case GameState.GameOver:
                 Debug.Log("Game Over");
                 //Show(VFXgameover);
+                UI_gameEnd(_gameoverUI);
                 isPlaying = false;
                 break;
         }
@@ -123,5 +130,17 @@ public class GameManager : MonoBehaviour
             .OnComplete(() => _introPanel.DOFade(0f, 1f)
                 .OnComplete(() => _introPanel.gameObject.SetActive(false)));
         _ingamePanel.DOFade(1f, 2f);
+    }
+    
+    private void UI_gameEnd(CanvasGroup ui)
+    {
+        ui.gameObject.SetActive(true);
+        ui.DOFade(1, 1f);
+    }
+    
+    private void Clear_UI()
+    {
+        _gameclearUI.gameObject.SetActive(false);
+        _gameoverUI.gameObject.SetActive(false);
     }
 }
