@@ -9,6 +9,11 @@ public class SceneChange : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
     
+    public void ChangeToScene(int index)
+    {
+        SceneManager.LoadScene(index);
+    }
+    
     public void Nextlevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
