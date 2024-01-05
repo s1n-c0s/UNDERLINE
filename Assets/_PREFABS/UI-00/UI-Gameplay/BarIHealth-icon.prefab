@@ -13,6 +13,16 @@ PrefabInstance:
       propertyPath: m_BlocksRaycasts
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4568825539971168995, guid: 81dbca2237c08f64f947d48e61528d35,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5108323056208083403, guid: 81dbca2237c08f64f947d48e61528d35,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5560960338801913249, guid: 81dbca2237c08f64f947d48e61528d35,
         type: 3}
       propertyPath: m_Pivot.x
@@ -46,12 +56,12 @@ PrefabInstance:
     - target: {fileID: 5560960338801913249, guid: 81dbca2237c08f64f947d48e61528d35,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 5560960338801913249, guid: 81dbca2237c08f64f947d48e61528d35,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 200
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 5560960338801913249, guid: 81dbca2237c08f64f947d48e61528d35,
         type: 3}
@@ -117,6 +127,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BarIHealth-icon
+      objectReference: {fileID: 0}
+    - target: {fileID: 7204758476276519965, guid: 81dbca2237c08f64f947d48e61528d35,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8235952188800062787, guid: 81dbca2237c08f64f947d48e61528d35,
         type: 3}
