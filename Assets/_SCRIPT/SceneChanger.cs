@@ -8,4 +8,9 @@ public class SceneChange : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
     }
+    
+    public void Nextlevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
 }
