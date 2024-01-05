@@ -1,6 +1,8 @@
 using DG.Tweening;
 using UnityEngine;
 using Lean.Pool;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class GameManager : MonoBehaviour
     public EnemyDetectorArea enemyDetectorArea;
     public bool isPlaying;
 
+    [SerializeField] private TextMeshProUGUI _levelNumber;
     [SerializeField] private CanvasGroup _introPanel;
     [SerializeField] private CanvasGroup _ingamePanel;
         
@@ -34,6 +37,10 @@ public class GameManager : MonoBehaviour
     
     private float delayBeforeWinCheck = 2f; // Adjust the delay as needed
     
+    private void Awake()
+    {
+        _levelNumber.text = SceneManager.GetActiveScene().buildIndex.ToString();
+    }
     private void Start()
     {
         Clear_UI();
@@ -129,7 +136,7 @@ public class GameManager : MonoBehaviour
         _introPanel.DOFade(1, 1f)
             .OnComplete(() => _introPanel.DOFade(0f, 1f)
                 .OnComplete(() => _introPanel.gameObject.SetActive(false)));
-        _ingamePanel.DOFade(1f, 2f);
+        _ingamePanel.DOFade(1f, 2.5f);
     }
     
     private void UI_gameEnd(CanvasGroup ui)
