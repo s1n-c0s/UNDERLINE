@@ -23,19 +23,24 @@ public class ICameraSwitcher : MonoBehaviour
         // Check for input to switch cameras
         if (Input.GetKeyDown(KeyCode.C))
         {
-            // Disable the current camera
-            cameras[currentCameraIndex].gameObject.SetActive(false);
-
-            // Increment the camera index, and wrap around if necessary
-            currentCameraIndex = (currentCameraIndex + 1) % cameras.Count;
-
-            // Enable the new current camera
-            cameras[currentCameraIndex].gameObject.SetActive(true);
+            SwitchCamera();
         }
     }
     
-    public void findPlayer(GameObject player)
+    private void findPlayer(GameObject player)
     {
         PlayerfollowCamera.Follow = player.transform;
+    }
+
+    public void SwitchCamera()
+    {
+        // Disable the current camera
+        cameras[currentCameraIndex].gameObject.SetActive(false);
+
+        // Increment the camera index, and wrap around if necessary
+        currentCameraIndex = (currentCameraIndex + 1) % cameras.Count;
+
+        // Enable the new current camera
+        cameras[currentCameraIndex].gameObject.SetActive(true);
     }
 }
