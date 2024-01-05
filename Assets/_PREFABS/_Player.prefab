@@ -41,13 +41,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8378151589295215728}
-  - component: {fileID: 7328202003289419911}
+  - component: {fileID: 3974005736623565414}
   - component: {fileID: 5070158653847375716}
   - component: {fileID: 6168418088058611014}
   - component: {fileID: 6633779303583798633}
   - component: {fileID: 3787548944662405222}
   - component: {fileID: 3438137685412226217}
   - component: {fileID: 6372522719978164187}
+  - component: {fileID: 7328202003289419911}
   - component: {fileID: 1621556112100868850}
   m_Layer: 3
   m_Name: _Player
@@ -76,29 +77,20 @@ Transform:
   - {fileID: 6976715713709561702}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &7328202003289419911
-CapsuleCollider:
+--- !u!114 &3974005736623565414
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3375307613194460096}
-  m_Material: {fileID: 13400000, guid: 12f29e53b75fb574e83366c4fa013ef5, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.221427
-  m_Height: 3.780831
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.8556083, z: 0.01999998}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d09b06996048571419293ff7ccc9ddbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitParticle: {fileID: 1622961693977746307, guid: dbe5a19ac09fb484a99ff2570e82828b,
+    type: 3}
 --- !u!114 &5070158653847375716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,9 +103,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 907f9219b82226d4cb28838c5645fcaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _HitFlash: {fileID: 0}
   _enemyDetectorArea: {fileID: 0}
   fx_die: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a, type: 3}
   maxHealth: 10
+  currentHealth: 0
 --- !u!114 &6168418088058611014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,6 +281,29 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 1
   m_ApplyActiveColorSpace: 1
+--- !u!136 &7328202003289419911
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3375307613194460096}
+  m_Material: {fileID: 13400000, guid: 12f29e53b75fb574e83366c4fa013ef5, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.221427
+  m_Height: 3.780831
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.8556083, z: 0.01999998}
 --- !u!54 &1621556112100868850
 Rigidbody:
   m_ObjectHideFlags: 0

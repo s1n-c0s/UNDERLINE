@@ -1,5 +1,5 @@
-using Unity.VisualScripting;
 using UnityEngine;
+using Lean.Pool;
 
 public class HitDetection : MonoBehaviour
 {
@@ -24,9 +24,9 @@ public class HitDetection : MonoBehaviour
     private void PlayHitParticleEffect(Vector3 position)
     {
         // Instantiate the particle effect at the specified position
-        ParticleSystem particleInstance = Instantiate(hitParticle, position, Quaternion.identity);
+        ParticleSystem particleInstance = LeanPool.Spawn(hitParticle, position, Quaternion.identity);
 
         // Destroy the particle system after its duration
-        Destroy(particleInstance.gameObject, particleInstance.main.duration);
+        LeanPool.Despawn(particleInstance.gameObject, particleInstance.main.duration);
     }
 }
