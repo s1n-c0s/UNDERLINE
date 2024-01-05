@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
     private void UI_gameEnd(CanvasGroup ui)
     {
         ui.gameObject.SetActive(true);
-        ui.DOFade(1, 1f);
+        ui.DOFade(1, 0.5f);
     }
     
     private void Clear_UI()
