@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6852359695029905673}
   - component: {fileID: 4564289330766612107}
   - component: {fileID: 5239955903407091707}
+  - component: {fileID: 4123187664063610398}
   m_Layer: 5
   m_Name: ResetBT
   m_TagString: Untagged
@@ -121,7 +122,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4123187664063610398}
         m_TargetAssemblyTypeName: ResetScene, Assembly-CSharp
         m_MethodName: Reset
         m_Mode: 1
@@ -133,6 +134,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4123187664063610398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34638542499404845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0217b8e03853a4b43848a8d5c4e493bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6228746234261264652
 GameObject:
   m_ObjectHideFlags: 0
