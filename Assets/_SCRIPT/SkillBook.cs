@@ -17,7 +17,7 @@ public class SkillBook : MonoBehaviour
     {
         if (other.CompareTag("Player") || other.CompareTag("Shuriken"))
         {
-           InitBullet(other.gameObject); 
+           InitBullet(gameObject); 
            Destroy(gameObject);
         }
     }
