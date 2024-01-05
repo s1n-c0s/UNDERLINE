@@ -9,11 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2093744119255247451}
+  - component: {fileID: 7483533244691888638}
   - component: {fileID: -8362033268256529279}
   - component: {fileID: 8467062041218771997}
   m_Layer: 0
   m_Name: Shuriken
-  m_TagString: Shuriken
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,6 +35,18 @@ Transform:
   - {fileID: 3813238523307917081}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7483533244691888638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518477889419750770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bfb23d6537c72a4abf5cd7bf90a5102, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &-8362033268256529279
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -80,8 +93,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.42352918, y: 0.22595845, z: 2.0250325}
-  m_Center: {x: 0, y: 0.021964319, z: 0}
+  m_Size: {x: 0.78694326, y: 0.22595845, z: 3.0897517}
+  m_Center: {x: 0, y: 0.021964319, z: -0.025011778}
 --- !u!1 &6798381896861436920
 GameObject:
   m_ObjectHideFlags: 0
