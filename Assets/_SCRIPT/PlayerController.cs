@@ -246,14 +246,16 @@ public class PlayerController : MonoBehaviour
 
     void UpdateRunsRemainingText()
     {
-        if (runsRemainingText != null)
+        runsRemaining = _healthSystem.GetCurrentHealth();
+        
+        /*if (runsRemainingText != null)
         {
             runsRemaining = _healthSystem.GetCurrentHealth();
             
             sb.Clear();
             sb.Append("Runs Remaining: ").Append(runsRemaining);
             runsRemainingText.text = sb.ToString();
-        }
+        }*/
     }
 
     public void Respawn()
