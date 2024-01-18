@@ -433,6 +433,7 @@ GameObject:
   - component: {fileID: 8006796926834433843}
   - component: {fileID: 513005468219932935}
   - component: {fileID: 1817724001585402315}
+  - component: {fileID: 8223491474988628967}
   m_Layer: 6
   m_Name: _KikiSamurai
   m_TagString: Enemy
@@ -471,9 +472,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 907f9219b82226d4cb28838c5645fcaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _HitFlash: {fileID: 0}
   _enemyDetectorArea: {fileID: 0}
   fx_die: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a, type: 3}
   maxHealth: 2
+  currentHealth: 0
 --- !u!114 &6065848670205569355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,6 +587,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8223491474988628967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6576880398642072795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d09b06996048571419293ff7ccc9ddbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitParticle: {fileID: 1622961693977746307, guid: dbe5a19ac09fb484a99ff2570e82828b,
+    type: 3}
 --- !u!1 &7864702709670335574
 GameObject:
   m_ObjectHideFlags: 0
