@@ -709,6 +709,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI-HeadSlot
       objectReference: {fileID: 0}
+    - target: {fileID: 4814009158710599579, guid: ab8de9188afb1644cbe914e990862b48,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6153731776897990291, guid: ab8de9188afb1644cbe914e990862b48,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -758,6 +763,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7381246019375797807, guid: ab8de9188afb1644cbe914e990862b48,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7381246019375797807, guid: ab8de9188afb1644cbe914e990862b48,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7381246019375797807, guid: ab8de9188afb1644cbe914e990862b48,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 9000034512959257241, guid: ab8de9188afb1644cbe914e990862b48,
         type: 3}
