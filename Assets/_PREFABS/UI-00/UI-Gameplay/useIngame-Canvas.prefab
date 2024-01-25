@@ -697,7 +697,7 @@ GameObject:
   - component: {fileID: 7713290878941507123}
   - component: {fileID: 2344399715809971780}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2502,7 +2502,7 @@ GameObject:
   - component: {fileID: 1963346004387462617}
   - component: {fileID: 6468594369751873646}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Combo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2671,6 +2671,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2579912247397528151}
+  - component: {fileID: 790625176061445677}
   m_Layer: 5
   m_Name: Combo-Bar
   m_TagString: Untagged
@@ -2698,6 +2699,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 900, y: 262.33118}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!225 &790625176061445677
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6032106590035860477}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6119924380237362223
 GameObject:
   m_ObjectHideFlags: 0
@@ -2953,7 +2966,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4122588672032090498}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: L-Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3986,7 +3999,7 @@ GameObject:
   - component: {fileID: 8458736348418402179}
   - component: {fileID: 2565996227693464396}
   m_Layer: 5
-  m_Name: GameObject (1)
+  m_Name: R-Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
