@@ -4,35 +4,50 @@ using DG.Tweening;
 
 public class IMainMenuManager : MonoBehaviour
 {
-    private int currentPanelIndex = 0;
-    [SerializeField] private float fadeTime = 1f;
+    [SerializeField] private float fadeTime = 0.5f;
     [SerializeField] private CanvasGroup[] canvasGroups;
+
+    private int currentPanelIndex = 0;
 
     private void Start()
     {
-        // Call OpenPanel to open the first panel (you can customize this based on your requirements)
         OpenPanel(0);
     }
 
     public void OpenPanel(int panelIndex)
     {
-        if (panelIndex < 0 || panelIndex >= canvasGroups.Length || panelIndex == currentPanelIndex)
+        if (!IsValidPanelIndex(panelIndex) || panelIndex == currentPanelIndex)
         {
-            //Debug.LogWarning("Invalid panel index or already open");
             return;
         }
 
-        // Close the current panel
-        CanvasGroup currentPanel = canvasGroups[currentPanelIndex];
-        currentPanel.DOFade(0f, fadeTime).SetEase(Ease.OutQuad).SetUpdate(true).OnComplete(() => currentPanel.gameObject.SetActive(false));
+        CloseCurrentPanel();
+        OpenSelectedPanel(panelIndex);
+    }
 
-        // Open the selected panel
+    private bool IsValidPanelIndex(int panelIndex)
+    {
+        return panelIndex >= 0 && panelIndex < canvasGroups.Length;
+    }
+
+    private void CloseCurrentPanel()
+    {
+        CanvasGroup currentPanel = canvasGroups[currentPanelIndex];
+        currentPanel.DOFade(0f, fadeTime).SetEase(Ease.OutQuad).SetUpdate(true).OnComplete(() => SetPanelActive(currentPanel, false));
+    }
+
+    private void OpenSelectedPanel(int panelIndex)
+    {
         CanvasGroup selectedPanel = canvasGroups[panelIndex];
-        selectedPanel.gameObject.SetActive(true);
+        SetPanelActive(selectedPanel, true);
         selectedPanel.alpha = 0f;
         selectedPanel.DOFade(1f, fadeTime).SetEase(Ease.InQuad).SetUpdate(true);
 
-        // Update the current panel index
         currentPanelIndex = panelIndex;
+    }
+
+    private void SetPanelActive(CanvasGroup panel, bool active)
+    {
+        panel.gameObject.SetActive(active);
     }
 }
