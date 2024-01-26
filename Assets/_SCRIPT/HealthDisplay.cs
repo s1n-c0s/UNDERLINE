@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using TMPro;
 
@@ -20,7 +21,14 @@ public class HealthDisplay : MonoBehaviour
 
     void Update()
     {
-        //textMeshPro.text = "Health: " + healthSystem.GetCurrentHealth();
-        textMeshPro.text = "" + healthSystem.GetCurrentHealth();
+        int currentHealth = healthSystem.GetCurrentHealth();
+
+        if (textMeshPro.text != currentHealth.ToString())
+        {
+            textMeshPro.text = currentHealth.ToString();
+            
+            // Add punch scale effect when the value changes
+            textMeshPro.transform.DOPunchScale(Vector3.one * 0.5f, 0.3f, 0, 1f);
+        }
     }
 }
