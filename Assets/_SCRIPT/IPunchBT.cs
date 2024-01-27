@@ -14,6 +14,7 @@ public class IPunchBT : MonoBehaviour
 
     void Start()
     {
+        playBT = GetComponent<Button>();
         //playBT = gameObject.GetComponent<Button>();
         // Subscribe to the button click event
         playBT.onClick.AddListener(OnClick);
@@ -28,24 +29,12 @@ public class IPunchBT : MonoBehaviour
             isTweening = true;
 
             // Use DOTween to apply punch scale effect to the button
-            playBT.transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 1f, 5, 1f)
+            playBT.transform.DOPunchScale(Vector3.one * 0.5f, 0.3f, 10, 1f)
                 .SetEase(Ease.OutQuad)
                 .OnComplete(() =>
                 {
-                    // Optional: OnComplete callback for additional actions
-                    // Do something when the punch scale animation is complete
-
-                    // Reset the flag after the tween is complete
                     isTweening = false;
-                    /*mainMenu.DOFade(0, 1);
-                    LoadNextScene();*/
                 });
         }
     }
-    
-    /*void LoadNextScene()
-    {
-        // Load your next scene
-        SceneManager.LoadScene(sceneName);
-    }*/
 }

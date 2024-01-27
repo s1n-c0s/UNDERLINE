@@ -44,6 +44,7 @@ public class EnemyDetectorArea : MonoBehaviour
         if (detectedEnemies.Contains(enemy))
         {
             detectedEnemies.Remove(enemy);
+            ICombo.Instance.IncreaseCombo();
             //UpdateEnemyCountText();
         }
     }

@@ -68,6 +68,7 @@ public class HealthSystem : MonoBehaviour
                 // update enemy count
                 _enemyDetectorArea.DecreaseEnemy(gameObject);
                 Destroy(gameObject);
+                CameraShake.Shake(0.5f, 2);
             
                 ParticleSystem fxInstance = LeanPool.Spawn(fx_die, Vector3.up + transform.position, Quaternion.identity);
 
