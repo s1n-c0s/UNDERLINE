@@ -1,34 +1,54 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; // Import the UI namespace
+using Cinemachine;
 
 public class ICameraSwitcher : MonoBehaviour
 {
+    [SerializeField] private CinemachineVirtualCamera PlayerfollowCamera;
     public List<GameObject> cameras; // List of cameras to switch between
     private int currentCameraIndex = 0;
 
+    // Reference to the UI button
+    public Button switchCameraButton;
+    
     private void Start()
     {
-        // Disable all cameras except the initial one
+        // Attach the method to be called when the button is clicked
+        switchCameraButton.onClick.AddListener(SwitchCamera);
+
+        findPlayer(GameObject.FindGameObjectWithTag("Player"));
+
+        // Load the selected camera index from PlayerPrefs, default to 0 if not set
+        currentCameraIndex = PlayerPrefs.GetInt("SelectedCameraIndex", 0);
+
+        // Disable all cameras except the saved one
         for (int i = 0; i < cameras.Count; i++)
         {
-            cameras[i].gameObject.SetActive(i == 0);
+            cameras[i].SetActive(i == currentCameraIndex);
         }
     }
 
-    private void Update()
+    private void findPlayer(GameObject player)
     {
-        // Check for input to switch cameras
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            // Disable the current camera
-            cameras[currentCameraIndex].gameObject.SetActive(false);
+        PlayerfollowCamera.Follow = player.transform;
+    }
 
-            // Increment the camera index, and wrap around if necessary
-            currentCameraIndex = (currentCameraIndex + 1) % cameras.Count;
+    public void SwitchCamera()
+    {
+        // Disable the current camera
+        cameras[currentCameraIndex].SetActive(false);
 
-            // Enable the new current camera
-            cameras[currentCameraIndex].gameObject.SetActive(true);
-        }
+        // Increment the camera index, and wrap around if necessary
+        currentCameraIndex = (currentCameraIndex + 1) % cameras.Count;
+
+        // Enable the new current camera
+        cameras[currentCameraIndex].SetActive(true);
+
+        // Save the selected camera index to PlayerPrefs
+        PlayerPrefs.SetInt("SelectedCameraIndex", currentCameraIndex);
+        PlayerPrefs.Save(); // Save the PlayerPrefs data
     }
 }

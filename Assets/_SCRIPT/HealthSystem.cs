@@ -1,24 +1,34 @@
-using Unity.Mathematics;
 using UnityEngine;
+using Lean.Pool;
 
 public class HealthSystem : MonoBehaviour
 {
+    public HitFlashDamage _HitFlash;
     public EnemyDetectorArea _enemyDetectorArea;
     public ParticleSystem fx_die;
     
     public int maxHealth = 100;
-    private int currentHealth;
+    public int currentHealth;
 
     void Start()
     {
-        currentHealth = maxHealth;
-        
-        _enemyDetectorArea = GameObject.FindGameObjectWithTag("EnemyDetector").GetComponent<EnemyDetectorArea>();
+        if (currentHealth == 0) 
+        {
+            currentHealth = maxHealth;
+        }
+
+        _HitFlash = GetComponent<HitFlashDamage>();
+        _enemyDetectorArea = GameObject.FindObjectOfType<EnemyDetectorArea>();
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+
+        if (gameObject.CompareTag("Enemy"))
+        {
+            _HitFlash.playHitModelFX();
+        }
 
         if (currentHealth <= 0 )
         {
@@ -37,38 +47,46 @@ public class HealthSystem : MonoBehaviour
 
     public void Heal(int heal)
     {
-        currentHealth += heal;
+        if (currentHealth < maxHealth)
+        {
+            currentHealth += heal;
+        }
         
-        if (currentHealth > maxHealth)
+        /*if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
-        }
+        }*/
     }
     
     public void Die()
     {
-        // other code for handling death
-        if (gameObject.CompareTag("Enemy"))
+        switch (gameObject.tag)
         {
-            // update enemy count
-            _enemyDetectorArea.DecreaseEnemy();
-        }
+            case "Player":
+                break;
+            case "Enemy":
+                // update enemy count
+                _enemyDetectorArea.DecreaseEnemy(gameObject);
+                Destroy(gameObject);
+                CameraShake.Shake(0.5f, 2);
+            
+                ParticleSystem fxInstance = LeanPool.Spawn(fx_die, Vector3.up + transform.position, Quaternion.identity);
 
-        // Instantiate the particle effect
-        ParticleSystem fxInstance = Instantiate(fx_die, transform.position, quaternion.identity);
-
-        // Destroy the particle effect after 5 seconds
-        Destroy(fxInstance.gameObject, 5f);
-        
-        // destroy the enemy object
-        if (!gameObject.CompareTag("Player"))
-        {
-            Destroy(gameObject);
+                // Destroy the particle effect after 5 seconds
+                LeanPool.Despawn(fxInstance, 3f);
+                break;
+            default:
+                break;
         }
     }
 
     public int GetCurrentHealth()
     {
         return currentHealth;
+    }
+
+    public void ResetHp()
+    {
+        currentHealth = maxHealth;
     }
 }
