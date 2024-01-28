@@ -17,11 +17,12 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public EnemyDetectorArea enemyDetectorArea;
     public bool isPlaying;
-
+    
     [SerializeField] private TextMeshProUGUI _levelNumber;
     [SerializeField] private CanvasGroup _introPanel;
     [SerializeField] private CanvasGroup _ingamePanel;
-        
+    [SerializeField] private GameObject audioSystem;
+    
     public enum GameState
     {
         Playing,
@@ -39,6 +40,9 @@ public class GameManager : MonoBehaviour
     
     private void Awake()
     {
+        GameObject GameplayAudio = Instantiate(audioSystem);
+        GameplayAudio.name = "GameplayAudio";
+        
         _levelNumber.text = SceneManager.GetActiveScene().buildIndex.ToString();
     }
     private void Start()
