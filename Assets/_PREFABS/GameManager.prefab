@@ -160,6 +160,8 @@ MonoBehaviour:
   _levelNumber: {fileID: 0}
   _introPanel: {fileID: 0}
   _ingamePanel: {fileID: 0}
+  audioSystem: {fileID: 4813745427238729350, guid: ebcf550d4705d1f46ad5cbe4755ce3e7,
+    type: 3}
 --- !u!114 &1260003991168824826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,8 +176,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerfollowCamera: {fileID: 1251650277387731860}
   cameras:
-  - {fileID: 5102004833283911279}
   - {fileID: 3583149215366260406}
+  - {fileID: 5102004833283911279}
+  switchCameraButton: {fileID: 0}
 --- !u!1 &5234365130489894169
 GameObject:
   m_ObjectHideFlags: 0
