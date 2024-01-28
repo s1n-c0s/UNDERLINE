@@ -16,9 +16,12 @@ public class ICameraSwitcher : MonoBehaviour
     
     private void Start()
     {
-        // Attach the method to be called when the button is clicked
-        switchCameraButton.onClick.AddListener(SwitchCamera);
-
+        if (switchCameraButton != null)
+        {
+            // Attach the method to be called when the button is clicked
+            switchCameraButton.onClick.AddListener(SwitchCamera);
+        }
+        
         findPlayer(GameObject.FindGameObjectWithTag("Player"));
 
         // Load the selected camera index from PlayerPrefs, default to 0 if not set
