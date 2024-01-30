@@ -27,7 +27,7 @@ public class HealthSystem : MonoBehaviour
 
         if (gameObject.CompareTag("Enemy"))
         {
-            _HitFlash.playHitModelFX();
+            //_HitFlash.playHitModelFX();
         }
 
         if (currentHealth <= 0 )
