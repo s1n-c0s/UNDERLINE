@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9026223026830398840}
   - component: {fileID: 590119383942239829}
   m_Layer: 0
-  m_Name: fx_slash
+  m_Name: ps_slash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -1261,12 +1261,12 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: -1
-          inSlope: 0
-          outSlope: 0
+          inSlope: 1.7435898
+          outSlope: 1.7435898
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0.33333334
+          outWeight: 0.14285713
         - serializedVersion: 3
           time: 1
           value: 0
