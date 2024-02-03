@@ -6,6 +6,7 @@ public class HealthSystem : MonoBehaviour
     public HitFlashDamage _HitFlash;
     public EnemyDetectorArea _enemyDetectorArea;
     public ParticleSystem fx_die;
+    public GameObject model;
     
     public int maxHealth = 100;
     public int currentHealth;
@@ -60,7 +61,19 @@ public class HealthSystem : MonoBehaviour
     
     public void Die()
     {
-        switch (gameObject.tag)
+        if (gameObject.CompareTag("Enemy"))
+        {
+            // update enemy count
+            _enemyDetectorArea.DecreaseEnemy(gameObject);
+            Destroy(gameObject);
+            CameraShake.Shake(0.5f, 2);
+            
+            ParticleSystem fxInstance = LeanPool.Spawn(fx_die, Vector3.up + transform.position, Quaternion.identity);
+
+            // Destroy the particle effect after 5 seconds
+            LeanPool.Despawn(fxInstance, 3f);
+        }
+        /*switch (gameObject.tag)
         {
             case "Player":
                 break;
@@ -77,7 +90,7 @@ public class HealthSystem : MonoBehaviour
                 break;
             default:
                 break;
-        }
+        }*/
     }
 
     public int GetCurrentHealth()
