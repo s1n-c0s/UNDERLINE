@@ -22,10 +22,10 @@ public class EnemyDetectorArea : MonoBehaviour
         //UpdateEnemyCountText(); // Display initial count
     }
 
-    private void Update()
+    /*private void Update()
     {
         //UpdateEnemyCountText();
-    }
+    }*/
 
     private void OnTriggerEnter(Collider other)
     {
