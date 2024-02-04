@@ -9,7 +9,7 @@ public class ICombo : MonoBehaviour
     public GameObject comboPanel;
     public TextMeshProUGUI comboText;
 
-    private int hitcombo = 0;
+    public int hitcombo = 0;
     private float timer = 0f;
     public float comboResetTime = 2f;
     public float fadeDuration = 0.5f;

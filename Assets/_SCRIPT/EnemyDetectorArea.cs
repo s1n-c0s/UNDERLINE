@@ -8,9 +8,15 @@ public class EnemyDetectorArea : MonoBehaviour
     public TextMeshProUGUI enemyCountText;
     private BoxCollider boxCollider;
     private List<GameObject> detectedEnemies = new List<GameObject>();
+    
+    [SerializeField] private ParticleSystem[] _speedlinePS;
 
     private void Start()
     {
+        foreach (var speedline in _speedlinePS)
+        {
+            speedline.Stop();
+        }
         boxCollider = GetComponent<BoxCollider>();
         boxCollider.isTrigger = true;
         //UpdateEnemyCountText(); // Display initial count
@@ -45,6 +51,21 @@ public class EnemyDetectorArea : MonoBehaviour
         {
             detectedEnemies.Remove(enemy);
             ICombo.Instance.IncreaseCombo();
+
+            if (ICombo.Instance.hitcombo >= 2)
+            {
+                foreach (var speedline in _speedlinePS)
+                {
+                    speedline.Play();
+                }
+            }
+            else
+            {
+                foreach (var speedline in _speedlinePS)
+                {
+                    speedline.Stop();
+                }
+            }
             //UpdateEnemyCountText();
         }
     }
