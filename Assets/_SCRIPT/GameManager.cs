@@ -113,8 +113,8 @@ public class GameManager : MonoBehaviour
             if (countdownTimer <= 0f)
             {
                 SetGameState(GameState.GameOver);
-                playerHealthSystem.model.SetActive(false);
-                LeanPool.Spawn(playerHealthSystem.fx_die, player.transform.position, Quaternion.identity);
+                player.SetActive(false);
+                Instantiate(playerHealthSystem.fx_die, player.transform.position, Quaternion.identity);
                 
                 /*ParticleSystem playerDieFx = LeanPool.Spawn(playerHealthSystem.fx_die, Vector3.up + player.transform.position, Quaternion.identity);
                 LeanPool.Despawn(playerDieFx, 3f);*/

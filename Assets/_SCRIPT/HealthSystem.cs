@@ -6,7 +6,6 @@ public class HealthSystem : MonoBehaviour
     public HitFlashDamage _HitFlash;
     public EnemyDetectorArea _enemyDetectorArea;
     public ParticleSystem fx_die;
-    public GameObject model;
     
     public int maxHealth = 100;
     public int currentHealth;
@@ -26,10 +25,12 @@ public class HealthSystem : MonoBehaviour
     {
         currentHealth -= damage;
 
+        /*
         if (gameObject.CompareTag("Enemy"))
         {
             //_HitFlash.playHitModelFX();
         }
+        */
 
         if (currentHealth <= 0 )
         {
