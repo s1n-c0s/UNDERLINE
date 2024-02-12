@@ -4,6 +4,7 @@ public class enemyDestroy : MonoBehaviour
 {
     //public GameObject objectToDestroy;
     private PlayerController playerController;
+    [SerializeField] private ParticleSystem fx_slash;
 
     private void Start()
     {
@@ -21,6 +22,7 @@ public class enemyDestroy : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
+            fx_slash.Play();
             //Destroy(other.gameObject);
             //Destroy(objectToDestroy);
             if (other.GetComponent<HealthSystem>().GetCurrentHealth() == 0)
