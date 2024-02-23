@@ -3,10 +3,10 @@
 public class SamuraiMovement : MonoBehaviour
 {
     public float moveSpeed = 5.0f;
-    public float stopDuration = 2.0f;
+    public float stopDuration = 5.0f;
 
-    [SerializeField] private Vector3 startPoint = new Vector3(-5.0f, 0.0f, 0.0f);
-    [SerializeField] private Vector3 endPoint = new Vector3(5.0f, 0.0f, 0.0f);
+    [SerializeField] private Vector3 startPoint = new Vector3(0.0f, 0.0f, 0.0f);
+    [SerializeField] private Vector3 endPoint = new Vector3(0.0f, 0.0f, 0.0f);
 
     private Vector3 target;
     private bool isMoving = true;
@@ -23,8 +23,8 @@ public class SamuraiMovement : MonoBehaviour
     {
         if (isMoving)
         {
-            // ย้ายศัตรูไปที่เป้าหมาย (แก้ไขเพื่อให้เคลื่อนที่แค่แกน X)
-            Vector3 newPosition = new Vector3(target.x, transform.position.y, transform.position.z);
+            // ย้ายศัตรูไปที่เป้าหมาย (เคลื่อนที่ในแกน X และ Z)
+            Vector3 newPosition = new Vector3(target.x, transform.position.y, target.z); // เปลี่ยนที่ตำแหน่ง Z เป็น target.z
             transform.position = Vector3.MoveTowards(transform.position, newPosition, moveSpeed * Time.deltaTime);
 
             // เมื่อ Samurai ถึงเป้าหมายแล้วหยุด
