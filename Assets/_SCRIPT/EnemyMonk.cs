@@ -24,7 +24,7 @@ public class EnemyMonk : MonoBehaviour
         {
             foreach (var target in targets)
             {
-                if (target != null) // Check if the target is not null
+                if (target != null)
                 {
                     var healthSystem = target.GetComponent<HealthSystem>();
                     if (healthSystem != null)
@@ -35,10 +35,9 @@ public class EnemyMonk : MonoBehaviour
             }
         }
     }
-    
+
     void Update()
     {
-        // Check if targets list is not null or empty and cooldown is not active
         if (!_isCooldown && targets != null && targets.Count > 0)
         {
             StartCoroutine(ActivateProtection());
@@ -49,35 +48,41 @@ public class EnemyMonk : MonoBehaviour
     {
         _isCooldown = true;
 
-        ToggleProtection(true);
+        ToggleProtection(0, true); // Activate protection for the first enemy
 
         yield return new WaitForSeconds(protectionDuration);
 
-        ToggleProtection(false);
+        ToggleProtection(0, false); // Deactivate protection for the first enemy
 
         yield return new WaitForSeconds(cooldownDuration);
 
+        RemoveNullTargets(); // Remove null or missing targets from the list
         _isCooldown = false;
     }
 
-    private void ToggleProtection(bool state)
+    private void ToggleProtection(int index, bool state)
     {
-        // Check if the list of Health Systems is not null or empty
-        if (_targetHealthSystems != null && _targetHealthSystems.Count > 0)
+        if (_targetHealthSystems.Count > 0 && index < _targetHealthSystems.Count)
         {
-            foreach (var healthSystem in _targetHealthSystems)
+            if (_targetHealthSystems[index] != null)
             {
-                if (healthSystem != null && healthSystem.gameObject.activeSelf) // Check if the Health System and its GameObject are not null and active
-                {
-                    healthSystem.EnableProtection(state);
-                }
+                _targetHealthSystems[index].EnableProtection(state);
             }
         }
     }
 
+    private void RemoveNullTargets()
+    {
+        _targetHealthSystems.RemoveAll(item => item == null); // Remove null or missing targets
+    }
+
     private void OnDestroy()
     {
-        ToggleProtection(false);
+        // Deactivate protection for all enemies when this enemy is destroyed
+        for (int i = 0; i < _targetHealthSystems.Count; i++)
+        {
+            ToggleProtection(i, false);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
