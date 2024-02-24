@@ -7,9 +7,9 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private EnemyDetectorArea _enemyDetectorArea;
     
     [Header("Health Point")]
-    [SerializeField] private bool hasProtect;
     public int maxHealth = 100;
     [SerializeField] private int currentHealth;
+    [SerializeField] private bool hasProtect;
 
     [Header("VFX")]
     public ParticleSystem fx_die;
