@@ -5902,7 +5902,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  stopDuration: 1
+  stopDuration: 3
   startPoint: {x: -2, y: 0, z: 0}
   endPoint: {x: 3, y: 0, z: 0}
   canOpenKatana: 0
@@ -6192,8 +6192,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.730746, y: 3.4508605, z: 3.6132193}
-  m_Center: {x: -0.42477363, y: 1.4258678, z: 1.5891596}
+  m_Size: {x: 7.4819407, y: 3.4508605, z: 9.997056}
+  m_Center: {x: 0.7947972, y: 1.4258678, z: -1.6027584}
 --- !u!114 &8936333695053408918
 MonoBehaviour:
   m_ObjectHideFlags: 0

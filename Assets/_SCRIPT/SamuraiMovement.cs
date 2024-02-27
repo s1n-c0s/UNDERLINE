@@ -16,21 +16,21 @@ public class SamuraiMovement : MonoBehaviour
 
     private void Start()
     {
-        target = endPoint; // เริ่มจากจุดสุดท้าย
+        target = endPoint; // Start from the end point
     }
 
     private void Update()
     {
         if (isMoving)
         {
-            // ย้ายศัตรูไปที่เป้าหมาย (เคลื่อนที่ในแกน X และ Z)
-            Vector3 newPosition = new Vector3(target.x, transform.position.y, target.z); // เปลี่ยนที่ตำแหน่ง Z เป็น target.z
+            // Move the Samurai towards the target (Modified to move along the z-axis)
+            Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, target.z);
             transform.position = Vector3.MoveTowards(transform.position, newPosition, moveSpeed * Time.deltaTime);
 
-            // เมื่อ Samurai ถึงเป้าหมายแล้วหยุด
+            // When the Samurai reaches the target, stop
             if (transform.position == newPosition)
             {
-                // หยุดเคลื่อนที่ไป 2 วินาที
+                // Stop moving for 2 seconds
                 isMoving = false;
                 OpenKatana();
                 StartCoroutine(WaitAndRotate());
@@ -40,22 +40,22 @@ public class SamuraiMovement : MonoBehaviour
 
     private System.Collections.IEnumerator WaitAndRotate()
     {
-        // รอเวลาหยุด
+        // Wait for stopDuration seconds
         yield return new WaitForSeconds(stopDuration);
 
-        // เปลี่ยนเป้าหมาย
+        // Change target
         if (target == startPoint)
             target = endPoint;
         else
             target = startPoint;
 
-        // หมุน 180 องศาเมื่อเดินกลับที่จุดเริ่มต้นหรือจุดสุดท้าย
+        // Rotate 180 degrees when moving back to the start or end point
         transform.Rotate(Vector3.up, 180.0f);
 
-        // รีเซ็ตเพื่อเริ่มเคลื่อนที่ใหม่
+        // Reset to start a new movement
         isMoving = true;
 
-        // ปิด Katana เมื่อเริ่มเคลื่อนที่อีกครั้ง
+        // Close the Katana when starting to move again
         CloseKatana();
     }
 
