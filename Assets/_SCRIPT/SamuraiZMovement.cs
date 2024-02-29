@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SamuraiMovement : MonoBehaviour
+public class SamuraiZMovement : MonoBehaviour
 {
     public float moveSpeed = 5.0f;
     public float stopDuration = 5.0f;

@@ -344,7 +344,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d166c840d24da494f9f17f2d2f444509, type: 3}
-  m_Color: {r: 0.80148655, g: 0.98039216, b: 0.40392157, a: 1}
+  m_Color: {r: 0.49880138, g: 0.2867924, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -378,14 +378,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4603378546570669552}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.07097517, z: 0, w: 0.9974781}
+  m_LocalRotation: {x: -0.026176924, y: 0, z: 0, w: 0.99965733}
   m_LocalPosition: {x: -0.009060543, y: 0, z: 0.00045720613}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 785722215856447285}
   m_Father: {fileID: 708578889526484903}
-  m_LocalEulerAnglesHint: {x: 0, y: 8.14, z: 0}
+  m_LocalEulerAnglesHint: {x: -3, y: 0, z: 0}
 --- !u!1 &4741701723495546051
 GameObject:
   m_ObjectHideFlags: 0
@@ -5720,9 +5720,9 @@ GameObject:
   - component: {fileID: 147266091078385220}
   - component: {fileID: 1686293171019134720}
   - component: {fileID: 4512146006832990378}
-  - component: {fileID: 2839855654224423281}
+  - component: {fileID: 772259967037647580}
   m_Layer: 6
-  m_Name: _walkKikiSamurai (3)
+  m_Name: _UseXWalkKikiSamurai
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5737,8 +5737,8 @@ Transform:
   m_GameObject: {fileID: 6621502502083966502}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.8649998, y: 0.07793236, z: 9}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalPosition: {x: 0, y: 0, z: 9}
+  m_LocalScale: {x: 1.9, y: 1.9, z: 1.9}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3187281237437230705}
@@ -5760,11 +5760,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 907f9219b82226d4cb28838c5645fcaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitFlash: {fileID: 0}
   _enemyDetectorArea: {fileID: 0}
-  fx_die: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a, type: 3}
   maxHealth: 10
   currentHealth: 1
+  hasProtect: 0
+  fx_die: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a, type: 3}
 --- !u!114 &3146519808605151725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5889,7 +5889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitParticle: {fileID: 1622961693977746307, guid: dbe5a19ac09fb484a99ff2570e82828b,
     type: 3}
---- !u!114 &2839855654224423281
+--- !u!114 &772259967037647580
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5898,13 +5898,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6621502502083966502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f91cc09bbd089774ca1ff2cbd731a61c, type: 3}
+  m_Script: {fileID: 11500000, guid: c1cb270e21707264698b0b08c2f4f412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
   stopDuration: 3
-  startPoint: {x: -2, y: 0, z: 0}
-  endPoint: {x: 3, y: 0, z: 0}
+  startPoint: {x: -7, y: 0, z: 0}
+  endPoint: {x: 17, y: 0, z: 0}
   canOpenKatana: 0
   katana: {fileID: 8810447324094666809}
 --- !u!1 &7690153039151593696

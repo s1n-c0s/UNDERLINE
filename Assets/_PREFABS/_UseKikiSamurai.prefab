@@ -24,14 +24,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1105081860463323755}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.026176924, y: 0, z: 0, w: 0.99965733}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8684692896096902201}
   m_Father: {fileID: 4360399539140765564}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -3, y: 0, z: 0}
 --- !u!1 &1760020811886588474
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 1817724001585402315}
   - component: {fileID: 8223491474988628967}
   m_Layer: 6
-  m_Name: _KikiSamurai
+  m_Name: _UseKikiSamurai
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -451,8 +451,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 12.36}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.9, y: 1.9, z: 1.9}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4444240093208892525}
   - {fileID: 5657978163302254576}
@@ -472,11 +472,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 907f9219b82226d4cb28838c5645fcaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitFlash: {fileID: 0}
   _enemyDetectorArea: {fileID: 0}
-  fx_die: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a, type: 3}
   maxHealth: 3
-  currentHealth: 0
+  currentHealth: 1
+  hasProtect: 0
+  fx_die: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a, type: 3}
 --- !u!114 &6065848670205569355
 MonoBehaviour:
   m_ObjectHideFlags: 0

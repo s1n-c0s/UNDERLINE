@@ -24,14 +24,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1105081860463323755}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.32309166, z: 0, w: 0.94636774}
+  m_LocalRotation: {x: -0.024772996, y: -0.3229809, z: -0.008457545, w: 0.94604343}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8684692896096902201}
   m_Father: {fileID: 4360399539140765564}
-  m_LocalEulerAnglesHint: {x: 0, y: -37.7, z: 0}
+  m_LocalEulerAnglesHint: {x: -3, y: -37.7, z: 0}
 --- !u!1 &1760020811886588474
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,7 +244,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d166c840d24da494f9f17f2d2f444509, type: 3}
-  m_Color: {r: 0.98039216, g: 0.8469004, b: 0.40392157, a: 1}
+  m_Color: {r: 0.7464613, g: 0.40392157, b: 0.98039216, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -436,7 +436,7 @@ GameObject:
   - component: {fileID: 8223491474988628967}
   - component: {fileID: 799391309148502105}
   m_Layer: 6
-  m_Name: _SquearSamurai 1
+  m_Name: _UseSquearSamurai
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -452,8 +452,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 12.36}
-  m_LocalScale: {x: 1.9053866, y: 1.9053866, z: 1.9053866}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.9, y: 1.9, z: 1.9}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4444240093208892525}
   - {fileID: 5657978163302254576}
@@ -473,11 +473,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 907f9219b82226d4cb28838c5645fcaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitFlash: {fileID: 0}
   _enemyDetectorArea: {fileID: 0}
-  fx_die: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a, type: 3}
   maxHealth: 3
   currentHealth: 0
+  hasProtect: 0
+  fx_die: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a, type: 3}
 --- !u!114 &6065848670205569355
 MonoBehaviour:
   m_ObjectHideFlags: 0
