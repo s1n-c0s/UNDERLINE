@@ -3,13 +3,17 @@ using Lean.Pool;
 
 public class HealthSystem : MonoBehaviour
 {
-    public HitFlashDamage _HitFlash;
-    public EnemyDetectorArea _enemyDetectorArea;
+    /*public HitFlashDamage _HitFlash;*/
+    [SerializeField] private EnemyDetectorArea _enemyDetectorArea;
+    
+    [Header("Health Point")]
+    public int maxHealth = 100;
+    [SerializeField] private int currentHealth;
+    [SerializeField] private bool hasProtect;
+
+    [Header("VFX")]
     public ParticleSystem fx_die;
     
-    public int maxHealth = 100;
-    public int currentHealth;
-
     void Start()
     {
         if (currentHealth == 0) 
@@ -17,34 +21,28 @@ public class HealthSystem : MonoBehaviour
             currentHealth = maxHealth;
         }
 
-        _HitFlash = GetComponent<HitFlashDamage>();
+        /*_HitFlash = GetComponent<HitFlashDamage>();*/
         _enemyDetectorArea = GameObject.FindObjectOfType<EnemyDetectorArea>();
     }
+    
+    public void EnableProtection(bool status)
+    {
+        hasProtect = status;
+    }
+
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-
-        /*
-        if (gameObject.CompareTag("Enemy"))
+        if (!hasProtect)
         {
-            //_HitFlash.playHitModelFX();
+            currentHealth -= damage;
+        
+            if (currentHealth <= 0 )
+            {
+                currentHealth = 0;
+                Die();
+            }
         }
-        */
-
-        if (currentHealth <= 0 )
-        {
-            currentHealth = 0;
-            Die();
-            /*Destroy(gameObject);*/
-            //Debug.Log("Character is dead.");
-        }
-
-        /*if (currentHealth < 0 && gameObject.CompareTag("Player"))
-        {
-            currentHealth = 0;
-            Die();
-        }*/
     }
 
     public void Heal(int heal)
