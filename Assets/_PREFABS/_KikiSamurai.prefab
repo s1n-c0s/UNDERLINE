@@ -472,11 +472,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 907f9219b82226d4cb28838c5645fcaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitFlash: {fileID: 0}
   _enemyDetectorArea: {fileID: 0}
-  fx_die: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a, type: 3}
   maxHealth: 3
   currentHealth: 0
+  hasProtect: 0
+  fx_die: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a, type: 3}
+  fx_attackhit: {fileID: 2440458749352115294, guid: 122da1aa00758c64ea83545da0052b0f,
+    type: 3}
 --- !u!114 &6065848670205569355
 MonoBehaviour:
   m_ObjectHideFlags: 0
