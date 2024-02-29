@@ -11,8 +11,9 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private int currentHealth;
     [SerializeField] private bool hasProtect;
 
-    [Header("VFX")]
+    [Header("VFX")] 
     public ParticleSystem fx_die;
+    [SerializeField] private ParticleSystem fx_attackhit;
     
     void Start()
     {
@@ -36,13 +37,25 @@ public class HealthSystem : MonoBehaviour
         if (!hasProtect)
         {
             currentHealth -= damage;
-        
+            if (!CompareTag("Player"))
+            {
+                playHitAttack();
+            }
+            
             if (currentHealth <= 0 )
             {
                 currentHealth = 0;
                 Die();
             }
         }
+    }
+
+    private void playHitAttack()
+    {
+        ParticleSystem fxInstance = LeanPool.Spawn(fx_attackhit, new Vector3(0,2,0) + transform.position, Quaternion.identity);
+
+        // Destroy the particle effect after 5 seconds
+        LeanPool.Despawn(fxInstance, 3f);
     }
 
     public void Heal(int heal)
