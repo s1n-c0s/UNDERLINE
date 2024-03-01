@@ -8,9 +8,6 @@
         },
         {
             "m_Id": "879ab26668684ae58b18f9e3fbc4a421"
-        },
-        {
-            "m_Id": "45c5ad0a5dbe4b929369ff5e6e02cf74"
         }
     ],
     "m_Keywords": [],
@@ -1070,34 +1067,6 @@
 }
 
 {
-    "m_SGVersion": 1,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
-    "m_ObjectId": "45c5ad0a5dbe4b929369ff5e6e02cf74",
-    "m_Guid": {
-        "m_GuidSerialized": "adc03bb6-faaf-4f74-9cb2-644ba8604140"
-    },
-    "m_Name": "Float",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Float",
-    "m_DefaultReferenceName": "_Float",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_DismissedVersion": 0,
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": 1.0,
-    "m_FloatType": 0,
-    "m_RangeValues": {
-        "x": 0.0,
-        "y": 1.0
-    }
-}
-
-{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.NormalMaterialSlot",
     "m_ObjectId": "48d35b36e4cf4661b2ec622211fa24e7",
@@ -1345,9 +1314,6 @@
         },
         {
             "m_Id": "879ab26668684ae58b18f9e3fbc4a421"
-        },
-        {
-            "m_Id": "45c5ad0a5dbe4b929369ff5e6e02cf74"
         }
     ]
 }
@@ -1717,10 +1683,10 @@
     "m_Guid": {
         "m_GuidSerialized": "5d601ed2-c83e-41c9-a89b-2a3596e7bc1d"
     },
-    "m_Name": "Dissolve",
+    "m_Name": "Fade",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Dissolve",
-    "m_DefaultReferenceName": "_Dissolve",
+    "m_RefNameGeneratedByDisplayName": "Fade",
+    "m_DefaultReferenceName": "_Fade",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
@@ -2311,7 +2277,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "b2db037ec34249379e9a77215a4415b4",
     "m_Id": 0,
-    "m_DisplayName": "Dissolve",
+    "m_DisplayName": "Fade",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
