@@ -7,9 +7,12 @@ public class EnemyMonk : MonoBehaviour
     private HealthSystem _healthSystem;
     public List<GameObject> targets;
     private List<HealthSystem> _targetHealthSystems = new List<HealthSystem>();
+    
+    [Header("Protect Skill")]
     public float protectionDuration = 10f;
     public float cooldownDuration = 5f;
     private bool _isCooldown = false;
+    [SerializeField] private ParticleSystem fx_protectskill;
 
     private void Start()
     {
@@ -47,7 +50,8 @@ public class EnemyMonk : MonoBehaviour
     private IEnumerator ActivateProtection()
     {
         _isCooldown = true;
-
+        Debug.Log("Cooldown started");
+        fx_protectskill.Play();
         ToggleProtection(0, true); // Activate protection for the first enemy
 
         yield return new WaitForSeconds(protectionDuration);
@@ -56,8 +60,10 @@ public class EnemyMonk : MonoBehaviour
 
         yield return new WaitForSeconds(cooldownDuration);
 
+        Debug.Log("Cooldown ended");
         RemoveNullTargets(); // Remove null or missing targets from the list
         _isCooldown = false;
+        fx_protectskill.Stop(); // Stop particle effect when cooldown ends
     }
 
     private void ToggleProtection(int index, bool state)
