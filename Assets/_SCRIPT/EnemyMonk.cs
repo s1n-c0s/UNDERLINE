@@ -35,32 +35,34 @@ public class EnemyMonk : MonoBehaviour
 
     void Update()
     {
+        RemoveNullTargets(); // Clean up before checking to start protection
         if (!_isCooldown && targets.Count > 0)
         {
             StartCoroutine(ActivateProtection());
         }
     }
-
+    
     private IEnumerator ActivateProtection()
     {
         _isCooldown = true;
         Debug.Log("Cooldown started");
         fx_protectskill.Play();
-
+    
         yield return new WaitForSeconds(protectionDuration);
-
+    
+        RemoveNullTargets(); // Ensure the list is clean before toggling protection
         // Assuming fx_protect is managed inside the EnableProtection method of HealthSystem
         ToggleProtection(0, true); // Activate protection for the first enemy
         fx_protectskill.Stop(); // Stop the charging effect
-
+    
         yield return new WaitForSeconds(cooldownDuration);
-
+    
         ToggleProtection(0, false); // Deactivate protection for the first enemy
         Debug.Log("Cooldown ended");
-
-        RemoveNullTargets(); // Clean up any targets that may have been destroyed or are null
+    
         _isCooldown = false;
     }
+
 
     private void ToggleProtection(int index, bool state)
     {
@@ -72,8 +74,10 @@ public class EnemyMonk : MonoBehaviour
 
     private void RemoveNullTargets()
     {
-        _targetHealthSystems.RemoveAll(item => item == null);
+        targets.RemoveAll(item => item == null); // Clean up GameObject list
+        _targetHealthSystems.RemoveAll(item => item == null || item.gameObject == null); // Clean up HealthSystem list, checking both the component and its GameObject
     }
+
 
     private void OnDestroy()
     {
