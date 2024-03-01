@@ -5829,6 +5829,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 3959b8652b943af4398577a6d54fc18b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2482f4d0edd6b4b4e985924ba3f0bf2f, type: 2}
     - target: {fileID: 919132149155446097, guid: 3959b8652b943af4398577a6d54fc18b,
         type: 3}
       propertyPath: m_Name
@@ -5969,6 +5974,21 @@ PrefabInstance:
         type: 3}
       propertyPath: rectangleVertices.Array.data[3].z
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 938004660555449719, guid: 73eb90d0eb97038478889d29ead38e00,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 938004660555449719, guid: 73eb90d0eb97038478889d29ead38e00,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 938004660555449719, guid: 73eb90d0eb97038478889d29ead38e00,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4360399539140765564, guid: 73eb90d0eb97038478889d29ead38e00,
         type: 3}
