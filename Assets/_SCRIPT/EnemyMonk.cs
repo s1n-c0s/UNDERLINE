@@ -23,25 +23,19 @@ public class EnemyMonk : MonoBehaviour
     private void CacheTargetHealthSystems()
     {
         _targetHealthSystems.Clear();
-        if (targets != null)
+        foreach (var target in targets)
         {
-            foreach (var target in targets)
+            var healthSystem = target?.GetComponent<HealthSystem>();
+            if (healthSystem != null)
             {
-                if (target != null)
-                {
-                    var healthSystem = target.GetComponent<HealthSystem>();
-                    if (healthSystem != null)
-                    {
-                        _targetHealthSystems.Add(healthSystem);
-                    }
-                }
+                _targetHealthSystems.Add(healthSystem);
             }
         }
     }
 
     void Update()
     {
-        if (!_isCooldown && targets != null && targets.Count > 0)
+        if (!_isCooldown && targets.Count > 0)
         {
             StartCoroutine(ActivateProtection());
         }
@@ -52,39 +46,37 @@ public class EnemyMonk : MonoBehaviour
         _isCooldown = true;
         Debug.Log("Cooldown started");
         fx_protectskill.Play();
-        ToggleProtection(0, true); // Activate protection for the first enemy
 
         yield return new WaitForSeconds(protectionDuration);
 
-        ToggleProtection(0, false); // Deactivate protection for the first enemy
+        // Assuming fx_protect is managed inside the EnableProtection method of HealthSystem
+        ToggleProtection(0, true); // Activate protection for the first enemy
+        fx_protectskill.Stop(); // Stop the charging effect
 
         yield return new WaitForSeconds(cooldownDuration);
 
+        ToggleProtection(0, false); // Deactivate protection for the first enemy
         Debug.Log("Cooldown ended");
-        RemoveNullTargets(); // Remove null or missing targets from the list
+
+        RemoveNullTargets(); // Clean up any targets that may have been destroyed or are null
         _isCooldown = false;
-        fx_protectskill.Stop(); // Stop particle effect when cooldown ends
     }
 
     private void ToggleProtection(int index, bool state)
     {
-        if (_targetHealthSystems.Count > 0 && index < _targetHealthSystems.Count)
+        if (index < _targetHealthSystems.Count)
         {
-            if (_targetHealthSystems[index] != null)
-            {
-                _targetHealthSystems[index].EnableProtection(state);
-            }
+            _targetHealthSystems[index]?.EnableProtection(state);
         }
     }
 
     private void RemoveNullTargets()
     {
-        _targetHealthSystems.RemoveAll(item => item == null); // Remove null or missing targets
+        _targetHealthSystems.RemoveAll(item => item == null);
     }
 
     private void OnDestroy()
     {
-        // Deactivate protection for all enemies when this enemy is destroyed
         for (int i = 0; i < _targetHealthSystems.Count; i++)
         {
             ToggleProtection(i, false);
