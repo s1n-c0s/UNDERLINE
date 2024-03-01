@@ -7,9 +7,12 @@ public class EnemyMonk : MonoBehaviour
     private HealthSystem _healthSystem;
     public List<GameObject> targets;
     private List<HealthSystem> _targetHealthSystems = new List<HealthSystem>();
+    
+    [Header("Protect Skill")]
     public float protectionDuration = 10f;
     public float cooldownDuration = 5f;
     private bool _isCooldown = false;
+    [SerializeField] private ParticleSystem fx_protectskill;
 
     private void Start()
     {
@@ -20,65 +23,64 @@ public class EnemyMonk : MonoBehaviour
     private void CacheTargetHealthSystems()
     {
         _targetHealthSystems.Clear();
-        if (targets != null)
+        foreach (var target in targets)
         {
-            foreach (var target in targets)
+            var healthSystem = target?.GetComponent<HealthSystem>();
+            if (healthSystem != null)
             {
-                if (target != null)
-                {
-                    var healthSystem = target.GetComponent<HealthSystem>();
-                    if (healthSystem != null)
-                    {
-                        _targetHealthSystems.Add(healthSystem);
-                    }
-                }
+                _targetHealthSystems.Add(healthSystem);
             }
         }
     }
 
     void Update()
     {
-        if (!_isCooldown && targets != null && targets.Count > 0)
+        RemoveNullTargets(); // Clean up before checking to start protection
+        if (!_isCooldown && targets.Count > 0)
         {
             StartCoroutine(ActivateProtection());
         }
     }
-
+    
     private IEnumerator ActivateProtection()
     {
         _isCooldown = true;
-
-        ToggleProtection(0, true); // Activate protection for the first enemy
-
+        Debug.Log("Cooldown started");
+        fx_protectskill.Play();
+    
         yield return new WaitForSeconds(protectionDuration);
-
-        ToggleProtection(0, false); // Deactivate protection for the first enemy
-
+    
+        RemoveNullTargets(); // Ensure the list is clean before toggling protection
+        // Assuming fx_protect is managed inside the EnableProtection method of HealthSystem
+        ToggleProtection(0, true); // Activate protection for the first enemy
+        fx_protectskill.Stop(); // Stop the charging effect
+    
         yield return new WaitForSeconds(cooldownDuration);
-
-        RemoveNullTargets(); // Remove null or missing targets from the list
+    
+        ToggleProtection(0, false); // Deactivate protection for the first enemy
+        Debug.Log("Cooldown ended");
+    
         _isCooldown = false;
     }
 
+
     private void ToggleProtection(int index, bool state)
     {
-        if (_targetHealthSystems.Count > 0 && index < _targetHealthSystems.Count)
+        if (index < _targetHealthSystems.Count)
         {
-            if (_targetHealthSystems[index] != null)
-            {
-                _targetHealthSystems[index].EnableProtection(state);
-            }
+            _targetHealthSystems[index]?.EnableProtection(state);
         }
     }
 
     private void RemoveNullTargets()
     {
-        _targetHealthSystems.RemoveAll(item => item == null); // Remove null or missing targets
+        targets.RemoveAll(item => item == null); // Clean up GameObject list
+        _targetHealthSystems.RemoveAll(item => item == null || item.gameObject == null); // Clean up HealthSystem list, checking both the component and its GameObject
     }
+
 
     private void OnDestroy()
     {
-        // Deactivate protection for all enemies when this enemy is destroyed
         for (int i = 0; i < _targetHealthSystems.Count; i++)
         {
             ToggleProtection(i, false);

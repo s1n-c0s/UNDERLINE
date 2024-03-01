@@ -14,6 +14,7 @@ public class HealthSystem : MonoBehaviour
     [Header("VFX")] 
     public ParticleSystem fx_die;
     [SerializeField] private ParticleSystem fx_attackhit;
+    [SerializeField] private GameObject fx_protect;
     
     void Start()
     {
@@ -29,6 +30,15 @@ public class HealthSystem : MonoBehaviour
     public void EnableProtection(bool status)
     {
         hasProtect = status;
+        fx_protect.SetActive(status);
+        /*if (status)
+        {
+            fx_protect.material.SetFloat("_Fade",1);
+        }
+        else
+        {
+            fx_protect.material.SetFloat("_Fade", -3);
+        }*/
     }
 
 
