@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 1817724001585402315}
   - component: {fileID: 8223491474988628967}
   m_Layer: 6
-  m_Name: _KikiSamurai
+  m_Name: _UseKikiSamurai
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -451,8 +451,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 12.36}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4444240093208892525}
   - {fileID: 5657978163302254576}
