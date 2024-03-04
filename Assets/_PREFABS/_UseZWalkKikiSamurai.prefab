@@ -831,7 +831,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.340137, y: 0.116735816, z: 0.68000007}
-  m_LocalScale: {x: 0.30173, y: 0.30173, z: 0.30173}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 421332151838495346}
@@ -5766,6 +5766,7 @@ MonoBehaviour:
   hasProtect: 0
   fx_die: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a, type: 3}
   fx_attackhit: {fileID: 0}
+  fx_protect: {fileID: 0}
 --- !u!114 &3146519808605151725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6153,7 +6154,7 @@ GameObject:
   - component: {fileID: 5750721500522072358}
   m_Layer: 0
   m_Name: Katana
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
