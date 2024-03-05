@@ -15,10 +15,10 @@ public class SkillBook : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Shuriken"))
+        if (other.CompareTag("Player"))
         {
+           LeanPool.Despawn(gameObject);
            InitBullet(gameObject); 
-           Destroy(gameObject);
         }
     }
 
