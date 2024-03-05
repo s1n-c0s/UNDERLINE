@@ -1,35 +1,67 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Hitbox : MonoBehaviour
 {
     [SerializeField] private HealthSystem _healthSystem;
-
-    [Header("Random")] 
     [SerializeField] private bool _isRandom;
-    [SerializeField] private int[] randomDamages;
-    
-    [SerializeField] private int _SetDamage;
-    
+    [SerializeField] private int[] _randomDamages;
+    [SerializeField] private int _damage;
+
+    private static HashSet<int> _usedDamages = new HashSet<int>();
+
     private void Awake()
     {
-        if (_SetDamage == 0) // If custom damage value is 0, set it to a random value
+        if (_damage == 0)
         {
             _isRandom = true;
-            _SetDamage = GetRandomDamage();
+            _damage = GetRandomDamage();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Shuriken") || other.CompareTag("Enemy"))
+        if (IsTargetCollider(other))
         {
-            _healthSystem.TakeDamage(_SetDamage);
+            _healthSystem.TakeDamage(_damage);
         }
     }
 
     private int GetRandomDamage()
     {
-        int randomIndex = Random.Range(0, randomDamages.Length);
-        return randomDamages[randomIndex];
+        if (_isRandom)
+        {
+            List<int> availableDamages = new List<int>();
+
+            foreach (int damage in _randomDamages)
+            {
+                if (!_usedDamages.Contains(damage))
+                {
+                    availableDamages.Add(damage);
+                }
+            }
+
+            if (availableDamages.Count == 0)
+            {
+                // All damages have been used, reset the used damages set
+                _usedDamages.Clear();
+                availableDamages.AddRange(_randomDamages);
+            }
+
+            int randomIndex = Random.Range(0, availableDamages.Count);
+            int randomDamage = availableDamages[randomIndex];
+            _usedDamages.Add(randomDamage);
+            return randomDamage;
+        }
+        else
+        {
+            return _damage;
+        }
+    }
+
+
+    private bool IsTargetCollider(Collider collider)
+    {
+        return collider.CompareTag("Player") || collider.CompareTag("Shuriken") || collider.CompareTag("Enemy");
     }
 }
