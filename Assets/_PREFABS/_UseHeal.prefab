@@ -41,11 +41,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5566981924610931744}
-  - component: {fileID: 531521254892570000}
+  - component: {fileID: 9035963896676629228}
   - component: {fileID: 8018363070786713557}
   - component: {fileID: 4592040326602400556}
   m_Layer: 0
-  m_Name: _UseSkillBook
+  m_Name: _UseHeal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,7 +69,7 @@ Transform:
   - {fileID: 270972249338641690}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &531521254892570000
+--- !u!114 &9035963896676629228
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -78,16 +78,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2637203413192431154}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88c7d30bcc6a8ca448aa413f5c31a9a8, type: 3}
+  m_Script: {fileID: 11500000, guid: 87dbcc0429e9cff43879646448e6f0e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 1518477889419750770, guid: 1a50697405c808a4c91521607567896c,
-    type: 3}
-  bulletSpeed: 20
-  bulletSpawnRadius: 3
-  timeForDestroy: 2
-  numBullets: 8
-  heightOffset: 2
 --- !u!136 &8018363070786713557
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -514,7 +507,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b8543c42031d8c44bae4661d13d6f702, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.7533188, a: 1}
+  m_Color: {r: 1, g: 0.5203069, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
