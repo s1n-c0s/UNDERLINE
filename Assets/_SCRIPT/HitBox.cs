@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Hitbox : MonoBehaviour
+public class HitBox : MonoBehaviour
 {
     [SerializeField] private E_RandomDamages randomDamagesManager;
     [SerializeField] private HealthSystem _healthSystem;
@@ -30,9 +30,19 @@ public class Hitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Shuriken") || other.CompareTag("Enemy"))
+        switch (other.tag)
+        {
+            case "Player": _healthSystem.TakeDamage(_damage);
+                break;
+            case "Enemy": _healthSystem.TakeDamage(1);
+                break;
+            case "shuriken":_healthSystem.TakeDamage(1);
+                break;
+        }
+        
+        /*if (other.CompareTag("Player") || other.CompareTag("Shuriken") || other.CompareTag("Enemy"))
         {
             _healthSystem.TakeDamage(_damage);
-        }
+        }*/
     }
 }
