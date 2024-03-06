@@ -720,10 +720,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4360399539140765564}
   - component: {fileID: 8514019350733670213}
+  - component: {fileID: 6527529829152144676}
   - component: {fileID: 4200907223889215956}
   - component: {fileID: 8223491474988628967}
   - component: {fileID: 8006796926834433843}
-  - component: {fileID: 6527529829152144676}
   - component: {fileID: 513005468219932935}
   - component: {fileID: 1817724001585402315}
   m_Layer: 6
@@ -776,6 +776,19 @@ MonoBehaviour:
   fx_attackhit: {fileID: 2440458749352115294, guid: 122da1aa00758c64ea83545da0052b0f,
     type: 3}
   fx_protect: {fileID: 5639764745546312181}
+--- !u!114 &6527529829152144676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6576880398642072795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abd00351fcd2c2d40a99c2ea93c66fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomDamages: 01000000010000000100000003000000
 --- !u!114 &4200907223889215956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -829,19 +842,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &6527529829152144676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6576880398642072795}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abd00351fcd2c2d40a99c2ea93c66fb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  randomDamages: 01000000010000000100000003000000
 --- !u!136 &513005468219932935
 CapsuleCollider:
   m_ObjectHideFlags: 0
