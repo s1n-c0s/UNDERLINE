@@ -10,6 +10,9 @@ public class HitBox : MonoBehaviour
     [SerializeField] private bool _isRandom;
     [SerializeField] private int _damage;
 
+    [Header("Heal Player")]
+    [SerializeField] private bool _playerHeal;
+    
     [Header("VFX")]
     [SerializeField] private GameObject _fxWeakpoint;
 
@@ -24,6 +27,7 @@ public class HitBox : MonoBehaviour
 
         if (_damage >= 3)
         {
+            _playerHeal = true;
             _fxWeakpoint.SetActive(true);
         }
     }
@@ -32,11 +36,18 @@ public class HitBox : MonoBehaviour
     {
         switch (other.tag)
         {
-            case "Player": _healthSystem.TakeDamage(_damage);
+            case "Player":
+                _healthSystem.TakeDamage(_damage);
+                if (_playerHeal)
+                {
+                    other.gameObject.GetComponent<HealthSystem>().Heal(1);
+                }
                 break;
-            case "Enemy": _healthSystem.TakeDamage(1);
+            case "Enemy":
+                _healthSystem.TakeDamage(1);
                 break;
-            case "shuriken":_healthSystem.TakeDamage(1);
+            case "shuriken":
+                _healthSystem.TakeDamage(1);
                 break;
         }
         
