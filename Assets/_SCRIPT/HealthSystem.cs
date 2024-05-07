@@ -125,6 +125,11 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
+    public void SetHealth(int num)
+    {
+        currentHealth = num;
+    }
+
     public int GetCurrentHealth()
     {
         return currentHealth;
