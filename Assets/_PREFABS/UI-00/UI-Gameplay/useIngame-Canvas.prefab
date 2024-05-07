@@ -1564,6 +1564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   comboPanel: {fileID: 6032106590035860477}
   comboText: {fileID: 5994575552972310390}
+  hitcombo: 0
   comboResetTime: 2
   fadeDuration: 0.5
 --- !u!223 &8047423282727400704
@@ -2536,7 +2537,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: KILLS
+  m_text: Combo
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2563,7 +2564,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 90.2
+  m_fontSize: 75.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
