@@ -1,38 +1,24 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using System.Linq;
 
 public class EnemyDetectorArea : MonoBehaviour
 {
-    public TextMeshProUGUI enemyCountText;
-    private BoxCollider boxCollider;
     private List<GameObject> detectedEnemies = new List<GameObject>();
-    
+    private Dictionary<GameObject, int> enemyHealthBackup = new Dictionary<GameObject, int>();
+
     [SerializeField] private ParticleSystem[] _speedlinePS;
 
-    private void Start()
-    {
-        foreach (var speedline in _speedlinePS)
-        {
-            speedline.Stop();
-        }
-        boxCollider = GetComponent<BoxCollider>();
-        boxCollider.isTrigger = true;
-        //UpdateEnemyCountText(); // Display initial count
-    }
+    private const int PANIC_COMBO_THRESHOLD = 2;
+    private const float PANIC_DURATION = 3f;
 
-    /*private void Update()
-    {
-        //UpdateEnemyCountText();
-    }*/
+    private bool isInPanicMode = false;
+    private float panicTimer = 0f;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             detectedEnemies.Add(other.gameObject);
-            //UpdateEnemyCountText();
         }
     }
 
@@ -41,7 +27,6 @@ public class EnemyDetectorArea : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && detectedEnemies.Contains(other.gameObject))
         {
             detectedEnemies.Remove(other.gameObject);
-            //UpdateEnemyCountText();
         }
     }
 
@@ -50,41 +35,74 @@ public class EnemyDetectorArea : MonoBehaviour
         if (detectedEnemies.Contains(enemy))
         {
             detectedEnemies.Remove(enemy);
+
+            if (!enemyHealthBackup.ContainsKey(enemy))
+            {
+                enemyHealthBackup.Add(enemy, enemy.GetComponent<HealthSystem>().GetCurrentHealth());
+            }
+
             ICombo.Instance.IncreaseCombo();
 
-            if (ICombo.Instance.hitcombo >= 2)
+            if (ICombo.Instance.hitcombo >= PANIC_COMBO_THRESHOLD)
             {
-                foreach (var speedline in _speedlinePS)
-                {
-                    speedline.Play();
-                }
+                StartPanicMode();
             }
             else
             {
-                foreach (var speedline in _speedlinePS)
-                {
-                    speedline.Stop();
-                }
+                EndPanicMode();
             }
-            //UpdateEnemyCountText();
         }
     }
 
-    private void UpdateEnemyCountText()
+    private void StartPanicMode()
     {
-        if (enemyCountText != null)
+        if (!isInPanicMode)
         {
-            enemyCountText.text = "Enemies: " + detectedEnemies.Count;
+            isInPanicMode = true;
+            panicTimer = 0f;
+            foreach (var enemy in detectedEnemies)
+            {
+                enemyHealthBackup[enemy] = enemy.GetComponent<HealthSystem>().GetCurrentHealth();
+                enemy.GetComponent<HealthSystem>().SetHealth(1);
+            }
+            foreach (var speedline in _speedlinePS)
+            {
+                speedline.Play();
+            }
         }
     }
 
+    private void EndPanicMode()
+    {
+        if (isInPanicMode)
+        {
+            isInPanicMode = false;
+            foreach (var enemy in detectedEnemies)
+            {
+                enemy.GetComponent<HealthSystem>().SetHealth(enemyHealthBackup[enemy]);
+            }
+            enemyHealthBackup.Clear();
+            foreach (var speedline in _speedlinePS)
+            {
+                speedline.Stop();
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if (isInPanicMode)
+        {
+            panicTimer += Time.deltaTime;
+            if (panicTimer >= PANIC_DURATION)
+            {
+                EndPanicMode();
+            }
+        }
+    }
+    
     public int GetCurrentEnemy()
     {
         return detectedEnemies.Count;
-    }
-
-    public GameObject[] GetDetectedEnemiesArray()
-    {
-        return detectedEnemies.ToArray();
     }
 }
