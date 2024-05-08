@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,8 +8,9 @@ public class EnemyDetectorArea : MonoBehaviour
 {
     public TextMeshProUGUI enemyCountText;
     private BoxCollider boxCollider;
-    private List<GameObject> detectedEnemies = new List<GameObject>();
-    
+    public event Action OnEnemyDecreased;
+
+    [SerializeField] private List<GameObject> detectedEnemies = new List<GameObject>();
     [SerializeField] private ParticleSystem[] _speedlinePS;
 
     private void Start()
@@ -52,6 +54,7 @@ public class EnemyDetectorArea : MonoBehaviour
             detectedEnemies.Remove(enemy);
             ICombo.Instance.IncreaseCombo();
 
+            // Trigger speedline particle effects based on combo count
             if (ICombo.Instance.hitcombo >= 2)
             {
                 foreach (var speedline in _speedlinePS)
@@ -66,7 +69,11 @@ public class EnemyDetectorArea : MonoBehaviour
                     speedline.Stop();
                 }
             }
-            //UpdateEnemyCountText();
+
+            // Invoke the OnEnemyDecreased event
+            OnEnemyDecreased?.Invoke();
+
+            //UpdateEnemyCountText(); // Uncomment or implement if updating UI dynamically
         }
     }
 
