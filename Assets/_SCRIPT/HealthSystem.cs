@@ -120,6 +120,9 @@ public class HealthSystem : MonoBehaviour
                 }*/
                 
                 break;
+            case "Wall":
+                Destroy(gameObject);
+                break;
             default:
                 break;
         }

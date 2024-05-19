@@ -99,12 +99,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38c939c42ff0d6b419de42d5c529e331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bomb: {fileID: 1518477889419750770, guid: 1a50697405c808a4c91521607567896c, type: 3}
-  power: 30
+  damage: 3
   radius: 10
-  upforce: 2
-  expposionPrefab: {fileID: 1783276646780061817, guid: 1c0520325bd5b534188c40bef406dc5c,
+  fx_expposion: {fileID: 1783276646780061817, guid: 1c0520325bd5b534188c40bef406dc5c,
     type: 3}
+  drawColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &6827512710951740330
 GameObject:
   m_ObjectHideFlags: 0
