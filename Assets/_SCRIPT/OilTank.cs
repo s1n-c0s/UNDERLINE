@@ -1,16 +1,16 @@
 ﻿using System.Collections;  // อันนี้ระเบิดพร้อมกัน
 using System.Collections.Generic;
+using Lean.Pool;
 using UnityEngine;
 
 public class OilTank : MonoBehaviour
 {
-    public GameObject bomb;
-    public float power = 10.0f;
+    [SerializeField] private int damage = 3;
     public float radius = 5.0f;
-    public float upforce = 1.0f;
-    public GameObject expposionPrefab;
-
-    public Color explosionColor = Color.yellow;
+    
+    [Header("VFX")]
+    public GameObject fx_expposion;
+    public Color drawColor = Color.yellow;
 
     private void Start()
     {
@@ -29,22 +29,23 @@ public class OilTank : MonoBehaviour
         if (collision.rigidbody != null)
         {
             Detonate();
-            Invoke("Detonate", 5);
+            Invoke("Detonate", 5f);
         }
 
     }
     void Detonate()
     {
-        Vector3 explosionPosition = bomb.transform.position;
+        Vector3 explosionPosition = this.transform.position;
         Collider[] colliders = Physics.OverlapSphere(explosionPosition, radius);
 
         foreach (Collider hit in colliders)
         {
-            if (hit.CompareTag("Player") || hit.CompareTag("Enemy"))
+            if (hit.GetComponent<HealthSystem>())
             {
-                // ถ้ามี tag เป็น "Enemy" หรือ "Player" ก็ทำการทำลาย object นี้
-                Instantiate(expposionPrefab, hit.transform.position, hit.transform.rotation);
-                Destroy(hit.gameObject);
+                hit.GetComponent<HealthSystem>().TakeDamage(damage);
+                LeanPool.Spawn(fx_expposion, hit.transform.position, hit.transform.rotation);
+                CameraShake.Shake(1f, 5);
+                
             }
 
             // ไม่ต้องสร้าง explosion force หรือทำลาย game object ที่ไม่ใช่ "Enemy" หรือ "Player"
@@ -56,7 +57,7 @@ public class OilTank : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.color = explosionColor; // ตั้งสีเพื่อแสดงรัศมีระเบิด
+        Gizmos.color = drawColor; // ตั้งสีเพื่อแสดงรัศมีระเบิด
         Gizmos.DrawWireSphere(transform.position, radius); // วาดรูปร่างรัศมีระเบิด
     }
 }
