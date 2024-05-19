@@ -83,7 +83,7 @@ public class HealthSystem : MonoBehaviour
     
     public void Die()
     {
-        if (gameObject.CompareTag("Enemy"))
+        /*if (gameObject.CompareTag("Enemy"))
         {
             // update enemy count
             _enemyDetectorArea.DecreaseEnemy(gameObject);
@@ -94,8 +94,8 @@ public class HealthSystem : MonoBehaviour
 
             // Destroy the particle effect after 5 seconds
             LeanPool.Despawn(fxInstance, 3f);
-        }
-        /*switch (gameObject.tag)
+        }*/
+        switch (gameObject.tag)
         {
             case "Player":
                 break;
@@ -103,16 +103,26 @@ public class HealthSystem : MonoBehaviour
                 // update enemy count
                 _enemyDetectorArea.DecreaseEnemy(gameObject);
                 Destroy(gameObject);
+
                 CameraShake.Shake(0.5f, 2);
             
                 ParticleSystem fxInstance = LeanPool.Spawn(fx_die, Vector3.up + transform.position, Quaternion.identity);
 
                 // Destroy the particle effect after 5 seconds
                 LeanPool.Despawn(fxInstance, 3f);
+                
+                /*
+                Spawner _spawner = GetComponent<Spawner>();
+
+                if (_spawner != null)
+                {
+                    _spawner.SpawnItemsBasedOnChance();
+                }*/
+                
                 break;
             default:
                 break;
-        }*/
+        }
     }
 
     public int GetCurrentHealth()
