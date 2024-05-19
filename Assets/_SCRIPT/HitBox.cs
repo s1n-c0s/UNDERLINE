@@ -44,7 +44,7 @@ public class HitBox : MonoBehaviour
                 }
                 break;
             case "Enemy":
-                _healthSystem.TakeDamage(1);
+                //_healthSystem.TakeDamage(1);
                 break;
             case "shuriken":
                 _healthSystem.TakeDamage(1);
