@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Lean.Pool;
 using UnityEngine;
 
 public class OrbSystem : MonoBehaviour
@@ -7,66 +6,84 @@ public class OrbSystem : MonoBehaviour
     public float radius = 5.0f;
     public float height = 2.0f;
     public float rotationSpeed = 10.0f;
-    public float spawnCooldown = 5.0f;
-    
-    public GameObject orbPrefab;
-    [SerializeField] private int Maxorb;
-    
-    private List<GameObject> orbs = new List<GameObject>(); // Initialize orbs list
-    private Vector3 orbPosition;
-    private float spawnTimer;
+    public float activeCooldown = 5.0f;
+    public List<GameObject> orbPrefabs = new List<GameObject>();
 
-    void Start()
+    private List<GameObject> orbs = new List<GameObject>();
+    private float nextActiveTime;
+
+    private void Start()
     {
-        // Initialize spawn timer
-        spawnTimer = spawnCooldown;
+        nextActiveTime = activeCooldown;
+        SpawnOrbs();
     }
 
-    void Update()
+    private void Update()
     {
         RotateOrbs();
-        RespawnOrbs();
+        UpdateOrbActivation();
     }
 
-    void RotateOrbs()
+    private void RotateOrbs()
     {
         foreach (var orb in orbs)
         {
             if (orb != null)
             {
-                // Rotate the orb around the system's center
                 orb.transform.RotateAround(transform.position, Vector3.up, rotationSpeed * Time.deltaTime);
             }
         }
     }
 
-    void RespawnOrbs()
+    private void UpdateOrbActivation()
     {
-        if (orbs.Count < Maxorb)
+        nextActiveTime -= Time.deltaTime;
+        if (nextActiveTime <= 0f)
         {
-            // Decrement spawn timer
-            spawnTimer -= Time.deltaTime;
-            // If spawn timer reaches 0 or below, spawn a new orb
-            if (spawnTimer <= 0f)
-            {
-                SpawnOrb();
-                // Reset spawn timer to spawn cooldown
-                spawnTimer = spawnCooldown;
-            }
+            ActivateOrb();
+            nextActiveTime = activeCooldown;
         }
     }
 
-    void SpawnOrb()
+    private void ActivateOrb()
     {
-        float angle = Random.Range(0f, Mathf.PI * 2);
-        orbPosition = new Vector3(
-            Mathf.Cos(angle) * radius,
-            height,
-            Mathf.Sin(angle) * radius
-        );
-        // Instantiate the orb at the calculated position
-        GameObject newOrb = LeanPool.Spawn(orbPrefab, transform.position + orbPosition, Quaternion.identity);
-        // Add the spawned orb to the list
-        orbs.Add(newOrb);
+        if (orbs.Count == 0)
+        {
+            Debug.LogWarning("No orbs to activate.");
+            return;
+        }
+
+        int indexToActivate = Random.Range(0, orbs.Count);
+        GameObject orbToActivate = orbs[indexToActivate];
+
+        if (orbToActivate != null && !orbToActivate.activeSelf)
+        {
+            orbToActivate.SetActive(true);
+        }
+    }
+
+    private void SpawnOrbs()
+    {
+        if (orbPrefabs.Count == 0)
+        {
+            Debug.LogWarning("No orb prefabs found.");
+            return;
+        }
+
+        float angleIncrement = 360f / orbPrefabs.Count;
+
+        for (int i = 0; i < orbPrefabs.Count; i++)
+        {
+            float angle = i * angleIncrement * Mathf.Deg2Rad;
+            Vector3 orbPosition = new Vector3(
+                Mathf.Cos(angle) * radius,
+                height,
+                Mathf.Sin(angle) * radius
+            );
+
+            GameObject newOrb = Instantiate(orbPrefabs[i], transform.position + orbPosition, Quaternion.identity);
+            newOrb.SetActive(false); // Set the orb as deactivated initially
+            orbs.Add(newOrb);
+        }
     }
 }
