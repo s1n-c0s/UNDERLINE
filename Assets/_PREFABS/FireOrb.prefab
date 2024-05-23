@@ -85,7 +85,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.7
+  m_Radius: 0.5
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.32, z: 0}
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 010d240a5e398d34db87db6b0ac46596, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 2
+  _fireDamage: 2
 --- !u!1001 &2563972417120113717
 PrefabInstance:
   m_ObjectHideFlags: 0

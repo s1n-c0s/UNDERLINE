@@ -56,4 +56,9 @@ public class HitBox : MonoBehaviour
             _healthSystem.TakeDamage(_damage);
         }*/
     }
+
+    /*public void fireBallHit(int DmgFireball)
+    {
+        _healthSystem.TakeDamage(DmgFireball);
+    }*/
 }
