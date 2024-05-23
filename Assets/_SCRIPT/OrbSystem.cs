@@ -21,14 +21,33 @@ public class OrbSystem : MonoBehaviour
     private void Update()
     {
         RotateOrbs();
-        UpdateOrbActivation();
+        if (CountActiveOrbs() < orbPrefabs.Count)
+        {
+            UpdateOrbActivation();
+        }
+    }
+
+    private int CountActiveOrbs()
+    {
+        int activeOrbs = 0;
+        foreach (var orb in orbs)
+        {
+            if (orb.activeSelf)
+            {
+                activeOrbs++;
+            }
+        }
+        return activeOrbs;
     }
 
     private void RotateOrbs()
     {
         foreach (var orb in orbs)
         {
-            orb?.transform.RotateAround(transform.position, Vector3.up, rotationSpeed * Time.deltaTime);
+            if (orb != null)
+            {
+                orb.transform.RotateAround(transform.position, Vector3.up, rotationSpeed * Time.deltaTime);
+            }
         }
     }
 
@@ -44,19 +63,18 @@ public class OrbSystem : MonoBehaviour
 
     private void ActivateOrb()
     {
-        if (orbs.Count > 0)
-        {
-            int indexToActivate = Random.Range(0, orbs.Count);
-            GameObject orbToActivate = orbs[indexToActivate];
-
-            if (!orbToActivate.activeSelf)
-            {
-                orbToActivate.SetActive(true);
-            }
-        }
-        else
+        if (orbs.Count == 0)
         {
             Debug.LogWarning("No orbs to activate.");
+            return;
+        }
+
+        int indexToActivate = Random.Range(0, orbs.Count);
+        GameObject orbToActivate = orbs[indexToActivate];
+
+        if (!orbToActivate.activeSelf)
+        {
+            orbToActivate.SetActive(true);
         }
     }
 
