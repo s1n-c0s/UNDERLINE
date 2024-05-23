@@ -28,10 +28,7 @@ public class OrbSystem : MonoBehaviour
     {
         foreach (var orb in orbs)
         {
-            if (orb != null)
-            {
-                orb.transform.RotateAround(transform.position, Vector3.up, rotationSpeed * Time.deltaTime);
-            }
+            orb?.transform.RotateAround(transform.position, Vector3.up, rotationSpeed * Time.deltaTime);
         }
     }
 
@@ -47,18 +44,19 @@ public class OrbSystem : MonoBehaviour
 
     private void ActivateOrb()
     {
-        if (orbs.Count == 0)
+        if (orbs.Count > 0)
+        {
+            int indexToActivate = Random.Range(0, orbs.Count);
+            GameObject orbToActivate = orbs[indexToActivate];
+
+            if (!orbToActivate.activeSelf)
+            {
+                orbToActivate.SetActive(true);
+            }
+        }
+        else
         {
             Debug.LogWarning("No orbs to activate.");
-            return;
-        }
-
-        int indexToActivate = Random.Range(0, orbs.Count);
-        GameObject orbToActivate = orbs[indexToActivate];
-
-        if (orbToActivate != null && !orbToActivate.activeSelf)
-        {
-            orbToActivate.SetActive(true);
         }
     }
 
@@ -81,9 +79,30 @@ public class OrbSystem : MonoBehaviour
                 Mathf.Sin(angle) * radius
             );
 
-            GameObject newOrb = Instantiate(orbPrefabs[i], transform.position + orbPosition, Quaternion.identity);
+            GameObject newOrb = Instantiate(orbPrefabs[i], transform.position + orbPosition, Quaternion.identity, transform);
             newOrb.SetActive(false); // Set the orb as deactivated initially
             orbs.Add(newOrb);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, 0.1f); // Draw a small sphere at the center for reference
+        DrawWireCircle(transform.position, radius, height, 360);
+    }
+
+    private void DrawWireCircle(Vector3 center, float radius, float height, int segments)
+    {
+        float angleIncrement = 360f / segments;
+        Vector3 prevPoint = center + new Vector3(Mathf.Cos(0) * radius, height, Mathf.Sin(0) * radius);
+
+        for (int i = 1; i <= segments; i++)
+        {
+            float angle = i * angleIncrement * Mathf.Deg2Rad;
+            Vector3 nextPoint = center + new Vector3(Mathf.Cos(angle) * radius, height, Mathf.Sin(angle) * radius);
+            Gizmos.DrawLine(prevPoint, nextPoint);
+            prevPoint = nextPoint;
         }
     }
 }
