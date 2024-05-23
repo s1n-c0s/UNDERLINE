@@ -410,6 +410,7 @@ MonoBehaviour:
   _healthSystem: {fileID: 8514019350733670213}
   _isRandom: 1
   _damage: 0
+  _playerHeal: 0
   _fxWeakpoint: {fileID: 8255594678588767414}
 --- !u!1 &3182633652563342195
 GameObject:
@@ -482,6 +483,7 @@ MonoBehaviour:
   _healthSystem: {fileID: 8514019350733670213}
   _isRandom: 1
   _damage: 0
+  _playerHeal: 0
   _fxWeakpoint: {fileID: 6575556190355492656}
 --- !u!1 &3622832044530872248
 GameObject:
@@ -598,7 +600,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1800215623348648142}
   m_Layer: 0
-  m_Name: Mark_E-Circle (1)
+  m_Name: Mark_F
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -688,7 +690,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8147381151806704119}
   m_Layer: 0
-  m_Name: Mark_E-Circle (1)
+  m_Name: Mark_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -896,7 +898,7 @@ GameObject:
   m_Component:
   - component: {fileID: 683848603828288630}
   m_Layer: 0
-  m_Name: Mark_E-Circle (1)
+  m_Name: Mark_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1073,6 +1075,7 @@ MonoBehaviour:
   _healthSystem: {fileID: 8514019350733670213}
   _isRandom: 1
   _damage: 0
+  _playerHeal: 0
   _fxWeakpoint: {fileID: 4858717208190022565}
 --- !u!1 &7621778545798945278
 GameObject:
@@ -1145,6 +1148,7 @@ MonoBehaviour:
   _healthSystem: {fileID: 8514019350733670213}
   _isRandom: 1
   _damage: 0
+  _playerHeal: 0
   _fxWeakpoint: {fileID: 6926798729542774755}
 --- !u!1 &7864702709670335574
 GameObject:
@@ -1323,7 +1327,7 @@ GameObject:
   m_Component:
   - component: {fileID: 21923228295652836}
   m_Layer: 0
-  m_Name: Mark_E-Circle (1)
+  m_Name: Mark_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
