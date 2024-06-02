@@ -1,18 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using Lean.Pool;
 using UnityEngine;
 
 public class BulletOrb : MonoBehaviour
 {   
     [SerializeField] private float rotationSpeed = 30f;
+    [SerializeField] private float power = 10f;
     [SerializeField] private float radiusOffset = 5f;
-    [SerializeField] private float heightOffset = 0f; // Adjust this if needed for height
+    [SerializeField] private float heightOffset = 0f;
     [SerializeField] private List<GameObject> items;
+
+    private List<GameObject> instantiatedBullets = new List<GameObject>();
 
     private void Start()
     {
         InitItems();
-        RotateOrb();
+        StartCoroutine(RotateOrb());
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ShootOrb();
+        }
     }
 
     private void InitItems()
@@ -24,28 +36,36 @@ public class BulletOrb : MonoBehaviour
         {
             float angle = angleIncrement * i;
             Quaternion rotation = Quaternion.Euler(0, angle, 0);
-            Vector3 direction = rotation * Vector3.forward;
+            Vector3 position = transform.position + rotation * Vector3.forward * radiusOffset + Vector3.up * heightOffset;
 
-            Vector3 position = transform.position + direction * radiusOffset + Vector3.up * heightOffset;
-
-            Instantiate(items[i], position, rotation, transform);
+            GameObject bullet = LeanPool.Spawn(items[i], position, rotation, transform);
+            bullet.name = "Kunai";
+            instantiatedBullets.Add(bullet);
         }
     }
 
-    private void RotateOrb()
+    private IEnumerator RotateOrb()
     {
-        RotateOnce();
+        while (true)
+        {
+            transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
+            yield return null;
+        }
     }
 
-    private void RotateOnce()
+    private void ShootOrb()
     {
-        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
-        Invoke(nameof(RotateOnce), Time.deltaTime);
-    }
+        foreach (GameObject bullet in instantiatedBullets)
+        {
+            bullet.transform.SetParent(null);
+            Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
+            if (bulletRigidbody != null)
+            {
+                Vector3 direction = bullet.transform.forward;
+                bulletRigidbody.AddForce(direction * power, ForceMode.Impulse);
+            }
+        }
 
-    public void ResetRotation()
-    {
-        transform.rotation = Quaternion.identity;
-        CancelInvoke(nameof(RotateOnce));
+        instantiatedBullets.Clear();
     }
 }
