@@ -4,13 +4,16 @@ using Lean.Pool;
 using UnityEngine;
 
 public class BulletOrb : MonoBehaviour
-{   
+{
     [SerializeField] private float rotationSpeed = 30f;
     [SerializeField] private float power = 10f;
     [SerializeField] private float radiusOffset = 5f;
-    [SerializeField] private float heightOffset = 0f;
+    [SerializeField] private float heightOffset = 2f;
+    [SerializeField] private float cooldown = 1f;
     [SerializeField] private List<GameObject> items;
 
+    private bool canShoot = true;
+    private float timer;
     private List<GameObject> instantiatedBullets = new List<GameObject>();
 
     private void Start()
@@ -21,9 +24,19 @@ public class BulletOrb : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && canShoot)
         {
             ShootOrb();
+        }
+
+        if (!canShoot)
+        {
+            timer -= Time.deltaTime;
+
+            if (timer <= 0)
+            {
+                InitItems();
+            }
         }
     }
 
@@ -41,7 +54,16 @@ public class BulletOrb : MonoBehaviour
             GameObject bullet = LeanPool.Spawn(items[i], position, rotation, transform);
             bullet.name = "Kunai";
             instantiatedBullets.Add(bullet);
+
+            Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
+            if (bulletRigidbody != null)
+            {
+                bulletRigidbody.velocity = Vector3.zero;
+                bulletRigidbody.angularVelocity = Vector3.zero;
+            }
         }
+
+        canShoot = true;
     }
 
     private IEnumerator RotateOrb()
@@ -67,5 +89,7 @@ public class BulletOrb : MonoBehaviour
         }
 
         instantiatedBullets.Clear();
+        canShoot = false;
+        timer = cooldown;
     }
 }
