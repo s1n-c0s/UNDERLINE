@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2257278832335014143}
-  - component: {fileID: 6694670562601316341}
+  - component: {fileID: 5573635897985742652}
   - component: {fileID: 2338263459833092987}
   m_Layer: 0
-  m_Name: Audio-System
+  m_Name: SFX-AudioSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,7 +33,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6694670562601316341
+--- !u!114 &5573635897985742652
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,15 +42,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4813745427238729350}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c8582720451d78448893566099e935f, type: 3}
+  m_Script: {fileID: 11500000, guid: 3052c73a2796d0f4dbd1baa738fb658f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 2338263459833092987}
-  zone:
-  - {fileID: 8300000, guid: b734f2b3938be9044ae6f31ce28a9fec, type: 3}
-  - {fileID: 8300000, guid: a97211c127263224183b0d7708572321, type: 3}
-  - {fileID: 8300000, guid: b734f2b3938be9044ae6f31ce28a9fec, type: 3}
-  - {fileID: 0}
+  soundClips: []
+  volume: 1
 --- !u!82 &2338263459833092987
 AudioSource:
   m_ObjectHideFlags: 0

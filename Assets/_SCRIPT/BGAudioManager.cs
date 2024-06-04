@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class AudioManager : MonoBehaviour
+public class BGAudioManager : MonoBehaviour
 {
-    public static AudioManager instance;
+    public static BGAudioManager Instance;
 
     public AudioSource audioSource;
     public AudioClip[] zone;
@@ -12,14 +12,15 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
+            return;
         }
     }
 
@@ -39,7 +40,6 @@ public class AudioManager : MonoBehaviour
         int levelIndex = scene.buildIndex;
         PlayLevelMusic(levelIndex);
 
-        // Check if the main menu scene is loaded
         if (IsMainMenuScene(levelIndex))
         {
             Destroy(gameObject);
@@ -58,7 +58,6 @@ public class AudioManager : MonoBehaviour
 
                 if (musicToPlay == null && previousClip != null)
                 {
-                    // Play the previous valid AudioClip
                     audioSource.clip = previousClip;
                 }
                 else
@@ -68,7 +67,7 @@ public class AudioManager : MonoBehaviour
 
                 audioSource.Play();
                 currentZoneIndex = zoneIndex;
-                previousClip = musicToPlay; // Store the current clip as the previous valid clip
+                previousClip = musicToPlay;
             }
         }
         else
@@ -81,28 +80,30 @@ public class AudioManager : MonoBehaviour
     {
         if (levelIndex >= 1 && levelIndex <= 3)
         {
-            return 0; // Zone 1
+            return 0;
         }
         else if (levelIndex >= 4 && levelIndex <= 6)
         {
-            return 1; // Zone 2
+            return 1;
         }
         else
         {
-            // Handle other cases as needed
-            return 0; // Default to Zone 1 for unknown levels
+            return 0;
         }
     }
 
     bool IsMainMenuScene(int levelIndex)
     {
-        // Adjust this logic based on the actual build index of your main menu scene
         return levelIndex == 0;
     }
 
-    // Add this method to reset audioSource when a new scene is loaded
     void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    public void ToggleMute(bool mute)
+    {
+        audioSource.mute = mute;
     }
 }

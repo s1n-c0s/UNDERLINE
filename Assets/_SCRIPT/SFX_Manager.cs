@@ -1,28 +1,38 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class SoundManager : MonoBehaviour
+public class SFX_Manager : MonoBehaviour
 {
-    public List<AudioClip> soundClips; // List of audio clips to play
-    public float volume = 1.0f; // Volume level of the sound effects
-    public bool isSoundOn = true; // Flag to control sound on/off
+    public static SFX_Manager Instance;
+
+    public List<AudioClip> soundClips;
+    public float volume = 1.0f;
+    private bool isMuted;
 
     private Dictionary<string, AudioClip> audioClipsByName;
     private List<AudioSource> audioSources;
 
-    void Start()
+    private void Awake()
     {
-        // Initialize the list of AudioSources
-        audioSources = new List<AudioSource>();
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-        // Initialize the dictionary of audio clips by name
+        audioSources = new List<AudioSource>();
         audioClipsByName = new Dictionary<string, AudioClip>();
+
         foreach (AudioClip clip in soundClips)
         {
             audioClipsByName.Add(clip.name, clip);
         }
 
-        // Create an AudioSource for each sound clip
         foreach (AudioClip clip in soundClips)
         {
             AudioSource source = gameObject.AddComponent<AudioSource>();
@@ -33,10 +43,9 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    // Function to play a specific sound effect by name
     public void PlaySound(string clipName)
     {
-        if (!isSoundOn || !audioClipsByName.ContainsKey(clipName))
+        if (isMuted || !audioClipsByName.ContainsKey(clipName))
             return;
 
         AudioClip clip = audioClipsByName[clipName];
@@ -48,7 +57,6 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    // Function to pause a specific sound effect by name
     public void PauseSound(string clipName)
     {
         if (audioClipsByName.ContainsKey(clipName))
@@ -64,7 +72,6 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    // Function to stop a specific sound effect by name
     public void StopSound(string clipName)
     {
         if (audioClipsByName.ContainsKey(clipName))
@@ -80,13 +87,15 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    // Function to toggle sound on/off
-    public void ToggleSound()
+    public void ToggleMute(bool mute)
     {
-        isSoundOn = !isSoundOn;
+        isMuted = mute;
+        foreach (AudioSource source in audioSources)
+        {
+            source.mute = isMuted;
+        }
     }
 
-    // Helper function to get an available AudioSource
     private AudioSource GetAvailableAudioSource()
     {
         foreach (AudioSource source in audioSources)
