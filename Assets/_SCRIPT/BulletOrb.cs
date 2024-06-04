@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Lean.Pool;
@@ -24,10 +25,10 @@ public class BulletOrb : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && canShoot)
+        /*if (Input.GetKeyDown(KeyCode.Space) && canShoot)
         {
             ShootOrb();
-        }
+        }*/
 
         if (!canShoot)
         {
@@ -37,6 +38,14 @@ public class BulletOrb : MonoBehaviour
             {
                 InitItems();
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            ShootOrb();
         }
     }
 
