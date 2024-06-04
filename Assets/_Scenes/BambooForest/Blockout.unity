@@ -1920,6 +1920,26 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 8682351733808418727, guid: 706d31185e0563b41a9a569bc0ed25c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4372885215582781065}
+    - target: {fileID: 8682351733808418727, guid: 706d31185e0563b41a9a569bc0ed25c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleMute
+      objectReference: {fileID: 0}
+    - target: {fileID: 8682351733808418727, guid: 706d31185e0563b41a9a569bc0ed25c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8682351733808418727, guid: 706d31185e0563b41a9a569bc0ed25c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8799909583439589547, guid: 706d31185e0563b41a9a569bc0ed25c3,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -11695,6 +11715,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40b25c5406b31774d9bd884a17ed8a26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4372885215582781065 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8211938523373113567, guid: 36aec9bcaf89f9f49b8042184a141890,
+    type: 3}
+  m_PrefabInstance: {fileID: 6886492780660256822}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a65696f7ad46fc142bdb4cc4483e1adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5039524819508818101
