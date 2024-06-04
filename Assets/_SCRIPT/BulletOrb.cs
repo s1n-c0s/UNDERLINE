@@ -13,6 +13,9 @@ public class BulletOrb : MonoBehaviour
     [SerializeField] private float cooldown = 1f;
     [SerializeField] private List<GameObject> items;
 
+    [Header("VFX")]
+    [SerializeField] private ParticleSystem fx_Shoot;
+
     private bool canShoot = true;
     private float timer;
     private List<GameObject> instantiatedBullets = new List<GameObject>();
@@ -20,16 +23,11 @@ public class BulletOrb : MonoBehaviour
     private void Start()
     {
         InitItems();
-        StartCoroutine(RotateOrb());
     }
 
     private void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.Space) && canShoot)
-        {
-            ShootOrb();
-        }*/
-
+        RotateOrb();
         if (!canShoot)
         {
             timer -= Time.deltaTime;
@@ -78,13 +76,9 @@ public class BulletOrb : MonoBehaviour
         canShoot = true;
     }
 
-    private IEnumerator RotateOrb()
+    private void RotateOrb()
     {
-        while (true)
-        {
-            transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
-            yield return null;
-        }
+        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
     }
 
     private void ShootOrb()
