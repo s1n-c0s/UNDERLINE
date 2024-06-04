@@ -138,18 +138,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a65696f7ad46fc142bdb4cc4483e1adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlaying: 1
+  player: {fileID: 0}
+  enemyDetectorArea: {fileID: 9010885377395136517}
+  _levelNumber: {fileID: 0}
+  _introPanel: {fileID: 0}
+  _ingamePanel: {fileID: 0}
+  isMuted: 0
+  BG_audio: {fileID: 4813745427238729350, guid: ebcf550d4705d1f46ad5cbe4755ce3e7,
+    type: 3}
+  SFX_audio: {fileID: 4813745427238729350, guid: b33dea55e73e945459f99b0cceb672f9,
+    type: 3}
   gameclearFX: {fileID: 0}
   _gameclearUI: {fileID: 0}
   gameoverFX: {fileID: 0}
   _gameoverUI: {fileID: 0}
-  player: {fileID: 0}
-  enemyDetectorArea: {fileID: 9010885377395136517}
-  isPlaying: 1
-  _levelNumber: {fileID: 0}
-  _introPanel: {fileID: 0}
-  _ingamePanel: {fileID: 0}
-  audioSystem: {fileID: 4813745427238729350, guid: ebcf550d4705d1f46ad5cbe4755ce3e7,
-    type: 3}
 --- !u!114 &3508851128368601663
 MonoBehaviour:
   m_ObjectHideFlags: 0

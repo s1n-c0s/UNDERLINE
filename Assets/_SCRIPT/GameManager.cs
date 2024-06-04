@@ -6,54 +6,61 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
-
-    public GameObject gameclearFX;
-    [SerializeField] private CanvasGroup _gameclearUI; 
-    
-    public GameObject gameoverFX;
-    [SerializeField] private CanvasGroup _gameoverUI;
-
+    public bool isPlaying;
     public GameObject player;
     public EnemyDetectorArea enemyDetectorArea;
-    public bool isPlaying;
     
+    [Header("Ingame Ui")]
     [SerializeField] private TextMeshProUGUI _levelNumber;
     [SerializeField] private CanvasGroup _introPanel;
     [SerializeField] private CanvasGroup _ingamePanel;
-    [SerializeField] private GameObject audioSystem;
+
+    [Header("Audio System")]
+    [SerializeField] private bool isMuted;
+    [SerializeField] private GameObject BG_audio;
+    [SerializeField] private GameObject SFX_audio;
     
+    [Header("Endgame Setting")]
+    public GameObject gameclearFX;
+    [SerializeField] private CanvasGroup _gameclearUI;
+    [Space(10)]
+    public GameObject gameoverFX;
+    [SerializeField] private CanvasGroup _gameoverUI;
+
     public enum GameState
     {
         Playing,
         Clear,
         GameOver
-        // Add more states as needed
     }
 
     public GameState CurrentGameState { get; private set; }
 
     private float countdownTimer;
     private const float CountdownDuration = 2f;
-    
-    private float delayBeforeWinCheck = 2f; // Adjust the delay as needed
-    
+    private float delayBeforeWinCheck = 2f;
+
     private void Awake()
     {
-        GameObject GameplayAudio = Instantiate(audioSystem);
-        GameplayAudio.name = "GameplayAudio";
-        
+        // Instantiate the audio system
+        GameObject BG_Audio = Instantiate(BG_audio);
+        GameObject SFX_Audio = Instantiate(SFX_audio);
+
         _levelNumber.text = SceneManager.GetActiveScene().buildIndex.ToString();
+
+        // Load mute preference
+        isMuted = PlayerPrefs.GetInt("Muted", 0) == 1;
     }
+
     private void Start()
     {
         Clear_UI();
         CurrentGameState = GameState.Playing;
         UI_introFade();
-        
-        /*_introPanel.DOFade(1, 1f).OnComplete(() => _introPanel.DOFade(0f,1f).OnComplete(() 
-            => _introPanel.gameObject.SetActive(false)));*/
         ResetCountdownTimer();
+
+        // Apply the mute setting
+        ApplyMute();
     }
 
     private void LateUpdate()
@@ -63,8 +70,13 @@ public class GameManager : MonoBehaviour
             isKillAllEnemy();
             CheckPlayerHealth();
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ToggleMute();
+        }
     }
-    
+
     public void SetGameState(GameState newGameState)
     {
         CurrentGameState = newGameState;
@@ -72,18 +84,14 @@ public class GameManager : MonoBehaviour
         switch (newGameState)
         {
             case GameState.Playing:
-                //Debug.Log("Playing");
                 isPlaying = true;
                 break;
             case GameState.Clear:
-                //Debug.Log("Game Clear");
                 //Show(VFXclear);
                 UI_gameEnd(_gameclearUI);
                 isPlaying = false;
                 break;
-
             case GameState.GameOver:
-                //Debug.Log("Game Over");
                 //Show(VFXgameover);
                 UI_gameEnd(_gameoverUI);
                 isPlaying = false;
@@ -93,9 +101,8 @@ public class GameManager : MonoBehaviour
 
     private void isKillAllEnemy()
     {
-        // Delay the win check
         delayBeforeWinCheck -= Time.deltaTime;
-    
+
         if (delayBeforeWinCheck <= 0f && enemyDetectorArea.GetCurrentEnemy() == 0)
         {
             SetGameState(GameState.Clear);
@@ -108,21 +115,16 @@ public class GameManager : MonoBehaviour
 
         if (playerHealthSystem.GetCurrentHealth() == 0)
         {
-            // Countdown when player's health is zero
             countdownTimer -= Time.deltaTime;
             if (countdownTimer <= 0f)
             {
                 SetGameState(GameState.GameOver);
                 player.SetActive(false);
                 Instantiate(playerHealthSystem.fx_die, player.transform.position, Quaternion.identity);
-                
-                /*ParticleSystem playerDieFx = LeanPool.Spawn(playerHealthSystem.fx_die, Vector3.up + player.transform.position, Quaternion.identity);
-                LeanPool.Despawn(playerDieFx, 3f);*/
             }
         }
         else
         {
-            // Reset countdown when player's health is not zero
             ResetCountdownTimer();
         }
     }
@@ -131,12 +133,12 @@ public class GameManager : MonoBehaviour
     {
         countdownTimer = CountdownDuration;
     }
-    
+
     private void Show(GameObject gameObject)
     {
         gameObject.SetActive(true);
     }
-    
+
     private void UI_introFade()
     {
         _introPanel.gameObject.SetActive(true);
@@ -145,16 +147,29 @@ public class GameManager : MonoBehaviour
                 .OnComplete(() => _introPanel.gameObject.SetActive(false)));
         _ingamePanel.DOFade(1f, 2.5f);
     }
-    
+
     private void UI_gameEnd(CanvasGroup ui)
     {
         ui.gameObject.SetActive(true);
         ui.DOFade(1, 0.5f);
     }
-    
+
     private void Clear_UI()
     {
         _gameclearUI.gameObject.SetActive(false);
         _gameoverUI.gameObject.SetActive(false);
+    }
+
+    public void ToggleMute()
+    {
+        isMuted = !isMuted;
+        PlayerPrefs.SetInt("Muted", isMuted ? 1 : 0);
+        ApplyMute();
+    }
+
+    private void ApplyMute()
+    {
+        SFX_Manager.Instance.ToggleMute(isMuted);
+        BGAudioManager.Instance.ToggleMute(isMuted);
     }
 }
