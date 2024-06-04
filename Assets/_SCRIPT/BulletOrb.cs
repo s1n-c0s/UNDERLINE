@@ -55,6 +55,9 @@ public class BulletOrb : MonoBehaviour
             bullet.name = "Kunai";
             instantiatedBullets.Add(bullet);
 
+            BoxCollider bulletCollider = bullet.GetComponent<BoxCollider>();
+            bulletCollider.enabled = false;
+            
             Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
             if (bulletRigidbody != null)
             {
@@ -86,6 +89,9 @@ public class BulletOrb : MonoBehaviour
                 Vector3 direction = bullet.transform.forward;
                 bulletRigidbody.AddForce(direction * power, ForceMode.Impulse);
             }
+            
+            BoxCollider bulletCollider = bullet.GetComponent<BoxCollider>();
+            bulletCollider.enabled = true;
         }
 
         instantiatedBullets.Clear();
