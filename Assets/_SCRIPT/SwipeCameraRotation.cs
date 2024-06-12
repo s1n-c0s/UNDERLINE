@@ -4,12 +4,15 @@ using System.Collections;
 
 public class SwipeCameraRotation : MonoBehaviour
 {
+    [Header("References")]
     public CinemachineVirtualCamera virtualCamera;
-    public Transform player; // Reference to the player's transform
+    public Transform player;
+
+    [Header("Settings")]
     public float rotationSpeed = 10f;
-    public bool canDrag = true; // Variable to enable/disable dragging
-    public float resetTime = 4f; // Time after which to reset the rotation
-    public float resetDuration = 1f; // Duration over which to smoothly reset
+    public bool canDrag = true;
+    public float resetTime = 4f;
+    public float resetDuration = 1f;
 
     private float rotationY;
     private Vector2 startTouchPosition;
@@ -19,8 +22,11 @@ public class SwipeCameraRotation : MonoBehaviour
 
     void Start()
     {
-        // Initialize rotationY with the current local Y rotation of the camera
         rotationY = virtualCamera.transform.localEulerAngles.y;
+        if (!player)
+        {
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+        }
     }
 
     void Update()
@@ -33,10 +39,7 @@ public class SwipeCameraRotation : MonoBehaviour
         HandleInactivity();
     }
 
-    public void SetCanDrag(bool value)
-    {
-        canDrag = value;
-    }
+    public void SetCanDrag(bool value) => canDrag = value;
 
     void HandleTouchInput()
     {
@@ -48,26 +51,22 @@ public class SwipeCameraRotation : MonoBehaviour
 
         Touch touch = Input.GetTouch(0);
 
-        switch (touch.phase)
+        if (touch.phase == TouchPhase.Began)
         {
-            case TouchPhase.Began:
-                startTouchPosition = touch.position;
-                isDragging = true;
-                ResetInactivityTimer();
-                break;
-            case TouchPhase.Moved:
-                if (isDragging)
-                {
-                    Vector2 touchDelta = touch.position - startTouchPosition;
-                    UpdateRotation(touchDelta.x);
-                    startTouchPosition = touch.position;
-                    ResetInactivityTimer();
-                }
-                break;
-            case TouchPhase.Ended:
-            case TouchPhase.Canceled:
-                isDragging = false;
-                break;
+            startTouchPosition = touch.position;
+            isDragging = true;
+            ResetInactivityTimer();
+        }
+        else if (touch.phase == TouchPhase.Moved && isDragging)
+        {
+            Vector2 touchDelta = touch.position - startTouchPosition;
+            UpdateRotation(touchDelta.x);
+            startTouchPosition = touch.position;
+            ResetInactivityTimer();
+        }
+        else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+        {
+            isDragging = false;
         }
     }
 
@@ -95,7 +94,7 @@ public class SwipeCameraRotation : MonoBehaviour
     void UpdateRotation(float delta)
     {
         rotationY += delta * rotationSpeed;
-        rotationY = NormalizeAngle(rotationY); // Normalize the rotation to stay within -180 to 180 degrees
+        rotationY = NormalizeAngle(rotationY);
         ApplyCameraRotation();
     }
 
@@ -108,11 +107,6 @@ public class SwipeCameraRotation : MonoBehaviour
 
     void HandleInactivity()
     {
-        if (player == null)
-        {
-            player = GameObject.FindGameObjectWithTag("Player").transform;
-        }
-        
         inactivityTimer += Time.deltaTime;
 
         if (inactivityTimer >= resetTime && resetCoroutine == null)
@@ -135,13 +129,12 @@ public class SwipeCameraRotation : MonoBehaviour
     {
         float elapsedTime = 0f;
         float initialRotationY = rotationY;
-        float targetRotationY = player.eulerAngles.y; // Target rotation aligned with player's forward direction
+        float targetRotationY = player.eulerAngles.y;
 
         while (elapsedTime < resetDuration)
         {
             float t = elapsedTime / resetDuration;
-            float easedT = Mathf.SmoothStep(0f, 1f, t); // Cubic ease-out
-            rotationY = Mathf.Lerp(initialRotationY, targetRotationY, easedT);
+            rotationY = Mathf.Lerp(initialRotationY, targetRotationY, Mathf.SmoothStep(0f, 1f, t));
             ApplyCameraRotation();
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -155,7 +148,7 @@ public class SwipeCameraRotation : MonoBehaviour
 
     float NormalizeAngle(float angle)
     {
-        angle = angle % 360f;
+        angle %= 360f;
         if (angle > 180f)
         {
             angle -= 360f;
