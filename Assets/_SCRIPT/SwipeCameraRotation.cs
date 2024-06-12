@@ -1,16 +1,17 @@
+using System;
 using UnityEngine;
 using Cinemachine;
 using System.Collections;
 
 public class SwipeCameraRotation : MonoBehaviour
-{   
+{
     [Header("Settings")]
     public bool canDrag = true;
     public float rotationSpeed = 10f;
-    public float touchSensitivity = 0.1f; // Adjust this to control touch sensitivity
-    public float resetTime = 4f;
-    public float resetDuration = 1f;
-    
+    public float touchSensitivity = 100f;
+    public float resetTime = 3f;
+    public float resetDuration = 2f;
+
     public CinemachineVirtualCamera virtualCamera;
     public Transform player;
 
@@ -23,108 +24,85 @@ public class SwipeCameraRotation : MonoBehaviour
     void Start()
     {
         rotationY = virtualCamera.transform.localEulerAngles.y;
+        
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     void Update()
     {
         if (canDrag)
         {
-            HandleTouchInput();
+            HandleInput();
             HandleInactivity();
         }
-        HandleKeyboardInput();
-       
     }
-
-    public void SetCanDrag(bool value) => canDrag = value;
-
-    void HandleTouchInput()
+    
+    void HandleInput()
     {
-        if (Input.touchCount == 0)
+        if (Input.touchCount > 0)
         {
-            isDragging = false;
-            return;
-        }
+            Touch touch = Input.GetTouch(0);
 
-        Touch touch = Input.GetTouch(0);
-
-        if (touch.phase == TouchPhase.Began)
-        {
-            startTouchPosition = touch.position;
-            isDragging = true;
-            ResetInactivityTimer();
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    StartTouchInput(touch.position);
+                    break;
+                case TouchPhase.Moved:
+                    if (isDragging)
+                        UpdateRotation(touch.position);
+                    break;
+                case TouchPhase.Ended:
+                case TouchPhase.Canceled:
+                    EndTouchInput();
+                    break;
+            }
         }
-        else if (touch.phase == TouchPhase.Moved && isDragging)
+        else if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E))
         {
-            Vector2 touchDelta = touch.position - startTouchPosition;
-            UpdateRotation(touchDelta.x * touchSensitivity);
-            startTouchPosition = touch.position;
-            ResetInactivityTimer();
-        }
-        else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
-        {
-            isDragging = false;
+            HandleKeyboardInput();
         }
     }
 
+    void StartTouchInput(Vector2 position)
+    {
+        startTouchPosition = position;
+        isDragging = true;
+        ResetInactivityTimer();
+    }
+
+    void UpdateRotation(Vector2 currentPosition)
+    {
+        Vector2 touchDelta = currentPosition - startTouchPosition;
+        float delta = touchDelta.x * touchSensitivity * rotationSpeed * Time.deltaTime;
+        rotationY += delta;
+        rotationY = NormalizeAngle(rotationY);
+        ApplyCameraRotation();
+        startTouchPosition = currentPosition;
+        ResetInactivityTimer();
+    }
+
+    void EndTouchInput()
+    {
+        isDragging = false;
+    }
 
     void HandleKeyboardInput()
     {
-        bool rotated = false;
-
-        if (Input.GetKey(KeyCode.Q))
-        {
-            UpdateRotation(-rotationSpeed * Time.deltaTime);
-            rotated = true;
-        }
-        if (Input.GetKey(KeyCode.E))
-        {
-            UpdateRotation(rotationSpeed * Time.deltaTime);
-            rotated = true;
-        }
-
-        if (rotated)
-        {
-            ResetInactivityTimer();
-        }
-    }
-
-    void UpdateRotation(float delta)
-    {
-        rotationY += delta * rotationSpeed;
+        float delta = Input.GetKey(KeyCode.Q) ? -rotationSpeed : rotationSpeed;
+        delta *= Time.deltaTime;
+        rotationY += delta;
         rotationY = NormalizeAngle(rotationY);
         ApplyCameraRotation();
-    }
-
-    void ApplyCameraRotation()
-    {
-        Vector3 currentRotation = virtualCamera.transform.localEulerAngles;
-        currentRotation.y = rotationY;
-        virtualCamera.transform.localRotation = Quaternion.Euler(currentRotation);
+        ResetInactivityTimer();
     }
 
     void HandleInactivity()
     {
-        if (player == null)
-        {
-            player = GameObject.FindGameObjectWithTag("Player").transform;
-        }
-        
         inactivityTimer += Time.deltaTime;
-
         if (inactivityTimer >= resetTime && resetCoroutine == null)
         {
             resetCoroutine = StartCoroutine(SmoothResetRotation());
-        }
-    }
-
-    void ResetInactivityTimer()
-    {
-        inactivityTimer = 0f;
-        if (resetCoroutine != null)
-        {
-            StopCoroutine(resetCoroutine);
-            resetCoroutine = null;
         }
     }
 
@@ -149,15 +127,15 @@ public class SwipeCameraRotation : MonoBehaviour
         ResetInactivityTimer();
     }
 
-    float GetNearestAngle(float targetAngle)
+    void ResetInactivityTimer()
     {
-        float currentAngle = rotationY;
-        float normalizedTargetAngle = NormalizeAngle(targetAngle);
-        float difference = Mathf.DeltaAngle(currentAngle, normalizedTargetAngle);
-        float nearestAngle = currentAngle + difference;
-        return nearestAngle;
+        inactivityTimer = 0f;
+        if (resetCoroutine != null)
+        {
+            StopCoroutine(resetCoroutine);
+            resetCoroutine = null;
+        }
     }
-
 
     float NormalizeAngle(float angle)
     {
@@ -171,5 +149,21 @@ public class SwipeCameraRotation : MonoBehaviour
             angle += 360f;
         }
         return angle;
+    }
+
+    float GetNearestAngle(float targetAngle)
+    {
+        float currentAngle = rotationY;
+        float normalizedTargetAngle = NormalizeAngle(targetAngle);
+        float difference = Mathf.DeltaAngle(currentAngle, normalizedTargetAngle);
+        float nearestAngle = currentAngle + difference;
+        return nearestAngle;
+    }
+
+    void ApplyCameraRotation()
+    {
+        Vector3 currentRotation = virtualCamera.transform.localEulerAngles;
+        currentRotation.y = rotationY;
+        virtualCamera.transform.localRotation = Quaternion.Euler(currentRotation);
     }
 }
