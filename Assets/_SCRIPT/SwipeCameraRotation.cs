@@ -89,7 +89,7 @@ public class SwipeCameraRotation : MonoBehaviour
 
     void HandleKeyboardInput()
     {
-        float delta = Input.GetKey(KeyCode.Q) ? -rotationSpeed : rotationSpeed;
+        float delta = Input.GetKey(KeyCode.Q) ? rotationSpeed * 10f : -rotationSpeed * 10f; // Increase rotation speed for keyboard input
         delta *= Time.deltaTime;
         rotationY += delta;
         rotationY = NormalizeAngle(rotationY);
