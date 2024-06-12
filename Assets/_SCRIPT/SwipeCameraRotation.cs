@@ -5,6 +5,7 @@ using System.Collections;
 public class SwipeCameraRotation : MonoBehaviour
 {
     public CinemachineVirtualCamera virtualCamera;
+    public Transform player; // Reference to the player's transform
     public float rotationSpeed = 10f;
     public bool canDrag = true; // Variable to enable/disable dragging
     public float resetTime = 4f; // Time after which to reset the rotation
@@ -14,13 +15,13 @@ public class SwipeCameraRotation : MonoBehaviour
     private Vector2 startTouchPosition;
     private bool isDragging = false;
     private float inactivityTimer = 0f;
-    private bool isResetting = false;
-    private float resetVelocity = 0f;
+    private Coroutine resetCoroutine;
 
     void Start()
     {
         // Initialize rotationY with the current local Y rotation of the camera
         rotationY = virtualCamera.transform.localEulerAngles.y;
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
     void Update()
@@ -31,10 +32,6 @@ public class SwipeCameraRotation : MonoBehaviour
         }
         HandleKeyboardInput();
         HandleInactivity();
-        if (isResetting)
-        {
-            SmoothResetRotation();
-        }
     }
 
     public void SetCanDrag(bool value)
@@ -116,9 +113,9 @@ public class SwipeCameraRotation : MonoBehaviour
 
         if (inactivityTimer >= resetTime)
         {
-            if (!isResetting)
+            if (resetCoroutine == null)
             {
-                isResetting = true;
+                resetCoroutine = StartCoroutine(SmoothResetRotation());
             }
         }
     }
@@ -126,21 +123,31 @@ public class SwipeCameraRotation : MonoBehaviour
     void ResetInactivityTimer()
     {
         inactivityTimer = 0f;
-        isResetting = false;
-        resetVelocity = 0f;
+        if (resetCoroutine != null)
+        {
+            StopCoroutine(resetCoroutine);
+            resetCoroutine = null;
+        }
     }
 
-    void SmoothResetRotation()
+    IEnumerator SmoothResetRotation()
     {
-        rotationY = Mathf.SmoothDamp(rotationY, 0f, ref resetVelocity, resetDuration);
-        rotationY = NormalizeAngle(rotationY);
-        ApplyCameraRotation();
+        float elapsedTime = 0f;
+        float initialRotationY = rotationY;
+        float targetRotationY = player.eulerAngles.y; // Target rotation aligned with player's forward direction
 
-        if (Mathf.Abs(rotationY) < 0.01f)
+        while (elapsedTime < resetDuration)
         {
-            rotationY = 0f;
-            isResetting = false;
+            rotationY = Mathf.Lerp(initialRotationY, targetRotationY, elapsedTime / resetDuration);
+            ApplyCameraRotation();
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
+
+        rotationY = targetRotationY;
+        ApplyCameraRotation();
+        resetCoroutine = null;
+        ResetInactivityTimer();
     }
 
     float NormalizeAngle(float angle)
