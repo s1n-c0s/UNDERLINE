@@ -192,9 +192,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb130a435100ce43a78b399617622df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  virtualCamera: {fileID: 1251650277387731860}
-  rotationSpeed: 10
   canDrag: 1
+  rotationSpeed: 10
+  touchSensitivity: 3
+  resetTime: 3
+  resetDuration: 2
+  virtualCamera: {fileID: 1251650277387731860}
+  player: {fileID: 0}
 --- !u!1 &5234365130489894169
 GameObject:
   m_ObjectHideFlags: 0
