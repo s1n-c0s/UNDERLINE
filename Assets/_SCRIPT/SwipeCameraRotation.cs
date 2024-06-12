@@ -21,7 +21,6 @@ public class SwipeCameraRotation : MonoBehaviour
     {
         // Initialize rotationY with the current local Y rotation of the camera
         rotationY = virtualCamera.transform.localEulerAngles.y;
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
     void Update()
@@ -109,14 +108,16 @@ public class SwipeCameraRotation : MonoBehaviour
 
     void HandleInactivity()
     {
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+        }
+        
         inactivityTimer += Time.deltaTime;
 
-        if (inactivityTimer >= resetTime)
+        if (inactivityTimer >= resetTime && resetCoroutine == null)
         {
-            if (resetCoroutine == null)
-            {
-                resetCoroutine = StartCoroutine(SmoothResetRotation());
-            }
+            resetCoroutine = StartCoroutine(SmoothResetRotation());
         }
     }
 
@@ -138,7 +139,9 @@ public class SwipeCameraRotation : MonoBehaviour
 
         while (elapsedTime < resetDuration)
         {
-            rotationY = Mathf.Lerp(initialRotationY, targetRotationY, elapsedTime / resetDuration);
+            float t = elapsedTime / resetDuration;
+            float easedT = Mathf.SmoothStep(0f, 1f, t); // Cubic ease-out
+            rotationY = Mathf.Lerp(initialRotationY, targetRotationY, easedT);
             ApplyCameraRotation();
             elapsedTime += Time.deltaTime;
             yield return null;
