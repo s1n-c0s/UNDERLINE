@@ -1,83 +1,163 @@
+using System;
 using UnityEngine;
 using Cinemachine;
+using System.Collections;
 
 public class SwipeCameraRotation : MonoBehaviour
 {
-    public CinemachineVirtualCamera virtualCamera;
+    [Header("Settings")]
+    public bool canDrag = true;
     public float rotationSpeed = 10f;
-    public bool canDrag = true; // Variable to enable/disable dragging
+    public float touchSensitivity = 100f;
+    public float resetTime = 3f;
+    public float resetDuration = 2f;
+
+    public CinemachineVirtualCamera virtualCamera;
+    public Transform player;
 
     private float rotationY;
     private Vector2 startTouchPosition;
     private bool isDragging = false;
+    private float inactivityTimer = 0f;
+    private Coroutine resetCoroutine;
 
     void Start()
     {
-        // Initialize rotationY with the current local Y rotation of the camera
         rotationY = virtualCamera.transform.localEulerAngles.y;
+        
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     void Update()
     {
         if (canDrag)
         {
-            HandleTouchInput();
+            HandleInput();
+            HandleInactivity();
         }
-        HandleKeyboardInput();
+    }
+    
+    void HandleInput()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    StartTouchInput(touch.position);
+                    break;
+                case TouchPhase.Moved:
+                    if (isDragging)
+                        UpdateRotation(touch.position);
+                    break;
+                case TouchPhase.Ended:
+                case TouchPhase.Canceled:
+                    EndTouchInput();
+                    break;
+            }
+        }
+        else if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E))
+        {
+            HandleKeyboardInput();
+        }
     }
 
-    public void SetCanDrag(bool value)
+    void StartTouchInput(Vector2 position)
     {
-        canDrag = value;
+        startTouchPosition = position;
+        isDragging = true;
+        ResetInactivityTimer();
     }
 
-    void HandleTouchInput()
+    void UpdateRotation(Vector2 currentPosition)
     {
-        if (Input.touchCount == 0)
-        {
-            isDragging = false;
-            return;
-        }
+        Vector2 touchDelta = currentPosition - startTouchPosition;
+        float delta = touchDelta.x * touchSensitivity * rotationSpeed * Time.deltaTime;
+        rotationY += delta;
+        rotationY = NormalizeAngle(rotationY);
+        ApplyCameraRotation();
+        startTouchPosition = currentPosition;
+        ResetInactivityTimer();
+    }
 
-        Touch touch = Input.GetTouch(0);
-
-        switch (touch.phase)
-        {
-            case TouchPhase.Began:
-                startTouchPosition = touch.position;
-                isDragging = true;
-                break;
-            case TouchPhase.Moved:
-                if (isDragging)
-                {
-                    Vector2 touchDelta = touch.position - startTouchPosition;
-                    UpdateRotation(touchDelta.x);
-                    startTouchPosition = touch.position;
-                }
-                break;
-            case TouchPhase.Ended:
-            case TouchPhase.Canceled:
-                isDragging = false;
-                break;
-        }
+    void EndTouchInput()
+    {
+        isDragging = false;
     }
 
     void HandleKeyboardInput()
     {
-        if (Input.GetKey(KeyCode.Q))
+        float delta = Input.GetKey(KeyCode.Q) ? rotationSpeed * 10f : -rotationSpeed * 10f; // Increase rotation speed for keyboard input
+        delta *= Time.deltaTime;
+        rotationY += delta;
+        rotationY = NormalizeAngle(rotationY);
+        ApplyCameraRotation();
+        ResetInactivityTimer();
+    }
+
+    void HandleInactivity()
+    {
+        inactivityTimer += Time.deltaTime;
+        if (inactivityTimer >= resetTime && resetCoroutine == null)
         {
-            UpdateRotation(-rotationSpeed * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.E))
-        {
-            UpdateRotation(rotationSpeed * Time.deltaTime);
+            resetCoroutine = StartCoroutine(SmoothResetRotation());
         }
     }
 
-    void UpdateRotation(float delta)
+    IEnumerator SmoothResetRotation()
     {
-        rotationY += delta * rotationSpeed;
+        float initialRotationY = rotationY;
+        float targetRotationY = GetNearestAngle(player.eulerAngles.y);
+
+        float elapsedTime = 0f;
+        while (elapsedTime < resetDuration)
+        {
+            float t = elapsedTime / resetDuration;
+            rotationY = Mathf.Lerp(initialRotationY, targetRotationY, Mathf.SmoothStep(0f, 1f, t));
+            ApplyCameraRotation();
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        rotationY = targetRotationY;
         ApplyCameraRotation();
+        resetCoroutine = null;
+        ResetInactivityTimer();
+    }
+
+    void ResetInactivityTimer()
+    {
+        inactivityTimer = 0f;
+        if (resetCoroutine != null)
+        {
+            StopCoroutine(resetCoroutine);
+            resetCoroutine = null;
+        }
+    }
+
+    float NormalizeAngle(float angle)
+    {
+        angle %= 360f;
+        if (angle > 180f)
+        {
+            angle -= 360f;
+        }
+        else if (angle < -180f)
+        {
+            angle += 360f;
+        }
+        return angle;
+    }
+
+    float GetNearestAngle(float targetAngle)
+    {
+        float currentAngle = rotationY;
+        float normalizedTargetAngle = NormalizeAngle(targetAngle);
+        float difference = Mathf.DeltaAngle(currentAngle, normalizedTargetAngle);
+        float nearestAngle = currentAngle + difference;
+        return nearestAngle;
     }
 
     void ApplyCameraRotation()

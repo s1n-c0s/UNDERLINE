@@ -95,13 +95,13 @@ public class PlayerController : MonoBehaviour
         if (isRunning)
         {
             HandleRunning();
-            swipeCameraRotation.SetCanDrag(false);
+            swipeCameraRotation.canDrag = false;
         }
 
         if (Input.GetMouseButtonUp(0) && isRunning)
         {
             HandleMouseUp();
-            swipeCameraRotation.SetCanDrag(true);
+            swipeCameraRotation.canDrag = true;
         }
     }
 
