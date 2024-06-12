@@ -34,9 +34,10 @@ public class SwipeCameraRotation : MonoBehaviour
         if (canDrag)
         {
             HandleTouchInput();
+            HandleInactivity();
         }
         HandleKeyboardInput();
-        HandleInactivity();
+       
     }
 
     public void SetCanDrag(bool value) => canDrag = value;
