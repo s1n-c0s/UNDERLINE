@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using Lean.Pool;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
