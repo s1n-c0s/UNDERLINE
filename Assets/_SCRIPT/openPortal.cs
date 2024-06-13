@@ -4,34 +4,17 @@ using UnityEngine;
 
 public class openPortal : MonoBehaviour
 {
-    public bool canOpenPortal;
-    public GameObject portal;
-    public int allEnemyCount;
-
-    private EnemyDetector enemyDetector;
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        enemyDetector = GetComponent<EnemyDetector>();
-        allEnemyCount = enemyDetector.detectedEnemyCount;
+        gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        if (allEnemyCount != 0)
+        if (other.CompareTag("Player"))
         {
-            canOpenPortal = true;
-            if (canOpenPortal == true)  // Use == for comparison, not =
-            {
-                portal.SetActive(true); // Activate the portal GameObject
-            }
-        }
-        else
-        {
-            canOpenPortal = false;
-            portal.SetActive(false); // Deactivate the portal GameObject
+            other.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GameManager.Instance.SetGameState(GameManager.GameState.Clear);
         }
     }
 }
