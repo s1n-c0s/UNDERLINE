@@ -9,22 +9,21 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public GameObject gameclearFX;
-    [SerializeField] private CanvasGroup _gameclearUI; 
-    
+    [SerializeField] private CanvasGroup _gameclearUI;
     public GameObject gameoverFX;
     [SerializeField] private CanvasGroup _gameoverUI;
 
     public GameObject player;
     [SerializeField] private List<ZoneManager> Zones;
-    
+
     public bool isPlaying;
-    
+
     [SerializeField] private TextMeshProUGUI _levelNumber;
     [SerializeField] private CanvasGroup _introPanel;
     [SerializeField] private CanvasGroup _ingamePanel;
     [SerializeField] private GameObject audioSystem;
     public GameObject portal;
-    
+
     public enum GameState
     {
         Playing,
@@ -36,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     private float countdownTimer;
     private const float CountdownDuration = 2f;
-    
+
     private void Awake()
     {
         if (Instance == null)
@@ -47,27 +46,14 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
-        GameObject GameplayAudio = Instantiate(audioSystem);
-        GameplayAudio.name = "GameplayAudio";
-        
+
+        Instantiate(audioSystem).name = "GameplayAudio";
         _levelNumber.text = SceneManager.GetActiveScene().buildIndex.ToString();
     }
-    
+
     private void Start()
     {
-        Clear_UI();
-        CurrentGameState = GameState.Playing;
-        UI_introFade();
-        ResetCountdownTimer();
-
-        Zones.AddRange(FindObjectsOfType<ZoneManager>());
-
-        // Subscribe to zone clear events
-        foreach (ZoneManager zone in Zones)
-        {
-            zone.OnZoneClear += HandleZoneClear;
-        }
+        InitializeGame();
     }
 
     private void LateUpdate()
@@ -77,57 +63,61 @@ public class GameManager : MonoBehaviour
             CheckPlayerHealth();
         }
     }
-    
+
+    private void InitializeGame()
+    {
+        ClearUI();
+        SetGameState(GameState.Playing);
+        FadeUI(_introPanel, true, 1f, () =>
+        {
+            FadeUI(_introPanel, false, 1f);
+            FadeUI(_ingamePanel, true, 2.5f);
+        });
+
+        ResetCountdownTimer();
+        Zones.AddRange(FindObjectsOfType<ZoneManager>());
+
+        foreach (var zone in Zones)
+        {
+            zone.OnZoneClear += HandleZoneClear;
+        }
+    }
+
     public void SetGameState(GameState newGameState)
     {
         CurrentGameState = newGameState;
+        isPlaying = newGameState == GameState.Playing;
 
         switch (newGameState)
         {
-            case GameState.Playing:
-                isPlaying = true;
-                break;
             case GameState.Clear:
-                UI_gameEnd(_gameclearUI);
-                isPlaying = false;
+                EndGame(_gameclearUI);
                 break;
-
             case GameState.GameOver:
-                UI_gameEnd(_gameoverUI);
-                isPlaying = false;
+                EndGame(_gameoverUI);
                 break;
         }
     }
 
     private void HandleZoneClear(ZoneManager zone)
     {
-        // Check if all zones are clear
         if (AllZonesClear())
         {
-            // Open the portal when all zones are clear
             portal.SetActive(true);
         }
     }
 
     private bool AllZonesClear()
     {
-        foreach (ZoneManager zone in Zones)
-        {
-            if (!zone.isClear)
-            {
-                return false;
-            }
-        }
-        return true;
+        return Zones.TrueForAll(zone => zone.isClear);
     }
 
     private void CheckPlayerHealth()
     {
-        HealthSystem playerHealthSystem = player.GetComponent<HealthSystem>();
+        var playerHealthSystem = player.GetComponent<HealthSystem>();
 
         if (playerHealthSystem.GetCurrentHealth() == 0)
         {
-            // Countdown when player's health is zero
             countdownTimer -= Time.deltaTime;
             if (countdownTimer <= 0f)
             {
@@ -138,7 +128,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // Reset countdown when player's health is not zero
             ResetCountdownTimer();
         }
     }
@@ -147,30 +136,28 @@ public class GameManager : MonoBehaviour
     {
         countdownTimer = CountdownDuration;
     }
-    
-    private void Show(GameObject gameObject)
-    {
-        gameObject.SetActive(true);
-    }
-    
-    private void UI_introFade()
-    {
-        _introPanel.gameObject.SetActive(true);
-        _introPanel.DOFade(1, 1f)
-            .OnComplete(() => _introPanel.DOFade(0f, 1f)
-                .OnComplete(() => _introPanel.gameObject.SetActive(false)));
-        _ingamePanel.DOFade(1f, 2.5f);
-    }
-    
-    private void UI_gameEnd(CanvasGroup ui)
-    {
-        ui.gameObject.SetActive(true);
-        ui.DOFade(1, 0.5f);
-    }
-    
-    private void Clear_UI()
+
+    private void ClearUI()
     {
         _gameclearUI.gameObject.SetActive(false);
         _gameoverUI.gameObject.SetActive(false);
+    }
+
+    private void FadeUI(CanvasGroup ui, bool fadeIn, float duration, TweenCallback onComplete = null)
+    {
+        ui.gameObject.SetActive(true);
+        ui.DOFade(fadeIn ? 1 : 0, duration).OnComplete(() =>
+        {
+            if (!fadeIn)
+            {
+                ui.gameObject.SetActive(false);
+            }
+            onComplete?.Invoke();
+        });
+    }
+
+    private void EndGame(CanvasGroup ui)
+    {
+        FadeUI(ui, true, 0.5f);
     }
 }
