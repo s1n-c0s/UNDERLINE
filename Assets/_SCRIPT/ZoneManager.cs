@@ -6,12 +6,11 @@ using UnityEngine;
 
 public class ZoneManager : MonoBehaviour
 {
+    public int zoneOrder; // Add this property
     public event Action<ZoneManager> OnZoneClear;
     
     public bool isClear;
     [SerializeField] private List<GameObject> doors;
-    //[SerializeField] private List<GameObject> Prefabs;
-
     [SerializeField] private List<GameObject> Enemys;
 
     private void Start()
@@ -22,14 +21,13 @@ public class ZoneManager : MonoBehaviour
             door.SetActive(false);
         }
 
-        // Subscribe to enemy death events
+        // Subscribe to enemy death events and deactivate them initially
         foreach (GameObject enemyObj in Enemys)
         {
             if (enemyObj.TryGetComponent<HealthSystem>(out HealthSystem enemy))
             {
                 enemy.OnEnemyDeath += HandleEnemyDeath;
             }
-            enemyObj.SetActive(false);
         }
     }
 
@@ -43,6 +41,14 @@ public class ZoneManager : MonoBehaviour
         if (Enemys.Count == 0 && !isClear)
         {
             ZoneClear();
+        }
+    }
+
+    public void ActivateEnemies(bool isActive)
+    {
+        foreach (GameObject activeEnemy in Enemys)
+        {
+            activeEnemy.SetActive(isActive);
         }
     }
 
@@ -69,16 +75,6 @@ public class ZoneManager : MonoBehaviour
             {
                 door.SetActive(true);
             }
-            
-            foreach (GameObject enemy in Enemys)
-            {
-                enemy.SetActive(true);
-            }
-
-            /*for (int i = 0; i < Prefabs.Count; i++)
-            {
-                Enemys[i] = LeanPool.Spawn(Prefabs[i]);
-            }*/
         }
     }
 

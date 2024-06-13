@@ -76,10 +76,18 @@ public class GameManager : MonoBehaviour
 
         ResetCountdownTimer();
         Zones.AddRange(FindObjectsOfType<ZoneManager>());
+        Zones.Sort((z1, z2) => z1.zoneOrder.CompareTo(z2.zoneOrder)); // Ensure zones are sorted by order
 
-        foreach (var zone in Zones)
+        foreach (ZoneManager zone in Zones)
         {
             zone.OnZoneClear += HandleZoneClear;
+            zone.ActivateEnemies(false); // Ensure enemies are inactive initially
+        }
+
+        // Activate the first zone and its enemies
+        if (Zones.Count > 0)
+        {
+            Zones[0].ActivateEnemies(true);
         }
     }
 
@@ -101,6 +109,14 @@ public class GameManager : MonoBehaviour
 
     private void HandleZoneClear(ZoneManager zone)
     {
+        // Find the index of the cleared zone
+        int clearedZoneIndex = Zones.IndexOf(zone);
+        if (clearedZoneIndex != -1 && clearedZoneIndex < Zones.Count - 1)
+        {
+            // Activate enemies in the next zone
+            Zones[clearedZoneIndex + 1].ActivateEnemies(true);
+        }
+        
         if (AllZonesClear())
         {
             portal.SetActive(true);
