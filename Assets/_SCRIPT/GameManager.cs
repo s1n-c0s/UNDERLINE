@@ -23,13 +23,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CanvasGroup _introPanel;
     [SerializeField] private CanvasGroup _ingamePanel;
     [SerializeField] private GameObject audioSystem;
+    public GameObject portal;
     
     public enum GameState
     {
         Playing,
         Clear,
         GameOver
-        // Add more states as needed
     }
 
     public GameState CurrentGameState { get; private set; }
@@ -37,10 +37,17 @@ public class GameManager : MonoBehaviour
     private float countdownTimer;
     private const float CountdownDuration = 2f;
     
-    private float delayBeforeWinCheck = 2f; // Adjust the delay as needed
-    
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
         GameObject GameplayAudio = Instantiate(audioSystem);
         GameplayAudio.name = "GameplayAudio";
         
@@ -97,8 +104,8 @@ public class GameManager : MonoBehaviour
         // Check if all zones are clear
         if (AllZonesClear())
         {
-            SetGameState(GameState.Clear);
-            Debug.Log(CurrentGameState);
+            // Open the portal when all zones are clear
+            portal.SetActive(true);
         }
     }
 
