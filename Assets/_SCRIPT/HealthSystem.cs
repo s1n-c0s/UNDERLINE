@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Lean.Pool;
 
@@ -10,6 +11,8 @@ public class HealthSystem : MonoBehaviour
     public int maxHealth = 100;
     [SerializeField] private int currentHealth;
     [SerializeField] private bool hasProtect;
+    
+    public event Action<HealthSystem> OnEnemyDeath;
 
     [Header("VFX")] 
     public ParticleSystem fx_die;
@@ -102,6 +105,8 @@ public class HealthSystem : MonoBehaviour
             case "Enemy":
                 // update enemy count
                 _enemyDetectorArea.DecreaseEnemy(gameObject);
+                
+                OnEnemyDeath?.Invoke(this);
                 Destroy(gameObject);
 
                 CameraShake.Shake(0.6f, 5);
