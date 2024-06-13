@@ -6,8 +6,10 @@ using UnityEngine;
 
 public class ZoneManager : MonoBehaviour
 {
-    [SerializeField] private bool isClear;
-    [SerializeField] private GameObject door;
+    public event Action<ZoneManager> OnZoneClear;
+    
+    public bool isClear;
+    [SerializeField] private List<GameObject> doors;
     //[SerializeField] private List<GameObject> Prefabs;
 
     [SerializeField] private List<GameObject> Enemys;
@@ -15,7 +17,10 @@ public class ZoneManager : MonoBehaviour
     private void Start()
     {
         isClear = false;
-        door.SetActive(false);
+        foreach (GameObject door in doors)
+        {
+            door.SetActive(false);
+        }
 
         // Subscribe to enemy death events
         foreach (GameObject enemyObj in Enemys)
@@ -59,7 +64,11 @@ public class ZoneManager : MonoBehaviour
     {
         if (!isClear)
         {
-            door.SetActive(true);
+            foreach (GameObject door in doors)
+            {
+                door.SetActive(true);
+            }
+            
             foreach (GameObject enemy in Enemys)
             {
                 enemy.SetActive(true);
@@ -75,7 +84,11 @@ public class ZoneManager : MonoBehaviour
     private void ZoneClear()
     {
         isClear = true;
-        door.SetActive(false);
+        foreach (GameObject door in doors)
+        {
+            door.SetActive(false);
+        }
+        OnZoneClear?.Invoke(this);
     }
 
     private void OnTriggerEnter(Collider other)

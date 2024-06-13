@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using Lean.Pool;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -15,7 +17,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CanvasGroup _gameoverUI;
 
     public GameObject player;
-    public EnemyDetectorArea enemyDetectorArea;
+    [SerializeField] private List<ZoneManager> Zones;
+    
     public bool isPlaying;
     
     [SerializeField] private TextMeshProUGUI _levelNumber;
@@ -45,22 +48,27 @@ public class GameManager : MonoBehaviour
         
         _levelNumber.text = SceneManager.GetActiveScene().buildIndex.ToString();
     }
+    
     private void Start()
     {
         Clear_UI();
         CurrentGameState = GameState.Playing;
         UI_introFade();
-        
-        /*_introPanel.DOFade(1, 1f).OnComplete(() => _introPanel.DOFade(0f,1f).OnComplete(() 
-            => _introPanel.gameObject.SetActive(false)));*/
         ResetCountdownTimer();
+
+        Zones.AddRange(FindObjectsOfType<ZoneManager>());
+
+        // Subscribe to zone clear events
+        foreach (ZoneManager zone in Zones)
+        {
+            zone.OnZoneClear += HandleZoneClear;
+        }
     }
 
     private void LateUpdate()
     {
         if (isPlaying && CurrentGameState == GameState.Playing)
         {
-            isKillAllEnemy();
             CheckPlayerHealth();
         }
     }
@@ -72,34 +80,40 @@ public class GameManager : MonoBehaviour
         switch (newGameState)
         {
             case GameState.Playing:
-                //Debug.Log("Playing");
                 isPlaying = true;
                 break;
             case GameState.Clear:
-                //Debug.Log("Game Clear");
-                //Show(VFXclear);
                 UI_gameEnd(_gameclearUI);
                 isPlaying = false;
                 break;
 
             case GameState.GameOver:
-                //Debug.Log("Game Over");
-                //Show(VFXgameover);
                 UI_gameEnd(_gameoverUI);
                 isPlaying = false;
                 break;
         }
     }
 
-    private void isKillAllEnemy()
+    private void HandleZoneClear(ZoneManager zone)
     {
-        // Delay the win check
-        delayBeforeWinCheck -= Time.deltaTime;
-    
-        if (delayBeforeWinCheck <= 0f && enemyDetectorArea.GetCurrentEnemy() == 0)
+        // Check if all zones are clear
+        if (AllZonesClear())
         {
             SetGameState(GameState.Clear);
+            Debug.Log(CurrentGameState);
         }
+    }
+
+    private bool AllZonesClear()
+    {
+        foreach (ZoneManager zone in Zones)
+        {
+            if (!zone.isClear)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void CheckPlayerHealth()
@@ -115,9 +129,6 @@ public class GameManager : MonoBehaviour
                 SetGameState(GameState.GameOver);
                 player.SetActive(false);
                 Instantiate(playerHealthSystem.fx_die, player.transform.position, Quaternion.identity);
-                
-                /*ParticleSystem playerDieFx = LeanPool.Spawn(playerHealthSystem.fx_die, Vector3.up + player.transform.position, Quaternion.identity);
-                LeanPool.Despawn(playerDieFx, 3f);*/
             }
         }
         else
