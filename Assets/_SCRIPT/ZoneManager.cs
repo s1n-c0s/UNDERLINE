@@ -1,17 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Lean.Pool;
 using UnityEngine;
 
 public class ZoneManager : MonoBehaviour
 {
     public int zoneOrder; // Add this property
+    public bool usingChance; // Add this property
     public event Action<ZoneManager> OnZoneClear;
-    
+
+    [Serializable]
+    private class EnemyPrefabs
+    {
+        public GameObject enemyPrefab;
+        [Range(0f, 100f)]
+        public float activeChancePercent; // Chance in percent
+    }
+
     public bool isClear;
     [SerializeField] private List<GameObject> doors;
-    [SerializeField] private List<GameObject> Enemys;
+    [SerializeField] private List<EnemyPrefabs> Enemys;
+
+    private List<GameObject> activeEnemies = new List<GameObject>();
 
     private void Start()
     {
@@ -19,15 +29,6 @@ public class ZoneManager : MonoBehaviour
         foreach (GameObject door in doors)
         {
             door.SetActive(false);
-        }
-
-        // Subscribe to enemy death events and deactivate them initially
-        foreach (GameObject enemyObj in Enemys)
-        {
-            if (enemyObj.TryGetComponent<HealthSystem>(out HealthSystem enemy))
-            {
-                enemy.OnEnemyDeath += HandleEnemyDeath;
-            }
         }
     }
 
@@ -38,7 +39,7 @@ public class ZoneManager : MonoBehaviour
 
     private void CheckEnemies()
     {
-        if (Enemys.Count == 0 && !isClear)
+        if (activeEnemies.Count == 0 && !isClear)
         {
             ZoneClear();
         }
@@ -46,9 +47,39 @@ public class ZoneManager : MonoBehaviour
 
     public void ActivateEnemies(bool isActive)
     {
-        foreach (GameObject activeEnemy in Enemys)
+        foreach (EnemyPrefabs enemyObj in Enemys)
         {
-            activeEnemy.SetActive(isActive);
+            if (usingChance)
+            {
+                // Convert percentage chance to a probability
+                float randomValue = UnityEngine.Random.Range(0f, 100f);
+                if (randomValue <= enemyObj.activeChancePercent)
+                {
+                    enemyObj.enemyPrefab.SetActive(isActive);
+                    RegisterEnemy(enemyObj.enemyPrefab);
+                }
+                else
+                {
+                    enemyObj.enemyPrefab.SetActive(false);
+                }
+            }
+            else
+            {
+                enemyObj.enemyPrefab.SetActive(isActive);
+                RegisterEnemy(enemyObj.enemyPrefab);
+            }
+        }
+    }
+
+    private void RegisterEnemy(GameObject enemyObj)
+    {
+        if (enemyObj.TryGetComponent<HealthSystem>(out HealthSystem enemy))
+        {
+            if (!activeEnemies.Contains(enemyObj))
+            {
+                activeEnemies.Add(enemyObj);
+                enemy.OnEnemyDeath += HandleEnemyDeath;
+            }
         }
     }
 
@@ -58,10 +89,10 @@ public class ZoneManager : MonoBehaviour
         enemy.OnEnemyDeath -= HandleEnemyDeath;
 
         // Remove the enemy from the list
-        Enemys.Remove(enemy.gameObject);
+        activeEnemies.Remove(enemy.gameObject);
 
         // Check if all enemies are cleared
-        if (Enemys.Count == 0)
+        if (activeEnemies.Count == 0)
         {
             ZoneClear();
         }
@@ -75,6 +106,8 @@ public class ZoneManager : MonoBehaviour
             {
                 door.SetActive(true);
             }
+            
+            ActivateEnemies(true);
         }
     }
 
