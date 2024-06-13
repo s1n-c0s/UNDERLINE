@@ -29,6 +29,7 @@ public class ZoneManager : MonoBehaviour
             {
                 enemy.OnEnemyDeath += HandleEnemyDeath;
             }
+            enemyObj.SetActive(false);
         }
     }
 
