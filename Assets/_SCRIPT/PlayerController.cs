@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour
     private Vector3 targetPosition;
     private bool isRunning = false;
     private Collider playerCollider;
-    private EnemyDetector enemyDetector;
 
     public int runsRemaining = 3;
     public float maxPower = 20f;
@@ -52,7 +51,6 @@ public class PlayerController : MonoBehaviour
         startPosition = transform.position;
         targetPosition = startPosition;
         playerCollider = GetComponent<Collider>();
-        enemyDetector = GetComponent<EnemyDetector>();
         swipeCameraRotation = FindObjectOfType<SwipeCameraRotation>();
         
         //lastStartPosition = startPosition;
