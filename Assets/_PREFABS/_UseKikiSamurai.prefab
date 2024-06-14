@@ -410,6 +410,7 @@ MonoBehaviour:
   _healthSystem: {fileID: 8514019350733670213}
   _isRandom: 1
   _damage: 0
+  _playerHeal: 0
   _fxWeakpoint: {fileID: 8255594678588767414}
 --- !u!1 &3182633652563342195
 GameObject:
@@ -423,7 +424,7 @@ GameObject:
   - component: {fileID: 6007233459356118131}
   - component: {fileID: 8643662722238615302}
   m_Layer: 0
-  m_Name: Hitbox_Right
+  m_Name: Hitbox_Back
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -482,6 +483,7 @@ MonoBehaviour:
   _healthSystem: {fileID: 8514019350733670213}
   _isRandom: 1
   _damage: 0
+  _playerHeal: 0
   _fxWeakpoint: {fileID: 6575556190355492656}
 --- !u!1 &3622832044530872248
 GameObject:
@@ -1073,6 +1075,7 @@ MonoBehaviour:
   _healthSystem: {fileID: 8514019350733670213}
   _isRandom: 1
   _damage: 0
+  _playerHeal: 0
   _fxWeakpoint: {fileID: 4858717208190022565}
 --- !u!1 &7621778545798945278
 GameObject:
@@ -1086,7 +1089,7 @@ GameObject:
   - component: {fileID: 8460891452382461256}
   - component: {fileID: 7034817677547723018}
   m_Layer: 0
-  m_Name: Hitbox_Back
+  m_Name: Hitbox_Right
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1145,6 +1148,7 @@ MonoBehaviour:
   _healthSystem: {fileID: 8514019350733670213}
   _isRandom: 1
   _damage: 0
+  _playerHeal: 0
   _fxWeakpoint: {fileID: 6926798729542774755}
 --- !u!1 &7864702709670335574
 GameObject:
