@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
             zone.ActivateEnemies(false); // Ensure enemies are inactive initially
         }
 
-        // Activate the first zone and its enemies
+        // Activate the first zone's enemies
         if (Zones.Count > 0)
         {
             Zones[0].ActivateEnemies(true);
@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
             // Activate enemies in the next zone
             Zones[clearedZoneIndex + 1].ActivateEnemies(true);
         }
-        
+
         if (AllZonesClear())
         {
             portal.SetActive(true);

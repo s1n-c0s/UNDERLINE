@@ -1,12 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ZoneManager : MonoBehaviour
 {
-    public int zoneOrder; // Add this property
-    public bool usingChance; // Add this property
+    public int zoneOrder;
+    public bool usingChance;
     public event Action<ZoneManager> OnZoneClear;
 
     [Serializable]
@@ -14,22 +13,21 @@ public class ZoneManager : MonoBehaviour
     {
         public GameObject enemyPrefab;
         [Range(0f, 100f)]
-        public float activeChancePercent; // Chance in percent
+        public float activeChancePercent;
     }
 
     public bool isClear;
+    public bool isPlayed;
     [SerializeField] private List<GameObject> doors;
     [SerializeField] private List<EnemyPrefabs> Enemys;
 
-    private List<GameObject> activeEnemies = new List<GameObject>();
+    [SerializeField] private List<GameObject> activeEnemies = new List<GameObject>();
 
     private void Start()
     {
         isClear = false;
-        foreach (GameObject door in doors)
-        {
-            door.SetActive(false);
-        }
+        isPlayed = false;
+        SetDoorsActive(false);
     }
 
     private void LateUpdate()
@@ -39,7 +37,7 @@ public class ZoneManager : MonoBehaviour
 
     private void CheckEnemies()
     {
-        if (activeEnemies.Count == 0 && !isClear)
+        if (activeEnemies.Count == 0 && !isClear && isPlayed)
         {
             ZoneClear();
         }
@@ -49,13 +47,12 @@ public class ZoneManager : MonoBehaviour
     {
         foreach (EnemyPrefabs enemyObj in Enemys)
         {
-            if (usingChance)
+            if (usingChance && isActive)
             {
-                // Convert percentage chance to a probability
                 float randomValue = UnityEngine.Random.Range(0f, 100f);
                 if (randomValue <= enemyObj.activeChancePercent)
                 {
-                    enemyObj.enemyPrefab.SetActive(isActive);
+                    enemyObj.enemyPrefab.SetActive(true);
                     RegisterEnemy(enemyObj.enemyPrefab);
                 }
                 else
@@ -66,7 +63,14 @@ public class ZoneManager : MonoBehaviour
             else
             {
                 enemyObj.enemyPrefab.SetActive(isActive);
-                RegisterEnemy(enemyObj.enemyPrefab);
+                if (isActive)
+                {
+                    RegisterEnemy(enemyObj.enemyPrefab);
+                }
+                else
+                {
+                    UnregisterEnemy(enemyObj.enemyPrefab);
+                }
             }
         }
     }
@@ -83,15 +87,23 @@ public class ZoneManager : MonoBehaviour
         }
     }
 
+    private void UnregisterEnemy(GameObject enemyObj)
+    {
+        if (enemyObj.TryGetComponent<HealthSystem>(out HealthSystem enemy))
+        {
+            if (activeEnemies.Contains(enemyObj))
+            {
+                enemy.OnEnemyDeath -= HandleEnemyDeath;
+                activeEnemies.Remove(enemyObj);
+            }
+        }
+    }
+
     private void HandleEnemyDeath(HealthSystem enemy)
     {
-        // Unsubscribe from the event to prevent memory leaks
         enemy.OnEnemyDeath -= HandleEnemyDeath;
-
-        // Remove the enemy from the list
         activeEnemies.Remove(enemy.gameObject);
 
-        // Check if all enemies are cleared
         if (activeEnemies.Count == 0)
         {
             ZoneClear();
@@ -102,23 +114,23 @@ public class ZoneManager : MonoBehaviour
     {
         if (!isClear)
         {
-            foreach (GameObject door in doors)
-            {
-                door.SetActive(true);
-            }
-            
-            ActivateEnemies(true);
+            SetDoorsActive(true);
         }
     }
 
     private void ZoneClear()
     {
         isClear = true;
+        SetDoorsActive(false);
+        OnZoneClear?.Invoke(this);
+    }
+
+    public void SetDoorsActive(bool isActive)
+    {
         foreach (GameObject door in doors)
         {
-            door.SetActive(false);
+            door.SetActive(isActive);
         }
-        OnZoneClear?.Invoke(this);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -126,6 +138,7 @@ public class ZoneManager : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             ZoneStart();
+            isPlayed = true;
         }
     }
 }
