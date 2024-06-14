@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyDetectorArea : MonoBehaviour
 {
-    private List<GameObject> detectedEnemies = new List<GameObject>();
+    [SerializeField] private List<GameObject> detectedEnemies = new List<GameObject>();
     private Dictionary<GameObject, int> enemyHealthBackup = new Dictionary<GameObject, int>();
 
     [SerializeField] private ParticleSystem[] _speedlinePS;
@@ -19,6 +19,15 @@ public class EnemyDetectorArea : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             detectedEnemies.Add(other.gameObject);
+            int currentHealth = other.gameObject.GetComponent<HealthSystem>().GetCurrentHealth();
+            if (!enemyHealthBackup.ContainsKey(other.gameObject))
+            {
+                enemyHealthBackup.Add(other.gameObject, currentHealth);
+            }
+            if (isInPanicMode)
+            {
+                other.gameObject.GetComponent<HealthSystem>().SetHealth(1);
+            }
         }
     }
 
@@ -27,6 +36,7 @@ public class EnemyDetectorArea : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && detectedEnemies.Contains(other.gameObject))
         {
             detectedEnemies.Remove(other.gameObject);
+            enemyHealthBackup.Remove(other.gameObject);
         }
     }
 
@@ -60,10 +70,13 @@ public class EnemyDetectorArea : MonoBehaviour
         {
             isInPanicMode = true;
             panicTimer = 0f;
-            foreach (var enemy in detectedEnemies)
+            foreach (GameObject enemy in detectedEnemies)
             {
-                enemyHealthBackup[enemy] = enemy.GetComponent<HealthSystem>().GetCurrentHealth();
-                enemy.GetComponent<HealthSystem>().SetHealth(1);
+                if (enemy != null)
+                {
+                    enemyHealthBackup[enemy] = enemy.GetComponent<HealthSystem>().GetCurrentHealth();
+                    enemy.GetComponent<HealthSystem>().SetHealth(1);
+                }
             }
             foreach (var speedline in _speedlinePS)
             {
@@ -77,9 +90,12 @@ public class EnemyDetectorArea : MonoBehaviour
         if (isInPanicMode)
         {
             isInPanicMode = false;
-            foreach (var enemy in detectedEnemies)
+            foreach (GameObject enemy in detectedEnemies)
             {
-                enemy.GetComponent<HealthSystem>().SetHealth(enemyHealthBackup[enemy]);
+                if (enemy != null && enemyHealthBackup.ContainsKey(enemy))
+                {
+                    enemy.GetComponent<HealthSystem>().SetHealth(enemyHealthBackup[enemy]);
+                }
             }
             enemyHealthBackup.Clear();
             foreach (var speedline in _speedlinePS)
