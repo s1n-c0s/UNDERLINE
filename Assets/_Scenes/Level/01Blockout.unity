@@ -4298,7 +4298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zoneOrder: 2
-  usingChance: 1
+  usingChance: 0
   isClear: 0
   isPlayed: 0
   doors:
@@ -4341,13 +4341,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 270660740}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.65225637, z: -0, w: 0.7579984}
-  m_LocalPosition: {x: 46.9, y: 38, z: 52.41}
+  m_LocalRotation: {x: -0, y: 0.70710576, z: -0, w: 0.7071079}
+  m_LocalPosition: {x: 45.1, y: 38, z: 52.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 81.424, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &319657903
 GameObject:
   m_ObjectHideFlags: 0
@@ -28765,7 +28765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zoneOrder: 1
-  usingChance: 1
+  usingChance: 0
   isClear: 0
   isPlayed: 0
   doors:
@@ -28808,13 +28808,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131038146}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.09369969, z: -0, w: 0.9956005}
-  m_LocalPosition: {x: 117.5, y: 31.5, z: 39.75}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 117.5, y: 31.5, z: 41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -10.753, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &685755422118671122 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7772634933744938690, guid: 508115f35f45fe64a9b91cd68dddd9e3,
