@@ -38,12 +38,19 @@ public class ICombo : MonoBehaviour
 
     public void IncreaseCombo()
     {
-        comboText.transform.DOPunchScale(Vector3.one * 0.5f, 0.3f, 10, 1f);
         hitcombo++;
         comboText.text = hitcombo.ToString();
         timer = 0f;
 
-        // Only fade in if the combo panel is not already active
+        // Ensure any existing punch scale animation is completed before starting a new one
+        comboText.transform.DOKill(true);
+
+        // Reset the scale to the original value before applying the punch scale effect
+        comboText.transform.localScale = Vector3.one;
+
+        // Create a punch scale effect using a sequence
+        comboText.transform.DOPunchScale(Vector3.one * 0.5f, 0.3f, 10, 1f).SetUpdate(true);
+
         if (!comboPanel.activeSelf)
         {
             FadeInComboPanel();
@@ -64,7 +71,6 @@ public class ICombo : MonoBehaviour
 
     private void FadeOutComboPanel()
     {
-        // Only initiate fade-out if the combo panel is currently active
         if (comboPanel.activeSelf)
         {
             comboCanvasGroup.DOFade(0f, fadeDuration).OnComplete(() =>
