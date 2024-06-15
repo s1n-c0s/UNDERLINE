@@ -24,8 +24,9 @@ public class SwipeCameraRotation : MonoBehaviour
     void Start()
     {
         rotationY = virtualCamera.transform.localEulerAngles.y;
-        
+        virtualCamera = GetComponent<CinemachineVirtualCamera>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        virtualCamera.Follow = player;
     }
 
     void Update()
