@@ -105,7 +105,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb130a435100ce43a78b399617622df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDrag: 1
   rotationSpeed: 10
   touchSensitivity: 1
   resetTime: 5
@@ -5232,7 +5231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb130a435100ce43a78b399617622df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDrag: 1
   rotationSpeed: 10
   touchSensitivity: 1
   resetTime: 5
@@ -5272,9 +5270,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1622337226893918416, guid: dd0dff37dc8140143b9904956e7ccf5e,
         type: 3}
+      propertyPath: speedlinePS.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1622337226893918416, guid: dd0dff37dc8140143b9904956e7ccf5e,
+        type: 3}
       propertyPath: _speedlinePS.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1622337226893918416, guid: dd0dff37dc8140143b9904956e7ccf5e,
+        type: 3}
+      propertyPath: speedlinePS.Array.data[0]
+      value: 
+      objectReference: {fileID: 5082625963815319867}
+    - target: {fileID: 1622337226893918416, guid: dd0dff37dc8140143b9904956e7ccf5e,
+        type: 3}
+      propertyPath: speedlinePS.Array.data[1]
+      value: 
+      objectReference: {fileID: 4811482673888433800}
     - target: {fileID: 1622337226893918416, guid: dd0dff37dc8140143b9904956e7ccf5e,
         type: 3}
       propertyPath: _speedlinePS.Array.data[0]
