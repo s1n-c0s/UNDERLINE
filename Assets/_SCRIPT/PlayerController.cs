@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
             HandleRunning();
             foreach (SwipeCameraRotation camera in _swipeCameraRotation)
             {
-                camera.canDrag = false;
+                camera.iscanDrag = false;
             }
         }
 
@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
             HandleMouseUp();
             foreach (SwipeCameraRotation camera in _swipeCameraRotation)
             {
-                camera.canDrag = true;
+                camera.iscanDrag = true;
             }
         }
     }
