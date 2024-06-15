@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Text;
@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     public float runningAngularDamping = 10f;
 
     public TextMeshProUGUI runsRemainingText;
-    public SwipeCameraRotation swipeCameraRotation;
+    public List<SwipeCameraRotation> _swipeCameraRotation;
     
     public bool IsMoving { get; private set; }
 
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
         startPosition = transform.position;
         targetPosition = startPosition;
         playerCollider = GetComponent<Collider>();
-        swipeCameraRotation = FindObjectOfType<SwipeCameraRotation>();
+        _swipeCameraRotation.Add(FindObjectOfType<SwipeCameraRotation>());
         
         //lastStartPosition = startPosition;
         UpdateRunsRemainingText();
@@ -77,11 +77,6 @@ public class PlayerController : MonoBehaviour
         CheckGrounded();
     }
 
-    void FixedUpdate()
-    {
-        // Physics-related operations can go here
-    }
-
     void HandleRunningInput()
     {
         if (Input.GetMouseButtonDown(0))
@@ -93,13 +88,19 @@ public class PlayerController : MonoBehaviour
         if (isRunning)
         {
             HandleRunning();
-            swipeCameraRotation.canDrag = false;
+            foreach (SwipeCameraRotation camera in _swipeCameraRotation)
+            {
+                camera.canDrag = false;
+            }
         }
 
         if (Input.GetMouseButtonUp(0) && isRunning)
         {
             HandleMouseUp();
-            swipeCameraRotation.canDrag = true;
+            foreach (SwipeCameraRotation camera in _swipeCameraRotation)
+            {
+                camera.canDrag = true;
+            }
         }
     }
 
