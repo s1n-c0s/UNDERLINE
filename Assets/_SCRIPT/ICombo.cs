@@ -42,13 +42,8 @@ public class ICombo : MonoBehaviour
         comboText.text = hitcombo.ToString();
         timer = 0f;
 
-        // Ensure any existing punch scale animation is completed before starting a new one
-        comboText.transform.DOKill(true);
-
-        // Reset the scale to the original value before applying the punch scale effect
+        comboText.transform.DOKill();
         comboText.transform.localScale = Vector3.one;
-
-        // Create a punch scale effect using a sequence
         comboText.transform.DOPunchScale(Vector3.one * 0.5f, 0.3f, 10, 1f).SetUpdate(true);
 
         if (!comboPanel.activeSelf)
