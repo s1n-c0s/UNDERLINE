@@ -5,8 +5,14 @@ using System.Collections;
 
 public class SwipeCameraRotation : MonoBehaviour
 {
-    [Header("Settings")]
-    public bool canDrag = true;
+    [Header("Settings")] 
+    private static bool canDrag;
+    public bool iscanDrag
+    {
+        get => canDrag;
+        set => canDrag = value;
+    }
+
     public float rotationSpeed = 10f;
     public float touchSensitivity = 100f;
     public float resetTime = 3f;
