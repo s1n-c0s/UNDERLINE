@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,9 +8,8 @@ public class EnemyDetectorArea : MonoBehaviour
     private Dictionary<GameObject, int> enemyHealthBackup = new Dictionary<GameObject, int>();
 
     [SerializeField] private ParticleSystem[] _speedlinePS;
-
-    private const int PANIC_COMBO_THRESHOLD = 2;
-    private const float PANIC_DURATION = 3f;
+    [SerializeField] private int PANIC_COMBO_THRESHOLD = 2;
+    [SerializeField] private float PANIC_DURATION = 8f;
 
     private bool isInPanicMode = false;
     private float panicTimer = 0f;
