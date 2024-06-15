@@ -101,9 +101,10 @@ public class EnemyDetectorArea : MonoBehaviour
 
     private void ExtendPanicMode()
     {
-        panicTimer -= panicExtendDuration;
-        panicTimer = Mathf.Max(panicTimer, 0f);
+        // Do not reset panicTimer on extension
+        panicTimer += panicExtendDuration;
     }
+
 
     private void EndPanicMode()
     {

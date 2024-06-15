@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 public class ICombo : MonoBehaviour
 {
@@ -10,11 +11,13 @@ public class ICombo : MonoBehaviour
     public TextMeshProUGUI comboText;
 
     public int hitcombo = 0;
-    private float timer = 0f;
+    private float comboTimer = 0f;
     public float comboResetTime = 2f;
     public float fadeDuration = 0.5f;
 
     private CanvasGroup comboCanvasGroup;
+
+    private bool isInPanicMode = false;
 
     private void Awake()
     {
@@ -27,12 +30,16 @@ public class ICombo : MonoBehaviour
         HideComboPanel();
     }
 
-    private void LateUpdate()
+    private void Update()
     {
-        timer += Time.deltaTime;
-        if (timer >= comboResetTime)
+        // Update combo timer
+        if (!isInPanicMode)
         {
-            ResetCombo();
+            comboTimer += Time.deltaTime;
+            if (comboTimer >= comboResetTime)
+            {
+                ResetCombo();
+            }
         }
     }
 
@@ -40,40 +47,58 @@ public class ICombo : MonoBehaviour
     {
         hitcombo++;
         comboText.text = hitcombo.ToString();
-        timer = 0f;
+        comboTimer = 0f; // Reset combo timer on combo increase
 
         comboText.transform.DOKill();
         comboText.transform.localScale = Vector3.one;
         comboText.transform.DOPunchScale(Vector3.one * 0.5f, 0.3f, 10, 1f).SetUpdate(true);
 
-        if (!comboPanel.activeSelf)
+        if (!comboPanel.activeSelf && !isInPanicMode)
         {
             FadeInComboPanel();
         }
     }
 
+
     public void ResetCombo()
     {
-        FadeOutComboPanel();
-        timer = 0f;
+        if (!isInPanicMode)
+        {
+            // Fade out combo panel first, then reset hitcombo
+            FadeOutComboPanel(() =>
+            {
+                hitcombo = 0;
+                comboText.text = hitcombo.ToString();
+            });
+        }
+        else
+        {
+            // Directly reset hitcombo if in panic mode
+            hitcombo = 0;
+            comboText.text = hitcombo.ToString();
+        }
     }
 
     private void FadeInComboPanel()
     {
         comboPanel.SetActive(true);
+        comboCanvasGroup.alpha = 0f; // Ensure alpha is 0 before fade-in
         comboCanvasGroup.DOFade(1f, fadeDuration);
     }
 
-    private void FadeOutComboPanel()
+    private void FadeOutComboPanel(Action onComplete = null)
     {
         if (comboPanel.activeSelf)
         {
             comboCanvasGroup.DOFade(0f, fadeDuration).OnComplete(() =>
             {
                 comboPanel.SetActive(false);
-                hitcombo = 0;
-                comboText.text = hitcombo.ToString();
+                onComplete?.Invoke();
             });
+        }
+        else
+        {
+            onComplete?.Invoke();
         }
     }
 
