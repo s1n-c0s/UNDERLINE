@@ -15,6 +15,14 @@ public class EnemyDetectorArea : MonoBehaviour
     private bool isInPanicMode = false;
     private float panicTimer = 0f;
 
+    private ICombo comboManager;
+
+    private void Start()
+    {
+        comboManager = FindObjectOfType<ICombo>();
+        comboManager.UpdatePanicDurations(PANIC_DURATION, panicExtendDuration); // Update initial panic durations
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
@@ -56,9 +64,9 @@ public class EnemyDetectorArea : MonoBehaviour
                 enemyHealthBackup.Add(enemy, enemy.GetComponent<HealthSystem>().GetCurrentHealth());
             }
 
-            ICombo.Instance.IncreaseCombo();
+            comboManager.IncreaseCombo();
 
-            if (ICombo.Instance.hitcombo >= PANIC_COMBO_THRESHOLD)
+            if (comboManager.GetComboCount() >= PANIC_COMBO_THRESHOLD)
             {
                 if (isInPanicMode)
                 {
@@ -96,15 +104,16 @@ public class EnemyDetectorArea : MonoBehaviour
             {
                 speedline.Play();
             }
+
+            comboManager.SetPanicMode(true);
         }
     }
 
     private void ExtendPanicMode()
     {
-        // Do not reset panicTimer on extension
-        panicTimer += panicExtendDuration;
+        panicTimer -= panicExtendDuration;
+        panicTimer = Mathf.Max(panicTimer, 0f);
     }
-
 
     private void EndPanicMode()
     {
@@ -126,6 +135,8 @@ public class EnemyDetectorArea : MonoBehaviour
             {
                 speedline.Stop();
             }
+
+            comboManager.SetPanicMode(false);
         }
     }
 
@@ -141,7 +152,7 @@ public class EnemyDetectorArea : MonoBehaviour
         }
     }
 
-    public int GetCurrentEnemy()
+    public int GetCurrentEnemyCount()
     {
         return detectedEnemies.Count;
     }
