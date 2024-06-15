@@ -8910,55 +8910,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &527877000 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3583149215366260406, guid: 36aec9bcaf89f9f49b8042184a141890,
-    type: 3}
-  m_PrefabInstance: {fileID: 6886492780660256822}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &527877003 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1251650277387731860, guid: 36aec9bcaf89f9f49b8042184a141890,
-    type: 3}
-  m_PrefabInstance: {fileID: 6886492780660256822}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 527877000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &527877004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 527877000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cb130a435100ce43a78b399617622df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canDrag: 1
-  rotationSpeed: 10
-  touchSensitivity: 1
-  resetTime: 5
-  resetDuration: 2
-  virtualCamera: {fileID: 527877003}
-  player: {fileID: 0}
---- !u!114 &527877005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 527877000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6efdb9bde2e4af4b8b6feabe132df50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &529031639
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30105,15 +30056,7 @@ PrefabInstance:
     - {fileID: 3508851128368601663, guid: 36aec9bcaf89f9f49b8042184a141890, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3583149215366260406, guid: 36aec9bcaf89f9f49b8042184a141890,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 527877004}
-    - targetCorrespondingSourceObject: {fileID: 3583149215366260406, guid: 36aec9bcaf89f9f49b8042184a141890,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 527877005}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36aec9bcaf89f9f49b8042184a141890, type: 3}
 --- !u!4 &8861168203431724940
 Transform:
