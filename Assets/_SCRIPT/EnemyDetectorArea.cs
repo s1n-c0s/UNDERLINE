@@ -12,7 +12,6 @@ public class EnemyDetectorArea : MonoBehaviour
     [SerializeField] private int PANIC_COMBO_THRESHOLD = 2;
     [SerializeField] private float PANIC_DURATION = 8f;
     [SerializeField] private float panicExtendDuration = 2f;
-    [SerializeField] private CanvasGroup panicModeUI;
 
     private bool isInPanicMode = false;
     private float panicTimer = 0f;
@@ -92,7 +91,6 @@ public class EnemyDetectorArea : MonoBehaviour
             {
                 speedline.Play();
             }
-            ShowPanicModeUI();
         }
     }
 
@@ -103,7 +101,6 @@ public class EnemyDetectorArea : MonoBehaviour
         {
             panicTimer = 0f;
         }
-        ShowPanicModeUI();
     }
 
     private void EndPanicMode()
@@ -123,7 +120,6 @@ public class EnemyDetectorArea : MonoBehaviour
             {
                 speedline.Stop();
             }
-            HidePanicModeUI();
         }
     }
 
@@ -142,21 +138,5 @@ public class EnemyDetectorArea : MonoBehaviour
     public int GetCurrentEnemy()
     {
         return detectedEnemies.Count;
-    }
-
-    private void ShowPanicModeUI()
-    {
-        panicModeUI.DOFade(1f, 0.5f).SetUpdate(true); // Ensures UI fades in
-        panicModeUI.interactable = true;
-        panicModeUI.blocksRaycasts = true;
-    }
-
-    private void HidePanicModeUI()
-    {
-        panicModeUI.DOFade(0f, 0.5f).SetUpdate(true).OnComplete(() =>
-        {
-            panicModeUI.interactable = false;
-            panicModeUI.blocksRaycasts = false;
-        }); // Ensures UI fades out
     }
 }
