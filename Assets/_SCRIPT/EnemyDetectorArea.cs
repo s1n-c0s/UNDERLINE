@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -8,7 +7,7 @@ public class EnemyDetectorArea : MonoBehaviour
     [SerializeField] private List<GameObject> detectedEnemies = new List<GameObject>();
     private Dictionary<GameObject, int> enemyHealthBackup = new Dictionary<GameObject, int>();
 
-    [SerializeField] private ParticleSystem[] _speedlinePS;
+    [SerializeField] private ParticleSystem[] speedlinePS;
     [SerializeField] private int PANIC_COMBO_THRESHOLD = 2;
     [SerializeField] private float PANIC_DURATION = 8f;
     [SerializeField] private float panicExtendDuration = 2f;
@@ -20,15 +19,18 @@ public class EnemyDetectorArea : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            detectedEnemies.Add(other.gameObject);
-            int currentHealth = other.gameObject.GetComponent<HealthSystem>().GetCurrentHealth();
-            if (!enemyHealthBackup.ContainsKey(other.gameObject))
+            GameObject enemy = other.gameObject;
+            detectedEnemies.Add(enemy);
+
+            int currentHealth = enemy.GetComponent<HealthSystem>().GetCurrentHealth();
+            if (!enemyHealthBackup.ContainsKey(enemy))
             {
-                enemyHealthBackup.Add(other.gameObject, currentHealth);
+                enemyHealthBackup.Add(enemy, currentHealth);
             }
+
             if (isInPanicMode)
             {
-                other.gameObject.GetComponent<HealthSystem>().SetHealth(1);
+                enemy.GetComponent<HealthSystem>().SetHealth(1);
             }
         }
     }
@@ -37,8 +39,9 @@ public class EnemyDetectorArea : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && detectedEnemies.Contains(other.gameObject))
         {
-            detectedEnemies.Remove(other.gameObject);
-            enemyHealthBackup.Remove(other.gameObject);
+            GameObject enemy = other.gameObject;
+            detectedEnemies.Remove(enemy);
+            enemyHealthBackup.Remove(enemy);
         }
     }
 
@@ -79,6 +82,7 @@ public class EnemyDetectorArea : MonoBehaviour
         {
             isInPanicMode = true;
             panicTimer = 0f;
+
             foreach (GameObject enemy in detectedEnemies)
             {
                 if (enemy != null)
@@ -87,7 +91,8 @@ public class EnemyDetectorArea : MonoBehaviour
                     enemy.GetComponent<HealthSystem>().SetHealth(1);
                 }
             }
-            foreach (var speedline in _speedlinePS)
+
+            foreach (var speedline in speedlinePS)
             {
                 speedline.Play();
             }
@@ -97,10 +102,7 @@ public class EnemyDetectorArea : MonoBehaviour
     private void ExtendPanicMode()
     {
         panicTimer -= panicExtendDuration;
-        if (panicTimer < 0f)
-        {
-            panicTimer = 0f;
-        }
+        panicTimer = Mathf.Max(panicTimer, 0f);
     }
 
     private void EndPanicMode()
@@ -108,6 +110,7 @@ public class EnemyDetectorArea : MonoBehaviour
         if (isInPanicMode)
         {
             isInPanicMode = false;
+
             foreach (GameObject enemy in detectedEnemies)
             {
                 if (enemy != null && enemyHealthBackup.ContainsKey(enemy))
@@ -115,8 +118,10 @@ public class EnemyDetectorArea : MonoBehaviour
                     enemy.GetComponent<HealthSystem>().SetHealth(enemyHealthBackup[enemy]);
                 }
             }
+
             enemyHealthBackup.Clear();
-            foreach (var speedline in _speedlinePS)
+
+            foreach (var speedline in speedlinePS)
             {
                 speedline.Stop();
             }
