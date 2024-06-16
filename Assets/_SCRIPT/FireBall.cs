@@ -5,7 +5,6 @@ public class Fireball : MonoBehaviour
     //[SerializeField] private int fireDamage;
 
     [Header("VFX")]
-    [SerializeField] private ParticleSystem fx_fire;
     [SerializeField] private ParticleSystem fx_hit;
 
     [Header("Burn Effect")]
