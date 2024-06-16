@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMonk : MonoBehaviour
+public class EnemyTotem : MonoBehaviour
 {
     private HealthSystem _healthSystem;
     public List<GameObject> targets;
