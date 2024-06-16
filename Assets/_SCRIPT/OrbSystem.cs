@@ -30,7 +30,7 @@ public class OrbSystem : MonoBehaviour
     private int CountActiveOrbs()
     {
         int activeOrbs = 0;
-        foreach (var orb in orbs)
+        foreach (GameObject orb in orbs)
         {
             if (orb.activeSelf)
             {
