@@ -28,8 +28,8 @@ public class PlayerReflect : MonoBehaviour
     private void ReflectVelocity(Vector3 normal)
     {
         // Calculate the reflection direction while preserving speed
-        var speed = lastVelocity.magnitude;
-        var direction = Vector3.Reflect(lastVelocity.normalized, normal);
+        float speed = lastVelocity.magnitude;
+        Vector3 direction = Vector3.Reflect(lastVelocity.normalized, normal);
 
         // Only change the forward direction without affecting the up direction
         direction = Vector3.ProjectOnPlane(direction, transform.up).normalized;

@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 8211938523373113567}
   - component: {fileID: 3508851128368601663}
   - component: {fileID: 1260003991168824826}
+  - component: {fileID: 7553568783607457209}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -179,6 +180,25 @@ MonoBehaviour:
   - {fileID: 3583149215366260406}
   - {fileID: 5102004833283911279}
   switchCameraButton: {fileID: 0}
+--- !u!114 &7553568783607457209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5076174323464425549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cb130a435100ce43a78b399617622df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canDrag: 1
+  rotationSpeed: 10
+  touchSensitivity: 1
+  resetTime: 5
+  resetDuration: 2
+  virtualCamera: {fileID: 1251650277387731860}
+  player: {fileID: 0}
 --- !u!1 &5234365130489894169
 GameObject:
   m_ObjectHideFlags: 0

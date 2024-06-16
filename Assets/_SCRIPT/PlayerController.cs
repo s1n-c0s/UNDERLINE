@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     public float runningAngularDamping = 10f;
 
     public TextMeshProUGUI runsRemainingText;
+    public SwipeCameraRotation swipeCameraRotation;
+    
     public bool IsMoving { get; private set; }
 
     public LineRenderer _lineRenderer;
@@ -51,6 +53,8 @@ public class PlayerController : MonoBehaviour
         targetPosition = startPosition;
         playerCollider = GetComponent<Collider>();
         enemyDetector = GetComponent<EnemyDetector>();
+        swipeCameraRotation = FindObjectOfType<SwipeCameraRotation>();
+        
         //lastStartPosition = startPosition;
         UpdateRunsRemainingText();
 
@@ -91,11 +95,13 @@ public class PlayerController : MonoBehaviour
         if (isRunning)
         {
             HandleRunning();
+            swipeCameraRotation.canDrag = false;
         }
 
         if (Input.GetMouseButtonUp(0) && isRunning)
         {
             HandleMouseUp();
+            swipeCameraRotation.canDrag = true;
         }
     }
 
