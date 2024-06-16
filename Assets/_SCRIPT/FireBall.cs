@@ -2,32 +2,51 @@ using UnityEngine;
 
 public class Fireball : MonoBehaviour
 {
-    [SerializeField] private int _fireDamage;
+    //[SerializeField] private int fireDamage;
 
-    [Header("VFX")] [SerializeField] private ParticleSystem fx_fire;
+    [Header("VFX")]
+    [SerializeField] private ParticleSystem fx_fire;
+    [SerializeField] private ParticleSystem fx_hit;
+
+    [Header("Burn Effect")]
+    [SerializeField] private float burnDuration = 2f;
+    [SerializeField] private int burnDamagePerSecond = 1;
     
-    void OnTriggerEnter(Collider other)
+
+    private void OnTriggerEnter(Collider other)
     {
-        switch (other.tag)
+        HealthSystem healthSystem = other.GetComponent<HealthSystem>();
+        StatusManager statusManager = other.GetComponent<StatusManager>();
+
+        if (healthSystem != null)
         {
-            case "Player": gameObject.SetActive(false);
-                other.GetComponent<HealthSystem>().TakeDamage(_fireDamage);
-                break;
-            case "Enemy": 
-                if (other.GetComponent<HealthSystem>())
-                {
-                    gameObject.SetActive(false);
-                    other.GetComponent<HealthSystem>().TakeDamage(_fireDamage);
-                }
-                /*else
-                { 
-                    other.GetComponent<HitBox>().fireBallHit(_fireDamage);
-                }*/
-                break;
-            case "Wall": gameObject.SetActive(false);
-                break;
-            default: 
-                break;
+            //healthSystem.TakeDamage(fireDamage);
+            if (statusManager != null)
+            {
+                statusManager.ApplyStatus(StatusManager.Status.Burn, true, burnDamagePerSecond, burnDuration);
+            }
+            PlayHitEffect();
+            gameObject.SetActive(false);
+            return;
+        }
+
+        if (other.CompareTag("Wall"))
+        {
+            PlayHitEffect();
+            gameObject.SetActive(false);
+            return;
+        }
+
+        // Additional handling for other cases can be added here
+    }
+
+    private void PlayHitEffect()
+    {
+        if (fx_hit != null)
+        {
+            ParticleSystem hitEffect = Instantiate(fx_hit, transform.position, Quaternion.identity);
+            hitEffect.Play();
+            Destroy(hitEffect.gameObject, hitEffect.main.duration);
         }
     }
 }
