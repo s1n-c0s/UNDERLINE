@@ -1,3 +1,4 @@
+using Lean.Pool;
 using UnityEngine;
 
 public class SizeupSkill : MonoBehaviour
@@ -8,6 +9,7 @@ public class SizeupSkill : MonoBehaviour
     [SerializeField] private int skillDurationTurns = 2; // Duration of the scale effect in turns
     [SerializeField] private int cooldownTurns = 3; // Number of turns for cooldown
 
+    [Header("VFX")] [SerializeField] private GameObject fx_cloud; 
     private int remainingDurationTurns;
     private int currentCooldownTurns;
 
@@ -67,7 +69,7 @@ public class SizeupSkill : MonoBehaviour
         if (currentCooldownTurns > 0)
         {
             currentCooldownTurns--;
-            Debug.Log($"{gameObject.name} Cooldown turns remaining: {currentCooldownTurns}");
+            /*Debug.Log($"{gameObject.name} Cooldown turns remaining: {currentCooldownTurns}");*/
         }
 
         if (currentCooldownTurns == 0 && currentState == SkillState.Idle)
@@ -78,6 +80,8 @@ public class SizeupSkill : MonoBehaviour
 
     public void ActivateEnemySkill()
     {
+        GameObject vfx = LeanPool.Spawn(fx_cloud, transform);
+        LeanPool.Despawn(vfx, 5f);
         transform.localScale = _newScale;
         currentState = SkillState.Active;
         remainingDurationTurns = skillDurationTurns;
