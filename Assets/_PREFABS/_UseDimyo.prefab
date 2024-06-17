@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 6418156319152879944}
   - component: {fileID: 6003634701003003829}
   - component: {fileID: 8893988539577694909}
+  - component: {fileID: 2301871065718270393}
   - component: {fileID: 8236253078782903240}
   - component: {fileID: 4023769007800556470}
   - component: {fileID: 7653410280296354760}
@@ -226,6 +227,23 @@ MonoBehaviour:
   isProtected: 0
   fx_die: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a, type: 3}
   fx_attackhit: {fileID: 2440458749352115294, guid: 122da1aa00758c64ea83545da0052b0f,
+    type: 3}
+--- !u!114 &2301871065718270393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3375307613194460096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3411da035d623dc48bc6aa2da91b1eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _newScale: {x: 3, y: 3, z: 3}
+  skillDurationTurns: 2
+  cooldownTurns: 3
+  fx_cloud: {fileID: 7618249568394114854, guid: 4b83b9dad2f67834e85bd96b8f6c8838,
     type: 3}
 --- !u!114 &8236253078782903240
 MonoBehaviour:
