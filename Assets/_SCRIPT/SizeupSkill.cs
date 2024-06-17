@@ -15,6 +15,8 @@ public class SizeupSkill : MonoBehaviour
     [Header("Explosion Settings")]
     [SerializeField] private float explosionRadius = 5f;
     [SerializeField] private float explosionForce = 1500f; // Increased explosion force
+    [SerializeField] private int shakeTime = 2;
+    [SerializeField] private int shakeDuration = 2;
 
     private int remainingDurationTurns;
     private int currentCooldownTurns;
@@ -33,6 +35,14 @@ public class SizeupSkill : MonoBehaviour
     {
         PlayerController.OnPlayerStop -= HandleTurnEnd;
     }
+    
+    /*private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ActivateEnemySkill();
+        }
+    }*/
 
     private void HandleTurnEnd()
     {
@@ -90,6 +100,8 @@ public class SizeupSkill : MonoBehaviour
         GameObject vfx = LeanPool.Spawn(fx_cloud, transform);
         LeanPool.Despawn(vfx, 5f);
 
+        CameraShake.Shake(shakeTime,shakeDuration);
+        
         // Change scale
         transform.localScale = _newScale;
         currentState = SkillState.Active;
