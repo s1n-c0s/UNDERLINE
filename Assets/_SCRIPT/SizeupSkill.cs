@@ -15,8 +15,8 @@ public class SizeupSkill : MonoBehaviour
     [Header("Explosion Settings")]
     [SerializeField] private float explosionRadius = 5f;
     [SerializeField] private float explosionForce = 1500f; // Increased explosion force
-    [SerializeField] private int shakeTime = 2;
-    [SerializeField] private int shakeDuration = 2;
+    [SerializeField] private int camShakeTime = 2;
+    [SerializeField] private int camShakeDuration = 2;
 
     private int remainingDurationTurns;
     private int currentCooldownTurns;
@@ -100,7 +100,7 @@ public class SizeupSkill : MonoBehaviour
         GameObject vfx = LeanPool.Spawn(fx_cloud, transform);
         LeanPool.Despawn(vfx, 5f);
 
-        CameraShake.Shake(shakeTime,shakeDuration);
+        CameraShake.Shake(camShakeTime,camShakeDuration);
         
         // Change scale
         transform.localScale = _newScale;
