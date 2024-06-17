@@ -245,6 +245,10 @@ MonoBehaviour:
   cooldownTurns: 3
   fx_cloud: {fileID: 7618249568394114854, guid: 4b83b9dad2f67834e85bd96b8f6c8838,
     type: 3}
+  explosionRadius: 5
+  explosionForce: 1500
+  camShakeTime: 2
+  camShakeDuration: 2
 --- !u!114 &8236253078782903240
 MonoBehaviour:
   m_ObjectHideFlags: 0
