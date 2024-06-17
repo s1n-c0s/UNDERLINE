@@ -9,13 +9,19 @@ public class SizeupSkill : MonoBehaviour
     [SerializeField] private int skillDurationTurns = 2; // Duration of the scale effect in turns
     [SerializeField] private int cooldownTurns = 3; // Number of turns for cooldown
 
-    [Header("VFX")] [SerializeField] private GameObject fx_cloud; 
+    [Header("VFX")] 
+    [SerializeField] private GameObject fx_cloud;
+
+    [Header("Explosion Settings")]
+    [SerializeField] private float explosionRadius = 5f;
+    [SerializeField] private float explosionForce = 1500f; // Increased explosion force
+
     private int remainingDurationTurns;
     private int currentCooldownTurns;
 
     private enum SkillState { Idle, Active, Cooldown }
     private SkillState currentState = SkillState.Idle;
-
+    
     private void OnEnable()
     {
         PlayerController.OnPlayerStop += HandleTurnEnd;
@@ -80,11 +86,25 @@ public class SizeupSkill : MonoBehaviour
 
     public void ActivateEnemySkill()
     {
+        // Spawn VFX
         GameObject vfx = LeanPool.Spawn(fx_cloud, transform);
         LeanPool.Despawn(vfx, 5f);
+
+        // Change scale
         transform.localScale = _newScale;
         currentState = SkillState.Active;
         remainingDurationTurns = skillDurationTurns;
+
+        // Apply explosion force to nearby objects, but not to itself
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        foreach (Collider hit in colliders)
+        {
+            Rigidbody rb = hit.GetComponent<Rigidbody>();
+            if (rb != null && rb.gameObject != gameObject)
+            {
+                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius);
+            }
+        }
     }
 
     private void DeactivateEnemySkill()
@@ -102,5 +122,12 @@ public class SizeupSkill : MonoBehaviour
     private void ResetCooldownTurns()
     {
         currentCooldownTurns = cooldownTurns; // Reset to the initial number of turns
+    }
+
+    // Draw Gizmos to visualize the explosion radius
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
 }
