@@ -20,7 +20,10 @@ public class HealthSystem : MonoBehaviour
 
     private void Start()
     {
-        currentHealth = maxHealth;
+        if (currentHealth == 0)
+        {
+            currentHealth = maxHealth;
+        }
         _enemyDetectorArea = FindObjectOfType<EnemyDetectorArea>();
         _statusManager = GetComponent<StatusManager>();
     }

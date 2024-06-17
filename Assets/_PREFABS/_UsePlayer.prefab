@@ -129,7 +129,7 @@ MonoBehaviour:
   stopThreshold: 0.1
   runningAngularDamping: 10
   runsRemainingText: {fileID: 0}
-  swipeCameraRotation: {fileID: 0}
+  _swipeCameraRotation: []
   _lineRenderer: {fileID: 6372522719978164187}
   launchPoint: {fileID: 5543933769647250355}
   launchSpeed: 50
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fx_Barrier: {fileID: 0}
-  fx_Fire: {fileID: 2018583246489067422}
+  fx_Fire: {fileID: 7248978427750517894}
 --- !u!114 &3787548944662405222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1115,6 +1115,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: fx_Fire
       objectReference: {fileID: 0}
+    - target: {fileID: 794679808632210996, guid: f3f29c869d136b446b5c5dccc3d77c03,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1291592452896487049, guid: f3f29c869d136b446b5c5dccc3d77c03,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -1190,9 +1195,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3f29c869d136b446b5c5dccc3d77c03, type: 3}
---- !u!198 &2018583246489067422 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8331022345270580524, guid: f3f29c869d136b446b5c5dccc3d77c03,
+--- !u!1 &7248978427750517894 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 794679808632210996, guid: f3f29c869d136b446b5c5dccc3d77c03,
     type: 3}
   m_PrefabInstance: {fileID: 8043092941293013682}
   m_PrefabAsset: {fileID: 0}
