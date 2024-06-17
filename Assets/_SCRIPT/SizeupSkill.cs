@@ -6,10 +6,7 @@ public class SizeupSkill : MonoBehaviour
     private Vector3 _oldScale;
     [SerializeField] private Vector3 _newScale;
 
-    [SerializeField] private int skillDurationTurns = 2; // Duration of the scale effect in turns
-    [SerializeField] private int cooldownTurns = 3; // Number of turns for cooldown
-
-    [Header("VFX")] 
+    [Header("VFX")]
     [SerializeField] private GameObject fx_cloud;
 
     [Header("Explosion Settings")]
@@ -18,31 +15,38 @@ public class SizeupSkill : MonoBehaviour
     [SerializeField] private int camShakeTime = 2;
     [SerializeField] private int camShakeDuration = 2;
 
+    private int skillDurationTurns;
+    private int cooldownTurns;
+
     private int remainingDurationTurns;
     private int currentCooldownTurns;
 
     private enum SkillState { Idle, Active, Cooldown }
     private SkillState currentState = SkillState.Idle;
-    
+
     private void OnEnable()
     {
-        PlayerController.OnPlayerStop += HandleTurnEnd;
+        SkillSystem.OnTurnEnd += HandleTurnEnd;
         _oldScale = transform.localScale; // Store the original scale
-        ResetCooldownTurns();
+
+        SkillSystem _skillSystem = FindObjectOfType<SkillSystem>();
+      
     }
 
     private void OnDisable()
     {
-        PlayerController.OnPlayerStop -= HandleTurnEnd;
+        SkillSystem.OnTurnEnd -= HandleTurnEnd;
+
+        SkillSystem _skillSystem = FindObjectOfType<SkillSystem>();
+      
     }
-    
-    /*private void Update()
+
+    public void SetTurnSettings(int duration, int cooldown)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ActivateEnemySkill();
-        }
-    }*/
+        skillDurationTurns = duration;
+        cooldownTurns = cooldown;
+        ResetCooldownTurns();
+    }
 
     private void HandleTurnEnd()
     {
@@ -85,7 +89,6 @@ public class SizeupSkill : MonoBehaviour
         if (currentCooldownTurns > 0)
         {
             currentCooldownTurns--;
-            /*Debug.Log($"{gameObject.name} Cooldown turns remaining: {currentCooldownTurns}");*/
         }
 
         if (currentCooldownTurns == 0 && currentState == SkillState.Idle)
@@ -100,8 +103,8 @@ public class SizeupSkill : MonoBehaviour
         GameObject vfx = LeanPool.Spawn(fx_cloud, transform);
         LeanPool.Despawn(vfx, 5f);
 
-        CameraShake.Shake(camShakeTime,camShakeDuration);
-        
+        CameraShake.Shake(camShakeTime, camShakeDuration);
+
         // Change scale
         transform.localScale = _newScale;
         currentState = SkillState.Active;
