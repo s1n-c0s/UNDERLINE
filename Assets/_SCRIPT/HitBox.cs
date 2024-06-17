@@ -12,16 +12,16 @@ public class HitBox : MonoBehaviour
 
     [Header("Heal Player")]
     [SerializeField] private bool _playerHeal;
-
+    
     [Header("VFX")]
     [SerializeField] private GameObject _fxWeakpoint;
 
     private void Start()
     {
         _fxWeakpoint.SetActive(false);
-        
-        if (_isRandom || _damage == 0) // Adjusted to utilize _isRandom
+        if (_damage == 0)
         {
+            _isRandom = true;
             _damage = randomDamagesManager.GetUnusedRandomDamage();
         }
 
@@ -50,5 +50,15 @@ public class HitBox : MonoBehaviour
                 _healthSystem.TakeDamage(1);
                 break;
         }
+        
+        /*if (other.CompareTag("Player") || other.CompareTag("Shuriken") || other.CompareTag("Enemy"))
+        {
+            _healthSystem.TakeDamage(_damage);
+        }*/
     }
+
+    /*public void fireBallHit(int DmgFireball)
+    {
+        _healthSystem.TakeDamage(DmgFireball);
+    }*/
 }
