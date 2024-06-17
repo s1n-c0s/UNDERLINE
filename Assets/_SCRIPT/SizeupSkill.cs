@@ -12,12 +12,16 @@ public class SizeupSkill : MonoBehaviour
     private int currentCooldownTurns;
 
     private bool skillActive;
+    private bool inCooldown;
 
     private void OnEnable()
     {
         PlayerController.OnPlayerStop += HandleTurnEnd;
         _oldScale = transform.localScale; // Store the original scale
-        currentCooldownTurns = cooldownTurns; // Initialize the cooldown turns
+        remainingDurationTurns = 0; // Initialize to 0
+        currentCooldownTurns = cooldownTurns; // Initialize to cooldownTurns
+        skillActive = false;
+        inCooldown = false;
     }
 
     private void OnDisable()
@@ -29,15 +33,36 @@ public class SizeupSkill : MonoBehaviour
     {
         if (skillActive)
         {
-            remainingDurationTurns--;
-            if (remainingDurationTurns <= 0)
-            {
-                DeactivateEnemySkill();
-                ResetCooldownTurns(); // Reset cooldown after skill deactivation
-            }
+            HandleSkillDuration();
         }
+        else if (inCooldown)
+        {
+            HandleCooldown();
+        }
+        else
+        {
+            DecreaseCooldownTurn(); // Decrease cooldown at the end of every turn if not in cooldown or skill active
+        }
+    }
 
-        DecreaseCooldownTurn(); // Decrease cooldown at the end of every turn
+    private void HandleSkillDuration()
+    {
+        remainingDurationTurns--;
+        if (remainingDurationTurns <= 0)
+        {
+            DeactivateEnemySkill();
+            StartCooldown();
+        }
+    }
+
+    private void HandleCooldown()
+    {
+        currentCooldownTurns--;
+        if (currentCooldownTurns <= 0)
+        {
+            inCooldown = false;
+            DecreaseCooldownTurn(); // Restart the cooldown countdown
+        }
     }
 
     private void DecreaseCooldownTurn()
@@ -46,14 +71,21 @@ public class SizeupSkill : MonoBehaviour
         {
             currentCooldownTurns--;
             Debug.Log(gameObject.name + " Cooldown turns remaining: " + currentCooldownTurns);
-            if (currentCooldownTurns == 0)
-            {
-                ActivateEnemySkill();
-            }
+        }
+        
+        if (currentCooldownTurns == 0 && !skillActive && !inCooldown)
+        {
+            ActivateEnemySkill();
         }
     }
 
-    private void ActivateEnemySkill()
+    private void StartCooldown()
+    {
+        inCooldown = true;
+        currentCooldownTurns = cooldownTurns;
+    }
+
+    public void ActivateEnemySkill()
     {
         transform.localScale = _newScale;
         skillActive = true;
@@ -64,10 +96,5 @@ public class SizeupSkill : MonoBehaviour
     {
         transform.localScale = _oldScale;
         skillActive = false;
-    }
-
-    private void ResetCooldownTurns()
-    {
-        currentCooldownTurns = cooldownTurns; // Reset to the initial number of turns
     }
 }
