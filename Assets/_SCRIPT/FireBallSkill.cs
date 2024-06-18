@@ -9,6 +9,7 @@ public class FireBallSkill : MonoBehaviour
     [SerializeField] private float radiusOffset = 5f;
     [SerializeField] private float heightOffset = 2f;
     [SerializeField] private List<GameObject> items;
+    private bool begin;
 
     private int cooldownTurns;
     private int currentTurnCount;
@@ -20,6 +21,7 @@ public class FireBallSkill : MonoBehaviour
     {
         skillSystem = GetComponent<SkillTurnSystem>();
         InitializeSkillSettings();
+        InitNextItem();
     }
 
     private void OnEnable()
