@@ -1,3 +1,4 @@
+using System;
 using Lean.Pool;
 using UnityEngine;
 
@@ -6,108 +7,169 @@ public class SizeupSkill : MonoBehaviour
     private Vector3 _oldScale;
     [SerializeField] private Vector3 _newScale;
 
-    [SerializeField] private int skillDurationTurns = 2; // Duration of the scale effect in turns
-    [SerializeField] private int cooldownTurns = 3; // Number of turns for cooldown
-
-    [Header("VFX")] 
+    [Header("VFX")]
     [SerializeField] private GameObject fx_cloud;
 
     [Header("Explosion Settings")]
     [SerializeField] private float explosionRadius = 5f;
-    [SerializeField] private float explosionForce = 1500f; // Increased explosion force
-    [SerializeField] private int camShakeTime = 2;
-    [SerializeField] private int camShakeDuration = 2;
+    [SerializeField] private float explosionForce = 1500f;
+
+    private int skillDurationTurns;
+    private int cooldownTurns;
+    private int camShakeTime;
+    private int camShakeDuration;
 
     private int remainingDurationTurns;
     private int currentCooldownTurns;
 
     private enum SkillState { Idle, Active, Cooldown }
     private SkillState currentState = SkillState.Idle;
-    
+
+    [SerializeField] private SkillTurnSystem _skillSystem;
+
+    private void Start()
+    {
+        _skillSystem = GetComponent<SkillTurnSystem>();
+        InitializeSkillSettings();
+    }
+
     private void OnEnable()
     {
-        PlayerController.OnPlayerStop += HandleTurnEnd;
-        _oldScale = transform.localScale; // Store the original scale
-        ResetCooldownTurns();
+        _oldScale = transform.localScale;
+        SkillTurnSystem.OnTurnEnd += HandleTurnEnd;
     }
 
     private void OnDisable()
     {
-        PlayerController.OnPlayerStop -= HandleTurnEnd;
+        SkillTurnSystem.OnTurnEnd -= HandleTurnEnd;
     }
-    
-    /*private void Update()
+
+    private void InitializeSkillSettings()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ActivateEnemySkill();
-        }
-    }*/
+        skillDurationTurns = _skillSystem.SkillDurationTurns;
+        cooldownTurns = _skillSystem.CooldownTurns;
+        camShakeTime = _skillSystem.camShakeTime;
+        camShakeDuration = _skillSystem.camShakeDuration;
+        ResetCooldown();
+    }
 
     private void HandleTurnEnd()
     {
         switch (currentState)
         {
             case SkillState.Active:
-                HandleSkillDuration();
+                ProcessSkillDuration();
                 break;
             case SkillState.Cooldown:
-                HandleCooldown();
+                ProcessCooldown();
                 break;
             case SkillState.Idle:
-                DecreaseCooldownTurn();
+                if (currentCooldownTurns == 0)
+                {
+                    ActivateSkill();
+                }
+                else
+                {
+                    DecrementCooldown();
+                }
                 break;
         }
     }
 
-    private void HandleSkillDuration()
+    private void ProcessSkillDuration()
     {
         remainingDurationTurns--;
+        UpdateSkillSystemValues();
+
         if (remainingDurationTurns <= 0)
         {
-            DeactivateEnemySkill();
+            DeactivateSkill();
             StartCooldown();
         }
     }
 
-    private void HandleCooldown()
+    private void ProcessCooldown()
     {
         currentCooldownTurns--;
+        UpdateSkillSystemValues();
+
         if (currentCooldownTurns <= 0)
         {
             currentState = SkillState.Idle;
-            DecreaseCooldownTurn();
+            if (currentCooldownTurns == 0)
+            {
+                ActivateSkill();
+            }
         }
     }
 
-    private void DecreaseCooldownTurn()
+    private void DecrementCooldown()
     {
         if (currentCooldownTurns > 0)
         {
             currentCooldownTurns--;
-            /*Debug.Log($"{gameObject.name} Cooldown turns remaining: {currentCooldownTurns}");*/
         }
+        UpdateSkillSystemValues();
 
         if (currentCooldownTurns == 0 && currentState == SkillState.Idle)
         {
-            ActivateEnemySkill();
+            ActivateSkill();
         }
     }
 
-    public void ActivateEnemySkill()
+    private void ActivateSkill()
     {
-        // Spawn VFX
-        GameObject vfx = LeanPool.Spawn(fx_cloud, transform);
-        LeanPool.Despawn(vfx, 5f);
-
-        CameraShake.Shake(camShakeTime,camShakeDuration);
-        
-        // Change scale
+        SpawnVFX();
+        ShakeCamera();
         transform.localScale = _newScale;
         currentState = SkillState.Active;
         remainingDurationTurns = skillDurationTurns;
+        ApplyExplosionForce();
+        UpdateSkillSystemValues();
+    }
 
-        // Apply explosion force to nearby objects, but not to itself
+    private void DeactivateSkill()
+    {
+        transform.localScale = _oldScale;
+        currentState = SkillState.Idle;
+        UpdateSkillSystemValues();
+    }
+
+    private void StartCooldown()
+    {
+        currentState = SkillState.Cooldown;
+        currentCooldownTurns = cooldownTurns;
+        UpdateSkillSystemValues();
+    }
+
+    private void ResetCooldown()
+    {
+        currentCooldownTurns = cooldownTurns;
+        remainingDurationTurns = 0;
+        UpdateSkillSystemValues();
+    }
+
+    private void UpdateSkillSystemValues()
+    {
+        _skillSystem.SetCurrentValue(currentCooldownTurns, remainingDurationTurns);
+    }
+
+    private void SpawnVFX()
+    {
+        GameObject vfx = LeanPool.Spawn(fx_cloud, transform);
+        LeanPool.Despawn(vfx, 5f);
+    }
+
+    private void ShakeCamera()
+    {
+        if (_skillSystem.useCamShake)
+        {
+            CameraShake.Shake(camShakeTime, camShakeDuration);
+        }
+    }
+
+    private void ApplyExplosionForce()
+    {
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach (Collider hit in colliders)
         {
@@ -119,24 +181,6 @@ public class SizeupSkill : MonoBehaviour
         }
     }
 
-    private void DeactivateEnemySkill()
-    {
-        transform.localScale = _oldScale;
-        currentState = SkillState.Idle;
-    }
-
-    private void StartCooldown()
-    {
-        currentState = SkillState.Cooldown;
-        currentCooldownTurns = cooldownTurns;
-    }
-
-    private void ResetCooldownTurns()
-    {
-        currentCooldownTurns = cooldownTurns; // Reset to the initial number of turns
-    }
-
-    // Draw Gizmos to visualize the explosion radius
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
