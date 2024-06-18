@@ -1,26 +1,33 @@
+using System.Collections;
 using System.Collections.Generic;
 using Lean.Pool;
 using UnityEngine;
 
 public class FireBallSkill : MonoBehaviour
 {
+    [Header("Skill Settings")]
     [SerializeField] private float rotationSpeed = 30f;
     [SerializeField] private float power = 10f;
     [SerializeField] private float radiusOffset = 5f;
     [SerializeField] private float heightOffset = 2f;
     [SerializeField] private List<GameObject> items;
-    private bool begin;
+    [SerializeField] private GameObject enemy;
 
+    private SkillTurnSystem skillSystem;
     private int cooldownTurns;
     private int currentTurnCount;
     private List<GameObject> instantiatedBullets = new List<GameObject>();
 
-    private SkillTurnSystem skillSystem;
-
     private void Start()
     {
+        Initialize();
+    }
+
+    private void Initialize()
+    {
         skillSystem = GetComponent<SkillTurnSystem>();
-        InitializeSkillSettings();
+        cooldownTurns = skillSystem.CooldownTurns;
+        ResetSkill();
         InitNextItem();
     }
 
@@ -34,14 +41,22 @@ public class FireBallSkill : MonoBehaviour
         SkillTurnSystem.OnTurnEnd -= HandleTurnEnd;
     }
 
-    private void InitializeSkillSettings()
-    {
-        cooldownTurns = skillSystem.CooldownTurns;
-        ResetSkill();
-    }
-
     private void HandleTurnEnd()
     {
+        StartCoroutine(WaitForVelocityZeroAndInit());
+    }
+
+    private IEnumerator WaitForVelocityZeroAndInit()
+    {
+        Rigidbody rb = enemy.GetComponent<Rigidbody>();
+
+        // Wait until the enemy's velocity is nearly zero
+        while (rb.velocity.magnitude > 0.01f)
+        {
+            yield return null;
+        }
+
+        // Once velocity is almost zero, proceed with initialization
         InitNextItem();
 
         currentTurnCount++;
@@ -66,8 +81,7 @@ public class FireBallSkill : MonoBehaviour
     private void InitNextItem()
     {
         int itemIndex = currentTurnCount % items.Count;
-        float angleIncrement = 360f / items.Count;
-        float angle = angleIncrement * itemIndex;
+        float angle = 360f / items.Count * itemIndex;
         Quaternion rotation = Quaternion.Euler(0, angle, 0);
         Vector3 position = transform.position + rotation * Vector3.forward * radiusOffset + Vector3.up * heightOffset;
 
@@ -95,7 +109,7 @@ public class FireBallSkill : MonoBehaviour
 
     private void RotateOrb()
     {
-        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
+        transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
     }
 
     private void ShootOrb()
