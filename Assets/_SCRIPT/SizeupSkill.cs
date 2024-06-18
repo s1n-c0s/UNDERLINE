@@ -1,3 +1,4 @@
+using System;
 using Lean.Pool;
 using UnityEngine;
 
@@ -11,12 +12,12 @@ public class SizeupSkill : MonoBehaviour
 
     [Header("Explosion Settings")]
     [SerializeField] private float explosionRadius = 5f;
-    [SerializeField] private float explosionForce = 1500f; // Increased explosion force
-    [SerializeField] private int camShakeTime = 2;
-    [SerializeField] private int camShakeDuration = 2;
+    [SerializeField] private float explosionForce = 1500f;
 
     private int skillDurationTurns;
     private int cooldownTurns;
+    private int camShakeTime;
+    private int camShakeDuration;
 
     private int remainingDurationTurns;
     private int currentCooldownTurns;
@@ -24,28 +25,35 @@ public class SizeupSkill : MonoBehaviour
     private enum SkillState { Idle, Active, Cooldown }
     private SkillState currentState = SkillState.Idle;
 
+    [SerializeField] private SkillTurnSystem _skillSystem;
+
+    private void Start()
+    {
+        _skillSystem = GetComponent<SkillTurnSystem>();
+        SetTurnSettings(_skillSystem.useCamShake);
+    }
+
     private void OnEnable()
     {
-        SkillSystem.OnTurnEnd += HandleTurnEnd;
-        _oldScale = transform.localScale; // Store the original scale
-
-        SkillSystem _skillSystem = FindObjectOfType<SkillSystem>();
-      
+        _oldScale = transform.localScale;
+        SkillTurnSystem.OnTurnEnd += HandleTurnEnd;
     }
 
     private void OnDisable()
     {
-        SkillSystem.OnTurnEnd -= HandleTurnEnd;
-
-        SkillSystem _skillSystem = FindObjectOfType<SkillSystem>();
-      
+        SkillTurnSystem.OnTurnEnd -= HandleTurnEnd;
     }
 
-    public void SetTurnSettings(int duration, int cooldown)
+    public void SetTurnSettings(bool useCamShake)
     {
-        skillDurationTurns = duration;
-        cooldownTurns = cooldown;
+        skillDurationTurns = _skillSystem.SkillDurationTurns;
+        cooldownTurns = _skillSystem.CooldownTurns;
         ResetCooldownTurns();
+        if (useCamShake)
+        {
+            camShakeTime = _skillSystem.camShakeTime;
+            camShakeDuration = _skillSystem.camShakeDuration;
+        }
     }
 
     private void HandleTurnEnd()
@@ -80,7 +88,6 @@ public class SizeupSkill : MonoBehaviour
         if (currentCooldownTurns <= 0)
         {
             currentState = SkillState.Idle;
-            DecreaseCooldownTurn();
         }
     }
 
@@ -99,27 +106,14 @@ public class SizeupSkill : MonoBehaviour
 
     public void ActivateEnemySkill()
     {
-        // Spawn VFX
-        GameObject vfx = LeanPool.Spawn(fx_cloud, transform);
-        LeanPool.Despawn(vfx, 5f);
+        SpawnVFX();
+        ShakeCamera();
 
-        CameraShake.Shake(camShakeTime, camShakeDuration);
-
-        // Change scale
         transform.localScale = _newScale;
         currentState = SkillState.Active;
         remainingDurationTurns = skillDurationTurns;
 
-        // Apply explosion force to nearby objects, but not to itself
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
-        foreach (Collider hit in colliders)
-        {
-            Rigidbody rb = hit.GetComponent<Rigidbody>();
-            if (rb != null && rb.gameObject != gameObject)
-            {
-                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius);
-            }
-        }
+        ApplyExplosionForce();
     }
 
     private void DeactivateEnemySkill()
@@ -136,10 +130,36 @@ public class SizeupSkill : MonoBehaviour
 
     private void ResetCooldownTurns()
     {
-        currentCooldownTurns = cooldownTurns; // Reset to the initial number of turns
+        currentCooldownTurns = cooldownTurns;
     }
 
-    // Draw Gizmos to visualize the explosion radius
+    private void SpawnVFX()
+    {
+        GameObject vfx = LeanPool.Spawn(fx_cloud, transform);
+        LeanPool.Despawn(vfx, 5f);
+    }
+
+    private void ShakeCamera()
+    {
+        if (_skillSystem.useCamShake)
+        {
+            CameraShake.Shake(camShakeTime, camShakeDuration);
+        }
+    }
+
+    private void ApplyExplosionForce()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        foreach (Collider hit in colliders)
+        {
+            Rigidbody rb = hit.GetComponent<Rigidbody>();
+            if (rb != null && rb.gameObject != gameObject)
+            {
+                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius);
+            }
+        }
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

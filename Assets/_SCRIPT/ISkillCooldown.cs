@@ -5,31 +5,25 @@ using TMPro;
 
 public class ISkillCooldown : MonoBehaviour
 {
-    public HealthSystem Skill; // Reference to HealthSystem
+    [SerializeField] private SkillTurnSystem _skillTurnSystem; // Reference to SkillTurnSystem
     private TextMeshProUGUI textMeshPro; // Reference to TextMeshProUGUI component
 
     private bool isScaling = false;
 
-    /*void Start()
+    void Start()
     {
-        if (healthSystem == null)
-        {
-            player = GameObject.FindGameObjectWithTag("Player");
-            healthSystem = player.GetComponent<HealthSystem>();
-        }
-        
         textMeshPro = GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
     {
-        int currentHealth = healthSystem.GetCurrentHealth();
+        int currentTurn = _skillTurnSystem.GetCurrentSkillCooldown();
 
-        if (textMeshPro.text != currentHealth.ToString())
+        if (textMeshPro.text != currentTurn.ToString())
         {
             if (!isScaling)
             {
-                StartCoroutine(UpdateTextWithScaleEffect(currentHealth.ToString()));
+                StartCoroutine(UpdateTextWithScaleEffect(currentTurn.ToString()));
             }
         }
     }
@@ -52,5 +46,5 @@ public class ISkillCooldown : MonoBehaviour
         yield return new WaitForSeconds(0.3f); // Wait for the scale back effect to finish
 
         isScaling = false;
-    }*/
+    }
 }
