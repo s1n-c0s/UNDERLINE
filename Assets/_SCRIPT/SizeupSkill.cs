@@ -67,7 +67,14 @@ public class SizeupSkill : MonoBehaviour
                 HandleCooldown();
                 break;
             case SkillState.Idle:
-                DecreaseCooldownTurn();
+                if (currentCooldownTurns == 0)
+                {
+                    ActivateEnemySkill();
+                }
+                else
+                {
+                    DecreaseCooldownTurn();
+                }
                 break;
         }
     }
@@ -92,6 +99,11 @@ public class SizeupSkill : MonoBehaviour
         if (currentCooldownTurns <= 0)
         {
             currentState = SkillState.Idle;
+            // Ensure the skill is activated immediately when the cooldown ends
+            if (currentCooldownTurns == 0)
+            {
+                ActivateEnemySkill();
+            }
         }
     }
 
@@ -102,12 +114,13 @@ public class SizeupSkill : MonoBehaviour
             currentCooldownTurns--;
         }
 
+        _skillSystem.SetCurrentValue(currentCooldownTurns, remainingDurationTurns);
+
+        // Ensure the skill is activated immediately when the cooldown ends
         if (currentCooldownTurns == 0 && currentState == SkillState.Idle)
         {
             ActivateEnemySkill();
         }
-
-        _skillSystem.SetCurrentValue(currentCooldownTurns, remainingDurationTurns);
     }
 
     public void ActivateEnemySkill()
