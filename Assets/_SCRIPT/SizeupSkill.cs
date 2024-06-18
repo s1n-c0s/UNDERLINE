@@ -30,7 +30,7 @@ public class SizeupSkill : MonoBehaviour
     private void Start()
     {
         _skillSystem = GetComponent<SkillTurnSystem>();
-        SetTurnSettings(_skillSystem.useCamShake);
+        InitializeSkillSettings();
     }
 
     private void OnEnable()
@@ -44,16 +44,13 @@ public class SizeupSkill : MonoBehaviour
         SkillTurnSystem.OnTurnEnd -= HandleTurnEnd;
     }
 
-    public void SetTurnSettings(bool useCamShake)
+    private void InitializeSkillSettings()
     {
         skillDurationTurns = _skillSystem.SkillDurationTurns;
         cooldownTurns = _skillSystem.CooldownTurns;
-        ResetCooldownTurns();
-        if (useCamShake)
-        {
-            camShakeTime = _skillSystem.camShakeTime;
-            camShakeDuration = _skillSystem.camShakeDuration;
-        }
+        camShakeTime = _skillSystem.camShakeTime;
+        camShakeDuration = _skillSystem.camShakeDuration;
+        ResetCooldown();
     }
 
     private void HandleTurnEnd()
@@ -61,101 +58,99 @@ public class SizeupSkill : MonoBehaviour
         switch (currentState)
         {
             case SkillState.Active:
-                HandleSkillDuration();
+                ProcessSkillDuration();
                 break;
             case SkillState.Cooldown:
-                HandleCooldown();
+                ProcessCooldown();
                 break;
             case SkillState.Idle:
                 if (currentCooldownTurns == 0)
                 {
-                    ActivateEnemySkill();
+                    ActivateSkill();
                 }
                 else
                 {
-                    DecreaseCooldownTurn();
+                    DecrementCooldown();
                 }
                 break;
         }
     }
 
-    private void HandleSkillDuration()
+    private void ProcessSkillDuration()
     {
         remainingDurationTurns--;
-        _skillSystem.SetCurrentValue(currentCooldownTurns, remainingDurationTurns);
+        UpdateSkillSystemValues();
 
         if (remainingDurationTurns <= 0)
         {
-            DeactivateEnemySkill();
+            DeactivateSkill();
             StartCooldown();
         }
     }
 
-    private void HandleCooldown()
+    private void ProcessCooldown()
     {
         currentCooldownTurns--;
-        _skillSystem.SetCurrentValue(currentCooldownTurns, remainingDurationTurns);
+        UpdateSkillSystemValues();
 
         if (currentCooldownTurns <= 0)
         {
             currentState = SkillState.Idle;
-            // Ensure the skill is activated immediately when the cooldown ends
             if (currentCooldownTurns == 0)
             {
-                ActivateEnemySkill();
+                ActivateSkill();
             }
         }
     }
 
-    private void DecreaseCooldownTurn()
+    private void DecrementCooldown()
     {
         if (currentCooldownTurns > 0)
         {
             currentCooldownTurns--;
         }
+        UpdateSkillSystemValues();
 
-        _skillSystem.SetCurrentValue(currentCooldownTurns, remainingDurationTurns);
-
-        // Ensure the skill is activated immediately when the cooldown ends
         if (currentCooldownTurns == 0 && currentState == SkillState.Idle)
         {
-            ActivateEnemySkill();
+            ActivateSkill();
         }
     }
 
-    public void ActivateEnemySkill()
+    private void ActivateSkill()
     {
         SpawnVFX();
         ShakeCamera();
-
         transform.localScale = _newScale;
         currentState = SkillState.Active;
         remainingDurationTurns = skillDurationTurns;
-
         ApplyExplosionForce();
-
-        _skillSystem.SetCurrentValue(currentCooldownTurns, remainingDurationTurns);
+        UpdateSkillSystemValues();
     }
 
-    private void DeactivateEnemySkill()
+    private void DeactivateSkill()
     {
         transform.localScale = _oldScale;
         currentState = SkillState.Idle;
-
-        _skillSystem.SetCurrentValue(currentCooldownTurns, remainingDurationTurns);
+        UpdateSkillSystemValues();
     }
 
     private void StartCooldown()
     {
         currentState = SkillState.Cooldown;
         currentCooldownTurns = cooldownTurns;
-        _skillSystem.SetCurrentValue(currentCooldownTurns, remainingDurationTurns);
+        UpdateSkillSystemValues();
     }
 
-    private void ResetCooldownTurns()
+    private void ResetCooldown()
     {
         currentCooldownTurns = cooldownTurns;
         remainingDurationTurns = 0;
+        UpdateSkillSystemValues();
+    }
+
+    private void UpdateSkillSystemValues()
+    {
         _skillSystem.SetCurrentValue(currentCooldownTurns, remainingDurationTurns);
     }
 

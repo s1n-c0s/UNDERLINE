@@ -33,14 +33,7 @@ public class SkillTurnSystem : MonoBehaviour
 
     public int GetCurrentValue()
     {
-        if (currentSkillDuration > 0)
-        {
-            return currentSkillDuration;
-        }
-        else
-        {
-            return currentSkillCooldown;
-        }
+        return currentSkillDuration > 0 ? currentSkillDuration : currentSkillCooldown;
     }
 
     public void SetCurrentValue(int cooldown, int duration)
