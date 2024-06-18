@@ -17,7 +17,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3004
   stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
@@ -53,7 +53,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: e66c6edac6d2e7f4f970bc7f3dda0602, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -108,12 +108,13 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _NoisePower: 2
-    - _NoiseScale: 9.14
+    - _NoisePower: 1.7
+    - _NoisePower_1: 5
+    - _NoiseScale: 2.8
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
-    - _QueueOffset: 0
+    - _QueueOffset: 4
     - _ReceiveShadows: 1
     - _RippleDensity: 5
     - _RippleSlimness: 5
@@ -124,15 +125,19 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _Vector1: 0
     - _WaveSpeed: 0.1
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.4113207, g: 0.4113207, b: 0.4113207, a: 0}
+    - _Color2: {r: 0.9622642, g: 0.41213953, b: 0.9463361, a: 0.21176471}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _NoiseSpeep: {r: 0, g: -0.5, b: 0, a: 0}
-    - _NoiseTilling: {r: 3, g: 0.2, b: 0, a: 0}
+    - _NoiseSpeed: {r: -0.85, g: -0.5, b: 0, a: 0}
+    - _NoiseSpeep: {r: -1.57, g: -1.04, b: 0, a: 0}
+    - _NoiseTilling: {r: -2.24, g: 0.45, b: 0, a: 0}
+    - _NoiseTilling_1: {r: 8.43, g: 2, b: 0, a: 0}
     - _RippleColor: {r: 0.3560209, g: 1.196916, b: 2, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
