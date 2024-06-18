@@ -85,6 +85,7 @@ public class SizeupSkill : MonoBehaviour
     private void HandleCooldown()
     {
         currentCooldownTurns--;
+        _skillSystem.SetCurrentSkillCooldown(currentCooldownTurns);
         if (currentCooldownTurns <= 0)
         {
             currentState = SkillState.Idle;
@@ -102,6 +103,7 @@ public class SizeupSkill : MonoBehaviour
         {
             ActivateEnemySkill();
         }
+        _skillSystem.SetCurrentSkillCooldown(currentCooldownTurns);
     }
 
     public void ActivateEnemySkill()
@@ -126,11 +128,13 @@ public class SizeupSkill : MonoBehaviour
     {
         currentState = SkillState.Cooldown;
         currentCooldownTurns = cooldownTurns;
+        _skillSystem.SetCurrentSkillCooldown(currentCooldownTurns);
     }
 
     private void ResetCooldownTurns()
     {
         currentCooldownTurns = cooldownTurns;
+        _skillSystem.SetCurrentSkillCooldown(currentCooldownTurns);
     }
 
     private void SpawnVFX()

@@ -31,4 +31,9 @@ public class SkillTurnSystem : MonoBehaviour
     }
 
     public int GetCurrentSkillCooldown() => currentSkillCooldown;
+
+    public void SetCurrentSkillCooldown(int cooldown)
+    {
+        currentSkillCooldown = cooldown;
+    }
 }
