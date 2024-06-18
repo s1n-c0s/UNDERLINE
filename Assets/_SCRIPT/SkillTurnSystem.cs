@@ -14,6 +14,7 @@ public class SkillTurnSystem : MonoBehaviour
     public int camShakeDuration = 2;
 
     private int currentSkillCooldown;
+    private int currentSkillDuration;
 
     private void OnEnable()
     {
@@ -30,10 +31,21 @@ public class SkillTurnSystem : MonoBehaviour
         OnTurnEnd?.Invoke();
     }
 
-    public int GetCurrentSkillCooldown() => currentSkillCooldown;
+    public int GetCurrentValue()
+    {
+        if (currentSkillDuration > 0)
+        {
+            return currentSkillDuration;
+        }
+        else
+        {
+            return currentSkillCooldown;
+        }
+    }
 
-    public void SetCurrentSkillCooldown(int cooldown)
+    public void SetCurrentValue(int cooldown, int duration)
     {
         currentSkillCooldown = cooldown;
+        currentSkillDuration = duration;
     }
 }

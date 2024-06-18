@@ -75,6 +75,8 @@ public class SizeupSkill : MonoBehaviour
     private void HandleSkillDuration()
     {
         remainingDurationTurns--;
+        _skillSystem.SetCurrentValue(currentCooldownTurns, remainingDurationTurns);
+
         if (remainingDurationTurns <= 0)
         {
             DeactivateEnemySkill();
@@ -85,7 +87,8 @@ public class SizeupSkill : MonoBehaviour
     private void HandleCooldown()
     {
         currentCooldownTurns--;
-        _skillSystem.SetCurrentSkillCooldown(currentCooldownTurns);
+        _skillSystem.SetCurrentValue(currentCooldownTurns, remainingDurationTurns);
+
         if (currentCooldownTurns <= 0)
         {
             currentState = SkillState.Idle;
@@ -103,7 +106,8 @@ public class SizeupSkill : MonoBehaviour
         {
             ActivateEnemySkill();
         }
-        _skillSystem.SetCurrentSkillCooldown(currentCooldownTurns);
+
+        _skillSystem.SetCurrentValue(currentCooldownTurns, remainingDurationTurns);
     }
 
     public void ActivateEnemySkill()
@@ -116,25 +120,30 @@ public class SizeupSkill : MonoBehaviour
         remainingDurationTurns = skillDurationTurns;
 
         ApplyExplosionForce();
+
+        _skillSystem.SetCurrentValue(currentCooldownTurns, remainingDurationTurns);
     }
 
     private void DeactivateEnemySkill()
     {
         transform.localScale = _oldScale;
         currentState = SkillState.Idle;
+
+        _skillSystem.SetCurrentValue(currentCooldownTurns, remainingDurationTurns);
     }
 
     private void StartCooldown()
     {
         currentState = SkillState.Cooldown;
         currentCooldownTurns = cooldownTurns;
-        _skillSystem.SetCurrentSkillCooldown(currentCooldownTurns);
+        _skillSystem.SetCurrentValue(currentCooldownTurns, remainingDurationTurns);
     }
 
     private void ResetCooldownTurns()
     {
         currentCooldownTurns = cooldownTurns;
-        _skillSystem.SetCurrentSkillCooldown(currentCooldownTurns);
+        remainingDurationTurns = 0;
+        _skillSystem.SetCurrentValue(currentCooldownTurns, remainingDurationTurns);
     }
 
     private void SpawnVFX()

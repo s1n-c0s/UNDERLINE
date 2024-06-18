@@ -17,7 +17,7 @@ public class ISkillCooldown : MonoBehaviour
 
     void Update()
     {
-        int currentTurn = _skillTurnSystem.GetCurrentSkillCooldown();
+        int currentTurn = _skillTurnSystem.GetCurrentValue();
 
         if (textMeshPro.text != currentTurn.ToString())
         {
