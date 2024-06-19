@@ -17,6 +17,7 @@ public class FireBallSkill : MonoBehaviour
     private int cooldownTurns;
     private int currentTurnCount;
     private List<GameObject> instantiatedBullets = new List<GameObject>();
+    private List<float> bulletAngles = new List<float>();
 
     private void Start()
     {
@@ -50,38 +51,39 @@ public class FireBallSkill : MonoBehaviour
     {
         Rigidbody rb = enemy.GetComponent<Rigidbody>();
 
-        // Wait until the enemy's velocity is nearly zero
         while (rb.velocity.magnitude > 0.01f)
         {
             yield return null;
         }
 
-        // Once velocity is almost zero, proceed with initialization
         InitNextItem();
-
         currentTurnCount++;
 
         if (currentTurnCount > 0 && currentTurnCount % cooldownTurns == 0)
         {
-            ShootOrb();
+            ShootOrbs();
         }
     }
 
     private void ResetSkill()
     {
         currentTurnCount = 0;
+        instantiatedBullets.Clear();
+        bulletAngles.Clear();
         UpdateSkillSystemValues();
     }
 
     private void UpdateSkillSystemValues()
     {
-        skillSystem.SetCurrentValue(0, currentTurnCount); // Assuming SetCurrentValue expects cooldown = 0 when not on cooldown
+        skillSystem.SetCurrentValue(0, currentTurnCount);
     }
 
     private void InitNextItem()
     {
         int itemIndex = currentTurnCount % items.Count;
         float angle = 360f / items.Count * itemIndex;
+        bulletAngles.Add(angle);
+
         Quaternion rotation = Quaternion.Euler(0, angle, 0);
         Vector3 position = transform.position + rotation * Vector3.forward * radiusOffset + Vector3.up * heightOffset;
 
@@ -102,28 +104,43 @@ public class FireBallSkill : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-        RotateOrb();
+        RotateOrbs();
     }
 
-    private void RotateOrb()
+    private void RotateOrbs()
     {
-        transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+        for (int i = 0; i < instantiatedBullets.Count; i++)
+        {
+            if (instantiatedBullets[i] != null)
+            {
+                bulletAngles[i] += rotationSpeed * Time.deltaTime;
+                bulletAngles[i] %= 360; // Ensure the angle stays within 0-360 degrees
+
+                float rad = Mathf.Deg2Rad * bulletAngles[i];
+                Vector3 offset = new Vector3(Mathf.Sin(rad), 0, Mathf.Cos(rad)) * radiusOffset;
+                instantiatedBullets[i].transform.position = transform.position + offset + Vector3.up * heightOffset;
+            }
+        }
     }
 
-    private void ShootOrb()
+    private void ShootOrbs()
     {
         foreach (GameObject bullet in instantiatedBullets)
         {
-            bullet.transform.SetParent(null);
-            Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
-            if (bulletRigidbody != null)
+            if (bullet != null)
             {
-                bulletRigidbody.AddForce(bullet.transform.forward * power, ForceMode.Impulse);
+                bullet.transform.SetParent(null);
+                Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
+                if (bulletRigidbody != null)
+                {
+                    bulletRigidbody.AddForce(bullet.transform.forward * power, ForceMode.Impulse);
+                }
             }
         }
 
         instantiatedBullets.Clear();
+        bulletAngles.Clear();
     }
 }
