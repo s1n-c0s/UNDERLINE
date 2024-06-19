@@ -158,7 +158,7 @@ public class FireBallSkill : MonoBehaviour
         {
             if (bullet != null)
             {
-                StartCoroutine(ShootAndDespawnBullet(bullet));
+                ShootBullet(bullet);
             }
         }
 
@@ -166,7 +166,7 @@ public class FireBallSkill : MonoBehaviour
         bulletAngles.Clear();
     }
 
-    private IEnumerator ShootAndDespawnBullet(GameObject bullet)
+    private void ShootBullet(GameObject bullet)
     {
         bullet.transform.SetParent(null);
         Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
@@ -179,8 +179,5 @@ public class FireBallSkill : MonoBehaviour
 
             bulletRigidbody.AddForce(direction * power, ForceMode.Impulse);
         }
-
-        yield return new WaitForSeconds(1f);
-        LeanPool.Despawn(bullet);
     }
 }
