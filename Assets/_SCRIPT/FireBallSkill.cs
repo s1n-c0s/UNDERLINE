@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Lean.Pool;
@@ -28,8 +27,10 @@ public class FireBallSkill : MonoBehaviour
     {
         skillSystem = GetComponent<SkillTurnSystem>();
         cooldownTurns = skillSystem.CooldownTurns;
+        currentTurnCount = cooldownTurns; // Start with the maximum cooldown value
         ResetSkill();
         InitAllItems();
+        UpdateSkillSystemValues(); // Update skill system initially
     }
 
     private void OnEnable()
@@ -56,20 +57,22 @@ public class FireBallSkill : MonoBehaviour
             yield return null;
         }
 
-        ActivateBullet(currentTurnCount);
-        currentTurnCount++;
+        ActivateBullet(currentTurnCount - 1); // Activate bullet corresponding to currentTurnCount
+        currentTurnCount--;
+        UpdateSkillSystemValues();
 
-        if (currentTurnCount > 0 && currentTurnCount % cooldownTurns == 0)
+        if (currentTurnCount <= 0)
         {
             ShootOrbs();
             ResetSkill();
+            currentTurnCount = cooldownTurns; // Reset currentTurnCount to cooldownTurns
             InitAllItems();
         }
     }
 
     private void ActivateBullet(int index)
     {
-        if (index < instantiatedBullets.Count)
+        if (index >= 0 && index < instantiatedBullets.Count)
         {
             instantiatedBullets[index].SetActive(true);
         }
@@ -77,15 +80,18 @@ public class FireBallSkill : MonoBehaviour
 
     private void ResetSkill()
     {
-        currentTurnCount = 0;
+        foreach (var bullet in instantiatedBullets)
+        {
+            LeanPool.Despawn(bullet); // Despawn bullets from the pool
+        }
         instantiatedBullets.Clear();
         bulletAngles.Clear();
-        UpdateSkillSystemValues();
     }
 
     private void UpdateSkillSystemValues()
     {
-        skillSystem.SetCurrentValue(0, currentTurnCount);
+        int displayedValue = currentTurnCount == 0 ? cooldownTurns : currentTurnCount;
+        skillSystem.SetCurrentValue(displayedValue, 0);
     }
 
     private void InitAllItems()
@@ -111,7 +117,7 @@ public class FireBallSkill : MonoBehaviour
 
         GameObject bullet = LeanPool.Spawn(fireballPrefab, position, rotation);
         bullet.name = "Fireball";
-        bullet.transform.parent = this.transform;
+        bullet.transform.parent = transform; // Simplified setting parent to transform
         bullet.SetActive(false);
         return bullet;
     }
