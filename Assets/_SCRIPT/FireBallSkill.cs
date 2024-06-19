@@ -64,8 +64,8 @@ public class FireBallSkill : MonoBehaviour
         if (currentTurnCount <= 0)
         {
             ShootOrbs();
-            currentTurnCount = cooldownTurns; // Reset currentTurnCount to cooldownTurns
             ResetSkill();
+            currentTurnCount = cooldownTurns; // Reset currentTurnCount to cooldownTurns
             InitAllItems();
         }
     }
@@ -82,10 +82,7 @@ public class FireBallSkill : MonoBehaviour
     {
         foreach (var bullet in instantiatedBullets)
         {
-            if (bullet != null)
-            {
-                LeanPool.Despawn(bullet); // Despawn bullets from the pool
-            }
+            LeanPool.Despawn(bullet); // Despawn bullets from the pool
         }
         instantiatedBullets.Clear();
         bulletAngles.Clear();
@@ -120,7 +117,7 @@ public class FireBallSkill : MonoBehaviour
 
         GameObject bullet = LeanPool.Spawn(fireballPrefab, position, rotation);
         bullet.name = "Fireball";
-        bullet.transform.parent = this.transform;
+        bullet.transform.parent = transform; // Simplified setting parent to transform
         bullet.SetActive(false);
         return bullet;
     }
