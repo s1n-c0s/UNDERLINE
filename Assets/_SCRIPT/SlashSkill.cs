@@ -102,8 +102,9 @@ public class SlashSkill : MonoBehaviour
     {
         Vector3 position = GetSlashPosition(angle);
         GameObject slash = LeanPool.Spawn(slashPrefab, position, Quaternion.Euler(0, angle, 0));
-        slash.name = "Slash";
+        slash.name = "SlashSkill";
         slash.transform.SetParent(transform);
+        DisableCollider(slash);
         ResetSlashPhysics(slash);
         return slash;
     }
@@ -123,12 +124,29 @@ public class SlashSkill : MonoBehaviour
         }
     }
 
+    private void DisableCollider(GameObject slash)
+    {
+        if (slash.TryGetComponent(out Collider collider))
+        {
+            collider.enabled = false;
+        }
+    }
+
+    private void EnableCollider(GameObject slash)
+    {
+        if (slash.TryGetComponent(out Collider collider))
+        {
+            collider.enabled = true;
+        }
+    }
+
     private void ShootSlashes()
     {
         foreach (GameObject slash in instantiatedSlashes)
         {
             if (slash != null)
             {
+                EnableCollider(slash);
                 ShootSlash(slash);
             }
         }
