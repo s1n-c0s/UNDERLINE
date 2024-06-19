@@ -10,7 +10,7 @@ public class FireBallSkill : MonoBehaviour
     [SerializeField] private float power = 10f;
     [SerializeField] private float radiusOffset = 5f;
     [SerializeField] private float heightOffset = 2f;
-    [SerializeField] private List<GameObject> items;
+    [SerializeField] private GameObject fireballPrefab;  // Changed to a single GameObject prefab
     [SerializeField] private GameObject enemy;
 
     private SkillTurnSystem skillSystem;
@@ -85,9 +85,9 @@ public class FireBallSkill : MonoBehaviour
         instantiatedBullets.Clear();
         bulletAngles.Clear();
 
-        float angleStep = 360f / items.Count;
+        float angleStep = 360f /  cooldownTurns;
 
-        for (int i = 0; i < items.Count; i++)
+        for (int i = 0; i < cooldownTurns; i++)
         {
             float angle = angleStep * i;
             bulletAngles.Add(angle);
@@ -96,7 +96,7 @@ public class FireBallSkill : MonoBehaviour
             Vector3 offset = transform.TransformDirection(Vector3.forward) * radiusOffset;
             Vector3 position = transform.position + offset + Vector3.up * heightOffset;
 
-            GameObject bullet = LeanPool.Spawn(items[i], position, rotation, transform);
+            GameObject bullet = LeanPool.Spawn(fireballPrefab, position, rotation, transform);
             bullet.name = "Fireball";
             instantiatedBullets.Add(bullet);
             bullet.SetActive(false);
@@ -140,6 +140,10 @@ public class FireBallSkill : MonoBehaviour
     {
         foreach (GameObject bullet in instantiatedBullets)
         {
+            if (bullet == null)
+            {
+                instantiatedBullets.Remove(bullet);
+            }
             if (bullet != null)
             {
                 bullet.transform.SetParent(null);
