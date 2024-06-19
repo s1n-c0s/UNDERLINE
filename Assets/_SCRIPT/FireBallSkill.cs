@@ -11,7 +11,6 @@ public class FireBallSkill : MonoBehaviour
     [SerializeField] private float radiusOffset = 5f;
     [SerializeField] private float heightOffset = 2f;
     [SerializeField] private GameObject fireballPrefab;
-    [SerializeField] private GameObject enemy;
 
     private SkillTurnSystem skillSystem;
     private int cooldownTurns;
@@ -49,7 +48,7 @@ public class FireBallSkill : MonoBehaviour
 
     private IEnumerator WaitForVelocityZeroAndInit()
     {
-        Rigidbody rb = enemy.GetComponent<Rigidbody>();
+        Rigidbody rb = GetComponent<Rigidbody>();
 
         while (rb.velocity.magnitude > 0.01f)
         {
