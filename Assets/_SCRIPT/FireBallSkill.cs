@@ -178,7 +178,6 @@ public class FireBallSkill : MonoBehaviour
             Vector3 direction = new Vector3(Mathf.Sin(rad), 0, Mathf.Cos(rad));
 
             bulletRigidbody.AddForce(direction * power, ForceMode.Impulse);
-            Debug.Log($"Bullet {bullet.name} shot in direction {direction} with power {power}");
         }
 
         yield return new WaitForSeconds(1f);
