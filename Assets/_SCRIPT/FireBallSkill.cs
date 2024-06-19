@@ -63,6 +63,8 @@ public class FireBallSkill : MonoBehaviour
         if (currentTurnCount > 0 && currentTurnCount % cooldownTurns == 0)
         {
             ShootOrbs();
+            ResetSkill();
+            InitAllItems();
         }
     }
 
