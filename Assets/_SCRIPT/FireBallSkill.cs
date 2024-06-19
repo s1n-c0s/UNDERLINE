@@ -140,6 +140,8 @@ public class FireBallSkill : MonoBehaviour
                     bulletRigidbody.AddForce(bullet.transform.forward * power, ForceMode.Impulse);
                 }
             }
+
+            LeanPool.Despawn(bullet, 1f);
         }
 
         instantiatedBullets.Clear();
