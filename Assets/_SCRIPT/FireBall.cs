@@ -1,9 +1,12 @@
+using System;
+using Cinemachine.Utility;
 using Lean.Pool;
 using UnityEngine;
 
 public class Fireball : MonoBehaviour
 {
-    //[SerializeField] private int fireDamage;
+    private Rigidbody rb;
+    [SerializeField] private float lifetime = 3f; // Assign a default lifetime if not set in the Inspector
 
     [Header("VFX")]
     [SerializeField] private ParticleSystem fx_hit;
@@ -11,8 +14,25 @@ public class Fireball : MonoBehaviour
     [Header("Burn Effect")]
     [SerializeField] private float burnDuration = 2f;
     [SerializeField] private int burnDamagePerSecond = 1;
-    
 
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void LateUpdate()
+    {
+        if (rb.velocity.magnitude > 0.01f)
+        {
+            afterShoot();
+        }
+    }
+
+    private void afterShoot()
+    {
+        LeanPool.Despawn(gameObject, lifetime);
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
         HealthSystem healthSystem = other.GetComponent<HealthSystem>();
@@ -20,24 +40,18 @@ public class Fireball : MonoBehaviour
 
         if (healthSystem != null)
         {
-            //healthSystem.TakeDamage(fireDamage);
             if (statusManager != null)
             {
                 statusManager.ApplyStatus(StatusManager.Status.Burn, true, burnDamagePerSecond, burnDuration);
             }
             PlayHitEffect();
             LeanPool.Despawn(gameObject);
-            //gameObject.SetActive(false);
-            return;
         }
-
-        /*if (other.CompareTag("Wall"))
+        else if (other.CompareTag("Wall"))
         {
             PlayHitEffect();
             LeanPool.Despawn(gameObject);
-            return;
-        }*/
-
+        }
         // Additional handling for other cases can be added here
     }
 
