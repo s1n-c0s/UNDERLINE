@@ -80,7 +80,7 @@ public class FireBallSkill : MonoBehaviour
 
     private void ResetSkill()
     {
-        foreach (var bullet in instantiatedBullets)
+        foreach (GameObject bullet in instantiatedBullets)
         {
             LeanPool.Despawn(bullet); // Despawn bullets from the pool
         }
