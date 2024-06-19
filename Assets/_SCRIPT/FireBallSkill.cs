@@ -137,10 +137,12 @@ public class FireBallSkill : MonoBehaviour
                 Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
                 if (bulletRigidbody != null)
                 {
-                    bulletRigidbody.AddForce(bullet.transform.forward * power, ForceMode.Impulse);
+                    // Calculate the direction based on the bullet's current position and angle
+                    float rad = Mathf.Deg2Rad * bulletAngles[instantiatedBullets.IndexOf(bullet)];
+                    Vector3 direction = new Vector3(Mathf.Sin(rad), 0, Mathf.Cos(rad));
+                    bulletRigidbody.AddForce(direction * power, ForceMode.Impulse);
                 }
             }
-
             LeanPool.Despawn(bullet, 1f);
         }
 
