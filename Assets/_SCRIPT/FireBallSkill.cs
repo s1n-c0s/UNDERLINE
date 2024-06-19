@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Lean.Pool;
@@ -97,6 +98,7 @@ public class FireBallSkill : MonoBehaviour
 
             GameObject bullet = LeanPool.Spawn(fireballPrefab, position, rotation);
             bullet.name = "Fireball";
+            bullet.transform.parent = this.transform; 
             instantiatedBullets.Add(bullet);
             bullet.SetActive(false);
             ResetBulletPhysics(bullet);
@@ -139,8 +141,9 @@ public class FireBallSkill : MonoBehaviour
     {
         foreach (GameObject bullet in instantiatedBullets)
         {
-            if (bullet != null && bullet.activeInHierarchy)
+            if (bullet != null)
             {
+                bullet.transform.SetParent(null); // Unparent the bullet
                 Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
                 if (bulletRigidbody != null)
                 {
@@ -153,8 +156,10 @@ public class FireBallSkill : MonoBehaviour
                 
                     // Apply the impulse force
                     bulletRigidbody.AddForce(direction * power, ForceMode.Impulse);
+
+                    // Add a debug message to check if the bullet is unparented and force applied
+                    Debug.Log($"Bullet {bullet.name} shot in direction {direction} with power {power}");
                 }
-                LeanPool.Despawn(bullet, 1f);
             }
         }
 
