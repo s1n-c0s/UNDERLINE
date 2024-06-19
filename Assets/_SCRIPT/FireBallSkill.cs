@@ -10,7 +10,7 @@ public class FireBallSkill : MonoBehaviour
     [SerializeField] private float power = 10f;
     [SerializeField] private float radiusOffset = 5f;
     [SerializeField] private float heightOffset = 2f;
-    [SerializeField] private GameObject fireballPrefab;  // Changed to a single GameObject prefab
+    [SerializeField] private GameObject fireballPrefab;
     [SerializeField] private GameObject enemy;
 
     private SkillTurnSystem skillSystem;
@@ -85,7 +85,7 @@ public class FireBallSkill : MonoBehaviour
         instantiatedBullets.Clear();
         bulletAngles.Clear();
 
-        float angleStep = 360f /  cooldownTurns;
+        float angleStep = 360f / cooldownTurns;
 
         for (int i = 0; i < cooldownTurns; i++)
         {
@@ -96,7 +96,7 @@ public class FireBallSkill : MonoBehaviour
             Vector3 offset = transform.TransformDirection(Vector3.forward) * radiusOffset;
             Vector3 position = transform.position + offset + Vector3.up * heightOffset;
 
-            GameObject bullet = LeanPool.Spawn(fireballPrefab, position, rotation, transform);
+            GameObject bullet = LeanPool.Spawn(fireballPrefab, position, rotation);
             bullet.name = "Fireball";
             instantiatedBullets.Add(bullet);
             bullet.SetActive(false);
@@ -140,17 +140,11 @@ public class FireBallSkill : MonoBehaviour
     {
         foreach (GameObject bullet in instantiatedBullets)
         {
-            if (bullet == null)
+            if (bullet != null && bullet.activeInHierarchy)
             {
-                instantiatedBullets.Remove(bullet);
-            }
-            if (bullet != null)
-            {
-                bullet.transform.SetParent(null);
                 Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
                 if (bulletRigidbody != null)
                 {
-                    // Calculate the direction based on the bullet's current position and angle
                     int index = instantiatedBullets.IndexOf(bullet);
                     float angle = bulletAngles[index];
                     float rad = Mathf.Deg2Rad * angle;
@@ -170,5 +164,4 @@ public class FireBallSkill : MonoBehaviour
 
         InitAllItems();
     }
-
 }
