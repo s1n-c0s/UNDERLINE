@@ -29,7 +29,7 @@ public class FireBallSkill : MonoBehaviour
         skillSystem = GetComponent<SkillTurnSystem>();
         cooldownTurns = skillSystem.CooldownTurns;
         ResetSkill();
-        InitNextItem();
+        InitAllItems();
     }
 
     private void OnEnable()
@@ -55,8 +55,9 @@ public class FireBallSkill : MonoBehaviour
         {
             yield return null;
         }
+        
+        instantiatedBullets[currentTurnCount].SetActive(true);
 
-        InitNextItem();
         currentTurnCount++;
 
         if (currentTurnCount > 0 && currentTurnCount % cooldownTurns == 0)
@@ -78,22 +79,28 @@ public class FireBallSkill : MonoBehaviour
         skillSystem.SetCurrentValue(0, currentTurnCount);
     }
 
-    private void InitNextItem()
+    private void InitAllItems()
     {
-        int itemIndex = currentTurnCount % items.Count;
+        instantiatedBullets.Clear();
+        bulletAngles.Clear();
+
         float angleStep = 360f / items.Count;
-        float angle = angleStep * instantiatedBullets.Count; // Calculate angle based on count of instantiated bullets
 
-        bulletAngles.Add(angle);
+        for (int i = 0; i < items.Count; i++)
+        {
+            float angle = angleStep * i;
 
-        Quaternion rotation = Quaternion.Euler(0, angle, 0);
-        Vector3 position = transform.position + rotation * Vector3.forward * radiusOffset + Vector3.up * heightOffset;
+            bulletAngles.Add(angle);
 
-        GameObject bullet = LeanPool.Spawn(items[itemIndex], position, rotation, transform);
-        bullet.name = "Fireball";
-        instantiatedBullets.Add(bullet);
+            Quaternion rotation = Quaternion.Euler(0, angle, 0);
+            Vector3 position = transform.position + rotation * Vector3.forward * radiusOffset + Vector3.up * heightOffset;
 
-        ResetBulletPhysics(bullet);
+            GameObject bullet = LeanPool.Spawn(items[i], position, rotation, transform);
+            bullet.name = "Fireball";
+            instantiatedBullets.Add(bullet);
+            instantiatedBullets[i].SetActive(false); 
+            ResetBulletPhysics(bullet);
+        }
     }
 
     private void ResetBulletPhysics(GameObject bullet)
@@ -148,5 +155,8 @@ public class FireBallSkill : MonoBehaviour
 
         instantiatedBullets.Clear();
         bulletAngles.Clear();
+
+        // Initialize all items again for continuous rotation
+        InitAllItems();
     }
 }
