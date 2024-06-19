@@ -31,12 +31,12 @@ public class Fireball : MonoBehaviour
             return;
         }
 
-        if (other.CompareTag("Wall"))
+        /*if (other.CompareTag("Wall"))
         {
             PlayHitEffect();
             LeanPool.Despawn(gameObject);
             return;
-        }
+        }*/
 
         // Additional handling for other cases can be added here
     }
