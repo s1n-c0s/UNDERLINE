@@ -81,7 +81,9 @@ public class FireBallSkill : MonoBehaviour
     private void InitNextItem()
     {
         int itemIndex = currentTurnCount % items.Count;
-        float angle = 360f / items.Count * itemIndex;
+        float angleStep = 360f / items.Count;
+        float angle = angleStep * instantiatedBullets.Count; // Calculate angle based on count of instantiated bullets
+
         bulletAngles.Add(angle);
 
         Quaternion rotation = Quaternion.Euler(0, angle, 0);
