@@ -57,7 +57,6 @@ public class FireBallSkill : MonoBehaviour
         }
         
         instantiatedBullets[currentTurnCount].SetActive(true);
-
         currentTurnCount++;
 
         if (currentTurnCount > 0 && currentTurnCount % cooldownTurns == 0)
@@ -91,16 +90,16 @@ public class FireBallSkill : MonoBehaviour
         for (int i = 0; i < items.Count; i++)
         {
             float angle = angleStep * i;
-
             bulletAngles.Add(angle);
 
             Quaternion rotation = Quaternion.Euler(0, angle, 0);
-            Vector3 position = transform.position + rotation * Vector3.forward * radiusOffset + Vector3.up * heightOffset;
+            Vector3 offset = transform.TransformDirection(Vector3.forward) * radiusOffset;
+            Vector3 position = transform.position + offset + Vector3.up * heightOffset;
 
             GameObject bullet = LeanPool.Spawn(items[i], position, rotation, transform);
             bullet.name = "Fireball";
             instantiatedBullets.Add(bullet);
-            instantiatedBullets[i].SetActive(false); 
+            bullet.SetActive(false);
             ResetBulletPhysics(bullet);
         }
     }
@@ -122,7 +121,8 @@ public class FireBallSkill : MonoBehaviour
 
     private void RotateOrbs()
     {
-        for (int i = 0; i < instantiatedBullets.Count; i++)
+        int count = instantiatedBullets.Count;
+        for (int i = 0; i < count; i++)
         {
             if (instantiatedBullets[i] != null)
             {
@@ -130,7 +130,7 @@ public class FireBallSkill : MonoBehaviour
                 bulletAngles[i] %= 360; // Ensure the angle stays within 0-360 degrees
 
                 float rad = Mathf.Deg2Rad * bulletAngles[i];
-                Vector3 offset = new Vector3(Mathf.Sin(rad), 0, Mathf.Cos(rad)) * radiusOffset;
+                Vector3 offset = transform.TransformDirection(new Vector3(Mathf.Sin(rad), 0, Mathf.Cos(rad))) * radiusOffset;
                 instantiatedBullets[i].transform.position = transform.position + offset + Vector3.up * heightOffset;
             }
         }
@@ -147,18 +147,24 @@ public class FireBallSkill : MonoBehaviour
                 if (bulletRigidbody != null)
                 {
                     // Calculate the direction based on the bullet's current position and angle
-                    float rad = Mathf.Deg2Rad * bulletAngles[instantiatedBullets.IndexOf(bullet)];
-                    Vector3 direction = new Vector3(Mathf.Sin(rad), 0, Mathf.Cos(rad));
+                    int index = instantiatedBullets.IndexOf(bullet);
+                    float angle = bulletAngles[index];
+                    float rad = Mathf.Deg2Rad * angle;
+                
+                    // Calculate the direction using the current angle
+                    Vector3 direction = transform.TransformDirection(new Vector3(Mathf.Sin(rad), 0, Mathf.Cos(rad)));
+                
+                    // Apply the impulse force
                     bulletRigidbody.AddForce(direction * power, ForceMode.Impulse);
                 }
+                LeanPool.Despawn(bullet, 1f);
             }
-            LeanPool.Despawn(bullet, 1f);
         }
 
         instantiatedBullets.Clear();
         bulletAngles.Clear();
 
-        // Initialize all items again for continuous rotation
         InitAllItems();
     }
+
 }
