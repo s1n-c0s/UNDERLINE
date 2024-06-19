@@ -158,7 +158,7 @@ public class FireBallSkill : MonoBehaviour
         {
             if (bullet != null)
             {
-                ShootBullet(bullet);
+                StartCoroutine(ShootAndDespawnBullet(bullet));
             }
         }
 
@@ -166,7 +166,7 @@ public class FireBallSkill : MonoBehaviour
         bulletAngles.Clear();
     }
 
-    private void ShootBullet(GameObject bullet)
+    private IEnumerator ShootAndDespawnBullet(GameObject bullet)
     {
         bullet.transform.SetParent(null);
         Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
@@ -178,6 +178,10 @@ public class FireBallSkill : MonoBehaviour
             Vector3 direction = new Vector3(Mathf.Sin(rad), 0, Mathf.Cos(rad));
 
             bulletRigidbody.AddForce(direction * power, ForceMode.Impulse);
+            Debug.Log($"Bullet {bullet.name} shot in direction {direction} with power {power}");
         }
+
+        yield return new WaitForSeconds(1f);
+        LeanPool.Despawn(bullet);
     }
 }
