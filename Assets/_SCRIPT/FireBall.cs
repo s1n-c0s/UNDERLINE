@@ -1,3 +1,4 @@
+using Lean.Pool;
 using UnityEngine;
 
 public class Fireball : MonoBehaviour
@@ -25,14 +26,15 @@ public class Fireball : MonoBehaviour
                 statusManager.ApplyStatus(StatusManager.Status.Burn, true, burnDamagePerSecond, burnDuration);
             }
             PlayHitEffect();
-            gameObject.SetActive(false);
+            LeanPool.Despawn(gameObject);
+            //gameObject.SetActive(false);
             return;
         }
 
         if (other.CompareTag("Wall"))
         {
             PlayHitEffect();
-            gameObject.SetActive(false);
+            //LeanPool.Despawn(gameObject);
             return;
         }
 
