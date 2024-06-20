@@ -6,8 +6,7 @@ using UnityEngine;
 public class SlashSkill : MonoBehaviour
 {
     [SerializeField] private GameObject slashPrefab;
-    [SerializeField] private int slash;
-
+    [SerializeField] private int slashCount;
     [Header("Skill Settings")]
     [SerializeField] private float speed = 10f;
     [SerializeField] private float radiusOffset = 5f;
@@ -16,12 +15,23 @@ public class SlashSkill : MonoBehaviour
     private SkillTurnSystem _skillSystem;
     private int cooldownTurns;
     private int currentCooldownTurns;
-    private List<GameObject> instantiatedSlashes = new List<GameObject>();
-    private List<Vector3> localSlashPositions = new List<Vector3>();
+    private List<SlashInfo> instantiatedSlashes = new List<SlashInfo>();
+
+    private class SlashInfo
+    {
+        public GameObject SlashObject;
+        public Vector3 LocalPosition;
+        public Rigidbody Rigidbody;
+        public Collider Collider;
+    }
+
+    private void Awake()
+    {
+        _skillSystem = GetComponent<SkillTurnSystem>();
+    }
 
     private void Start()
     {
-        _skillSystem = GetComponent<SkillTurnSystem>();
         InitializeSkillSettings();
     }
 
@@ -37,7 +47,10 @@ public class SlashSkill : MonoBehaviour
 
     private void Update()
     {
-        UpdateSlashPositions();
+        if (currentCooldownTurns == 1)
+        {
+            UpdateSlashPositions();
+        }
     }
 
     private void InitializeSkillSettings()
@@ -59,7 +72,8 @@ public class SlashSkill : MonoBehaviour
 
     private IEnumerator WaitForVelocityZeroAndInit()
     {
-        yield return new WaitUntil(() => GetComponent<Rigidbody>().velocity.magnitude <= 0.01f);
+        Rigidbody rb = GetComponent<Rigidbody>();
+        yield return new WaitUntil(() => rb.velocity.magnitude <= 0.01f);
         currentCooldownTurns--;
         UpdateSkillSystemValues();
 
@@ -78,12 +92,11 @@ public class SlashSkill : MonoBehaviour
 
     private void ResetSkill()
     {
-        foreach (var slash in instantiatedSlashes)
+        foreach (var slashInfo in instantiatedSlashes)
         {
-            LeanPool.Despawn(slash);
+            LeanPool.Despawn(slashInfo.SlashObject);
         }
         instantiatedSlashes.Clear();
-        localSlashPositions.Clear();
     }
 
     private void UpdateSkillSystemValues()
@@ -93,26 +106,34 @@ public class SlashSkill : MonoBehaviour
 
     private void InitSlashes()
     {
-        float angleStep = 360f / slash;
+        float angleStep = 360f / slashCount;
 
-        for (int i = 0; i < slash; i++)
+        for (int i = 0; i < slashCount; i++)
         {
             float angle = angleStep * i;
-            GameObject slash = SpawnSlash(angle);
-            instantiatedSlashes.Add(slash);
-            localSlashPositions.Add(slash.transform.localPosition);
+            SlashInfo slashInfo = SpawnSlash(angle);
+            instantiatedSlashes.Add(slashInfo);
         }
     }
 
-    private GameObject SpawnSlash(float angle)
+    private SlashInfo SpawnSlash(float angle)
     {
         Vector3 position = GetSlashPosition(angle);
         GameObject slash = LeanPool.Spawn(slashPrefab, position, Quaternion.Euler(0, angle, 0));
         slash.name = "SlashSkill";
         slash.transform.SetParent(transform);
         DisableCollider(slash);
-        ResetSlashPhysics(slash);
-        return slash;
+
+        SlashInfo slashInfo = new SlashInfo
+        {
+            SlashObject = slash,
+            LocalPosition = slash.transform.localPosition,
+            Rigidbody = slash.GetComponent<Rigidbody>(),
+            Collider = slash.GetComponent<Collider>()
+        };
+
+        ResetSlashPhysics(slashInfo);
+        return slashInfo;
     }
 
     private Vector3 GetSlashPosition(float angle)
@@ -123,19 +144,16 @@ public class SlashSkill : MonoBehaviour
 
     private void UpdateSlashPositions()
     {
-        for (int i = 0; i < instantiatedSlashes.Count; i++)
+        foreach (var slashInfo in instantiatedSlashes)
         {
-            instantiatedSlashes[i].transform.localPosition = localSlashPositions[i];
+            slashInfo.SlashObject.transform.localPosition = slashInfo.LocalPosition;
         }
     }
 
-    private void ResetSlashPhysics(GameObject slash)
+    private void ResetSlashPhysics(SlashInfo slashInfo)
     {
-        if (slash.TryGetComponent(out Rigidbody slashRigidbody))
-        {
-            slashRigidbody.velocity = Vector3.zero;
-            slashRigidbody.angularVelocity = Vector3.zero;
-        }
+        slashInfo.Rigidbody.velocity = Vector3.zero;
+        slashInfo.Rigidbody.angularVelocity = Vector3.zero;
     }
 
     private void DisableCollider(GameObject slash)
@@ -156,25 +174,21 @@ public class SlashSkill : MonoBehaviour
 
     private void ShootSlashes()
     {
-        foreach (GameObject slash in instantiatedSlashes)
+        foreach (var slashInfo in instantiatedSlashes)
         {
-            if (slash != null)
+            if (slashInfo.SlashObject != null)
             {
-                EnableCollider(slash);
-                ShootSlash(slash);
+                EnableCollider(slashInfo.SlashObject);
+                ShootSlash(slashInfo);
             }
         }
         instantiatedSlashes.Clear();
-        localSlashPositions.Clear();
     }
 
-    private void ShootSlash(GameObject slash)
+    private void ShootSlash(SlashInfo slashInfo)
     {
-        slash.transform.SetParent(null);
-        if (slash.TryGetComponent(out Rigidbody slashRigidbody))
-        {
-            Vector3 direction = (slash.transform.position - transform.position).normalized;
-            slashRigidbody.AddForce(direction * speed, ForceMode.Impulse);
-        }
+        slashInfo.SlashObject.transform.SetParent(null);
+        Vector3 direction = (slashInfo.SlashObject.transform.position - transform.position).normalized;
+        slashInfo.Rigidbody.AddForce(direction * speed, ForceMode.Impulse);
     }
 }
