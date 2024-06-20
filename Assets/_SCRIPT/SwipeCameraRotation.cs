@@ -33,6 +33,7 @@ public class SwipeCameraRotation : MonoBehaviour
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         virtualCamera.Follow = player;
+        canDrag = true;
     }
 
     void Update()
