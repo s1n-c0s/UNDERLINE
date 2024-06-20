@@ -12,21 +12,21 @@ public class FireBallSkill : MonoBehaviour
     [SerializeField] private float heightOffset = 2f;
     [SerializeField] private GameObject fireballPrefab;
 
-    private SkillTurnSystem skillSystem;
+    [SerializeField] private SkillTurnSystem _skillTurnSystem;
     private int cooldownTurns;
     private int currentTurnCount;
     private List<GameObject> instantiatedBullets = new List<GameObject>();
     private List<float> bulletAngles = new List<float>();
 
-    private void Start()
-    {
+    private void Awake()
+    {   
+        _skillTurnSystem = GetComponent<SkillTurnSystem>();
         Initialize();
     }
 
     private void Initialize()
     {
-        skillSystem = GetComponent<SkillTurnSystem>();
-        cooldownTurns = skillSystem.CooldownTurns;
+        cooldownTurns = _skillTurnSystem.CooldownTurns;
         currentTurnCount = cooldownTurns; // Start with the maximum cooldown value
         ResetSkill();
         InitAllItems();
@@ -35,12 +35,12 @@ public class FireBallSkill : MonoBehaviour
 
     private void OnEnable()
     {
-        SkillTurnSystem.OnTurnEnd += HandleTurnEnd;
+        _skillTurnSystem.OnTurnEnd += HandleTurnEnd;
     }
 
     private void OnDisable()
     {
-        SkillTurnSystem.OnTurnEnd -= HandleTurnEnd;
+        _skillTurnSystem.OnTurnEnd -= HandleTurnEnd;
     }
 
     private void HandleTurnEnd()
@@ -91,7 +91,7 @@ public class FireBallSkill : MonoBehaviour
     private void UpdateSkillSystemValues()
     {
         int displayedValue = currentTurnCount == 0 ? cooldownTurns : currentTurnCount;
-        skillSystem.SetCurrentValue(displayedValue, 0);
+        _skillTurnSystem.SetCurrentValue(displayedValue, 0);
     }
 
     private void InitAllItems()
