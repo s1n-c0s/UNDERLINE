@@ -819,7 +819,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fx_Barrier: {fileID: 2165149893385645611}
-  fx_Fire: {fileID: 5484973601852839385}
+  fx_Fire: {fileID: 3784276939168433857}
 --- !u!114 &4200907223889215956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1679,6 +1679,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: fx_Fire
       objectReference: {fileID: 0}
+    - target: {fileID: 794679808632210996, guid: f3f29c869d136b446b5c5dccc3d77c03,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1291592452896487049, guid: f3f29c869d136b446b5c5dccc3d77c03,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -1760,9 +1765,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4576561848180310261}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &5484973601852839385 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8331022345270580524, guid: f3f29c869d136b446b5c5dccc3d77c03,
+--- !u!1 &3784276939168433857 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 794679808632210996, guid: f3f29c869d136b446b5c5dccc3d77c03,
     type: 3}
   m_PrefabInstance: {fileID: 4576561848180310261}
   m_PrefabAsset: {fileID: 0}

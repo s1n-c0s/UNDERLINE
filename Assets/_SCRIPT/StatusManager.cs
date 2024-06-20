@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StatusManager : MonoBehaviour
@@ -11,7 +13,7 @@ public class StatusManager : MonoBehaviour
 
     [Header("VFX")]
     [SerializeField] private GameObject fx_Barrier;
-    [SerializeField] private ParticleSystem fx_Fire;
+    [SerializeField] private GameObject fx_Fire;
 
     private HealthSystem _healthSystem;
     private Coroutine burnCoroutine;
@@ -19,7 +21,11 @@ public class StatusManager : MonoBehaviour
     private void Start()
     {
         _healthSystem = GetComponent<HealthSystem>();
-        fx_Fire.Stop();
+        if (fx_Barrier != null) 
+        {
+            fx_Barrier.SetActive(false);
+        }
+        fx_Fire.SetActive(false);
     }
 
     public void ApplyStatus(Status status, bool enable, int burnDamagePerSecond = 0, float burnDuration = 0)
@@ -38,7 +44,7 @@ public class StatusManager : MonoBehaviour
                 else
                 {
                     if (burnCoroutine != null) StopCoroutine(burnCoroutine);
-                    fx_Fire.Stop();
+                    fx_Fire.SetActive(false);
                 }
                 break;
         }
@@ -52,13 +58,13 @@ public class StatusManager : MonoBehaviour
 
     private IEnumerator ApplyBurnDamage(int damage, float duration)
     {
-        fx_Fire.Play();
+        fx_Fire.SetActive(true);
         while (duration > 0)
         {
             _healthSystem.TakeDamage(damage);
             yield return new WaitForSeconds(1f);
             duration -= 1f;
         }
-        fx_Fire.Stop();
+        fx_Fire.SetActive(false);
     }
 }

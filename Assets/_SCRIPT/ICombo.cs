@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 public class ICombo : MonoBehaviour
 {
@@ -9,12 +10,14 @@ public class ICombo : MonoBehaviour
     public GameObject comboPanel;
     public TextMeshProUGUI comboText;
 
-    public int hitcombo = 0;
-    private float timer = 0f;
-    public float comboResetTime = 2f;
-    public float fadeDuration = 0.5f;
-
     private CanvasGroup comboCanvasGroup;
+    private int hitcombo = 0;
+    private float comboTimer = 0f;
+    private float fadeDuration = 0.5f;
+
+    private bool isInPanicMode = false;
+    private float panicDuration = 8f;
+    private float panicExtendDuration = 2f;
 
     private void Awake()
     {
@@ -27,24 +30,33 @@ public class ICombo : MonoBehaviour
         HideComboPanel();
     }
 
-    private void LateUpdate()
+    private void Update()
     {
-        timer += Time.deltaTime;
-        if (timer >= comboResetTime)
+        if (!isInPanicMode)
         {
-            ResetCombo();
+            comboTimer += Time.deltaTime;
+            if (comboTimer >= panicDuration)
+            {
+                // Reset combo and fade out combo panel when panic duration ends
+                FadeOutComboPanel(() =>
+                {
+                    ResetCombo();
+                });
+            }
         }
     }
 
     public void IncreaseCombo()
     {
-        comboText.transform.DOPunchScale(Vector3.one * 0.5f, 0.3f, 10, 1f);
         hitcombo++;
         comboText.text = hitcombo.ToString();
-        timer = 0f;
+        comboTimer = 0f;
 
-        // Only fade in if the combo panel is not already active
-        if (!comboPanel.activeSelf)
+        comboText.transform.DOKill();
+        comboText.transform.localScale = Vector3.one;
+        comboText.transform.DOPunchScale(Vector3.one * 0.5f, 0.3f, 10, 1f).SetUpdate(true);
+
+        if (!comboPanel.activeSelf && !isInPanicMode)
         {
             FadeInComboPanel();
         }
@@ -52,32 +64,74 @@ public class ICombo : MonoBehaviour
 
     public void ResetCombo()
     {
-        FadeOutComboPanel();
-        timer = 0f;
+        if (!isInPanicMode)
+        {
+            FadeOutComboPanel(() =>
+            {
+                hitcombo = 0;
+                comboText.text = hitcombo.ToString();
+            });
+        }
+        else
+        {
+            hitcombo = 0;
+            comboText.text = hitcombo.ToString();
+        }
     }
 
     private void FadeInComboPanel()
     {
         comboPanel.SetActive(true);
+        comboCanvasGroup.alpha = 0f;
         comboCanvasGroup.DOFade(1f, fadeDuration);
     }
 
-    private void FadeOutComboPanel()
+    private void FadeOutComboPanel(Action onComplete = null)
     {
-        // Only initiate fade-out if the combo panel is currently active
         if (comboPanel.activeSelf)
         {
             comboCanvasGroup.DOFade(0f, fadeDuration).OnComplete(() =>
             {
                 comboPanel.SetActive(false);
-                hitcombo = 0;
-                comboText.text = hitcombo.ToString();
+                onComplete?.Invoke();
             });
+        }
+        else
+        {
+            onComplete?.Invoke();
         }
     }
 
     private void HideComboPanel()
     {
         comboPanel.SetActive(false);
+    }
+
+    // Update panic durations
+    public void UpdatePanicDurations(float duration, float extendDuration)
+    {
+        panicDuration = duration;
+        panicExtendDuration = extendDuration;
+    }
+
+    // Set panic mode
+    public void SetPanicMode(bool panic)
+    {
+        isInPanicMode = panic;
+        if (isInPanicMode)
+        {
+            comboTimer = 0f;
+        }
+        else
+        {
+            // If panic mode ends, reset combo and fade out combo panel
+            ResetCombo();
+        }
+    }
+
+    // Get current combo count
+    public int GetComboCount()
+    {
+        return hitcombo;
     }
 }

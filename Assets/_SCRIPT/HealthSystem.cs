@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Lean.Pool;
 
@@ -10,6 +11,8 @@ public class HealthSystem : MonoBehaviour
     public int maxHealth = 100;
     [SerializeField] private int currentHealth;
     [SerializeField] private bool isProtected;
+    
+    public event Action<HealthSystem> OnEnemyDeath;
 
     [Header("VFX")]
     public ParticleSystem fx_die;
@@ -17,7 +20,10 @@ public class HealthSystem : MonoBehaviour
 
     private void Start()
     {
-        currentHealth = maxHealth;
+        if (currentHealth == 0)
+        {
+            currentHealth = maxHealth;
+        }
         _enemyDetectorArea = FindObjectOfType<EnemyDetectorArea>();
         _statusManager = GetComponent<StatusManager>();
     }
@@ -64,6 +70,8 @@ public class HealthSystem : MonoBehaviour
                 break;
             case "Enemy":
                 _enemyDetectorArea.DecreaseEnemy(gameObject);
+                
+                OnEnemyDeath?.Invoke(this);
                 Destroy(gameObject);
                 CameraShake.Shake(0.6f, 5);
                 var fxInstance = LeanPool.Spawn(fx_die, Vector3.up + transform.position, Quaternion.identity);

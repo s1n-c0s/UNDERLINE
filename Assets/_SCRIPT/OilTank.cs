@@ -9,7 +9,7 @@ public class OilTank : MonoBehaviour
     public float radius = 5.0f;
     
     [Header("VFX")]
-    public GameObject fx_expposion;
+    public ParticleSystem fx_expposion;
     public Color drawColor = Color.yellow;
 
     private void Start()
@@ -43,7 +43,8 @@ public class OilTank : MonoBehaviour
             if (hit.GetComponent<HealthSystem>())
             {
                 hit.GetComponent<HealthSystem>().TakeDamage(damage);
-                LeanPool.Spawn(fx_expposion, hit.transform.position, hit.transform.rotation);
+                ParticleSystem _fxExposion = LeanPool.Spawn(fx_expposion, hit.transform.position, hit.transform.rotation);
+                LeanPool.Despawn(_fxExposion, 3f);
                 CameraShake.Shake(1f, 5);
                 
             }
