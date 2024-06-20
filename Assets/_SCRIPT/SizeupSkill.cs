@@ -27,7 +27,7 @@ public class SizeupSkill : MonoBehaviour
 
     [SerializeField] private SkillTurnSystem _skillSystem;
 
-    private void Start()
+    private void Awake()
     {
         _skillSystem = GetComponent<SkillTurnSystem>();
         InitializeSkillSettings();
