@@ -733,7 +733,7 @@ GameObject:
   - component: {fileID: 513005468219932935}
   - component: {fileID: 1817724001585402315}
   m_Layer: 6
-  m_Name: _UseKikiSlash
+  m_Name: _UseKslash
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -811,9 +811,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a320e6304207af84c8fabafdfa598ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slashPrefab: {fileID: 9037914215663463343, guid: 273264e0f520f784c97ed2d6177b69b2,
+  slashPrefab: {fileID: 9037914215663463343, guid: 9e39460f8f8cb52439c6209370a5899e,
     type: 3}
-  slash: 2
+  slashCount: 3
   speed: 10
   radiusOffset: 5
   heightOffset: 2

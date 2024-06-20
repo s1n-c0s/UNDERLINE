@@ -36,12 +36,12 @@ public class SizeupSkill : MonoBehaviour
     private void OnEnable()
     {
         _oldScale = transform.localScale;
-        SkillTurnSystem.OnTurnEnd += HandleTurnEnd;
+        _skillSystem.OnTurnEnd += HandleTurnEnd;
     }
 
     private void OnDisable()
     {
-        SkillTurnSystem.OnTurnEnd -= HandleTurnEnd;
+        _skillSystem.OnTurnEnd -= HandleTurnEnd;
     }
 
     private void InitializeSkillSettings()
