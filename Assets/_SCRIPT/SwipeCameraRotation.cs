@@ -5,8 +5,14 @@ using System.Collections;
 
 public class SwipeCameraRotation : MonoBehaviour
 {
-    [Header("Settings")]
-    public bool canDrag = true;
+    [Header("Settings")] 
+    private static bool canDrag;
+    public bool iscanDrag
+    {
+        get => canDrag;
+        set => canDrag = value;
+    }
+
     public float rotationSpeed = 10f;
     public float touchSensitivity = 100f;
     public float resetTime = 3f;
@@ -24,8 +30,10 @@ public class SwipeCameraRotation : MonoBehaviour
     void Start()
     {
         rotationY = virtualCamera.transform.localEulerAngles.y;
-        
+        virtualCamera = GetComponent<CinemachineVirtualCamera>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        virtualCamera.Follow = player;
+        canDrag = true;
     }
 
     void Update()

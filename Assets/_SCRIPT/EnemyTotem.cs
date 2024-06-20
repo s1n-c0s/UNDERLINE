@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMonk : MonoBehaviour
+public class EnemyTotem : MonoBehaviour
 {
     private HealthSystem _healthSystem;
     public List<GameObject> targets;
@@ -33,7 +33,7 @@ public class EnemyMonk : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         RemoveNullTargets(); // Clean up before checking to start protection
         if (!_isCooldown && targets.Count > 0)
@@ -51,24 +51,22 @@ public class EnemyMonk : MonoBehaviour
         yield return new WaitForSeconds(protectionDuration);
     
         RemoveNullTargets(); // Ensure the list is clean before toggling protection
-        // Assuming fx_protect is managed inside the EnableProtection method of HealthSystem
-        ToggleProtection(0, true); // Activate protection for the first enemy
+        ToggleProtection(true); // Activate protection for all targets
         fx_protectskill.Stop(); // Stop the charging effect
     
         yield return new WaitForSeconds(cooldownDuration);
     
-        ToggleProtection(0, false); // Deactivate protection for the first enemy
+        ToggleProtection(false); // Deactivate protection for all targets
         Debug.Log("Cooldown ended");
     
         _isCooldown = false;
     }
 
-
-    private void ToggleProtection(int index, bool state)
+    private void ToggleProtection(bool state)
     {
-        if (index < _targetHealthSystems.Count)
+        foreach (var targetHealthSystem in _targetHealthSystems)
         {
-            _targetHealthSystems[index]?.EnableProtection(state);
+            targetHealthSystem?.GetComponent<StatusManager>()?.ApplyStatus(StatusManager.Status.Barrier, state);
         }
     }
 
@@ -78,12 +76,11 @@ public class EnemyMonk : MonoBehaviour
         _targetHealthSystems.RemoveAll(item => item == null || item.gameObject == null); // Clean up HealthSystem list, checking both the component and its GameObject
     }
 
-
     private void OnDestroy()
     {
-        for (int i = 0; i < _targetHealthSystems.Count; i++)
+        foreach (var targetHealthSystem in _targetHealthSystems)
         {
-            ToggleProtection(i, false);
+            targetHealthSystem?.GetComponent<StatusManager>()?.ApplyStatus(StatusManager.Status.Barrier, false);
         }
     }
 
