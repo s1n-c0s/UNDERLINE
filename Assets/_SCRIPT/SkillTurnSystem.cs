@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class SkillTurnSystem : MonoBehaviour
 {
-    public static event Action OnTurnEnd;
-
     public int SkillDurationTurns = 2;
     public int CooldownTurns = 3;
 
@@ -15,6 +13,11 @@ public class SkillTurnSystem : MonoBehaviour
 
     private int currentSkillCooldown;
     private int currentSkillDuration;
+
+    public int CurrentCooldownTurns => currentSkillCooldown;
+    public int CurrentDurationTurns => currentSkillDuration;
+
+    public event Action OnTurnEnd;
 
     private void OnEnable()
     {
@@ -31,14 +34,14 @@ public class SkillTurnSystem : MonoBehaviour
         OnTurnEnd?.Invoke();
     }
 
-    public int GetCurrentValue()
-    {
-        return currentSkillDuration > 0 ? currentSkillDuration : currentSkillCooldown;
-    }
-
     public void SetCurrentValue(int cooldown, int duration)
     {
         currentSkillCooldown = cooldown;
         currentSkillDuration = duration;
+    }
+
+    public int GetCurrentValue()
+    {
+        return currentSkillDuration > 0 ? currentSkillDuration : currentSkillCooldown;
     }
 }
