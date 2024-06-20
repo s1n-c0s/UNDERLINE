@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Text;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     public TextMeshProUGUI runsRemainingText;
     public List<SwipeCameraRotation> _swipeCameraRotation;
+    public static event Action OnPlayerStop;
     
     public bool IsMoving { get; private set; }
 
@@ -177,6 +179,8 @@ public class PlayerController : MonoBehaviour
             IsMoving = false;
             rb.freezeRotation = true;
             DecreaseRunsRemaining();
+            
+            OnPlayerStop?.Invoke();
         }
         _lineRenderer.enabled = false;
     }
