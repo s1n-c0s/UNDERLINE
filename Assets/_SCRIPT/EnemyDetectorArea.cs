@@ -96,6 +96,7 @@ public class EnemyDetectorArea : MonoBehaviour
                 if (enemy != null)
                 {
                     enemyHealthBackup[enemy] = enemy.GetComponent<HealthSystem>().GetCurrentHealth();
+                    enemy.GetComponent<StatusManager>().ApplyStatus(StatusManager.Status.Panic,true);
                     enemy.GetComponent<HealthSystem>().SetHealth(1);
                 }
             }
@@ -125,6 +126,7 @@ public class EnemyDetectorArea : MonoBehaviour
             {
                 if (enemy != null && enemyHealthBackup.ContainsKey(enemy))
                 {
+                    enemy.GetComponent<StatusManager>().ApplyStatus(StatusManager.Status.Panic, false);
                     enemy.GetComponent<HealthSystem>().SetHealth(enemyHealthBackup[enemy]);
                 }
             }
