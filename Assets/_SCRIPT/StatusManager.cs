@@ -8,12 +8,11 @@ public class StatusManager : MonoBehaviour
     public enum Status
     {
         Barrier,
-        Burn
+        Burn,
+        Panic
     }
 
-    [Header("VFX")]
-    [SerializeField] private GameObject fx_Barrier;
-    [SerializeField] private GameObject fx_Fire;
+    [Header("VFX")] [SerializeField] private List<GameObject> fx_groups;
 
     private HealthSystem _healthSystem;
     private Coroutine burnCoroutine;
@@ -21,11 +20,13 @@ public class StatusManager : MonoBehaviour
     private void Start()
     {
         _healthSystem = GetComponent<HealthSystem>();
-        if (fx_Barrier != null) 
+        foreach (var _vfx in fx_groups)
         {
-            fx_Barrier.SetActive(false);
+            if (_vfx != null)
+            {
+                _vfx.SetActive(false);
+            }
         }
-        fx_Fire.SetActive(false);
     }
 
     public void ApplyStatus(Status status, bool enable, int burnDamagePerSecond = 0, float burnDuration = 0)
@@ -44,27 +45,35 @@ public class StatusManager : MonoBehaviour
                 else
                 {
                     if (burnCoroutine != null) StopCoroutine(burnCoroutine);
-                    fx_Fire.SetActive(false);
+                    fx_groups[1].SetActive(false);
                 }
+                break;
+            case Status.Panic:
+                isPanic(enable);
                 break;
         }
     }
 
     private void EnableBarrier(bool enable)
     {
-        fx_Barrier.gameObject.SetActive(enable);
+        fx_groups[0].gameObject.SetActive(enable);
         _healthSystem.SetProtection(enable);
     }
 
     private IEnumerator ApplyBurnDamage(int damage, float duration)
     {
-        fx_Fire.SetActive(true);
+        fx_groups[1].SetActive(true);
         while (duration > 0)
         {
             _healthSystem.TakeDamage(damage);
             yield return new WaitForSeconds(1f);
             duration -= 1f;
         }
-        fx_Fire.SetActive(false);
+        fx_groups[1].SetActive(false);
+    }
+
+    private void isPanic(bool enable)
+    {
+        fx_groups[2].SetActive(enable);
     }
 }
