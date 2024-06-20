@@ -3,17 +3,14 @@ using Cinemachine.Utility;
 using Lean.Pool;
 using UnityEngine;
 
-public class Fireball : MonoBehaviour
+public class SlashBlade : MonoBehaviour
 {
     private Rigidbody rb;
+    [SerializeField] private int damage;
     [SerializeField] private float lifetime = 3f; // Assign a default lifetime if not set in the Inspector
 
     [Header("VFX")]
     [SerializeField] private ParticleSystem fx_hit;
-
-    [Header("Burn Effect")]
-    [SerializeField] private float burnDuration = 2f;
-    [SerializeField] private int burnDamagePerSecond = 1;
 
     private void Start()
     {
@@ -36,21 +33,17 @@ public class Fireball : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         HealthSystem healthSystem = other.GetComponent<HealthSystem>();
-        StatusManager statusManager = other.GetComponent<StatusManager>();
 
         if (healthSystem != null)
         {
-            if (statusManager != null)
-            {
-                statusManager.ApplyStatus(StatusManager.Status.Burn, true, burnDamagePerSecond, burnDuration);
-            }
-            PlayHitEffect();
+            //PlayHitEffect();
+            healthSystem.TakeDamage(damage);
             LeanPool.Despawn(gameObject);
         }
         else if (other.CompareTag("Wall"))
         {
             PlayHitEffect();
-            //LeanPool.Despawn(gameObject);
+            LeanPool.Despawn(gameObject);
         }
         // Additional handling for other cases can be added here
     }
