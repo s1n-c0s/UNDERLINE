@@ -188,7 +188,11 @@ public class SlashSkill : MonoBehaviour
     private void ShootSlash(SlashInfo slashInfo)
     {
         slashInfo.SlashObject.transform.SetParent(null);
-        Vector3 direction = (slashInfo.SlashObject.transform.position - transform.position).normalized;
-        slashInfo.Rigidbody.AddForce(direction * speed, ForceMode.Impulse);
+    
+        // Calculate forward direction based on slash's orientation (assuming local forward is the desired direction)
+        Vector3 forwardDirection = slashInfo.SlashObject.transform.forward;
+    
+        // Apply force in the forward direction
+        slashInfo.Rigidbody.AddForce(forwardDirection * speed, ForceMode.Impulse);
     }
 }
