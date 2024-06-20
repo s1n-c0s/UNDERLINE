@@ -16,7 +16,8 @@ public class HealthSystem : MonoBehaviour
 
     [Header("VFX")]
     public ParticleSystem fx_die;
-    [SerializeField] private ParticleSystem fx_attackhit;
+    [SerializeField] private GameObject fx_attackhit;
+    [SerializeField] private GameObject fx_block;
 
     private void Start()
     {
@@ -35,12 +36,16 @@ public class HealthSystem : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (isProtected) return;
+        if (isProtected || damage == 0)
+        {
+            PlayHitAttack(true);
+            return;
+        }
 
         currentHealth -= damage;
         if (!CompareTag("Player"))
         {
-            PlayHitAttack();
+            PlayHitAttack(false);
         }
 
         if (currentHealth <= 0)
@@ -50,10 +55,18 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-    private void PlayHitAttack()
+    private void PlayHitAttack(bool isBlock)
     {
-        var fxInstance = LeanPool.Spawn(fx_attackhit, new Vector3(0, 2, 0) + transform.position, Quaternion.identity);
-        LeanPool.Despawn(fxInstance, 3f);
+        if (isBlock)
+        {
+            GameObject fxInstance = LeanPool.Spawn(fx_block, new Vector3(0, 4, 0) + transform.position, Quaternion.identity);
+            LeanPool.Despawn(fxInstance, 3f);
+        }
+        else
+        {
+            GameObject fxInstance = LeanPool.Spawn(fx_attackhit, new Vector3(0, 2, 0) + transform.position, Quaternion.identity);
+            LeanPool.Despawn(fxInstance, 3f);
+        }
     }
 
     public void Heal(int heal)
