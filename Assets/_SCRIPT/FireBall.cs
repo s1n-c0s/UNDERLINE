@@ -50,7 +50,7 @@ public class Fireball : MonoBehaviour
         else if (other.CompareTag("Wall"))
         {
             PlayHitEffect();
-            LeanPool.Despawn(gameObject);
+            //LeanPool.Despawn(gameObject);
         }
         // Additional handling for other cases can be added here
     }
