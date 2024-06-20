@@ -17,7 +17,7 @@ public class SlashSkill : MonoBehaviour
     private int cooldownTurns;
     private int currentCooldownTurns;
     private List<GameObject> instantiatedSlashes = new List<GameObject>();
-    private List<float> slashAngles = new List<float>();
+    private List<Vector3> localSlashPositions = new List<Vector3>();
 
     private void Start()
     {
@@ -33,6 +33,11 @@ public class SlashSkill : MonoBehaviour
     private void OnDisable()
     {
         SkillTurnSystem.OnTurnEnd -= HandleTurnEnd;
+    }
+
+    private void Update()
+    {
+        UpdateSlashPositions();
     }
 
     private void InitializeSkillSettings()
@@ -78,7 +83,7 @@ public class SlashSkill : MonoBehaviour
             LeanPool.Despawn(slash);
         }
         instantiatedSlashes.Clear();
-        slashAngles.Clear();
+        localSlashPositions.Clear();
     }
 
     private void UpdateSkillSystemValues()
@@ -93,8 +98,9 @@ public class SlashSkill : MonoBehaviour
         for (int i = 0; i < slash; i++)
         {
             float angle = angleStep * i;
-            slashAngles.Add(angle);
-            instantiatedSlashes.Add(SpawnSlash(angle));
+            GameObject slash = SpawnSlash(angle);
+            instantiatedSlashes.Add(slash);
+            localSlashPositions.Add(slash.transform.localPosition);
         }
     }
 
@@ -113,6 +119,14 @@ public class SlashSkill : MonoBehaviour
     {
         Vector3 offset = Quaternion.Euler(0, angle, 0) * Vector3.forward * radiusOffset;
         return transform.position + offset + Vector3.up * heightOffset;
+    }
+
+    private void UpdateSlashPositions()
+    {
+        for (int i = 0; i < instantiatedSlashes.Count; i++)
+        {
+            instantiatedSlashes[i].transform.localPosition = localSlashPositions[i];
+        }
     }
 
     private void ResetSlashPhysics(GameObject slash)
@@ -151,7 +165,7 @@ public class SlashSkill : MonoBehaviour
             }
         }
         instantiatedSlashes.Clear();
-        slashAngles.Clear();
+        localSlashPositions.Clear();
     }
 
     private void ShootSlash(GameObject slash)
@@ -159,8 +173,7 @@ public class SlashSkill : MonoBehaviour
         slash.transform.SetParent(null);
         if (slash.TryGetComponent(out Rigidbody slashRigidbody))
         {
-            int index = instantiatedSlashes.IndexOf(slash);
-            Vector3 direction = new Vector3(Mathf.Sin(Mathf.Deg2Rad * slashAngles[index]), 0, Mathf.Cos(Mathf.Deg2Rad * slashAngles[index]));
+            Vector3 direction = (slash.transform.position - transform.position).normalized;
             slashRigidbody.AddForce(direction * speed, ForceMode.Impulse);
         }
     }
