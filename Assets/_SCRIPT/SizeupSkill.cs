@@ -27,7 +27,7 @@ public class SizeupSkill : MonoBehaviour
 
     [SerializeField] private SkillTurnSystem _skillSystem;
 
-    private void Start()
+    private void Awake()
     {
         _skillSystem = GetComponent<SkillTurnSystem>();
         InitializeSkillSettings();
@@ -36,12 +36,12 @@ public class SizeupSkill : MonoBehaviour
     private void OnEnable()
     {
         _oldScale = transform.localScale;
-        SkillTurnSystem.OnTurnEnd += HandleTurnEnd;
+        _skillSystem.OnTurnEnd += HandleTurnEnd;
     }
 
     private void OnDisable()
     {
-        SkillTurnSystem.OnTurnEnd -= HandleTurnEnd;
+        _skillSystem.OnTurnEnd -= HandleTurnEnd;
     }
 
     private void InitializeSkillSettings()
