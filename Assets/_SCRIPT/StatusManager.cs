@@ -21,8 +21,11 @@ public class StatusManager : MonoBehaviour
     private void Start()
     {
         _healthSystem = GetComponent<HealthSystem>();
+        if (fx_Barrier != null) 
+        {
+            fx_Barrier.SetActive(false);
+        }
         fx_Fire.SetActive(false);
-        fx_Barrier.SetActive(false);
     }
 
     public void ApplyStatus(Status status, bool enable, int burnDamagePerSecond = 0, float burnDuration = 0)
