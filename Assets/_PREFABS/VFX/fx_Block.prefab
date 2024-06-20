@@ -48,7 +48,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 1, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -4936,7 +4936,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 1, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -9824,7 +9824,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 1, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -14676,7 +14676,7 @@ GameObject:
   - component: {fileID: 958361791777923673}
   - component: {fileID: 816657535455440324}
   m_Layer: 0
-  m_Name: fx_Block_bonk
+  m_Name: fx_Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14690,10 +14690,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5319364474539801885}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7066386, y: -0.025728855, z: -0.025728852, w: 0.7066386}
-  m_LocalPosition: {x: 13.6, y: 3.39, z: 12.47}
-  m_LocalScale: {x: 3.754815, y: 3.754815, z: 3.754815}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6270390082889312295}
   - {fileID: 7777703611772419954}
@@ -14702,7 +14702,7 @@ Transform:
   - {fileID: 868082268011804911}
   - {fileID: 2610291896661831627}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: -4.17}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &958361791777923673
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -14718,7 +14718,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 1, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -19606,7 +19606,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 1, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -24494,7 +24494,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 1, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -29382,7 +29382,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 1, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0

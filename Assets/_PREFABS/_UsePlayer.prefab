@@ -110,7 +110,10 @@ MonoBehaviour:
   currentHealth: 0
   isProtected: 0
   fx_die: {fileID: 5490674421206928081, guid: 3e912514a3d04634cb848d2746962915, type: 3}
-  fx_attackhit: {fileID: 0}
+  fx_attackhit: {fileID: 5369207248581722931, guid: 122da1aa00758c64ea83545da0052b0f,
+    type: 3}
+  fx_block: {fileID: 5319364474539801885, guid: e2a16d3c7b0e22648a8b358ff563c54c,
+    type: 3}
 --- !u!114 &6168418088058611014
 MonoBehaviour:
   m_ObjectHideFlags: 0

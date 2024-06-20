@@ -755,7 +755,9 @@ MonoBehaviour:
   currentHealth: 0
   isProtected: 0
   fx_die: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a, type: 3}
-  fx_attackhit: {fileID: 2440458749352115294, guid: 122da1aa00758c64ea83545da0052b0f,
+  fx_attackhit: {fileID: 5369207248581722931, guid: 122da1aa00758c64ea83545da0052b0f,
+    type: 3}
+  fx_block: {fileID: 5319364474539801885, guid: e2a16d3c7b0e22648a8b358ff563c54c,
     type: 3}
 --- !u!114 &5799833456242539057
 MonoBehaviour:

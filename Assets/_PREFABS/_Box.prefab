@@ -349,13 +349,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyDetectorArea: {fileID: 0}
+  _statusManager: {fileID: 0}
   maxHealth: 10
   currentHealth: 0
-  hasProtect: 0
+  isProtected: 0
   fx_die: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a, type: 3}
-  fx_attackhit: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a,
+  fx_attackhit: {fileID: 5399786602881873947, guid: 36fbba032cf0e7241843823724aaa79a,
     type: 3}
-  fx_protect: {fileID: 0}
+  fx_block: {fileID: 0}
 --- !u!114 &1359658553599235377
 MonoBehaviour:
   m_ObjectHideFlags: 0
