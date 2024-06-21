@@ -55,10 +55,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _DissolveScale: 1.5
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 0}
-    - _TextSpeed: {r: 0.5, g: 0, b: 0, a: 0}
-    - _TextTilling: {r: 1, g: 1, b: 0, a: 0}
+    - _Color: {r: 0.39811313, g: 1, b: 0.76157135, a: 0}
+    - _TextSpeed: {r: 0, g: -5, b: 0, a: 0}
+    - _TextTilling: {r: 3.5, g: 0.7, b: 0, a: 0}
   m_BuildTextureStacks: []
