@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using TMPro;
@@ -7,6 +8,8 @@ public class HealthDisplay : MonoBehaviour
     private GameObject player; // Reference to Player
     public HealthSystem healthSystem; // Reference to HealthSystem
     private TextMeshProUGUI textMeshPro; // Reference to TextMeshProUGUI component
+
+    private bool isScaling = false;
 
     void Start()
     {
@@ -25,10 +28,30 @@ public class HealthDisplay : MonoBehaviour
 
         if (textMeshPro.text != currentHealth.ToString())
         {
-            textMeshPro.text = currentHealth.ToString();
-            
-            // Add punch scale effect when the value changes
-            textMeshPro.transform.DOPunchScale(Vector3.one * 0.5f, 0.3f, 0, 1f);
+            if (!isScaling)
+            {
+                StartCoroutine(UpdateTextWithScaleEffect(currentHealth.ToString()));
+            }
         }
+    }
+
+    private IEnumerator UpdateTextWithScaleEffect(string newText)
+    {
+        isScaling = true;
+
+        // Punch scale effect
+        textMeshPro.transform.DOPunchScale(Vector3.one * 0.5f, 0.3f, 0, 1f);
+
+        yield return new WaitForSeconds(0.3f); // Wait for the punch scale effect to finish
+
+        // Update text
+        textMeshPro.text = newText;
+
+        // Scale back to original size
+        textMeshPro.transform.DOScale(Vector3.one, 0.3f);
+
+        yield return new WaitForSeconds(0.3f); // Wait for the scale back effect to finish
+
+        isScaling = false;
     }
 }

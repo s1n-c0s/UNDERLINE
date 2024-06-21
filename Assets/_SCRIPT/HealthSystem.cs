@@ -1,103 +1,107 @@
+using System;
 using UnityEngine;
 using Lean.Pool;
 
 public class HealthSystem : MonoBehaviour
 {
-    public HitFlashDamage _HitFlash;
-    public EnemyDetectorArea _enemyDetectorArea;
-    public ParticleSystem fx_die;
-    
-    public int maxHealth = 100;
-    public int currentHealth;
+    [SerializeField] private EnemyDetectorArea _enemyDetectorArea;
+    [SerializeField] private StatusManager _statusManager;
 
-    void Start()
+    [Header("Health Point")]
+    public int maxHealth = 100;
+    [SerializeField] private int currentHealth;
+    [SerializeField] private bool isProtected;
+    
+    public event Action<HealthSystem> OnEnemyDeath;
+
+    [Header("VFX")]
+    public ParticleSystem fx_die;
+    [SerializeField] private GameObject fx_attackhit;
+    [SerializeField] private GameObject fx_block;
+
+    private void Start()
     {
-        if (currentHealth == 0) 
+        if (currentHealth == 0)
         {
             currentHealth = maxHealth;
         }
+        _enemyDetectorArea = FindObjectOfType<EnemyDetectorArea>();
+        _statusManager = GetComponent<StatusManager>();
+    }
 
-        _HitFlash = GetComponent<HitFlashDamage>();
-        _enemyDetectorArea = GameObject.FindObjectOfType<EnemyDetectorArea>();
+    public void SetProtection(bool status)
+    {
+        isProtected = status;
     }
 
     public void TakeDamage(int damage)
     {
+        if (isProtected || damage == 0)
+        {
+            PlayHitAttack(true);
+            return;
+        }
+
         currentHealth -= damage;
-
-        /*
-        if (gameObject.CompareTag("Enemy"))
+        if (!CompareTag("Player"))
         {
-            //_HitFlash.playHitModelFX();
+            PlayHitAttack(false);
         }
-        */
 
-        if (currentHealth <= 0 )
+        if (currentHealth <= 0)
         {
             currentHealth = 0;
             Die();
-            /*Destroy(gameObject);*/
-            //Debug.Log("Character is dead.");
         }
+    }
 
-        /*if (currentHealth < 0 && gameObject.CompareTag("Player"))
+    private void PlayHitAttack(bool isBlock)
+    {
+        if (isBlock)
         {
-            currentHealth = 0;
-            Die();
-        }*/
+            GameObject fxInstance = LeanPool.Spawn(fx_block, new Vector3(0, 4, 0) + transform.position, Quaternion.identity);
+            LeanPool.Despawn(fxInstance, 3f);
+        }
+        else
+        {
+            GameObject fxInstance = LeanPool.Spawn(fx_attackhit, new Vector3(0, 2, 0) + transform.position, Quaternion.identity);
+            LeanPool.Despawn(fxInstance, 3f);
+        }
     }
 
     public void Heal(int heal)
     {
-        if (currentHealth < maxHealth)
-        {
-            currentHealth += heal;
-        }
-        
-        /*if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }*/
+        currentHealth = Mathf.Min(currentHealth + heal, maxHealth);
     }
     
     public void Die()
     {
-        if (gameObject.CompareTag("Enemy"))
-        {
-            // update enemy count
-            _enemyDetectorArea.DecreaseEnemy(gameObject);
-            Destroy(gameObject);
-            CameraShake.Shake(0.5f, 2);
-            
-            ParticleSystem fxInstance = LeanPool.Spawn(fx_die, Vector3.up + transform.position, Quaternion.identity);
-
-            // Destroy the particle effect after 5 seconds
-            LeanPool.Despawn(fxInstance, 3f);
-        }
-        /*switch (gameObject.tag)
+        switch (gameObject.tag)
         {
             case "Player":
+                // Handle player death
                 break;
             case "Enemy":
-                // update enemy count
                 _enemyDetectorArea.DecreaseEnemy(gameObject);
+                
+                OnEnemyDeath?.Invoke(this);
                 Destroy(gameObject);
-                CameraShake.Shake(0.5f, 2);
-            
-                ParticleSystem fxInstance = LeanPool.Spawn(fx_die, Vector3.up + transform.position, Quaternion.identity);
-
-                // Destroy the particle effect after 5 seconds
+                CameraShake.Shake(0.6f, 5);
+                var fxInstance = LeanPool.Spawn(fx_die, Vector3.up + transform.position, Quaternion.identity);
                 LeanPool.Despawn(fxInstance, 3f);
                 break;
-            default:
+            case "Wall":
+                Destroy(gameObject);
                 break;
-        }*/
+        }
     }
 
-    public int GetCurrentHealth()
+    public void SetHealth(int num)
     {
-        return currentHealth;
+        currentHealth = num;
     }
+
+    public int GetCurrentHealth() => currentHealth;
 
     public void ResetHp()
     {

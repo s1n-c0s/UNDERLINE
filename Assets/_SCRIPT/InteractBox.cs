@@ -11,9 +11,9 @@ public class InteractBox : MonoBehaviour
         _HealthSystem = GetComponent<HealthSystem>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
-        if (other.CompareTag("Player") )
+        if (other.rigidbody)
         {
             _HealthSystem.TakeDamage(1);
         }
