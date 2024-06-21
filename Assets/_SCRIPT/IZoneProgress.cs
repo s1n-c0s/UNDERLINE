@@ -1,60 +1,62 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class IZoneProgress : MonoBehaviour
+public class ZoneProgress : MonoBehaviour
 {
     [SerializeField] private int currentProgress = 0;
-    [SerializeField] private Slider _zoneBar;
-    [SerializeField] private List<ZoneManager> zoneManager;
-    
+    [SerializeField] private Slider zoneBar;
+    [SerializeField] private List<ZoneManager> zoneManagers = new List<ZoneManager>();
+
     private void Awake()
     {
-        _zoneBar = GetComponent<Slider>(); // Ensure _zoneBar is correctly linked in the Inspector
+        zoneBar = GetComponent<Slider>(); // Ensure zoneBar is correctly linked in the Inspector
 
-        zoneManager.AddRange(FindObjectsOfType<ZoneManager>());
-        zoneManager.Sort((z1, z2) => z1.zoneOrder.CompareTo(z2.zoneOrder));
-        _zoneBar.value = currentProgress;
-        _zoneBar.maxValue = zoneManager.Count;
-        // Add listener to slider value change
-        _zoneBar.onValueChanged.AddListener(OnSliderValueChanged);
+        InitializeZoneManagers();
+        InitializeSlider();
+    }
+
+    private void InitializeZoneManagers()
+    {
+        zoneManagers.AddRange(FindObjectsOfType<ZoneManager>());
+        zoneManagers.Sort((z1, z2) => z1.zoneOrder.CompareTo(z2.zoneOrder));
+    }
+
+    private void InitializeSlider()
+    {
+        zoneBar.value = currentProgress;
+        zoneBar.maxValue = zoneManagers.Count;
+        zoneBar.onValueChanged.AddListener(OnSliderValueChanged);
     }
 
     private void OnEnable()
     {
-        if (zoneManager != null)
-        { 
-            foreach (ZoneManager zone in zoneManager)
-            {
-                zone.OnZoneClear += HandleZoneClear;
-            }
+        foreach (var zoneManager in zoneManagers)
+        {
+            zoneManager.OnZoneClear += HandleZoneClear;
         }
     }
 
     private void OnDisable()
     {
-        if (zoneManager != null)
-        { 
-            foreach (ZoneManager zone in zoneManager)
-            {
-                zone.OnZoneClear -= HandleZoneClear;
-            }
+        foreach (var zoneManager in zoneManagers)
+        {
+            zoneManager.OnZoneClear -= HandleZoneClear;
         }
     }
 
     private void HandleZoneClear(ZoneManager zoneManager)
     {
-        if (_zoneBar.value < _zoneBar.maxValue)
+        if (currentProgress < zoneBar.maxValue)
         {
-            _zoneBar.value++;
-            currentProgress = (int)_zoneBar.value;
+            currentProgress++;
+            zoneBar.value = currentProgress;
         }
     }
 
     private void OnSliderValueChanged(float value)
     {
-        currentProgress = (int)value;
-        _zoneBar.value = currentProgress;
+        currentProgress = Mathf.RoundToInt(value);
+        zoneBar.value = currentProgress;
     }
 }
