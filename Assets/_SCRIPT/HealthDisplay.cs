@@ -5,7 +5,7 @@ using TMPro;
 
 public class HealthDisplay : MonoBehaviour
 {
-    private GameObject player; // Reference to Player
+    private GameObject player; // Reference to the player
     public HealthSystem healthSystem; // Reference to HealthSystem
     private TextMeshProUGUI textMeshPro; // Reference to TextMeshProUGUI component
 
@@ -13,13 +13,23 @@ public class HealthDisplay : MonoBehaviour
 
     void Start()
     {
+        // Subscribe to the OnPlayerSwitch event
+        PlayerSwitcher.OnPlayerSwitch += HandlePlayerSwitch;
+
+        // Initial setup
         if (healthSystem == null)
         {
             player = GameObject.FindGameObjectWithTag("Player");
             healthSystem = player.GetComponent<HealthSystem>();
         }
-        
+
         textMeshPro = GetComponent<TextMeshProUGUI>();
+    }
+
+    void OnDestroy()
+    {
+        // Unsubscribe from the OnPlayerSwitch event to avoid memory leaks
+        PlayerSwitcher.OnPlayerSwitch -= HandlePlayerSwitch;
     }
 
     void Update()
@@ -53,5 +63,17 @@ public class HealthDisplay : MonoBehaviour
         yield return new WaitForSeconds(0.3f); // Wait for the scale back effect to finish
 
         isScaling = false;
+    }
+
+    private void HandlePlayerSwitch(GameObject newPlayer)
+    {
+        // Update the reference to the healthSystem when the player switches
+        healthSystem = newPlayer.GetComponent<HealthSystem>();
+
+        // Optionally, you can immediately update the display to show the new player's health
+        if (healthSystem != null)
+        {
+            textMeshPro.text = healthSystem.GetCurrentHealth().ToString();
+        }
     }
 }

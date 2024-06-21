@@ -1,20 +1,30 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerSwitcher : MonoBehaviour
 {
     public static event Action<GameObject> OnPlayerSwitch; // Event to notify when the player switches
 
-    public GameObject[] players; // Array to hold all player GameObjects
-    private int currentPlayerIndex = 0; // Index of the current player
+    [SerializeField] private List<GameObject> players; // Array to hold all player GameObjects
+    [SerializeField] private int currentPlayerIndex = 0; // Index of the current player
 
     void Start()
     {
-        // Ensure at least one player is present
-        if (players.Length == 0)
+        /*players.AddRange(GameObject.FindGameObjectsWithTag("Player"));*/
+        
+        // Ensure all players except the first one are inactive and positioned correctly
+        for (int i = 1; i < players.Count; i++)
         {
-            Debug.LogError("No players assigned. Please assign players in the Unity Editor.");
+            players[i].SetActive(false);
+            players[i].transform.position = players[0].transform.position;
+        }
+
+        // Ensure at least one player is present
+        if (players.Count == 0)
+        {
             enabled = false; // Disable the script to prevent errors
+            Debug.LogError("No players found with the 'Player' tag.");
         }
         else
         {
@@ -34,8 +44,15 @@ public class PlayerSwitcher : MonoBehaviour
 
     void SwitchPlayer(int newIndex)
     {
+        // Ensure the new index is within bounds
+        if (newIndex < 0 || newIndex >= players.Count)
+        {
+            Debug.LogError("Invalid player index: " + newIndex);
+            return;
+        }
+
         // Deactivate the current player
-        if (players.Length > currentPlayerIndex) // Safety check
+        if (players.Count > currentPlayerIndex && players[currentPlayerIndex] != null)
         {
             players[currentPlayerIndex].SetActive(false);
         }
@@ -49,11 +66,11 @@ public class PlayerSwitcher : MonoBehaviour
         // Update the current player index
         currentPlayerIndex = newIndex;
     }
-    
+
     public void SwitchToNextPlayer()
     {
         // Calculate the index of the next player, wrapping around if necessary
-        int nextPlayerIndex = (currentPlayerIndex + 1) % players.Length;
+        int nextPlayerIndex = (currentPlayerIndex + 1) % players.Count;
         SwitchPlayer(nextPlayerIndex);
     }
 }
