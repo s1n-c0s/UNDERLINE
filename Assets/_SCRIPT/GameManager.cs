@@ -138,8 +138,7 @@ public class GameManager : MonoBehaviour
             if (countdownTimer <= 0f)
             {
                 SetGameState(GameState.GameOver);
-                player.SetActive(false);
-                Instantiate(playerHealthSystem.fx_die, player.transform.position, Quaternion.identity);
+                playerHealthSystem.Die();
             }
         }
         else

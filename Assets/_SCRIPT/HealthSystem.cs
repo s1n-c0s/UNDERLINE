@@ -48,7 +48,7 @@ public class HealthSystem : MonoBehaviour
             PlayHitAttack(false);
         }
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && gameObject != CompareTag("Player"))
         {
             currentHealth = 0;
             Die();
@@ -79,7 +79,8 @@ public class HealthSystem : MonoBehaviour
         switch (gameObject.tag)
         {
             case "Player":
-                // Handle player death
+                gameObject.SetActive(false); 
+                LeanPool.Spawn(fx_die, transform.position, Quaternion.identity);
                 break;
             case "Enemy":
                 _enemyDetectorArea.DecreaseEnemy(gameObject);
@@ -87,7 +88,7 @@ public class HealthSystem : MonoBehaviour
                 OnEnemyDeath?.Invoke(this);
                 Destroy(gameObject);
                 CameraShake.Shake(0.6f, 5);
-                var fxInstance = LeanPool.Spawn(fx_die, Vector3.up + transform.position, Quaternion.identity);
+                ParticleSystem fxInstance = LeanPool.Spawn(fx_die, Vector3.up + transform.position, Quaternion.identity);
                 LeanPool.Despawn(fxInstance, 3f);
                 break;
             case "Wall":
