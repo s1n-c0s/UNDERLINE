@@ -5,42 +5,66 @@ using TMPro;
 
 public class HealthDisplay : MonoBehaviour
 {
-    private GameObject player; // Reference to the player
-    public HealthSystem healthSystem; // Reference to HealthSystem
+    [SerializeField] private HealthSystem healthSystem; // Reference to HealthSystem
     private TextMeshProUGUI textMeshPro; // Reference to TextMeshProUGUI component
 
     private bool isScaling = false;
+    private bool isPlayer = false; // To check if this display is for a player
 
     void Start()
     {
-        // Subscribe to the OnPlayerSwitch event
-        PlayerSwitcher.OnPlayerSwitch += HandlePlayerSwitch;
+        textMeshPro = GetComponent<TextMeshProUGUI>();
 
-        // Initial setup
-        if (healthSystem == null)
+        if (healthSystem.CompareTag("Player"))
         {
-            player = GameObject.FindGameObjectWithTag("Player");
-            healthSystem = player.GetComponent<HealthSystem>();
+            // Subscribe to the OnPlayerSwitch event if this is a player health display
+            isPlayer = true;
+            PlayerSwitcher.OnPlayerSwitch += HandlePlayerSwitch;
+
+            // Initial setup
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                healthSystem = player.GetComponent<HealthSystem>();
+            }
+        }
+        else
+        {
+            // For enemies, directly set the health system
+            if (healthSystem != null)
+            {
+                textMeshPro.text = healthSystem.GetCurrentHealth().ToString();
+            }
         }
 
-        textMeshPro = GetComponent<TextMeshProUGUI>();
+        // Initial display update for player or enemy
+        if (healthSystem != null)
+        {
+            textMeshPro.text = healthSystem.GetCurrentHealth().ToString();
+        }
     }
 
     void OnDestroy()
     {
         // Unsubscribe from the OnPlayerSwitch event to avoid memory leaks
-        PlayerSwitcher.OnPlayerSwitch -= HandlePlayerSwitch;
+        if (isPlayer)
+        {
+            PlayerSwitcher.OnPlayerSwitch -= HandlePlayerSwitch;
+        }
     }
 
     void Update()
     {
-        int currentHealth = healthSystem.GetCurrentHealth();
-
-        if (textMeshPro.text != currentHealth.ToString())
+        if (healthSystem != null)
         {
-            if (!isScaling)
+            int currentHealth = healthSystem.GetCurrentHealth();
+
+            if (textMeshPro.text != currentHealth.ToString())
             {
-                StartCoroutine(UpdateTextWithScaleEffect(currentHealth.ToString()));
+                if (!isScaling)
+                {
+                    StartCoroutine(UpdateTextWithScaleEffect(currentHealth.ToString()));
+                }
             }
         }
     }
