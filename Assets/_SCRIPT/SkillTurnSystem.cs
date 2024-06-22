@@ -17,21 +17,21 @@ public class SkillTurnSystem : MonoBehaviour
     public int CurrentCooldownTurns => currentSkillCooldown;
     public int CurrentDurationTurns => currentSkillDuration;
 
-    public event Action OnTurnEnd;
+    public event Action updateSkill;
 
     private void OnEnable()
     {
-        PlayerController.OnPlayerStop += HandleTurnEnd;
+        PlayerController.OnTurnEnd += HandleTurnEnd;
     }
 
     private void OnDisable()
     {
-        PlayerController.OnPlayerStop -= HandleTurnEnd;
+        PlayerController.OnTurnEnd -= HandleTurnEnd;
     }
 
     private void HandleTurnEnd()
     {
-        OnTurnEnd?.Invoke();
+        updateSkill?.Invoke();
     }
 
     public void SetCurrentValue(int cooldown, int duration)

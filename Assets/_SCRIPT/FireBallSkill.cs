@@ -35,12 +35,12 @@ public class FireBallSkill : MonoBehaviour
 
     private void OnEnable()
     {
-        _skillTurnSystem.OnTurnEnd += HandleTurnEnd;
+        _skillTurnSystem.updateSkill += HandleTurnEnd;
     }
 
     private void OnDisable()
     {
-        _skillTurnSystem.OnTurnEnd -= HandleTurnEnd;
+        _skillTurnSystem.updateSkill -= HandleTurnEnd;
     }
 
     private void HandleTurnEnd()

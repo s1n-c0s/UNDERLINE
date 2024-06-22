@@ -37,12 +37,12 @@ public class SlashSkill : MonoBehaviour
 
     private void OnEnable()
     {
-        _skillSystem.OnTurnEnd += HandleTurnEnd;
+        _skillSystem.updateSkill += HandleTurnEnd;
     }
 
     private void OnDisable()
     {
-        _skillSystem.OnTurnEnd -= HandleTurnEnd;
+        _skillSystem.updateSkill -= HandleTurnEnd;
     }
 
     private void Update()
