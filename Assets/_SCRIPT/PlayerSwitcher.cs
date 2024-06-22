@@ -8,6 +8,8 @@ public class PlayerSwitcher : MonoBehaviour
 
     [SerializeField] private List<GameObject> players; // Array to hold all player GameObjects
     [SerializeField] private int currentPlayerIndex = 0; // Index of the current player
+    [SerializeField] private bool firstSwitch = true; // To track if it is the first switch
+    [SerializeField] private float Radius = 20f;
 
     void Start()
     {
@@ -17,7 +19,7 @@ public class PlayerSwitcher : MonoBehaviour
         for (int i = 1; i < players.Count; i++)
         {
             players[i].SetActive(false);
-            players[i].transform.position = players[0].transform.position;
+            players[i].transform.position = players[0].transform.position + new Vector3(0, 0, 5);
         }
 
         // Ensure at least one player is present
@@ -44,6 +46,8 @@ public class PlayerSwitcher : MonoBehaviour
 
     void SwitchPlayer(int newIndex)
     {
+        Rigidbody shadow_rb =players[1].GetComponent<Rigidbody>();
+        float distance = Vector3.Distance(players[0].transform.position, players[1].transform.position);
         // Ensure the new index is within bounds
         if (newIndex < 0 || newIndex >= players.Count)
         {
@@ -51,14 +55,38 @@ public class PlayerSwitcher : MonoBehaviour
             return;
         }
 
-        // Deactivate the current player
-        if (players.Count > currentPlayerIndex && players[currentPlayerIndex] != null)
+        // Only deactivate players[0] if it's not the first switch
+        if (firstSwitch)
         {
-            players[currentPlayerIndex].SetActive(false);
+            players[0].SetActive(false);
+            firstSwitch = false;
+        }
+        else
+        {
+            players[currentPlayerIndex].GetComponent<PlayerController>().enabled = false;
+        }
+
+        if (distance >= Radius)
+        {
+            players[1].transform.position = players[0].transform.position + new Vector3(0, 0, 5);
+        }
+
+       
+
+        if (newIndex == 1)
+        {
+            shadow_rb.constraints = RigidbodyConstraints.FreezeRotation;
+            players[1].GetComponent<Collider>().isTrigger = false;
+        }
+        else
+        {
+            shadow_rb.constraints = RigidbodyConstraints.FreezeAll;
+            players[1].GetComponent<Collider>().isTrigger = true;
         }
 
         // Activate the new player
         players[newIndex].SetActive(true);
+        players[newIndex].GetComponent<PlayerController>().enabled = true;
 
         // Trigger the OnPlayerSwitch event
         OnPlayerSwitch?.Invoke(players[newIndex]);
