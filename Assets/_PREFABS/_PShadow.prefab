@@ -10369,9 +10369,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3051756000468042215}
-  - component: {fileID: 3724481440160478934}
+  - component: {fileID: 8526944309616170938}
   - component: {fileID: 537027720689045869}
   - component: {fileID: 7860979951967108783}
+  - component: {fileID: 3724481440160478934}
   - component: {fileID: 8008001104789420067}
   - component: {fileID: 5210919735383714375}
   - component: {fileID: 8815487295539998772}
@@ -10405,7 +10406,7 @@ Transform:
   - {fileID: 5310461225470230144}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3724481440160478934
+--- !u!114 &8526944309616170938
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10414,11 +10415,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3822263847314581060}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d09b06996048571419293ff7ccc9ddbc, type: 3}
+  m_Script: {fileID: 11500000, guid: ba162deab0b006848a60c07a6767e091, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitParticle: {fileID: 1622961693977746307, guid: dbe5a19ac09fb484a99ff2570e82828b,
-    type: 3}
+  shadowModels:
+  - {fileID: 3852967714831978939}
+  - {fileID: 1853208285305440570}
+  - {fileID: 4960486374740893154}
+  shadowDieFx: {fileID: 0}
+  cooldownToResetHealth: 2
 --- !u!114 &537027720689045869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10466,6 +10471,20 @@ MonoBehaviour:
   linePoints: 2
   timeIntervalinPoints: 0.1
   maxDistance: 1
+--- !u!114 &3724481440160478934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3822263847314581060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d09b06996048571419293ff7ccc9ddbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitParticle: {fileID: 1622961693977746307, guid: dbe5a19ac09fb484a99ff2570e82828b,
+    type: 3}
 --- !u!114 &8008001104789420067
 MonoBehaviour:
   m_ObjectHideFlags: 0
