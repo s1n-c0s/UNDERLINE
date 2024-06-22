@@ -6,20 +6,19 @@ public class PlayerSwitcher : MonoBehaviour
 {
     public static event Action<GameObject> OnPlayerSwitch; // Event to notify when the player switches
 
-    [SerializeField] private List<GameObject> players; // Array to hold all player GameObjects
+    [SerializeField] private List<GameObject> players = new List<GameObject>(); // List to hold all player GameObjects
     [SerializeField] private int currentPlayerIndex = 0; // Index of the current player
     [SerializeField] private bool firstSwitch = true; // To track if it is the first switch
-    [SerializeField] private float Radius = 20f;
+    [SerializeField] private float radius = 20f; // Distance threshold
+    [SerializeField] private Vector3 positionOffset = new Vector3(0, 0, 5); // Position offset for player placement
 
-    void Start()
+    private void Start()
     {
-        /*players.AddRange(GameObject.FindGameObjectsWithTag("Player"));*/
-        
         // Ensure all players except the first one are inactive and positioned correctly
         for (int i = 1; i < players.Count; i++)
         {
             players[i].SetActive(false);
-            players[i].transform.position = players[0].transform.position + new Vector3(0, 0, 5);
+            players[i].transform.position = players[0].transform.position + positionOffset;
         }
 
         // Ensure at least one player is present
@@ -35,7 +34,7 @@ public class PlayerSwitcher : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         // Check for input to switch players (you can customize the input key as needed)
         if (Input.GetKeyDown(KeyCode.Space))
@@ -44,18 +43,18 @@ public class PlayerSwitcher : MonoBehaviour
         }
     }
 
-    void SwitchPlayer(int newIndex)
+    private void SwitchPlayer(int newIndex)
     {
-        Rigidbody shadow_rb =players[1].GetComponent<Rigidbody>();
-        float distance = Vector3.Distance(players[0].transform.position, players[1].transform.position);
-        // Ensure the new index is within bounds
         if (newIndex < 0 || newIndex >= players.Count)
         {
             Debug.LogError("Invalid player index: " + newIndex);
             return;
         }
 
-        // Only deactivate players[0] if it's not the first switch
+        Rigidbody shadowRb = players[1].GetComponent<Rigidbody>();
+        float distance = Vector3.Distance(players[0].transform.position, players[1].transform.position);
+
+        // Deactivate the current player
         if (firstSwitch)
         {
             players[0].SetActive(false);
@@ -66,21 +65,21 @@ public class PlayerSwitcher : MonoBehaviour
             players[currentPlayerIndex].GetComponent<PlayerController>().enabled = false;
         }
 
-        if (distance >= Radius)
+        // Reset the position of the shadow player if it exceeds the radius
+        if (distance >= radius)
         {
-            players[1].transform.position = players[0].transform.position + new Vector3(0, 0, 5);
+            players[1].transform.position = players[0].transform.position + positionOffset;
         }
 
-       
-
+        // Update shadow player's constraints and collider based on the new index
         if (newIndex == 1)
         {
-            shadow_rb.constraints = RigidbodyConstraints.FreezeRotation;
+            shadowRb.constraints = RigidbodyConstraints.FreezeRotation;
             players[1].GetComponent<Collider>().isTrigger = false;
         }
         else
         {
-            shadow_rb.constraints = RigidbodyConstraints.FreezeAll;
+            shadowRb.constraints = RigidbodyConstraints.FreezeAll;
             players[1].GetComponent<Collider>().isTrigger = true;
         }
 
