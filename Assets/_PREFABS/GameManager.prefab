@@ -217,8 +217,8 @@ MonoBehaviour:
   players: []
   currentPlayerIndex: 0
   firstSwitch: 1
-  radius: 67
-  positionOffset: {x: 0, y: 0, z: 5}
+  radius: 70
+  forwardOffset: 5
 --- !u!1 &5352119254873259287
 GameObject:
   m_ObjectHideFlags: 0
