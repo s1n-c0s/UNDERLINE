@@ -10,15 +10,15 @@ public class PlayerSwitcher : MonoBehaviour
     [SerializeField] private int currentPlayerIndex = 0; // Index of the current player
     [SerializeField] private bool firstSwitch = true; // To track if it is the first switch
     [SerializeField] private float radius = 20f; // Distance threshold
-    [SerializeField] private Vector3 positionOffset = new Vector3(0, 0, 5); // Position offset for player placement
-
+    [SerializeField] private int forwardOffset = 5; // Position offset for player placement
+    
     private void Start()
     {
         // Ensure all players except the first one are inactive and positioned correctly
         for (int i = 1; i < players.Count; i++)
         {
             players[i].SetActive(false);
-            players[i].transform.position = players[0].transform.position + positionOffset;
+            PositionPlayerInFront(players[i], players[i].transform, forwardOffset);
         }
 
         // Ensure at least one player is present
@@ -68,7 +68,7 @@ public class PlayerSwitcher : MonoBehaviour
         // Reset the position of the shadow player if it exceeds the radius
         if (distance >= radius)
         {
-            players[1].transform.position = players[0].transform.position + positionOffset;
+            PositionPlayerInFront(players[1], players[0].transform, forwardOffset);
         }
 
         // Update shadow player's constraints and collider based on the new index
@@ -99,5 +99,12 @@ public class PlayerSwitcher : MonoBehaviour
         // Calculate the index of the next player, wrapping around if necessary
         int nextPlayerIndex = (currentPlayerIndex + 1) % players.Count;
         SwitchPlayer(nextPlayerIndex);
+    }
+    
+    private void PositionPlayerInFront(GameObject player, Transform referenceTransform, float offsetDistance)
+    {
+        // Calculate the position offset in front of the reference transform's forward direction
+        Vector3 offset = referenceTransform.position + referenceTransform.forward * offsetDistance;
+        player.transform.position = offset;
     }
 }
