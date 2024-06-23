@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using Lean.Pool;
 using UnityEngine;
 
-public class PShadowSkill : MonoBehaviour
+public class ShadowLife : MonoBehaviour
 {
-    [Header("Skill Settings")]
     [SerializeField] private List<GameObject> shadowModels;
     [SerializeField] private ParticleSystem shadowDieFx;
     [SerializeField] private int cooldownToResetHealth = 2;
