@@ -10370,6 +10370,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3051756000468042215}
   - component: {fileID: 8526944309616170938}
+  - component: {fileID: 7082291285209663792}
   - component: {fileID: 537027720689045869}
   - component: {fileID: 7860979951967108783}
   - component: {fileID: 3724481440160478934}
@@ -10424,6 +10425,25 @@ MonoBehaviour:
   - {fileID: 4960486374740893154}
   shadowDieFx: {fileID: 0}
   cooldownToResetHealth: 2
+--- !u!114 &7082291285209663792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3822263847314581060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb7ca168ba05afc4586018f9730e7937, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  despawnTimer: 2
+  rightOffset: 30
+  heightOffset: 2
+  speed: 330
+  shurikenPrefab: {fileID: 1518477889419750770, guid: c6f99d8496ea02d449e205741b4a92ee,
+    type: 3}
+  canCombo: 1
 --- !u!114 &537027720689045869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10438,8 +10458,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyDetectorArea: {fileID: 0}
   _statusManager: {fileID: 0}
-  maxHealth: 2
-  currentHealth: 2
+  maxHealth: 3
+  currentHealth: 3
   isProtected: 0
   fx_die: {fileID: 5490674421206928081, guid: 3e912514a3d04634cb848d2746962915, type: 3}
   fx_attackhit: {fileID: 5369207248581722931, guid: 122da1aa00758c64ea83545da0052b0f,
