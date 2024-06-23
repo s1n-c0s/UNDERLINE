@@ -48,10 +48,13 @@ public class HealthSystem : MonoBehaviour
             PlayHitAttack(false);
         }
 
-        if (currentHealth <= 0 && gameObject != CompareTag("Player"))
+        if (currentHealth <= 0)
         {
             currentHealth = 0;
-            Die();
+            if (gameObject != CompareTag("Player"))
+            {
+                Die();
+            }
         }
     }
 
