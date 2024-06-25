@@ -50,6 +50,7 @@ public class PlayerSwitcher : MonoBehaviour
         }
 
         Rigidbody shadowRb = players[1].GetComponent<Rigidbody>();
+        Collider shadowCollider = players[1].GetComponent<Collider>();
         float distance = Vector3.Distance(players[0].transform.position, players[1].transform.position);
       
         players[currentPlayerIndex].GetComponent<PlayerController>().enabled = false;
@@ -62,12 +63,12 @@ public class PlayerSwitcher : MonoBehaviour
         if (newIndex == 1)
         {
             shadowRb.constraints = RigidbodyConstraints.FreezeRotation;
-            players[1].GetComponent<Collider>().isTrigger = false;
+            shadowCollider.isTrigger = false;
         }
         else
         {
             shadowRb.constraints = RigidbodyConstraints.FreezeAll;
-            players[1].GetComponent<Collider>().isTrigger = true;
+            shadowCollider.isTrigger = true;
         }
 
         players[newIndex].SetActive(true);
