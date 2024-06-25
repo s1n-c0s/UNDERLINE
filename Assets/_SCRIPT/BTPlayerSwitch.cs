@@ -1,33 +1,58 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BTPlayerSwitch : MonoBehaviour
 {
-    private Button switchPlayerBT; // This will reference the button component on the same GameObject.
-    private PlayerSwitcher playerSwitcher; // This will reference the PlayerSwitcher component.
+    [SerializeField] private List<Sprite> playerIcons;
+    private Button switchPlayerButton;
+    private PlayerSwitcher playerSwitcher;
+    private Image buttonImage;
 
-    void Start()
+    private void Start()
     {
-        // Get the Button component from this GameObject
-        switchPlayerBT = GetComponent<Button>();
+        InitializeComponents();
 
-        // Attempt to find the PlayerSwitcher component in the scene
-        // Assuming there is one PlayerSwitcher component managing players.
-        playerSwitcher = FindObjectOfType<PlayerSwitcher>(); // This finds the PlayerSwitcher component in the scene
+        switchPlayerButton.onClick.AddListener(SwitchAndUpdateButton);
 
-        if (switchPlayerBT == null)
+        PlayerSwitcher.OnPlayerSwitch += UpdateButtonImage;
+
+        UpdateButtonImage(playerSwitcher.players[playerSwitcher.GetCurrentPlayerIndex()]);
+    }
+
+    private void OnDestroy()
+    {
+        PlayerSwitcher.OnPlayerSwitch -= UpdateButtonImage;
+    }
+
+    private void InitializeComponents()
+    {
+        switchPlayerButton = GetComponent<Button>();
+        playerSwitcher = FindObjectOfType<PlayerSwitcher>();
+        buttonImage = switchPlayerButton.GetComponent<Image>();
+
+        if (!switchPlayerButton || !playerSwitcher || !buttonImage)
         {
-            Debug.LogError("Button component not found on the GameObject");
-            return;
+            Debug.LogError("Missing required component.");
+            enabled = false;
         }
+    }
 
-        if (playerSwitcher == null)
+    private void SwitchAndUpdateButton()
+    {
+        playerSwitcher.SwitchToNextPlayer();
+    }
+
+    private void UpdateButtonImage(GameObject currentPlayer)
+    {
+        int currentIndex = playerSwitcher.GetCurrentPlayerIndex();
+        if (currentIndex >= 0 && currentIndex < playerIcons.Count)
         {
-            Debug.LogError("PlayerSwitcher component not found in the scene");
-            return;
+            buttonImage.sprite = playerIcons[currentIndex];
         }
-
-        // Add a listener to the button to call the SwitchToNextPlayer method on click
-        switchPlayerBT.onClick.AddListener(playerSwitcher.SwitchToNextPlayer); // Assuming you have this method public in your PlayerSwitcher
+        else
+        {
+            Debug.LogError("Invalid player index for icon update: " + currentIndex);
+        }
     }
 }

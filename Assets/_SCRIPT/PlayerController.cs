@@ -8,11 +8,11 @@ public class PlayerController : MonoBehaviour
 {
     private HealthSystem _healthSystem;
     private Checkpoint _checkpoint;
-    
+
     private Rigidbody rb;
     private Vector3 startPosition;
     private Vector3 targetPosition;
-    private bool isRunning = false;
+    private bool LineisRunning = false;
     private Collider playerCollider;
 
     public int runsRemaining = 3;
@@ -23,9 +23,10 @@ public class PlayerController : MonoBehaviour
 
     public TextMeshProUGUI runsRemainingText;
     public List<SwipeCameraRotation> _swipeCameraRotation;
-    public static event Action OnPlayerStop;
-    
-    public bool IsMoving { get; private set; }
+    public static event Action OnTurnEnd;
+
+    private bool isMoving;
+    private bool wasMoving;
 
     public LineRenderer _lineRenderer;
     public Transform launchPoint;
@@ -47,15 +48,14 @@ public class PlayerController : MonoBehaviour
     {
         _healthSystem = GetComponent<HealthSystem>();
         _checkpoint = GetComponent<Checkpoint>();
-        
+
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         startPosition = transform.position;
         targetPosition = startPosition;
         playerCollider = GetComponent<Collider>();
         _swipeCameraRotation.Add(FindObjectOfType<SwipeCameraRotation>());
-        
-        //lastStartPosition = startPosition;
+
         UpdateRunsRemainingText();
 
         mainCamera = Camera.main;
@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
     {
         UpdateRunsRemainingText();
 
-        if (runsRemaining > 0 && !IsMoving)
+        if (runsRemaining > 0 && !isMoving)
         {
             HandleRunningInput();
         }
@@ -79,6 +79,12 @@ public class PlayerController : MonoBehaviour
         CheckGrounded();
     }
 
+    private void FixedUpdate()
+    {
+        CheckIfMoving();
+        wasMoving = isMoving;
+    }
+
     void HandleRunningInput()
     {
         if (Input.GetMouseButtonDown(0))
@@ -87,7 +93,7 @@ public class PlayerController : MonoBehaviour
             _checkpoint.SetCheckpointPosition();
         }
 
-        if (isRunning)
+        if (LineisRunning)
         {
             HandleRunning();
             foreach (SwipeCameraRotation camera in _swipeCameraRotation)
@@ -96,7 +102,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(0) && isRunning)
+        if (Input.GetMouseButtonUp(0) && LineisRunning)
         {
             HandleMouseUp();
             foreach (SwipeCameraRotation camera in _swipeCameraRotation)
@@ -113,7 +119,7 @@ public class PlayerController : MonoBehaviour
 
         if (playerCollider.Raycast(ray, out hit, Mathf.Infinity))
         {
-            isRunning = true;
+            LineisRunning = true;
             startPosition = playerTransform.position;
         }
     }
@@ -160,29 +166,29 @@ public class PlayerController : MonoBehaviour
 
         rb.AddForce(runDirection.normalized * power, ForceMode.Impulse);
 
-        isRunning = false;
-        IsMoving = true;
-        //runsRemaining--;
-
-        if (runsRemaining <= 0)
-        {
-            isRunning = false;
-        }
-
+        LineisRunning = false;
         rb.angularDrag = 0f;
     }
 
     void HandleNotRunning()
     {
-        if (rb.velocity.magnitude < stopThreshold && IsMoving)
-        {
-            IsMoving = false;
-            rb.freezeRotation = true;
-            DecreaseRunsRemaining();
-            
-            OnPlayerStop?.Invoke();
-        }
         _lineRenderer.enabled = false;
+    }
+
+    void CheckIfMoving()
+    {
+        isMoving = rb.velocity.magnitude > stopThreshold;
+
+        if (!isMoving && wasMoving)
+        {
+            OnPlayerStop();
+        }
+    }
+
+    void OnPlayerStop()
+    {
+        DecreaseRunsRemaining();
+        OnTurnEnd?.Invoke();
     }
 
     void DrawTrajectory()
@@ -234,8 +240,7 @@ public class PlayerController : MonoBehaviour
     public void IncreaseRunsRemaining()
     {
         _healthSystem.Heal(1);
-        Debug.Log("Cost+1 :"+_healthSystem.GetCurrentHealth());
-        //runsRemaining++;
+        Debug.Log("Cost+1 :" + _healthSystem.GetCurrentHealth());
     }
 
     public void DecreaseRunsRemaining()
@@ -243,7 +248,7 @@ public class PlayerController : MonoBehaviour
         if (runsRemaining > 0)
         {
             _healthSystem.TakeDamage(1);
-            Debug.Log("Cost-1 :"+_healthSystem.GetCurrentHealth());
+            Debug.Log("Cost-1 :" + _healthSystem.GetCurrentHealth());
             UpdateRunsRemainingText();
         }
         else
@@ -269,7 +274,6 @@ public class PlayerController : MonoBehaviour
 
     public void Respawn()
     {
-        //playerTransform.position = lastStartPosition;
         transform.position = _checkpoint.GetLastCheckpointPosition();
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
