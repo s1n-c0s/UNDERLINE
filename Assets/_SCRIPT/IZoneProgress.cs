@@ -1,62 +1,45 @@
 using System.Collections.Generic;
+using Lean.Pool;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ZoneProgress : MonoBehaviour
+public class IZoneProgress : MonoBehaviour
 {
-    [SerializeField] private int currentProgress = 0;
-    [SerializeField] private Slider zoneBar;
+    [SerializeField] private Toggle _togglePrefab;
+    [SerializeField] private Transform toggleParent; // Add a parent for toggles in the inspector
     [SerializeField] private List<ZoneManager> zoneManagers = new List<ZoneManager>();
+
+    private float activeAlpha = 0.2f;
+    private float inactiveAlpha = 1.0f;
 
     private void Awake()
     {
-        zoneBar = GetComponent<Slider>(); // Ensure zoneBar is correctly linked in the Inspector
-
+        toggleParent = GetComponent<Transform>();
         InitializeZoneManagers();
-        InitializeSlider();
+        InitToggles();
     }
 
     private void InitializeZoneManagers()
     {
         zoneManagers.AddRange(FindObjectsOfType<ZoneManager>());
-        zoneManagers.Sort((z1, z2) => z1.zoneOrder.CompareTo(z2.zoneOrder));
+        zoneManagers.Sort((z1, z2) => z2.zoneOrder.CompareTo(z1.zoneOrder)); // Sort in descending order (reverse)
     }
 
-    private void InitializeSlider()
-    {
-        zoneBar.value = currentProgress;
-        zoneBar.maxValue = zoneManagers.Count;
-        zoneBar.onValueChanged.AddListener(OnSliderValueChanged);
-    }
-
-    private void OnEnable()
+    private void InitToggles()
     {
         foreach (var zoneManager in zoneManagers)
         {
-            zoneManager.OnZoneClear += HandleZoneClear;
+            Toggle toggle = LeanPool.Spawn(_togglePrefab, toggleParent);
+            UpdateToggle(zoneManager, toggle);
+            zoneManager.OnZoneClear += (zone) => UpdateToggle(zone, toggle);
         }
     }
 
-    private void OnDisable()
+    private void UpdateToggle(ZoneManager zone, Toggle toggle)
     {
-        foreach (var zoneManager in zoneManagers)
-        {
-            zoneManager.OnZoneClear -= HandleZoneClear;
-        }
-    }
-
-    private void HandleZoneClear(ZoneManager zoneManager)
-    {
-        if (currentProgress < zoneBar.maxValue)
-        {
-            currentProgress++;
-            zoneBar.value = currentProgress;
-        }
-    }
-
-    private void OnSliderValueChanged(float value)
-    {
-        currentProgress = Mathf.RoundToInt(value);
-        zoneBar.value = currentProgress;
+        Graphic background = toggle.targetGraphic;
+        Color color = background.color;
+        color.a = zone.isClear ? activeAlpha : inactiveAlpha;
+        background.color = color;
     }
 }
