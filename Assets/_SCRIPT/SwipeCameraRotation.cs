@@ -5,7 +5,7 @@ using System.Collections;
 
 public class SwipeCameraRotation : MonoBehaviour
 {
-    [Header("Settings")] 
+    [Header("Settings")]
     private static bool canDrag;
     public bool iscanDrag
     {
@@ -29,11 +29,23 @@ public class SwipeCameraRotation : MonoBehaviour
 
     void Start()
     {
-        rotationY = virtualCamera.transform.localEulerAngles.y;
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
+
+        // Find initial player and set follow target
         player = GameObject.FindGameObjectWithTag("Player").transform;
         virtualCamera.Follow = player;
+
+        rotationY = virtualCamera.transform.localEulerAngles.y;
         canDrag = true;
+
+        // Subscribe to player switch event
+        PlayerSwitcher.OnPlayerSwitch += OnPlayerSwitch;
+    }
+
+    void OnDestroy()
+    {
+        // Unsubscribe from player switch event
+        PlayerSwitcher.OnPlayerSwitch -= OnPlayerSwitch;
     }
 
     void Update()
@@ -44,7 +56,7 @@ public class SwipeCameraRotation : MonoBehaviour
             HandleInactivity();
         }
     }
-    
+
     void HandleInput()
     {
         if (Input.touchCount > 0)
@@ -173,5 +185,15 @@ public class SwipeCameraRotation : MonoBehaviour
         Vector3 currentRotation = virtualCamera.transform.localEulerAngles;
         currentRotation.y = rotationY;
         virtualCamera.transform.localRotation = Quaternion.Euler(currentRotation);
+    }
+
+    void OnPlayerSwitch(GameObject newPlayer)
+    {
+        player = newPlayer.transform;
+        virtualCamera.Follow = player;
+
+        // Immediately reset rotation to match the new player
+        rotationY = virtualCamera.transform.localEulerAngles.y;
+        ResetInactivityTimer();
     }
 }
