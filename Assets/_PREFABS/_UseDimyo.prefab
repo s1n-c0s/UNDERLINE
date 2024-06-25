@@ -1376,6 +1376,27 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skill-icon
       objectReference: {fileID: 0}
+    - target: {fileID: 8499277609968597533, guid: 05bb896126237604982f0d5612d20df0,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ee32255c0739c6d4680230e660a12def,
+        type: 3}
+    - target: {fileID: 8499277609968597533, guid: 05bb896126237604982f0d5612d20df0,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8499277609968597533, guid: 05bb896126237604982f0d5612d20df0,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.21781217
+      objectReference: {fileID: 0}
+    - target: {fileID: 8499277609968597533, guid: 05bb896126237604982f0d5612d20df0,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.87896043
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1489,6 +1510,16 @@ PrefabInstance:
       propertyPath: healthSystem
       value: 
       objectReference: {fileID: 8893988539577694909}
+    - target: {fileID: 2296794659062741695, guid: d7772befc5a0b6644bdfdb74a1c17266,
+        type: 3}
+      propertyPath: m_Spacing
+      value: -1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2296794659062741695, guid: d7772befc5a0b6644bdfdb74a1c17266,
+        type: 3}
+      propertyPath: m_ChildAlignment
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6577251157452747152, guid: d7772befc5a0b6644bdfdb74a1c17266,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1497,6 +1528,11 @@ PrefabInstance:
     - target: {fileID: 6577251157452747152, guid: d7772befc5a0b6644bdfdb74a1c17266,
         type: 3}
       propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6577251157452747152, guid: d7772befc5a0b6644bdfdb74a1c17266,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6577251157452747152, guid: d7772befc5a0b6644bdfdb74a1c17266,
