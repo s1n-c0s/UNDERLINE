@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject player;
     [SerializeField] private List<ZoneManager> Zones;
+    [SerializeField] private List<JailObj> _jailObjs;
 
     public bool isPlaying;
 
@@ -49,6 +50,16 @@ public class GameManager : MonoBehaviour
 
         Instantiate(audioSystem).name = "GameplayAudio";
         _levelNumber.text = SceneManager.GetActiveScene().buildIndex.ToString();
+    }
+
+    private void OnEnable()
+    {
+        JailObj.OnJailUnlock += HandleJailUnlock; // Subscribe to the event
+    }
+
+    private void OnDisable()
+    {
+        JailObj.OnJailUnlock -= HandleJailUnlock; // Unsubscribe from the event
     }
 
     private void Start()
@@ -89,6 +100,8 @@ public class GameManager : MonoBehaviour
         {
             Zones[0].ActivateEnemies(true);
         }
+
+        _jailObjs.AddRange(FindObjectsOfType<JailObj>()); // Find all JailObj instances
     }
 
     public void SetGameState(GameState newGameState)
@@ -117,7 +130,17 @@ public class GameManager : MonoBehaviour
             Zones[clearedZoneIndex + 1].ActivateEnemies(true);
         }
 
-        if (AllZonesClear())
+        CheckGameProgress();
+    }
+
+    private void HandleJailUnlock(JailObj jail)
+    {
+        CheckGameProgress();
+    }
+
+    private void CheckGameProgress()
+    {
+        if (AllZonesClear() && AllJailsUnlocked())
         {
             portal.SetActive(true);
         }
@@ -126,6 +149,11 @@ public class GameManager : MonoBehaviour
     private bool AllZonesClear()
     {
         return Zones.TrueForAll(zone => zone.isClear);
+    }
+
+    private bool AllJailsUnlocked()
+    {
+        return _jailObjs.TrueForAll(jail => !jail.IsLocked);
     }
 
     private void CheckPlayerHealth()
