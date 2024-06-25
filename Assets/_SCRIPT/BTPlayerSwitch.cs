@@ -4,47 +4,38 @@ using UnityEngine.UI;
 
 public class BTPlayerSwitch : MonoBehaviour
 {
-    [SerializeField] private List<Sprite> _iconPlayer; // List of player icons
-    private Button switchPlayerBT; // Reference to the button component
-    private PlayerSwitcher playerSwitcher; // Reference to the PlayerSwitcher component
-    private Image buttonImage; // Reference to the Image component on the button
+    [SerializeField] private List<Sprite> playerIcons;
+    private Button switchPlayerButton;
+    private PlayerSwitcher playerSwitcher;
+    private Image buttonImage;
 
-    void Start()
+    private void Start()
     {
-        switchPlayerBT = GetComponent<Button>();
-        playerSwitcher = FindObjectOfType<PlayerSwitcher>();
-        buttonImage = switchPlayerBT.GetComponent<Image>();
+        InitializeComponents();
 
-        if (switchPlayerBT == null)
-        {
-            Debug.LogError("Button component not found on the GameObject");
-            return;
-        }
+        switchPlayerButton.onClick.AddListener(SwitchAndUpdateButton);
 
-        if (playerSwitcher == null)
-        {
-            Debug.LogError("PlayerSwitcher component not found in the scene");
-            return;
-        }
-
-        if (buttonImage == null)
-        {
-            Debug.LogError("Image component not found on the Button");
-            return;
-        }
-
-        switchPlayerBT.onClick.AddListener(SwitchAndUpdateButton);
-
-        // Subscribe to the OnPlayerSwitch event
         PlayerSwitcher.OnPlayerSwitch += UpdateButtonImage;
 
-        // Set the initial image
         UpdateButtonImage(playerSwitcher.players[playerSwitcher.GetCurrentPlayerIndex()]);
     }
 
     private void OnDestroy()
     {
         PlayerSwitcher.OnPlayerSwitch -= UpdateButtonImage;
+    }
+
+    private void InitializeComponents()
+    {
+        switchPlayerButton = GetComponent<Button>();
+        playerSwitcher = FindObjectOfType<PlayerSwitcher>();
+        buttonImage = switchPlayerButton.GetComponent<Image>();
+
+        if (!switchPlayerButton || !playerSwitcher || !buttonImage)
+        {
+            Debug.LogError("Missing required component.");
+            enabled = false;
+        }
     }
 
     private void SwitchAndUpdateButton()
@@ -55,9 +46,9 @@ public class BTPlayerSwitch : MonoBehaviour
     private void UpdateButtonImage(GameObject currentPlayer)
     {
         int currentIndex = playerSwitcher.GetCurrentPlayerIndex();
-        if (currentIndex >= 0 && currentIndex < _iconPlayer.Count)
+        if (currentIndex >= 0 && currentIndex < playerIcons.Count)
         {
-            buttonImage.sprite = _iconPlayer[currentIndex];
+            buttonImage.sprite = playerIcons[currentIndex];
         }
         else
         {
