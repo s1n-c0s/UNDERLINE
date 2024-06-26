@@ -52,16 +52,6 @@ public class GameManager : MonoBehaviour
         _levelNumber.text = SceneManager.GetActiveScene().buildIndex.ToString();
     }
 
-    private void OnEnable()
-    {
-        JailObj.OnJailUnlock += HandleJailUnlock; // Subscribe to the event
-    }
-
-    private void OnDisable()
-    {
-        JailObj.OnJailUnlock -= HandleJailUnlock; // Unsubscribe from the event
-    }
-
     private void Start()
     {
         InitializeGame();
@@ -73,6 +63,11 @@ public class GameManager : MonoBehaviour
         {
             CheckPlayerHealth();
         }
+    }
+
+    private void OnDestroy()
+    {
+        Cleanup();
     }
 
     private void InitializeGame()
@@ -102,6 +97,25 @@ public class GameManager : MonoBehaviour
         }
 
         _jailObjs.AddRange(FindObjectsOfType<JailObj>()); // Find all JailObj instances
+
+        // Subscribe to OnJailUnlock event for each jail
+        foreach (var jail in _jailObjs)
+        {
+            jail.OnJailUnlock += HandleJailUnlock;
+        }
+    }
+
+    private void Cleanup()
+    {
+        foreach (var jail in _jailObjs)
+        {
+            jail.OnJailUnlock -= HandleJailUnlock;
+        }
+
+        foreach (var zone in Zones)
+        {
+            zone.OnZoneClear -= HandleZoneClear;
+        }
     }
 
     public void SetGameState(GameState newGameState)
