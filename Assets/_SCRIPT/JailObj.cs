@@ -8,11 +8,11 @@ public class JailObj : MonoBehaviour
     [SerializeField] private bool isLock = true;
     [SerializeField] private GameObject Door;
 
-    [Header("VFX")] 
+    [Header("VFX")]
     [SerializeField] private ParticleSystem fxUnlock;
     [SerializeField] private ParticleSystem fxSlash;
 
-    public static event Action<JailObj> OnJailUnlock;
+    public event Action<JailObj> OnJailUnlock; // Instance event
 
     public bool IsLocked => isLock; // Provide a public read-only property
 
@@ -25,7 +25,7 @@ public class JailObj : MonoBehaviour
 
             OnJailUnlock?.Invoke(this); // Notify the GameManager
 
-            if (fxSlash != null && fxUnlock != null) 
+            if (fxSlash != null && fxUnlock != null)
             {
                 ParticleSystem _fxUnlock = LeanPool.Spawn(fxSlash, transform.forward, quaternion.identity);
                 LeanPool.Despawn(_fxUnlock, 3f);
