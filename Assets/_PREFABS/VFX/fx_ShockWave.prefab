@@ -4903,7 +4903,7 @@ GameObject:
   - component: {fileID: 4925222834936908452}
   - component: {fileID: 6011721068661595666}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: ps_smokeAround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14679,7 +14679,7 @@ GameObject:
   - component: {fileID: 8497873932320683287}
   - component: {fileID: 6625450750445118801}
   m_Layer: 0
-  m_Name: Particle System (1)
+  m_Name: ps_Stone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14835,9 +14835,9 @@ ParticleSystem:
         m_RotationOrder: 4
     startSpeed:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 10
-      minScalar: 5
+      minMaxState: 1
+      scalar: 25
+      minScalar: 27
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -14848,17 +14848,17 @@ ParticleSystem:
           outSlope: 0
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         - serializedVersion: 3
           time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
+          value: 0
+          inSlope: -2
+          outSlope: -2
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -15277,8 +15277,8 @@ ParticleSystem:
     rotation3D: 0
     gravityModifier:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0
+      minMaxState: 1
+      scalar: 5
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -15286,21 +15286,21 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 0
-          outSlope: 0
+          inSlope: 2
+          outSlope: 2
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         - serializedVersion: 3
           time: 1
-          value: 0
+          value: 1
           inSlope: 0
           outSlope: 0
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -15331,11 +15331,11 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 10
-    angle: 25
+    type: 8
+    angle: 31.31
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
-    radiusThickness: 0
+    radiusThickness: 1
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0.61}
     m_Rotation: {x: 0, y: 0, z: 180}
@@ -15418,7 +15418,7 @@ ParticleSystem:
     sphericalDirectionAmount: 1
     randomPositionAmount: 0.5
     radius:
-      value: 2.33
+      value: 0.7
       mode: 0
       spread: 0
       speed:
@@ -16025,7 +16025,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 0
+    enabled: 1
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -16033,7 +16033,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.7509433, g: 0.7509433, b: 0.7509433, a: 1}
+        key0: {r: 1, g: 1, b: 1, a: 1}
         key1: {r: 0.7509433, g: 0.7509433, b: 0.7509433, a: 1}
         key2: {r: 1, g: 0.68050635, b: 0, a: 0.6214092}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -16099,7 +16099,7 @@ ParticleSystem:
     fps: 30
     frameOverTime:
       serializedVersion: 2
-      minMaxState: 1
+      minMaxState: 0
       scalar: 0.9999
       minScalar: 0.9999
       maxCurve:
@@ -16206,7 +16206,7 @@ ParticleSystem:
     speedRange: {x: 0, y: 1}
     tilesX: 2
     tilesY: 2
-    animationType: 0
+    animationType: 1
     rowIndex: 0
     cycles: 0.0001
     uvChannelMask: -1
@@ -16273,7 +16273,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 5
       minScalar: 0
       maxCurve:
         serializedVersion: 2
