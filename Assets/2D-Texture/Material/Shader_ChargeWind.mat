@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6822420510048901256
+--- !u!114 &-8962706772745134295
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_Shader_Charge
-  m_Shader: {fileID: -6465566751694194690, guid: 80368c2eb07952943a96db73c52ed91c,
+  m_Name: Shader_ChargeWind
+  m_Shader: {fileID: -6465566751694194690, guid: 70bf6dcb5f27cc243ae94f99d84ec26d,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -55,11 +55,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DissolveScale: 1.5
+    - _DissolveScale: 0.03
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 0.39811313, g: 1, b: 0.76157135, a: 0}
-    - _TextSpeed: {r: 0, g: -5, b: 0, a: 0}
-    - _TextTilling: {r: 3.5, g: 0.7, b: 0, a: 0}
+    - _Color: {r: 0.54905653, g: 1, b: 0.9493118, a: 0}
+    - _TextSpeed: {r: 0.5, g: 0, b: 0, a: 0}
+    - _TextTilling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
