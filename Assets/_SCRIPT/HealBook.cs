@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Lean.Pool;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HealBook : MonoBehaviour
 {
@@ -17,8 +14,7 @@ public class HealBook : MonoBehaviour
             // Heal the player by 1
             playerHealth.Heal(1);
             
-            // Destroy the heal book after it's been picked up
-            LeanPool.Despawn(gameObject);
+            Destroy(gameObject);
         }
     }
 }
