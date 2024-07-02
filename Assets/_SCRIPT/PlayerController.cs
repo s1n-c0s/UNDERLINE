@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Text;
+using Lean.Pool;
+using Unity.Mathematics;
 
 public class PlayerController : MonoBehaviour
 {
@@ -63,10 +65,7 @@ public class PlayerController : MonoBehaviour
         mainCamera = Camera.main;
         playerTransform = transform;
 
-        foreach (var vfx in Prefabfx)
-        {
-            vfx.SetActive(false);
-        }
+        Prefabfx[0].SetActive(false);
     }
 
     void Update()
@@ -114,10 +113,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && LineisRunning)
         {
             HandleMouseUp();
-            foreach (var vfx in Prefabfx)
-            {
-                vfx.SetActive(false);
-            }
+            Prefabfx[0].SetActive(false);
             
             foreach (SwipeCameraRotation camera in _swipeCameraRotation)
             {
@@ -197,6 +193,13 @@ public class PlayerController : MonoBehaviour
         {
             OnPlayerStop();
         }
+
+        if (wasMoving)
+        {
+            GameObject runsmoke = LeanPool.Spawn(Prefabfx[1], transform.position, quaternion.identity);
+            LeanPool.Despawn(runsmoke, 3f);
+        }
+     
     }
 
     void OnPlayerStop()
