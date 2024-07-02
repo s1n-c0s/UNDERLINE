@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Test_P
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: 4800000, guid: 650dd9526735d5b46b79224bc6e94025, type: 3}
   m_Parent: {fileID: 2100000, guid: 42c968cb1d107af499e6ce9f619f8718, type: 2}
   m_ModifiedSerializedProperties: 16
   m_ValidKeywords: []
@@ -28,6 +28,7 @@ Material:
     m_Floats:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
+    - _SrcBlend: 1
     - _Surface: 0
     - _ZWrite: 1
     m_Colors:

@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
     public float timeIntervalinPoints = 0.1f;
     public float maxDistance = 170f;
 
+    [Header("VFX")] [SerializeField] private List<GameObject> Prefabfx;
+    
     private Vector3 lastStartPosition;
 
     private bool isGrounded; // To track if the character is grounded
@@ -60,6 +62,11 @@ public class PlayerController : MonoBehaviour
 
         mainCamera = Camera.main;
         playerTransform = transform;
+
+        foreach (var vfx in Prefabfx)
+        {
+            vfx.SetActive(false);
+        }
     }
 
     void Update()
@@ -96,6 +103,8 @@ public class PlayerController : MonoBehaviour
         if (LineisRunning)
         {
             HandleRunning();
+            Prefabfx[0].SetActive(true);
+            
             foreach (SwipeCameraRotation camera in _swipeCameraRotation)
             {
                 camera.iscanDrag = false;
@@ -105,6 +114,11 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && LineisRunning)
         {
             HandleMouseUp();
+            foreach (var vfx in Prefabfx)
+            {
+                vfx.SetActive(false);
+            }
+            
             foreach (SwipeCameraRotation camera in _swipeCameraRotation)
             {
                 camera.iscanDrag = true;
