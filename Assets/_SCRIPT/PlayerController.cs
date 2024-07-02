@@ -197,7 +197,7 @@ public class PlayerController : MonoBehaviour
         if (wasMoving)
         {
             GameObject runsmoke = LeanPool.Spawn(Prefabfx[1], transform.position, quaternion.identity);
-            LeanPool.Despawn(runsmoke, 3f);
+            LeanPool.Despawn(runsmoke, 1f);
         }
      
     }
