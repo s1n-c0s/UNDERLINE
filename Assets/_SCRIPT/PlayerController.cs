@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Text;
@@ -7,13 +8,12 @@ public class PlayerController : MonoBehaviour
 {
     private HealthSystem _healthSystem;
     private Checkpoint _checkpoint;
-    
+
     private Rigidbody rb;
     private Vector3 startPosition;
     private Vector3 targetPosition;
-    private bool isRunning = false;
+    private bool LineisRunning = false;
     private Collider playerCollider;
-    private EnemyDetector enemyDetector;
 
     public int runsRemaining = 3;
     public float maxPower = 20f;
@@ -22,7 +22,11 @@ public class PlayerController : MonoBehaviour
     public float runningAngularDamping = 10f;
 
     public TextMeshProUGUI runsRemainingText;
-    public bool IsMoving { get; private set; }
+    public List<SwipeCameraRotation> _swipeCameraRotation;
+    public static event Action OnTurnEnd;
+
+    private bool isMoving;
+    private bool wasMoving;
 
     public LineRenderer _lineRenderer;
     public Transform launchPoint;
@@ -31,6 +35,8 @@ public class PlayerController : MonoBehaviour
     public float timeIntervalinPoints = 0.1f;
     public float maxDistance = 170f;
 
+    [Header("VFX")] [SerializeField] private List<GameObject> Prefabfx;
+    
     private Vector3 lastStartPosition;
 
     private bool isGrounded; // To track if the character is grounded
@@ -44,25 +50,30 @@ public class PlayerController : MonoBehaviour
     {
         _healthSystem = GetComponent<HealthSystem>();
         _checkpoint = GetComponent<Checkpoint>();
-        
+
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         startPosition = transform.position;
         targetPosition = startPosition;
         playerCollider = GetComponent<Collider>();
-        enemyDetector = GetComponent<EnemyDetector>();
-        //lastStartPosition = startPosition;
+        _swipeCameraRotation.Add(FindObjectOfType<SwipeCameraRotation>());
+
         UpdateRunsRemainingText();
 
         mainCamera = Camera.main;
         playerTransform = transform;
+
+        foreach (var vfx in Prefabfx)
+        {
+            vfx.SetActive(false);
+        }
     }
 
     void Update()
     {
         UpdateRunsRemainingText();
 
-        if (runsRemaining > 0 && !IsMoving)
+        if (runsRemaining > 0 && !isMoving)
         {
             HandleRunningInput();
         }
@@ -75,9 +86,10 @@ public class PlayerController : MonoBehaviour
         CheckGrounded();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        // Physics-related operations can go here
+        CheckIfMoving();
+        wasMoving = isMoving;
     }
 
     void HandleRunningInput()
@@ -88,14 +100,29 @@ public class PlayerController : MonoBehaviour
             _checkpoint.SetCheckpointPosition();
         }
 
-        if (isRunning)
+        if (LineisRunning)
         {
             HandleRunning();
+            Prefabfx[0].SetActive(true);
+            
+            foreach (SwipeCameraRotation camera in _swipeCameraRotation)
+            {
+                camera.iscanDrag = false;
+            }
         }
 
-        if (Input.GetMouseButtonUp(0) && isRunning)
+        if (Input.GetMouseButtonUp(0) && LineisRunning)
         {
             HandleMouseUp();
+            foreach (var vfx in Prefabfx)
+            {
+                vfx.SetActive(false);
+            }
+            
+            foreach (SwipeCameraRotation camera in _swipeCameraRotation)
+            {
+                camera.iscanDrag = true;
+            }
         }
     }
 
@@ -106,7 +133,7 @@ public class PlayerController : MonoBehaviour
 
         if (playerCollider.Raycast(ray, out hit, Mathf.Infinity))
         {
-            isRunning = true;
+            LineisRunning = true;
             startPosition = playerTransform.position;
         }
     }
@@ -153,27 +180,29 @@ public class PlayerController : MonoBehaviour
 
         rb.AddForce(runDirection.normalized * power, ForceMode.Impulse);
 
-        isRunning = false;
-        IsMoving = true;
-        //runsRemaining--;
-
-        if (runsRemaining <= 0)
-        {
-            isRunning = false;
-        }
-
+        LineisRunning = false;
         rb.angularDrag = 0f;
     }
 
     void HandleNotRunning()
     {
-        if (rb.velocity.magnitude < stopThreshold && IsMoving)
-        {
-            IsMoving = false;
-            rb.freezeRotation = true;
-            DecreaseRunsRemaining();
-        }
         _lineRenderer.enabled = false;
+    }
+
+    void CheckIfMoving()
+    {
+        isMoving = rb.velocity.magnitude > stopThreshold;
+
+        if (!isMoving && wasMoving)
+        {
+            OnPlayerStop();
+        }
+    }
+
+    void OnPlayerStop()
+    {
+        DecreaseRunsRemaining();
+        OnTurnEnd?.Invoke();
     }
 
     void DrawTrajectory()
@@ -225,8 +254,7 @@ public class PlayerController : MonoBehaviour
     public void IncreaseRunsRemaining()
     {
         _healthSystem.Heal(1);
-        Debug.Log("Cost+1 :"+_healthSystem.GetCurrentHealth());
-        //runsRemaining++;
+        Debug.Log("Cost+1 :" + _healthSystem.GetCurrentHealth());
     }
 
     public void DecreaseRunsRemaining()
@@ -234,7 +262,7 @@ public class PlayerController : MonoBehaviour
         if (runsRemaining > 0)
         {
             _healthSystem.TakeDamage(1);
-            Debug.Log("Cost-1 :"+_healthSystem.GetCurrentHealth());
+            Debug.Log("Cost-1 :" + _healthSystem.GetCurrentHealth());
             UpdateRunsRemainingText();
         }
         else
@@ -260,7 +288,6 @@ public class PlayerController : MonoBehaviour
 
     public void Respawn()
     {
-        //playerTransform.position = lastStartPosition;
         transform.position = _checkpoint.GetLastCheckpointPosition();
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;

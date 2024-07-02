@@ -11,7 +11,7 @@ public class HitDetection : MonoBehaviour
         // Check if the object we collided with has a specific tag (you can customize this)
         if (other.collider.CompareTag("Wall"))
         {
-            Debug.Log("Hit wall");
+            //Debug.Log("Hit wall");
             // Play the particle effect at the collision point
             PlayHitParticleEffect(transform.position + Vector3.forward);
 

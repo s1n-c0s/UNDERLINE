@@ -3,3 +3,7 @@
 
 3D - Causal | Mobile Game  
 🕹️ Play Now on https://sindivcos.itch.io/underline
+
+
+Thanakrit P. - Technical Artist.   
+Patcharin M. - Technical Artist.

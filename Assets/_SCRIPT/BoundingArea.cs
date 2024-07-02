@@ -19,7 +19,7 @@ public class BoundingArea : MonoBehaviour
             other.gameObject.GetComponent<HealthSystem>().TakeDamage(50);
         }*/
         
-        if(other.CompareTag("Enemy"))
+        if(other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             //other.gameObject.GetComponent<HealthSystem>().TakeDamage(50);
             other.gameObject.GetComponent<HealthSystem>().Die();

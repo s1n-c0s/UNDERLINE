@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bfb23d6537c72a4abf5cd7bf90a5102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
+  detectDespawn: 1
 --- !u!54 &-8362033268256529279
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10068,7 +10070,7 @@ ParticleSystem:
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
-  ringBufferMode: 1
+  ringBufferMode: 2
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 0

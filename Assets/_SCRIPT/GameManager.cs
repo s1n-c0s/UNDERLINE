@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using Lean.Pool;
 using TMPro;
 using UnityEngine.SceneManagement;
 
@@ -9,120 +9,140 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public GameObject gameclearFX;
-    [SerializeField] private CanvasGroup _gameclearUI; 
-    
+    [SerializeField] private CanvasGroup _gameclearUI;
     public GameObject gameoverFX;
     [SerializeField] private CanvasGroup _gameoverUI;
 
     public GameObject player;
-    public EnemyDetectorArea enemyDetectorArea;
+    [SerializeField] private List<ZoneManager> Zones;
+
     public bool isPlaying;
-    
+
     [SerializeField] private TextMeshProUGUI _levelNumber;
     [SerializeField] private CanvasGroup _introPanel;
     [SerializeField] private CanvasGroup _ingamePanel;
     [SerializeField] private GameObject audioSystem;
-    
+    public GameObject portal;
+
     public enum GameState
     {
         Playing,
         Clear,
         GameOver
-        // Add more states as needed
     }
 
     public GameState CurrentGameState { get; private set; }
 
     private float countdownTimer;
     private const float CountdownDuration = 2f;
-    
-    private float delayBeforeWinCheck = 2f; // Adjust the delay as needed
-    
+
     private void Awake()
     {
-        GameObject GameplayAudio = Instantiate(audioSystem);
-        GameplayAudio.name = "GameplayAudio";
-        
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        Instantiate(audioSystem).name = "GameplayAudio";
         _levelNumber.text = SceneManager.GetActiveScene().buildIndex.ToString();
     }
+
     private void Start()
     {
-        Clear_UI();
-        CurrentGameState = GameState.Playing;
-        UI_introFade();
-        
-        /*_introPanel.DOFade(1, 1f).OnComplete(() => _introPanel.DOFade(0f,1f).OnComplete(() 
-            => _introPanel.gameObject.SetActive(false)));*/
-        ResetCountdownTimer();
+        InitializeGame();
     }
 
     private void LateUpdate()
     {
         if (isPlaying && CurrentGameState == GameState.Playing)
         {
-            isKillAllEnemy();
             CheckPlayerHealth();
         }
     }
-    
+
+    private void InitializeGame()
+    {
+        ClearUI();
+        SetGameState(GameState.Playing);
+        FadeUI(_introPanel, true, 1f, () =>
+        {
+            FadeUI(_introPanel, false, 1f);
+            FadeUI(_ingamePanel, true, 2.5f);
+        });
+
+        ResetCountdownTimer();
+        Zones.AddRange(FindObjectsOfType<ZoneManager>());
+        Zones.Sort((z1, z2) => z1.zoneOrder.CompareTo(z2.zoneOrder)); // Ensure zones are sorted by order
+
+        foreach (ZoneManager zone in Zones)
+        {
+            zone.OnZoneClear += HandleZoneClear;
+            zone.ActivateEnemies(false); // Ensure enemies are inactive initially
+        }
+
+        // Activate the first zone's enemies
+        if (Zones.Count > 0)
+        {
+            Zones[0].ActivateEnemies(true);
+        }
+    }
+
     public void SetGameState(GameState newGameState)
     {
         CurrentGameState = newGameState;
+        isPlaying = newGameState == GameState.Playing;
 
         switch (newGameState)
         {
-            case GameState.Playing:
-                //Debug.Log("Playing");
-                isPlaying = true;
-                break;
             case GameState.Clear:
-                //Debug.Log("Game Clear");
-                //Show(VFXclear);
-                UI_gameEnd(_gameclearUI);
-                isPlaying = false;
+                EndGame(_gameclearUI);
                 break;
-
             case GameState.GameOver:
-                //Debug.Log("Game Over");
-                //Show(VFXgameover);
-                UI_gameEnd(_gameoverUI);
-                isPlaying = false;
+                EndGame(_gameoverUI);
                 break;
         }
     }
 
-    private void isKillAllEnemy()
+    private void HandleZoneClear(ZoneManager zone)
     {
-        // Delay the win check
-        delayBeforeWinCheck -= Time.deltaTime;
-    
-        if (delayBeforeWinCheck <= 0f && enemyDetectorArea.GetCurrentEnemy() == 0)
+        // Find the index of the cleared zone
+        int clearedZoneIndex = Zones.IndexOf(zone);
+        if (clearedZoneIndex != -1 && clearedZoneIndex < Zones.Count - 1)
         {
-            SetGameState(GameState.Clear);
+            // Activate enemies in the next zone
+            Zones[clearedZoneIndex + 1].ActivateEnemies(true);
         }
+
+        if (AllZonesClear())
+        {
+            portal.SetActive(true);
+        }
+    }
+
+    private bool AllZonesClear()
+    {
+        return Zones.TrueForAll(zone => zone.isClear);
     }
 
     private void CheckPlayerHealth()
     {
-        HealthSystem playerHealthSystem = player.GetComponent<HealthSystem>();
+        var playerHealthSystem = player.GetComponent<HealthSystem>();
 
         if (playerHealthSystem.GetCurrentHealth() == 0)
         {
-            // Countdown when player's health is zero
             countdownTimer -= Time.deltaTime;
             if (countdownTimer <= 0f)
             {
                 SetGameState(GameState.GameOver);
-                player.SetActive(false);
-                Instantiate(playerHealthSystem.fx_die, player.transform.position, Quaternion.identity);
-                
-                /*ParticleSystem playerDieFx = LeanPool.Spawn(playerHealthSystem.fx_die, Vector3.up + player.transform.position, Quaternion.identity);
-                LeanPool.Despawn(playerDieFx, 3f);*/
+                playerHealthSystem.Die();
             }
         }
         else
         {
-            // Reset countdown when player's health is not zero
             ResetCountdownTimer();
         }
     }
@@ -131,30 +151,28 @@ public class GameManager : MonoBehaviour
     {
         countdownTimer = CountdownDuration;
     }
-    
-    private void Show(GameObject gameObject)
-    {
-        gameObject.SetActive(true);
-    }
-    
-    private void UI_introFade()
-    {
-        _introPanel.gameObject.SetActive(true);
-        _introPanel.DOFade(1, 1f)
-            .OnComplete(() => _introPanel.DOFade(0f, 1f)
-                .OnComplete(() => _introPanel.gameObject.SetActive(false)));
-        _ingamePanel.DOFade(1f, 2.5f);
-    }
-    
-    private void UI_gameEnd(CanvasGroup ui)
-    {
-        ui.gameObject.SetActive(true);
-        ui.DOFade(1, 0.5f);
-    }
-    
-    private void Clear_UI()
+
+    private void ClearUI()
     {
         _gameclearUI.gameObject.SetActive(false);
         _gameoverUI.gameObject.SetActive(false);
+    }
+
+    private void FadeUI(CanvasGroup ui, bool fadeIn, float duration, TweenCallback onComplete = null)
+    {
+        ui.gameObject.SetActive(true);
+        ui.DOFade(fadeIn ? 1 : 0, duration).OnComplete(() =>
+        {
+            if (!fadeIn)
+            {
+                ui.gameObject.SetActive(false);
+            }
+            onComplete?.Invoke();
+        });
+    }
+
+    private void EndGame(CanvasGroup ui)
+    {
+        FadeUI(ui, true, 0.5f);
     }
 }
