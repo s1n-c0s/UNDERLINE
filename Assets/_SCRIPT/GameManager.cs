@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject player;
     [SerializeField] private List<ZoneManager> Zones;
+    [SerializeField] private List<JailObj> _jailObjs;
 
     public bool isPlaying;
 
@@ -64,6 +65,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        Cleanup();
+    }
+
     private void InitializeGame()
     {
         ClearUI();
@@ -88,6 +94,27 @@ public class GameManager : MonoBehaviour
         if (Zones.Count > 0)
         {
             Zones[0].ActivateEnemies(true);
+        }
+
+        _jailObjs.AddRange(FindObjectsOfType<JailObj>()); // Find all JailObj instances
+
+        // Subscribe to OnJailUnlock event for each jail
+        foreach (var jail in _jailObjs)
+        {
+            jail.OnJailUnlock += HandleJailUnlock;
+        }
+    }
+
+    private void Cleanup()
+    {
+        foreach (var jail in _jailObjs)
+        {
+            jail.OnJailUnlock -= HandleJailUnlock;
+        }
+
+        foreach (var zone in Zones)
+        {
+            zone.OnZoneClear -= HandleZoneClear;
         }
     }
 
@@ -117,7 +144,17 @@ public class GameManager : MonoBehaviour
             Zones[clearedZoneIndex + 1].ActivateEnemies(true);
         }
 
-        if (AllZonesClear())
+        CheckGameProgress();
+    }
+
+    private void HandleJailUnlock(JailObj jail)
+    {
+        CheckGameProgress();
+    }
+
+    private void CheckGameProgress()
+    {
+        if (AllZonesClear() && AllJailsUnlocked())
         {
             portal.SetActive(true);
         }
@@ -126,6 +163,11 @@ public class GameManager : MonoBehaviour
     private bool AllZonesClear()
     {
         return Zones.TrueForAll(zone => zone.isClear);
+    }
+
+    private bool AllJailsUnlocked()
+    {
+        return _jailObjs.TrueForAll(jail => !jail.IsLocked);
     }
 
     private void CheckPlayerHealth()
