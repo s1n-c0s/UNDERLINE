@@ -778,6 +778,7 @@ MonoBehaviour:
   fireballPrefab: {fileID: 9037914215663463343, guid: 273264e0f520f784c97ed2d6177b69b2,
     type: 3}
   _skillTurnSystem: {fileID: 0}
+  fx_Castmage: {fileID: 4172782219049453487}
 --- !u!114 &4196402497135166644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1796,6 +1797,11 @@ PrefabInstance:
       propertyPath: healthSystem
       value: 
       objectReference: {fileID: 8514019350733670213}
+    - target: {fileID: 2296794659062741695, guid: d7772befc5a0b6644bdfdb74a1c17266,
+        type: 3}
+      propertyPath: m_ChildAlignment
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6577251157452747152, guid: d7772befc5a0b6644bdfdb74a1c17266,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1955,6 +1961,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 156fdf8e8a738d747b096038b54d9ef2, type: 3}
+--- !u!198 &4172782219049453487 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6922090001791156886, guid: 156fdf8e8a738d747b096038b54d9ef2,
+    type: 3}
+  m_PrefabInstance: {fileID: 6483080645001725241}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8969070204336060012 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2702175907404346197, guid: 156fdf8e8a738d747b096038b54d9ef2,
