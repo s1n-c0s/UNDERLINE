@@ -13,6 +13,9 @@ public class FireBallSkill : MonoBehaviour
     [SerializeField] private GameObject fireballPrefab;
 
     [SerializeField] private SkillTurnSystem _skillTurnSystem;
+
+    [Header("VFX")] [SerializeField] private ParticleSystem fx_Castmage; 
+    
     private int cooldownTurns;
     private int currentTurnCount;
     private List<GameObject> instantiatedBullets = new List<GameObject>();
@@ -22,6 +25,7 @@ public class FireBallSkill : MonoBehaviour
     {   
         _skillTurnSystem = GetComponent<SkillTurnSystem>();
         Initialize();
+        fx_Castmage.Stop();
     }
 
     private void Initialize()
@@ -75,6 +79,7 @@ public class FireBallSkill : MonoBehaviour
         if (index >= 0 && index < instantiatedBullets.Count)
         {
             instantiatedBullets[index].SetActive(true);
+            fx_Castmage.Play();
         }
     }
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Text;
+using Lean.Pool;
+using Unity.Mathematics;
 
 public class PlayerController : MonoBehaviour
 {
@@ -35,6 +37,8 @@ public class PlayerController : MonoBehaviour
     public float timeIntervalinPoints = 0.1f;
     public float maxDistance = 170f;
 
+    [Header("VFX")] [SerializeField] private List<GameObject> Prefabfx;
+    
     private Vector3 lastStartPosition;
 
     private bool isGrounded; // To track if the character is grounded
@@ -60,6 +64,8 @@ public class PlayerController : MonoBehaviour
 
         mainCamera = Camera.main;
         playerTransform = transform;
+
+        Prefabfx[0].SetActive(false);
     }
 
     void Update()
@@ -96,6 +102,8 @@ public class PlayerController : MonoBehaviour
         if (LineisRunning)
         {
             HandleRunning();
+            Prefabfx[0].SetActive(true);
+            
             foreach (SwipeCameraRotation camera in _swipeCameraRotation)
             {
                 camera.iscanDrag = false;
@@ -105,6 +113,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && LineisRunning)
         {
             HandleMouseUp();
+            Prefabfx[0].SetActive(false);
+            
             foreach (SwipeCameraRotation camera in _swipeCameraRotation)
             {
                 camera.iscanDrag = true;
@@ -183,6 +193,13 @@ public class PlayerController : MonoBehaviour
         {
             OnPlayerStop();
         }
+
+        if (wasMoving)
+        {
+            GameObject runsmoke = LeanPool.Spawn(Prefabfx[1], transform.position, quaternion.identity);
+            LeanPool.Despawn(runsmoke, 1f);
+        }
+     
     }
 
     void OnPlayerStop()
