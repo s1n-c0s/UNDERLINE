@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: fx_Slash2
+  m_Name: fx_Particle
   m_Shader: {fileID: -6465566751694194690, guid: bbda0dfcadc90cd44aba971c011c643c,
     type: 3}
   m_Parent: {fileID: 0}
@@ -28,7 +28,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: b93cbfbc5ac8f54498137cdea1ad9c9f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 61e407a4c8efb4d47bfb7b1b6938bb43, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -59,7 +59,7 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
-    - _Color: {r: 3.9340389, g: 0.19150521, b: 0, a: 1}
+    - _Color: {r: 3.9340389, g: 0.396225, b: 0, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &8080378265084189348
 MonoBehaviour:
