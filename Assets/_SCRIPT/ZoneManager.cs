@@ -118,7 +118,7 @@ public class ZoneManager : MonoBehaviour
         if (!isClear)
         {
             SetDoorsActive(true);
-            ToggleDoorCollisionWithPlayer(!isPlayerIn);
+            StartCoroutine(ToggleDoorCollisionWithPlayer(!isPlayerIn, 0.75f));
         }
     }
 
@@ -144,7 +144,7 @@ public class ZoneManager : MonoBehaviour
             if (!other.GetComponent<ShadowLife>())
             {
                 isPlayerIn = true;
-                ToggleDoorCollisionWithPlayer(false);
+                StartCoroutine(ToggleDoorCollisionWithPlayer(false, 0.75f));
             }
             ZoneStart();
             isPlayed = true;
@@ -156,12 +156,13 @@ public class ZoneManager : MonoBehaviour
         if (other.CompareTag("Player") && !other.GetComponent<ShadowLife>())
         {
             isPlayerIn = false;
-            ToggleDoorCollisionWithPlayer(true);
+            StartCoroutine(ToggleDoorCollisionWithPlayer(true, 0.75f));
         }
     }
 
-    private void ToggleDoorCollisionWithPlayer(bool ignoreCollision)
+    private IEnumerator ToggleDoorCollisionWithPlayer(bool ignoreCollision, float delay)
     {
+        yield return new WaitForSeconds(delay);
         foreach (var door in doors)
         {
             Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Door"), ignoreCollision);
