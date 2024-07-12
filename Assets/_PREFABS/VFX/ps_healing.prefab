@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8620722126338102711}
   - component: {fileID: 7540231024041880042}
   m_Layer: 0
-  m_Name: ps_bombleaf
+  m_Name: ps_HealSparkle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9806,7 +9806,7 @@ GameObject:
   - component: {fileID: 4399344606859076858}
   - component: {fileID: 7011625351204771302}
   m_Layer: 0
-  m_Name: fx_bonkRing
+  m_Name: fx_HealRing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11170,13 +11170,13 @@ ParticleSystem:
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 16031
         ctime1: 34685
-        ctime2: 51944
+        ctime2: 47586
         ctime3: 65535
         ctime4: 0
         ctime5: 0
         ctime6: 0
         ctime7: 0
-        atime0: 51073
+        atime0: 46889
         atime1: 65535
         atime2: 0
         atime3: 0
