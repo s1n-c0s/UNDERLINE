@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Lean.Pool;
@@ -11,6 +10,7 @@ public class BulletOrb : MonoBehaviour
     [SerializeField] private float radiusOffset = 5f;
     [SerializeField] private float heightOffset = 2f;
     [SerializeField] private float cooldown = 1f;
+    [SerializeField] private AnimationCurve speedCurve; // Animation curve for speed adjustment
     [SerializeField] private List<GameObject> items;
 
     [Header("VFX")]
@@ -92,8 +92,7 @@ public class BulletOrb : MonoBehaviour
             Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
             if (bulletRigidbody != null)
             {
-                Vector3 direction = bullet.transform.forward;
-                bulletRigidbody.AddForce(direction * power, ForceMode.Impulse);
+                StartCoroutine(AdjustBulletSpeed(bulletRigidbody));
             }
             
             BoxCollider bulletCollider = bullet.GetComponent<BoxCollider>();
@@ -103,5 +102,19 @@ public class BulletOrb : MonoBehaviour
         instantiatedBullets.Clear();
         canShoot = false;
         timer = cooldown;
+    }
+
+    private IEnumerator AdjustBulletSpeed(Rigidbody bulletRigidbody)
+    {
+        float elapsedTime = 0f;
+        Vector3 initialDirection = bulletRigidbody.transform.forward;
+
+        while (true)
+        {
+            float curveValue = speedCurve.Evaluate(elapsedTime);
+            bulletRigidbody.velocity = initialDirection * curveValue * power;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 }
