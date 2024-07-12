@@ -38,9 +38,10 @@ public class HitBox : MonoBehaviour
         {
             case "Player":
                 _healthSystem.TakeDamage(_damage);
-                if (_playerHeal)
+                HealthSystem playerHP = other.GetComponent<HealthSystem>();
+                if (_playerHeal && playerHP != null)
                 {
-                    other.gameObject.GetComponent<HealthSystem>().Heal(1);
+                    playerHP.Heal(1);
                 }
                 break;
             case "Enemy":

@@ -109,7 +109,7 @@ public class BulletOrb : MonoBehaviour
         float elapsedTime = 0f;
         Vector3 initialDirection = bulletRigidbody.transform.forward;
 
-        while (true)
+        while (elapsedTime <= 1f) // Ensure the curve evaluates from 0 to 1
         {
             float curveValue = speedCurve.Evaluate(elapsedTime);
             bulletRigidbody.velocity = initialDirection * curveValue * power;
