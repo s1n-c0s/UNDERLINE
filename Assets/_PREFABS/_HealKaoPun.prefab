@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healPoint: 1
-  _statusManager: {fileID: 0}
+  healDuration: 2
 --- !u!65 &5309725321262334795
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -99,7 +99,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 2.040236, z: 1}
+  m_Size: {x: 1.4331317, y: 2, z: 1.4293003}
   m_Center: {x: 0, y: 1.8, z: -0}
 --- !u!1 &8381390077399816557
 GameObject:
@@ -146,7 +146,7 @@ ParticleSystem:
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
-  ringBufferMode: 1
+  ringBufferMode: 2
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 0
@@ -1302,8 +1302,8 @@ ParticleSystem:
     x:
       serializedVersion: 2
       minMaxState: 3
-      scalar: -1.7453293
-      minScalar: 1.7453293
+      scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1355,8 +1355,8 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 3
-      scalar: -3.4906585
-      minScalar: 3.4906585
+      scalar: 3.4906585
+      minScalar: 2.6179938
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1408,8 +1408,8 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 3
-      scalar: -1.7453293
-      minScalar: 1.7453293
+      scalar: 0.08726646
+      minScalar: -0.08726646
       maxCurve:
         serializedVersion: 2
         m_Curve:
