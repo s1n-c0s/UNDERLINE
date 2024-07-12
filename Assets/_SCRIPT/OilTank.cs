@@ -6,24 +6,14 @@ using UnityEngine;
 public class OilTank : MonoBehaviour
 {
     [SerializeField] private int damage = 3;
-    public float radius = 5.0f;
+    [SerializeField] private float power = 10.0f;
+    [SerializeField] private float upforce = 1.0f;
     
     [Header("VFX")]
-    public ParticleSystem fx_expposion;
-    public Color drawColor = Color.yellow;
-
-    private void Start()
-    {
-
-    }
-    /*    private void FixedUpdate()
-        {
-            if (bomb == enabled)
-            {
-                Invoke("Detonate", 5);
-            }
-        }*/
-
+    [SerializeField] private float radius = 5.0f;
+    [SerializeField] private ParticleSystem fx_expposion;
+    [SerializeField] private Color drawColor = Color.yellow;
+    
     public void OnCollisionEnter(Collision collision)
     {
         if (collision.rigidbody != null)
@@ -48,11 +38,13 @@ public class OilTank : MonoBehaviour
                 CameraShake.Shake(1f, 5);
                 
             }
-
-            // ไม่ต้องสร้าง explosion force หรือทำลาย game object ที่ไม่ใช่ "Enemy" หรือ "Player"
+            
+            Rigidbody rb = hit.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.AddExplosionForce(power, explosionPosition, radius, upforce, ForceMode.Impulse);
+            }
         }
-
-        // ทำลาย game object นี้
         Destroy(gameObject);
     }
 
