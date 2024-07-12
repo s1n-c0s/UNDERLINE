@@ -34,32 +34,19 @@ public class HitBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        switch (other.tag)
-        {
-            case "Player":
-                _healthSystem.TakeDamage(_damage);
-                HealthSystem playerHP = other.GetComponent<HealthSystem>();
-                if (_playerHeal && playerHP != null)
-                {
-                    playerHP.Heal(1);
-                }
-                break;
-            case "Enemy":
-                //_healthSystem.TakeDamage(1);
-                break;
-            case "shuriken":
-                _healthSystem.TakeDamage(1);
-                break;
-        }
-        
-        /*if (other.CompareTag("Player") || other.CompareTag("Shuriken") || other.CompareTag("Enemy"))
+        if (other.CompareTag("Player"))
         {
             _healthSystem.TakeDamage(_damage);
-        }*/
-    }
+            HealthSystem playerHP = other.GetComponent<HealthSystem>();
+            if (_playerHeal && playerHP != null)
+            {
+                playerHP.Heal(1);
+            }
+        }
 
-    /*public void fireBallHit(int DmgFireball)
-    {
-        _healthSystem.TakeDamage(DmgFireball);
-    }*/
+        if (other.CompareTag("Shuriken"))
+        {
+            _healthSystem.TakeDamage(1);
+        }
+    }
 }
