@@ -9,13 +9,16 @@ public class StatusManager : MonoBehaviour
     {
         Barrier,
         Burn,
-        Panic
+        Panic,
+        Heal
     }
 
-    [Header("VFX")] [SerializeField] private List<GameObject> fx_groups;
+    [Header("VFX")] 
+    [SerializeField] private List<GameObject> fx_groups;
 
     private HealthSystem _healthSystem;
     private Coroutine burnCoroutine;
+    private Coroutine healCoroutine;
 
     private void Start()
     {
@@ -29,7 +32,7 @@ public class StatusManager : MonoBehaviour
         }
     }
 
-    public void ApplyStatus(Status status, bool enable, int burnDamagePerSecond = 0, float burnDuration = 0)
+    public void ApplyStatus(Status status, bool enable = true, int burnDamagePerSecond = 0, float burnDuration = 0, float healDuration = 0)
     {
         switch (status)
         {
@@ -50,6 +53,18 @@ public class StatusManager : MonoBehaviour
                 break;
             case Status.Panic:
                 isPanic(enable);
+                break;
+            case Status.Heal:
+                if (enable)
+                {
+                    if (healCoroutine != null) StopCoroutine(healCoroutine);
+                    healCoroutine = StartCoroutine(ApplyHealing(healDuration));
+                }
+                else
+                {
+                    if (healCoroutine != null) StopCoroutine(healCoroutine);
+                    fx_groups[3].SetActive(false);
+                }
                 break;
         }
     }
@@ -75,5 +90,12 @@ public class StatusManager : MonoBehaviour
     private void isPanic(bool enable)
     {
         fx_groups[2].SetActive(enable);
+    }
+
+    private IEnumerator ApplyHealing(float duration)
+    {
+        fx_groups[3].SetActive(true);
+        yield return new WaitForSeconds(duration);
+        fx_groups[3].SetActive(false);
     }
 }
