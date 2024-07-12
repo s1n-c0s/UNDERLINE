@@ -46,7 +46,7 @@ GameObject:
   m_Layer: 0
   m_Name: _HealKaoPun
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -78,6 +78,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87dbcc0429e9cff43879646448e6f0e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healPoint: 1
+  _statusManager: {fileID: 0}
 --- !u!65 &5309725321262334795
 BoxCollider:
   m_ObjectHideFlags: 0
