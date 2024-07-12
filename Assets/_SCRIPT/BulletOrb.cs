@@ -14,7 +14,7 @@ public class BulletOrb : MonoBehaviour
     [SerializeField] private List<GameObject> items;
 
     [Header("VFX")]
-    [SerializeField] private ParticleSystem fx_Shoot;
+    [SerializeField] private GameObject fx_Shoot;
 
     private bool canShoot = true;
     private float timer;
@@ -41,9 +41,12 @@ public class BulletOrb : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && canShoot)
         {
             ShootOrb();
+            Vector3 spawnPosition = transform.position + Vector3.up * 3.5f;
+            GameObject fx_shoot = LeanPool.Spawn(fx_Shoot, spawnPosition, Quaternion.identity);
+            LeanPool.Despawn(fx_shoot, 3f);
         }
     }
 
