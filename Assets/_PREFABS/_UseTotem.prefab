@@ -451,7 +451,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4444240093208892525}
-  - component: {fileID: 765115938546641833}
+  - component: {fileID: 5109707256924348033}
   m_Layer: 0
   m_Name: Model
   m_TagString: Wall
@@ -475,7 +475,7 @@ Transform:
   - {fileID: 6035971082233749752}
   m_Father: {fileID: 4360399539140765564}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &765115938546641833
+--- !u!136 &5109707256924348033
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
