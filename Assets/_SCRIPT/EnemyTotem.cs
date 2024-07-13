@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyTotem : MonoBehaviour
 {
-    private HealthSystem _healthSystem;
     public List<GameObject> targets;
     private List<HealthSystem> _targetHealthSystems = new List<HealthSystem>();
     
@@ -16,7 +15,6 @@ public class EnemyTotem : MonoBehaviour
 
     private void Start()
     {
-        _healthSystem = GetComponent<HealthSystem>();
         CacheTargetHealthSystems();
     }
 
@@ -78,17 +76,10 @@ public class EnemyTotem : MonoBehaviour
 
     private void OnDestroy()
     {
+        RemoveNullTargets();
         foreach (var targetHealthSystem in _targetHealthSystems)
         {
             targetHealthSystem?.GetComponent<StatusManager>()?.ApplyStatus(StatusManager.Status.Barrier, false);
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player") || other.CompareTag("Shuriken") || other.CompareTag("Enemy"))
-        {
-            _healthSystem.TakeDamage(1);
         }
     }
 }
