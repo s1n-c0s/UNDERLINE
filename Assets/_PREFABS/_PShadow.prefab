@@ -10050,7 +10050,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3119121811698417225}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10381,7 +10381,7 @@ GameObject:
   - component: {fileID: 7710686492707414006}
   - component: {fileID: 5842914202114181444}
   - component: {fileID: 1952846726688857786}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: _PShadow
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -10495,6 +10495,7 @@ MonoBehaviour:
   Prefabfx:
   - {fileID: 653620031542524555}
   - {fileID: 7549610157218908158, guid: 58189eb855709c4429e042b9d3554101, type: 3}
+  - {fileID: 3144315092134922679, guid: 1a5c5e4084b164344aee5754ba623316, type: 3}
 --- !u!114 &3724481440160478934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10711,7 +10712,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!1 &3852967714831978939
 GameObject:
   m_ObjectHideFlags: 0
@@ -10721,7 +10722,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5901986207693075110}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25719,7 +25720,7 @@ GameObject:
   - component: {fileID: 5777042516347383687}
   - component: {fileID: 3317266269371437832}
   - component: {fileID: 1924184633905679804}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}

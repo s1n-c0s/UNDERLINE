@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: fx_Particle
+  m_Name: fx_EnemySlash_mat_Sparkle
   m_Shader: {fileID: -6465566751694194690, guid: bbda0dfcadc90cd44aba971c011c643c,
     type: 3}
   m_Parent: {fileID: 0}
@@ -49,7 +49,7 @@ Material:
     - _AlphaToMask: 0
     - _Blend: 0
     - _CastShadows: 1
-    - _Cull: 0
+    - _Cull: 2
     - _DstBlend: 10
     - _QueueControl: 0
     - _QueueOffset: 0

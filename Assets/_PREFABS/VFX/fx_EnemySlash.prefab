@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 431037763276384512}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.002, z: 0.091}
-  m_LocalScale: {x: 0.14738573, y: 0.601992, z: 0.24694097}
+  m_LocalPosition: {x: 0, y: -0.002, z: 0.657}
+  m_LocalScale: {x: 0.21132763, y: 0.601992, z: 0.30434638}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1699586572347765934}
@@ -41,14 +41,14 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 431037763276384512}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 10
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -116,7 +116,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 10
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1358,7 +1358,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 1
+    enabled: 0
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -4855,7 +4855,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_RenderMode: 4
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -4916,7 +4916,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.002, y: 0, z: -0.021}
-  m_LocalScale: {x: 0.2326196, y: 0.35, z: 0.22260432}
+  m_LocalScale: {x: 0.3335394, y: 0.35, z: 0.27435228}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1699586572347765934}
@@ -4929,14 +4929,14 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 888538167707801665}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 10
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -5004,7 +5004,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 10
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -6246,7 +6246,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 1
+    enabled: 0
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -9743,7 +9743,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_RenderMode: 4
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -9788,7 +9788,7 @@ GameObject:
   - component: {fileID: 5488347820530035608}
   - component: {fileID: 5235093720697842275}
   m_Layer: 0
-  m_Name: fx_EenemySlash
+  m_Name: fx_EnemySlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9822,14 +9822,14 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1179970043933456319}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 10
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -9897,7 +9897,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 10
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -14638,7 +14638,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.072}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1699586572347765934}
@@ -14685,11 +14685,11 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.25
+  m_Time: 0.75
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1.8
+    widthMultiplier: 5
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -14738,7 +14738,7 @@ TrailRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 2
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
@@ -14746,7 +14746,7 @@ TrailRenderer:
   m_MaskInteraction: 0
   m_Autodestruct: 0
   m_Emitting: 1
-  m_ApplyActiveColorSpace: 0
+  m_ApplyActiveColorSpace: 1
 --- !u!1 &5669984072465746348
 GameObject:
   m_ObjectHideFlags: 0
@@ -14774,7 +14774,7 @@ Transform:
   m_GameObject: {fileID: 5669984072465746348}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.015, z: -0.312}
+  m_LocalPosition: {x: 0, y: -0.015, z: -1.07}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -14788,14 +14788,14 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5669984072465746348}
   serializedVersion: 8
-  lengthInSec: 1.6
+  lengthInSec: 0.8
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -14970,7 +14970,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.9942949, g: 1, b: 0, a: 1}
+      maxColor: {r: 0.9960785, g: 1, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -15034,8 +15034,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.01
-      minScalar: 0.05
+      scalar: 0.3
+      minScalar: 0.7
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -15087,8 +15087,8 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.1
-      minScalar: 0.8
+      scalar: 0.3
+      minScalar: 5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -15419,7 +15419,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 2.8110585, y: 0.6919265, z: 2.4807408}
+    m_Scale: {x: 19.461813, y: 0.6919265, z: 2.4807408}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -19604,8 +19604,8 @@ Transform:
   m_GameObject: {fileID: 8264546733465875370}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.008, z: -0.037}
-  m_LocalScale: {x: 0.21907617, y: 0.25, z: 0.23309042}
+  m_LocalPosition: {x: 0, y: -0.008, z: 0.035}
+  m_LocalScale: {x: 0.26486492, y: 0.25, z: 0.19029523}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1699586572347765934}
@@ -19618,14 +19618,14 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8264546733465875370}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 10
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -19693,7 +19693,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 10
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -19800,7 +19800,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0, g: 0, b: 0, a: 1}
+      maxColor: {r: 0.18490559, g: 0, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -20935,7 +20935,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 1
+    enabled: 0
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -24432,7 +24432,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_RenderMode: 4
   m_MeshDistribution: 0
   m_SortMode: 0

@@ -178,6 +178,9 @@ public class PlayerController : MonoBehaviour
 
         LineisRunning = false;
         rb.angularDrag = 0f;
+        
+        GameObject rushSmoke = LeanPool.Spawn(Prefabfx[2], transform.position + -transform.forward, gameObject.transform.rotation);
+        LeanPool.Despawn(rushSmoke, 1f);
     }
 
     void HandleNotRunning()

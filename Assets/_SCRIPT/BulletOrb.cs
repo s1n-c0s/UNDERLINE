@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Lean.Pool;
@@ -11,10 +10,11 @@ public class BulletOrb : MonoBehaviour
     [SerializeField] private float radiusOffset = 5f;
     [SerializeField] private float heightOffset = 2f;
     [SerializeField] private float cooldown = 1f;
+    [SerializeField] private AnimationCurve speedCurve; // Animation curve for speed adjustment
     [SerializeField] private List<GameObject> items;
 
     [Header("VFX")]
-    [SerializeField] private ParticleSystem fx_Shoot;
+    [SerializeField] private GameObject fx_Shoot;
 
     private bool canShoot = true;
     private float timer;
@@ -41,9 +41,12 @@ public class BulletOrb : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && canShoot)
         {
             ShootOrb();
+            Vector3 spawnPosition = transform.position + Vector3.up * 3.5f;
+            GameObject fx_shoot = LeanPool.Spawn(fx_Shoot, spawnPosition, Quaternion.identity);
+            LeanPool.Despawn(fx_shoot, 3f);
         }
     }
 
@@ -89,8 +92,7 @@ public class BulletOrb : MonoBehaviour
             Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
             if (bulletRigidbody != null)
             {
-                Vector3 direction = bullet.transform.forward;
-                bulletRigidbody.AddForce(direction * power, ForceMode.Impulse);
+                StartCoroutine(AdjustBulletSpeed(bulletRigidbody));
             }
             
             BoxCollider bulletCollider = bullet.GetComponent<BoxCollider>();
@@ -100,5 +102,19 @@ public class BulletOrb : MonoBehaviour
         instantiatedBullets.Clear();
         canShoot = false;
         timer = cooldown;
+    }
+
+    private IEnumerator AdjustBulletSpeed(Rigidbody bulletRigidbody)
+    {
+        float elapsedTime = 0f;
+        Vector3 initialDirection = bulletRigidbody.transform.forward;
+
+        while (elapsedTime <= 1f) // Ensure the curve evaluates from 0 to 1
+        {
+            float curveValue = speedCurve.Evaluate(elapsedTime);
+            bulletRigidbody.velocity = initialDirection * curveValue * power;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 }

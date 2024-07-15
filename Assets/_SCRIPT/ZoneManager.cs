@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,10 +19,12 @@ public class ZoneManager : MonoBehaviour
 
     public bool isClear;
     public bool isPlayed;
-    [SerializeField] private List<GameObject> doors;
-    [SerializeField] private List<EnemyPrefabs> Enemys;
 
-    [SerializeField] private List<GameObject> activeEnemies = new List<GameObject>();
+    private bool isPlayerIn = false;
+    [SerializeField] private List<GameObject> doors;
+    [SerializeField] private List<EnemyPrefabs> enemies;
+
+    private List<GameObject> activeEnemies = new List<GameObject>();
 
     private void Start()
     {
@@ -45,7 +48,7 @@ public class ZoneManager : MonoBehaviour
 
     public void ActivateEnemies(bool isActive)
     {
-        foreach (EnemyPrefabs enemyObj in Enemys)
+        foreach (var enemyObj in enemies)
         {
             if (usingChance && isActive)
             {
@@ -115,6 +118,7 @@ public class ZoneManager : MonoBehaviour
         if (!isClear)
         {
             SetDoorsActive(true);
+            StartCoroutine(ToggleDoorCollisionWithPlayer(!isPlayerIn, 0.75f));
         }
     }
 
@@ -125,9 +129,9 @@ public class ZoneManager : MonoBehaviour
         OnZoneClear?.Invoke(this);
     }
 
-    public void SetDoorsActive(bool isActive)
+    private void SetDoorsActive(bool isActive)
     {
-        foreach (GameObject door in doors)
+        foreach (var door in doors)
         {
             door.SetActive(isActive);
         }
@@ -137,8 +141,31 @@ public class ZoneManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if (!other.GetComponent<ShadowLife>())
+            {
+                isPlayerIn = true;
+                StartCoroutine(ToggleDoorCollisionWithPlayer(false, 0.75f));
+            }
             ZoneStart();
             isPlayed = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") && !other.GetComponent<ShadowLife>())
+        {
+            isPlayerIn = false;
+            StartCoroutine(ToggleDoorCollisionWithPlayer(true, 0.75f));
+        }
+    }
+
+    private IEnumerator ToggleDoorCollisionWithPlayer(bool ignoreCollision, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        foreach (var door in doors)
+        {
+            Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Door"), ignoreCollision);
         }
     }
 }

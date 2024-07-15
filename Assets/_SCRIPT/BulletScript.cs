@@ -8,6 +8,8 @@ public class BulletScript : MonoBehaviour
     [SerializeField] private int damage = 1;
     [SerializeField] private bool detectDespawn;
 
+    [Header("VFX")] [SerializeField] private GameObject fx_impact; 
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy") || other.CompareTag("Wall"))
@@ -20,6 +22,8 @@ public class BulletScript : MonoBehaviour
             {
                 LeanPool.Despawn(gameObject);
             }
+            GameObject fx_crash = LeanPool.Spawn(fx_impact, transform.position, Quaternion.identity);
+            LeanPool.Despawn(fx_crash, 3f);
         }
     }
 }
