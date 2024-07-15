@@ -8,8 +8,8 @@ public class Fireball : MonoBehaviour
     private Rigidbody rb;
     [SerializeField] private float lifetime = 3f; // Assign a default lifetime if not set in the Inspector
 
-    [Header("VFX")]
-    [SerializeField] private ParticleSystem fx_hit;
+    /*[Header("VFX")]
+    [SerializeField] private ParticleSystem fx_hit;*/
 
     [Header("Burn Effect")]
     [SerializeField] private float burnDuration = 2f;
@@ -44,18 +44,23 @@ public class Fireball : MonoBehaviour
             {
                 statusManager.ApplyStatus(StatusManager.Status.Burn, true, burnDamagePerSecond, burnDuration);
             }
-            PlayHitEffect();
+            /*else
+            {
+                healthSystem.TakeDamage(2);
+            }*/
+            /*PlayHitEffect();*/
             LeanPool.Despawn(gameObject);
         }
-        else if (other.CompareTag("Wall"))
+        
+        /*if (other.CompareTag("Wall"))
         {
             PlayHitEffect();
             //LeanPool.Despawn(gameObject);
-        }
+        }*/
         // Additional handling for other cases can be added here
     }
 
-    private void PlayHitEffect()
+    /*private void PlayHitEffect()
     {
         if (fx_hit != null)
         {
@@ -63,5 +68,5 @@ public class Fireball : MonoBehaviour
             hitEffect.Play();
             Destroy(hitEffect.gameObject, hitEffect.main.duration);
         }
-    }
+    }*/
 }

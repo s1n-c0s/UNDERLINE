@@ -5,7 +5,6 @@ using Lean.Pool;
 public class HealthSystem : MonoBehaviour
 {
     [SerializeField] private EnemyDetectorArea _enemyDetectorArea;
-    [SerializeField] private StatusManager _statusManager;
 
     [Header("Health Point")]
     public int maxHealth = 100;
@@ -26,7 +25,6 @@ public class HealthSystem : MonoBehaviour
             currentHealth = maxHealth;
         }
         _enemyDetectorArea = FindObjectOfType<EnemyDetectorArea>();
-        _statusManager = GetComponent<StatusManager>();
     }
 
     public void SetProtection(bool status)
