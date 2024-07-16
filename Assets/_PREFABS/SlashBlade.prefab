@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d831051e6adc04d41ad774ae8cfa03ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 1
   lifetime: 3
   fx_hit: {fileID: 0}
 --- !u!136 &6294382278300283545
@@ -154,7 +154,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1.5
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.32, z: 0}
@@ -211,7 +211,7 @@ PrefabInstance:
     - target: {fileID: 1699586572347765934, guid: f778e5a20a0f8a342afdf742e29d1be2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1.48
       objectReference: {fileID: 0}
     - target: {fileID: 1699586572347765934, guid: f778e5a20a0f8a342afdf742e29d1be2,
         type: 3}
