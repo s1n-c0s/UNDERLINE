@@ -6,15 +6,21 @@ public class SlowPlatform : MonoBehaviour
     public AnimationCurve speedCurve;
     public float slowDuration = 2.0f; // Duration over which the speed will decrease
     public float slowMultiplier = 0.5f; // Multiplier for speed reduction
+
     private bool isSlowing = false;
+    private Coroutine slowCoroutine;
+    private Rigidbody playerRigidbody;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            isSlowing = true;
-            Rigidbody playerRigidbody = other.GetComponent<Rigidbody>();
-            StartCoroutine(SlowDown(playerRigidbody));
+            if (!isSlowing)
+            {
+                isSlowing = true;
+                playerRigidbody = other.GetComponent<Rigidbody>();
+                slowCoroutine = StartCoroutine(SlowDown());
+            }
         }
     }
 
@@ -22,11 +28,19 @@ public class SlowPlatform : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            isSlowing = false;
+            if (isSlowing)
+            {
+                isSlowing = false;
+                if (slowCoroutine != null)
+                {
+                    StopCoroutine(slowCoroutine);
+                    slowCoroutine = null;
+                }
+            }
         }
     }
 
-    private IEnumerator SlowDown(Rigidbody playerRigidbody)
+    private IEnumerator SlowDown()
     {
         float initialSpeed = playerRigidbody.velocity.magnitude;
         float elapsedTime = 0f;
@@ -39,5 +53,8 @@ public class SlowPlatform : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+
+        // Ensure the velocity is restored if the player exits the platform
+        playerRigidbody.velocity = playerRigidbody.velocity.normalized * initialSpeed;
     }
 }
