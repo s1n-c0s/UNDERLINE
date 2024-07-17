@@ -134,6 +134,19 @@ public class ZoneManager : MonoBehaviour
         foreach (var door in doors)
         {
             door.SetActive(isActive);
+            shaderFadeWall fadeController = door.GetComponent<shaderFadeWall>();
+            if (fadeController != null)
+            {
+                if (isActive)
+                {
+                    fadeController.enabled = true;
+                }
+                else
+                {
+                    fadeController.ResetScale();
+                    fadeController.enabled = false;
+                }
+            }
         }
     }
 
