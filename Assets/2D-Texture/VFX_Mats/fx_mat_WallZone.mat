@@ -21,18 +21,23 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: fx_mat_WallZone
-  m_Shader: {fileID: -6465566751694194690, guid: 162209d4a437a5543bfa689e15bdd541,
+  m_Shader: {fileID: -6465566751694194690, guid: 3c4215003488acb4ea4c3ccb7816b66d,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _ALPHAPREMULTIPLY_ON
+  - _ALPHATEST_ON
+  - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
+  disabledShaderPasses:
+  - DepthOnly
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -55,13 +60,29 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DissolveScale: 36.08
-    - _FadeScale: 0.33
+    - _AlphaClip: 1
+    - _AlphaToMask: 0
+    - _Blend: 0
+    - _BlendModePreserveSpecular: 1
+    - _CastShadows: 1
+    - _Cull: 0
+    - _DissolveScale: 14
+    - _DstBlend: 10
+    - _FadeScale: 0.45
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _ReceiveShadows: 1
+    - _SrcBlend: 1
+    - _Surface: 1
+    - _WorkflowMode: 1
+    - _ZTest: 4
+    - _ZWrite: 0
+    - _ZWriteControl: 0
     m_Colors:
-    - _Color01: {r: 0.27890992, g: 2, b: 0, a: 0}
-    - _Color02: {r: 1, g: 0, b: 0.47127438, a: 0}
-    - _DissolveSpeed: {r: -0.5, g: 0, b: 0, a: 0}
-    - _TextSped: {r: -0.1, g: 0, b: 0, a: 0}
+    - _Color01: {r: 1, g: 0.26226407, b: 0.3815741, a: 0}
+    - _Color02: {r: 0.97735846, g: 0.023984259, b: 0, a: 0}
+    - _DissolveScale2: {r: 51.7, g: 335.2, b: 0, a: 0}
+    - _DissolveSpeed: {r: 0, g: -0.6, b: 0, a: 0}
+    - _DissolveSpeed2: {r: -0.29, g: -0.25, b: 0, a: 0}
+    - _TextSped: {r: 8.65, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
