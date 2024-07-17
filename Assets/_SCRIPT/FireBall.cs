@@ -7,7 +7,8 @@ public class Fireball : MonoBehaviour
 {
     private Rigidbody rb;
     [SerializeField] private float lifetime = 3f; // Assign a default lifetime if not set in the Inspector
-
+    [SerializeField] private bool isArea = false;
+    
     /*[Header("VFX")]
     [SerializeField] private ParticleSystem fx_hit;*/
 
@@ -17,12 +18,15 @@ public class Fireball : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        if (isArea == false && rb == null)
+        {
+            rb = GetComponent<Rigidbody>(); 
+        }
     }
 
     private void LateUpdate()
     {
-        if (rb.velocity.magnitude > 0.01f)
+        if (!isArea && rb.velocity.magnitude > 0.01f)
         {
             afterShoot();
         }
@@ -49,7 +53,10 @@ public class Fireball : MonoBehaviour
                 healthSystem.TakeDamage(2);
             }*/
             /*PlayHitEffect();*/
-            LeanPool.Despawn(gameObject);
+            if (!isArea)
+            {
+                LeanPool.Despawn(gameObject);
+            }
         }
         
         /*if (other.CompareTag("Wall"))
