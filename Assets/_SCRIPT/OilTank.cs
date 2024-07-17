@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Lean.Pool;
 using UnityEngine;
@@ -12,75 +11,98 @@ public class OilTank : MonoBehaviour
     [SerializeField] private int damage = 3;
     [SerializeField] private float power = 10.0f;
     [SerializeField] private float upforce = 1.0f;
-    [SerializeField] private float radius = 5.0f;
+    [SerializeField] private float forceRadius = 20.0f;
+    [SerializeField] private float checkRadius = 7.0f;
 
     [Header("VFX")]
     [SerializeField] private List<GameObject> fx_bombs;
-    [SerializeField] private ParticleSystem fx_expposion;
+    [SerializeField] private ParticleSystem fx_explosion;
     [SerializeField] private Color drawColor = Color.yellow;
 
-    private void Start()
-    {
-        /*foreach (var fxBomb in fx_bombs)
-        {
-            fxBomb.SetActive(false);
-        }*/
-    }
+    private bool hasExploded = false;
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.rigidbody != null)
         {
-            if (isFireTank)
-            {
-                //fx_bombs[0].SetActive(true);
-                StartCoroutine(FireBombCoroutine(2f));
-            }
-            else
-            {
-                //fx_bombs[1].SetActive(true);
-                StartCoroutine(DetonateCoroutine(2f));
-            }
+            TriggerExplosion(checkRadius);
         }
     }
 
-    private IEnumerator DetonateCoroutine(float delay)
+    private void OnTriggerEnter(Collider other)
     {
-        yield return new WaitForSeconds(delay);
-        Detonate();
+        if (other.CompareTag("Shuriken"))
+        {
+            TriggerExplosion(checkRadius);
+        }
     }
 
-    private IEnumerator FireBombCoroutine(float delay)
+    private void TriggerExplosion(float radius)
     {
-        yield return new WaitForSeconds(delay);
-        FireBomb();
+        if (hasExploded) return;
+
+        hasExploded = true;
+
+        if (isFireTank)
+        {
+            StartCoroutine(ExplosionCoroutine(FireBomb, 2f, radius));
+        }
+        else
+        {
+            StartCoroutine(ExplosionCoroutine(Detonate, 2f, radius));
+        }
     }
 
-    private void Detonate()
+    private IEnumerator ExplosionCoroutine(System.Action<float> explosionMethod, float delay, float radius)
     {
-        ApplyExplosion(transform.position, Quaternion.identity, true);
+        yield return new WaitForSeconds(delay);
+        explosionMethod(radius);
+    }
+
+    private void Detonate(float radius)
+    {
+        ApplyExplosion(transform.position, Quaternion.identity, true, radius);
         Destroy(gameObject);
     }
 
-    private void FireBomb()
+    private void FireBomb(float radius)
     {
         Quaternion randomYRotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
-        ApplyExplosion(transform.position, randomYRotation, false);
+        ApplyExplosion(transform.position, randomYRotation, false, radius);
 
         GameObject fireObj = Instantiate(FireArea, transform.position, Quaternion.identity);
         Destroy(fireObj, 4f);
         Destroy(gameObject);
     }
 
-    private void ApplyExplosion(Vector3 position, Quaternion rotation, bool applyDamage)
+    private void ApplyExplosion(Vector3 position, Quaternion rotation, bool applyDamage, float checkRadius)
     {
-        Collider[] colliders = Physics.OverlapSphere(position, radius);
+        CheckNearbyOilTanks(position, checkRadius);
+        ApplyForceToNearbyObjects(position, applyDamage);
+
+        SpawnExplosionEffects(position, rotation);
+    }
+
+    private void CheckNearbyOilTanks(Vector3 position, float checkRadius)
+    {
+        Collider[] colliders = Physics.OverlapSphere(position, checkRadius);
         foreach (Collider hit in colliders)
         {
-            if (applyDamage && hit.GetComponent<HealthSystem>())
+            if (hit.CompareTag("OilTank") && !hit.GetComponent<OilTank>().hasExploded)
             {
-                hit.GetComponent<HealthSystem>().TakeDamage(damage);
-                HandleExplosionEffects(hit.transform.position, hit.transform.rotation);
+                hit.GetComponent<OilTank>().TriggerExplosion(checkRadius);
+            }
+        }
+    }
+
+    private void ApplyForceToNearbyObjects(Vector3 position, bool applyDamage)
+    {
+        Collider[] colliders = Physics.OverlapSphere(position, forceRadius);
+        foreach (Collider hit in colliders)
+        {
+            if (applyDamage)
+            {
+                ApplyDamage(hit);
             }
 
             if (hit.attachedRigidbody != null)
@@ -88,25 +110,34 @@ public class OilTank : MonoBehaviour
                 ApplyExplosionForce(hit.attachedRigidbody, position);
             }
         }
+    }
 
-        HandleExplosionEffects(position, rotation);
+    private void ApplyDamage(Collider hit)
+    {
+        var healthSystem = hit.GetComponent<HealthSystem>();
+        if (healthSystem != null)
+        {
+            healthSystem.TakeDamage(damage);
+        }
     }
 
     private void ApplyExplosionForce(Rigidbody rb, Vector3 explosionPosition)
     {
-        rb.AddExplosionForce(power, explosionPosition, radius, upforce, ForceMode.Impulse);
+        rb.AddExplosionForce(power, explosionPosition, forceRadius, upforce, ForceMode.Impulse);
     }
 
-    private void HandleExplosionEffects(Vector3 position, Quaternion rotation)
+    private void SpawnExplosionEffects(Vector3 position, Quaternion rotation)
     {
-        ParticleSystem explosionEffect = LeanPool.Spawn(fx_expposion, position, rotation);
+        ParticleSystem explosionEffect = LeanPool.Spawn(fx_explosion, position, rotation);
         LeanPool.Despawn(explosionEffect, 3f);
         CameraShake.Shake(1f, 5);
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = drawColor; // Set color to display explosion radius
-        Gizmos.DrawWireSphere(transform.position, radius); // Draw the explosion radius shape
+        Gizmos.color = drawColor; // Set color to display explosion radii
+        Gizmos.DrawWireSphere(transform.position, forceRadius); // Draw the force radius
+        Gizmos.color = Color.red; // Change color to distinguish check radius
+        Gizmos.DrawWireSphere(transform.position, checkRadius); // Draw the check radius
     }
 }

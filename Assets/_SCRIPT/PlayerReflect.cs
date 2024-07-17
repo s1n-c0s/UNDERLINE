@@ -18,11 +18,10 @@ public class PlayerReflect : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.collider.CompareTag("Wall"))
+        if (other.collider.CompareTag("Wall") || other.collider.CompareTag("OilTank"))
         {
             ReflectVelocity(other.contacts[0].normal);
         }
-
     }
 
     private void ReflectVelocity(Vector3 normal)

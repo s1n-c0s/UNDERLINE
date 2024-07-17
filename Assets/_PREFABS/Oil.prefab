@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3598665362542421538}
   m_Layer: 0
   m_Name: Oil
-  m_TagString: Wall
+  m_TagString: OilTank
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,10 +52,10 @@ MonoBehaviour:
   damage: 3
   power: 55
   upforce: 0.5
-  radius: 15
+  forceRadius: 15
+  checkRadius: 5
   fx_bombs: []
-  fx_expposion: {fileID: 1783276646780061819, guid: 1c0520325bd5b534188c40bef406dc5c,
-    type: 3}
+  fx_explosion: {fileID: 0}
   drawColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!65 &3598665362542421538
 BoxCollider:
