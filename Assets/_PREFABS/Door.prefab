@@ -153,7 +153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleMaterial: {fileID: 2100000, guid: ab0f8eed25e6c2548bda7d7d2e561e21, type: 2}
   targetScale: 0.35
-  scaleDuration: 0.7
+  fadeInDuration: 0.7
+  fadeOutDuration: 0.3
   fadeCurve:
     serializedVersion: 2
     m_Curve:
