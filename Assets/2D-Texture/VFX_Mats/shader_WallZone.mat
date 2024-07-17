@@ -66,10 +66,10 @@ Material:
     - _Blend: 3
     - _BlendModePreserveSpecular: 1
     - _CastShadows: 1
-    - _Cull: 2
-    - _DissolveScale: 14
+    - _Cull: 0
+    - _DissolveScale: 20
     - _DstBlend: 0
-    - _FadeScale: 0.45
+    - _FadeScale: 0.43
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 0
@@ -80,8 +80,8 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
-    - _Color01: {r: 1, g: 0.26226407, b: 0.3815741, a: 0}
-    - _Color02: {r: 3.9094338, g: 0.095937036, b: 0, a: 0}
+    - _Color01: {r: 1.9999999, g: 0.5245281, b: 0.7631481, a: 0}
+    - _Color02: {r: 5.992157, g: 0.1470468, b: 0, a: 0}
     - _DissolveScale2: {r: 51.7, g: 335.2, b: 0, a: 0}
     - _DissolveSpeed: {r: 0, g: -0.6, b: 0, a: 0}
     - _DissolveSpeed2: {r: -0.29, g: -0.25, b: 0, a: 0}
