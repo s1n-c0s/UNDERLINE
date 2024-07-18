@@ -11,6 +11,7 @@ public class SlashSkill : MonoBehaviour
     [SerializeField] private float speed = 10f;
     [SerializeField] private float radiusOffset = 5f;
     [SerializeField] private float heightOffset = 2f;
+    [SerializeField] private AnimationCurve speedCurve;
 
     private SkillTurnSystem _skillSystem;
     private int cooldownTurns;
@@ -174,25 +175,28 @@ public class SlashSkill : MonoBehaviour
 
     private void ShootSlashes()
     {
+        float curveValue = speedCurve.Evaluate(1.0f); // Evaluate the curve at its end to get the final speed multiplier
+        float curveSpeed = speed * curveValue;
+
         foreach (var slashInfo in instantiatedSlashes)
         {
             if (slashInfo.SlashObject != null)
             {
                 EnableCollider(slashInfo.SlashObject);
-                ShootSlash(slashInfo);
+                ShootSlash(slashInfo, curveSpeed);
             }
         }
         instantiatedSlashes.Clear();
     }
 
-    private void ShootSlash(SlashInfo slashInfo)
+    private void ShootSlash(SlashInfo slashInfo, float curveSpeed)
     {
         slashInfo.SlashObject.transform.SetParent(null);
     
         // Calculate forward direction based on slash's orientation (assuming local forward is the desired direction)
         Vector3 forwardDirection = slashInfo.SlashObject.transform.forward;
     
-        // Apply force in the forward direction
-        slashInfo.Rigidbody.AddForce(forwardDirection * speed, ForceMode.Impulse);
+        // Apply force in the forward direction with the curve speed
+        slashInfo.Rigidbody.AddForce(forwardDirection * curveSpeed, ForceMode.Impulse);
     }
 }

@@ -52,9 +52,9 @@ public class SlashBlade : MonoBehaviour
     {
         if (fx_hit != null)
         {
-            ParticleSystem hitEffect = Instantiate(fx_hit, transform.position, Quaternion.identity);
+            ParticleSystem hitEffect = LeanPool.Spawn(fx_hit, transform.position, Quaternion.identity);
             hitEffect.Play();
-            Destroy(hitEffect.gameObject, hitEffect.main.duration);
+            LeanPool.Despawn(hitEffect.gameObject, hitEffect.main.duration);
         }
     }
 }

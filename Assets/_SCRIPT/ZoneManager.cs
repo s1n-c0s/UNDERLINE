@@ -125,7 +125,7 @@ public class ZoneManager : MonoBehaviour
     private void ZoneClear()
     {
         isClear = true;
-        SetDoorsActive(false);
+        FadeOutDoors();
         OnZoneClear?.Invoke(this);
     }
 
@@ -134,7 +134,39 @@ public class ZoneManager : MonoBehaviour
         foreach (var door in doors)
         {
             door.SetActive(isActive);
+            shaderFadeWall fadeController = door.GetComponent<shaderFadeWall>();
+            if (fadeController != null)
+            {
+                if (isActive)
+                {
+                    fadeController.StartFadeIn();
+                }
+                else
+                {
+                    fadeController.ResetScale();
+                    fadeController.enabled = false;
+                }
+            }
         }
+    }
+
+    private void FadeOutDoors()
+    {
+        foreach (var door in doors)
+        {
+            shaderFadeWall fadeController = door.GetComponent<shaderFadeWall>();
+            if (fadeController != null)
+            {
+                fadeController.OnFadeOutComplete += HandleFadeOutComplete;
+                fadeController.StartFadeOut();
+            }
+        }
+    }
+
+    private void HandleFadeOutComplete(shaderFadeWall sender)
+    {
+        sender.OnFadeOutComplete -= HandleFadeOutComplete;
+        sender.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
