@@ -3,20 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class spikeTrap : MonoBehaviour
+public class SpikeTrap : MonoBehaviour
 {
     [SerializeField] private int Damage = 1;
     
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Enemy"))
         {
-            other.GetComponent<HealthSystem>().TakeDamage(Damage);
-        }
-        
-        if (other.CompareTag("Enemy"))
-        {
-            other.GetComponent<HealthSystem>().TakeDamage(Damage);
+            other.gameObject.GetComponent<HealthSystem>().TakeDamage(Damage);
         }
     }
 }
