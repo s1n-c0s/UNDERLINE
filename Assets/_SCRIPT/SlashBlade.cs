@@ -5,38 +5,39 @@ using UnityEngine;
 
 public class SlashBlade : MonoBehaviour
 {
-    private Rigidbody rb;
     [SerializeField] private int damage;
     [SerializeField] private float lifetime = 3f; // Assign a default lifetime if not set in the Inspector
 
     [Header("VFX")]
     [SerializeField] private ParticleSystem fx_hit;
 
+    private Vector3 lastPosition;
+
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        lastPosition = transform.position;
     }
 
     private void LateUpdate()
     {
-        if (rb.velocity.magnitude > 0.01f)
+        if (Vector3.Distance(transform.position, lastPosition) > 0.01f)
         {
             afterShoot();
         }
+        lastPosition = transform.position;
     }
 
     private void afterShoot()
     {
         LeanPool.Despawn(gameObject, lifetime);
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         HealthSystem healthSystem = other.GetComponent<HealthSystem>();
 
         if (healthSystem != null)
         {
-            //PlayHitEffect();
             healthSystem.TakeDamage(damage);
             LeanPool.Despawn(gameObject);
         }

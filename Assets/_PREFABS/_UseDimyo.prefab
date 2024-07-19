@@ -188,6 +188,7 @@ MonoBehaviour:
   _isRandom: 0
   _damage: 0
   _playerHeal: 0
+  HealPoint: 2
   _fxWeakpoint: {fileID: 9086115975286558873}
   fx_trigger: {fileID: 0}
 --- !u!1 &1432062735370165826
@@ -451,6 +452,7 @@ MonoBehaviour:
   _isRandom: 0
   _damage: 0
   _playerHeal: 0
+  HealPoint: 2
   _fxWeakpoint: {fileID: 8120462091762291403}
   fx_trigger: {fileID: 0}
 --- !u!1 &3375307613194460096
@@ -527,6 +529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyDetectorArea: {fileID: 0}
+  _statusManager: {fileID: 0}
   maxHealth: 5
   currentHealth: 0
   isProtected: 0
@@ -586,6 +589,7 @@ MonoBehaviour:
   - {fileID: 1034834486422456383}
   - {fileID: 8664478631909468776}
   - {fileID: 2973957548439632371}
+  - {fileID: 1707844840211615433}
 --- !u!114 &5451274937827716806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1155,6 +1159,7 @@ MonoBehaviour:
   _isRandom: 0
   _damage: 0
   _playerHeal: 0
+  HealPoint: 2
   _fxWeakpoint: {fileID: 7582875680040486800}
   fx_trigger: {fileID: 0}
 --- !u!1 &8866385079248714116
@@ -1229,6 +1234,7 @@ MonoBehaviour:
   _isRandom: 0
   _damage: 3
   _playerHeal: 1
+  HealPoint: 2
   _fxWeakpoint: {fileID: 6440623733368750660}
   fx_trigger: {fileID: 0}
 --- !u!1 &9086115975286558873
@@ -1703,6 +1709,12 @@ GameObject:
 --- !u!4 &1053047871714862650 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4882144300374419311, guid: 1e1e129ad113be8479d49cdba8cc56c1,
+    type: 3}
+  m_PrefabInstance: {fileID: 5574877076898988373}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1707844840211615433 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6552327337625800604, guid: 1e1e129ad113be8479d49cdba8cc56c1,
     type: 3}
   m_PrefabInstance: {fileID: 5574877076898988373}
   m_PrefabAsset: {fileID: 0}
