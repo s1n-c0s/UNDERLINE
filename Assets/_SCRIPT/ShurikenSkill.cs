@@ -1,5 +1,6 @@
 using System;
 using Lean.Pool;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class ShurikenSkill : MonoBehaviour
@@ -12,6 +13,9 @@ public class ShurikenSkill : MonoBehaviour
     [SerializeField] private float speed = 30f;
     [SerializeField] private GameObject shurikenPrefab;
     [SerializeField] private bool canCombo = true;
+
+    [Header("VFX")]
+    [SerializeField] private ParticleSystem fx_trigger;
 
     private bool ActiveSkill = false;
 
@@ -26,12 +30,19 @@ public class ShurikenSkill : MonoBehaviour
         {
             if (canCombo && _healthSystem.GetCurrentHealth() > 0)
             {
+                Vector3 objPosition = transform.position;
+                objPosition.y += 2f;
+
+                ParticleSystem fx_init = LeanPool.Spawn(fx_trigger, objPosition, Quaternion.identity);
+                LeanPool.Despawn(fx_init, 3f);
+                
                 _healthSystem.TakeDamage(1);
                 canCombo = false;
                 ActiveSkill = true;
             }
         }
     }
+
 
     private void SpawnShuriken()
     {
