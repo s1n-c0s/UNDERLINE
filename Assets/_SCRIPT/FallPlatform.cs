@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
@@ -16,6 +17,13 @@ public class FallPlatform : MonoBehaviour
     [SerializeField] private int shakeVibrato = 10; // Vibrato of the shake
     [SerializeField] private float shakeRandomness = 90f; // Randomness of the shake
 
+    [Header("VFX")] [SerializeField] private ParticleSystem fx_cracking;
+
+    private void Start()
+    {
+        fx_cracking.Stop();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if ((other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Enemy")) && canFall)
@@ -27,10 +35,12 @@ public class FallPlatform : MonoBehaviour
     private IEnumerator CountdownToFall()
     {
         // Start the shake effect
+        fx_cracking.Play();
         _platform.transform.DOShakePosition(shakeDuration, shakeStrength, shakeVibrato, shakeRandomness);
         
         yield return new WaitForSeconds(Countdown);
         _platform.SetActive(false);
+        fx_cracking.Stop();
         hitbox.enabled = false;
         canFall = false;
         StartCoroutine(ResetPlatform());
