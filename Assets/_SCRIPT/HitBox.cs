@@ -14,6 +14,7 @@ public class HitBox : MonoBehaviour
 
     [Header("Heal Player")]
     [SerializeField] private bool _playerHeal;
+    [SerializeField] private int HealPoint = 2;
     
     [Header("VFX")]
     [SerializeField] private GameObject _fxWeakpoint;
@@ -50,7 +51,7 @@ public class HitBox : MonoBehaviour
             {
                 ParticleSystem fxInit = LeanPool.Spawn(fx_trigger, objPosition, Quaternion.identity);
                 LeanPool.Despawn(fxInit, 3f);
-                playerHP.Heal(1);
+                playerHP.Heal(HealPoint);
             }
         }
 
