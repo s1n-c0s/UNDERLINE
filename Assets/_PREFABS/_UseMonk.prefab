@@ -73,6 +73,7 @@ MonoBehaviour:
   _damage: 0
   _playerHeal: 0
   _fxWeakpoint: {fileID: 2316925800042401033}
+  fx_trigger: {fileID: 0}
 --- !u!1 &941447152675425167
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,6 +360,7 @@ MonoBehaviour:
   _damage: 0
   _playerHeal: 0
   _fxWeakpoint: {fileID: 941447152675425167}
+  fx_trigger: {fileID: 0}
 --- !u!1 &2874967723926525176
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,6 +550,7 @@ MonoBehaviour:
   _damage: 0
   _playerHeal: 0
   _fxWeakpoint: {fileID: 3726847778915181762}
+  fx_trigger: {fileID: 0}
 --- !u!1 &4848287127063699809
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,7 +753,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyDetectorArea: {fileID: 0}
-  _statusManager: {fileID: 0}
   maxHealth: 3
   currentHealth: 0
   isProtected: 0
@@ -809,6 +811,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomDamages: 01000000010000000300000001000000
+  fx_trigger: {fileID: 6442238969932954468, guid: 7bf74c653d563334b9ae131881d7b000,
+    type: 3}
 --- !u!114 &3918622533225570278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -995,6 +999,7 @@ MonoBehaviour:
   _damage: 0
   _playerHeal: 0
   _fxWeakpoint: {fileID: 9029526761480141487}
+  fx_trigger: {fileID: 0}
 --- !u!1 &7602524499073089724
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,7 +5,10 @@ public class E_RandomDamages : MonoBehaviour
 {
     [SerializeField] private List<int> randomDamages;
     private List<int> usedDamages = new List<int>();
-
+    
+    [Header("VFX")]
+    public ParticleSystem fx_trigger;
+    
     private void ShuffleList<T>(List<T> list)
     {
         for (int i = list.Count - 1; i > 0; i--)
