@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Fireball : MonoBehaviour
 {
-    private Rigidbody rb;
     [SerializeField] private float lifetime = 3f; // Assign a default lifetime if not set in the Inspector
     [SerializeField] private bool isArea = false;
     
@@ -16,19 +15,25 @@ public class Fireball : MonoBehaviour
     [SerializeField] private float burnDuration = 2f;
     [SerializeField] private int burnDamagePerSecond = 1;
 
+    private Vector3 lastPosition;
+
     private void Start()
     {
-        if (isArea == false && rb == null)
+        if (!isArea)
         {
-            rb = GetComponent<Rigidbody>(); 
+            lastPosition = transform.position;
         }
     }
 
     private void LateUpdate()
     {
-        if (!isArea && rb.velocity.magnitude > 0.01f)
+        if (!isArea)
         {
-            afterShoot();
+            if (Vector3.Distance(lastPosition, transform.position) > 0.01f)
+            {
+                afterShoot();
+            }
+            lastPosition = transform.position;
         }
     }
 
