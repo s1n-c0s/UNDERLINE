@@ -10,7 +10,7 @@ public class FallPlatform : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player") && canFall)
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy") && canFall)
         {
             StartCoroutine(CountdownToFall());
         }
