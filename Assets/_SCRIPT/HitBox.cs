@@ -1,4 +1,6 @@
 using System;
+using Lean.Pool;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class HitBox : MonoBehaviour
@@ -15,9 +17,12 @@ public class HitBox : MonoBehaviour
     
     [Header("VFX")]
     [SerializeField] private GameObject _fxWeakpoint;
+    [SerializeField] private ParticleSystem fx_trigger;
 
     private void Start()
     {
+        fx_trigger = randomDamagesManager.fx_trigger;
+        
         _fxWeakpoint.SetActive(false);
         if (_damage == 0)
         {
@@ -34,12 +39,17 @@ public class HitBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Vector3 objPosition = transform.position;
+        objPosition.y += 2f;
+        
         if (other.CompareTag("Player"))
         {
             _healthSystem.TakeDamage(_damage);
             HealthSystem playerHP = other.GetComponent<HealthSystem>();
             if (_playerHeal && playerHP != null)
             {
+                ParticleSystem fxInit = LeanPool.Spawn(fx_trigger, objPosition, Quaternion.identity);
+                LeanPool.Despawn(fxInit, 3f);
                 playerHP.Heal(1);
             }
         }
