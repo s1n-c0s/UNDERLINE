@@ -1,0 +1,85 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EnemyTotem : MonoBehaviour
+{
+    public List<GameObject> targets;
+    private List<HealthSystem> _targetHealthSystems = new List<HealthSystem>();
+    
+    [Header("Protect Skill")]
+    public float protectionDuration = 10f;
+    public float cooldownDuration = 5f;
+    private bool _isCooldown = false;
+    [SerializeField] private ParticleSystem fx_protectskill;
+
+    private void Start()
+    {
+        CacheTargetHealthSystems();
+    }
+
+    private void CacheTargetHealthSystems()
+    {
+        _targetHealthSystems.Clear();
+        foreach (var target in targets)
+        {
+            var healthSystem = target?.GetComponent<HealthSystem>();
+            if (healthSystem != null)
+            {
+                _targetHealthSystems.Add(healthSystem);
+            }
+        }
+    }
+
+    private void Update()
+    {
+        RemoveNullTargets(); // Clean up before checking to start protection
+        if (!_isCooldown && targets.Count > 0)
+        {
+            StartCoroutine(ActivateProtection());
+        }
+    }
+    
+    private IEnumerator ActivateProtection()
+    {
+        _isCooldown = true;
+        Debug.Log("Cooldown started");
+        fx_protectskill.Play();
+    
+        yield return new WaitForSeconds(protectionDuration);
+    
+        RemoveNullTargets(); // Ensure the list is clean before toggling protection
+        ToggleProtection(true); // Activate protection for all targets
+        fx_protectskill.Stop(); // Stop the charging effect
+    
+        yield return new WaitForSeconds(cooldownDuration);
+    
+        ToggleProtection(false); // Deactivate protection for all targets
+        Debug.Log("Cooldown ended");
+    
+        _isCooldown = false;
+    }
+
+    private void ToggleProtection(bool state)
+    {
+        foreach (var targetHealthSystem in _targetHealthSystems)
+        {
+            targetHealthSystem?.GetComponent<StatusManager>()?.ApplyStatus(StatusManager.Status.Barrier, state);
+        }
+    }
+
+    private void RemoveNullTargets()
+    {
+        targets.RemoveAll(item => item == null); // Clean up GameObject list
+        _targetHealthSystems.RemoveAll(item => item == null || item.gameObject == null); // Clean up HealthSystem list, checking both the component and its GameObject
+    }
+
+    private void OnDestroy()
+    {
+        RemoveNullTargets();
+        foreach (var targetHealthSystem in _targetHealthSystems)
+        {
+            targetHealthSystem?.GetComponent<StatusManager>()?.ApplyStatus(StatusManager.Status.Barrier, false);
+        }
+    }
+}

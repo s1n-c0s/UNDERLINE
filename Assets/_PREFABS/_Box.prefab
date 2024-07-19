@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1319059740771528731}
   - component: {fileID: 5195768376866850033}
   - component: {fileID: 1519990297331751375}
-  - component: {fileID: 6226859410459366740}
   m_Layer: 0
   m_Name: Model
   m_TagString: Wall
@@ -302,27 +301,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 944319978726906251}
   m_Mesh: {fileID: 0}
---- !u!65 &6226859410459366740
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 944319978726906251}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.9986076, y: 2.0000005, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7798878160796632960
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,7 +312,7 @@ GameObject:
   - component: {fileID: 3152965566879036590}
   - component: {fileID: 8043552553122878429}
   - component: {fileID: 1359658553599235377}
-  - component: {fileID: 4851981797564059056}
+  - component: {fileID: 8772301287871237646}
   m_Layer: 0
   m_Name: _Box
   m_TagString: Wall
@@ -371,13 +349,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyDetectorArea: {fileID: 0}
+  _statusManager: {fileID: 0}
   maxHealth: 10
   currentHealth: 0
-  hasProtect: 0
+  isProtected: 0
   fx_die: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a, type: 3}
-  fx_attackhit: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a,
+  fx_attackhit: {fileID: 5399786602881873947, guid: 36fbba032cf0e7241843823724aaa79a,
     type: 3}
-  fx_protect: {fileID: 0}
+  fx_block: {fileID: 0}
 --- !u!114 &1359658553599235377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,7 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9389344924da8cc49aaf6a087254b309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &4851981797564059056
+--- !u!65 &8772301287871237646
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -405,9 +384,9 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.8231225, y: 2.336385, z: 3}
-  m_Center: {x: 0, y: 1.053856, z: 0}
+  m_Size: {x: 2.9986076, y: 2.0000005, z: 2}
+  m_Center: {x: 0, y: 1, z: 0}

@@ -5,26 +5,25 @@ using Lean.Pool;
 
 public class BulletScript : MonoBehaviour
 {
-    //private bool canDamage = true; // ตัวแปรเพื่อกำหนดว่ากระสุนสามารถทำลาย game object ที่มี tag "Player" หรือไม่
+    [SerializeField] private int damage = 1;
+    [SerializeField] private bool detectDespawn;
 
-    /*public void SetCanDamage(bool canDamageValue)
-    {
-        canDamage = canDamageValue;
-    }*/
+    [Header("VFX")] [SerializeField] private GameObject fx_hit; 
 
     private void OnTriggerEnter(Collider other)
     {
-        // ตรวจสอบว่ากระสุนสามารถทำลาย game object ที่มี tag "Enemy" หรือไม่
         if (other.CompareTag("Enemy") || other.CompareTag("Wall"))
         {
-            // ทำลาย game object ที่มี tag "Enemy"
             if (other.gameObject.GetComponent<HealthSystem>())
             {
-                other.GetComponent<HealthSystem>().TakeDamage(1);
+                other.GetComponent<HealthSystem>().TakeDamage(damage);
             }
-            LeanPool.Despawn(gameObject);
+            if (detectDespawn)
+            {
+                LeanPool.Despawn(gameObject);
+            }
+            GameObject fx_crash = LeanPool.Spawn(fx_hit, transform.position, Quaternion.identity);
+            LeanPool.Despawn(fx_crash, 3f);
         }
-        // ทำลายกระสุนหลังจากชน
-      
     }
 }

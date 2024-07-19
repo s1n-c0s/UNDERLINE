@@ -1,24 +1,45 @@
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class EnemyDetectorArea : MonoBehaviour
 {
-    private List<GameObject> detectedEnemies = new List<GameObject>();
+    [SerializeField] private List<GameObject> detectedEnemies = new List<GameObject>();
     private Dictionary<GameObject, int> enemyHealthBackup = new Dictionary<GameObject, int>();
 
-    [SerializeField] private ParticleSystem[] _speedlinePS;
-
-    private const int PANIC_COMBO_THRESHOLD = 2;
-    private const float PANIC_DURATION = 3f;
+    [SerializeField] private ParticleSystem[] speedlinePS;
+    [SerializeField] private int PANIC_COMBO_THRESHOLD = 2;
+    [SerializeField] private float PANIC_DURATION = 8f;
+    [SerializeField] private float panicExtendDuration = 2f;
 
     private bool isInPanicMode = false;
     private float panicTimer = 0f;
+
+    private ICombo comboManager;
+
+    private void Start()
+    {
+        comboManager = FindObjectOfType<ICombo>();
+        comboManager.UpdatePanicDurations(PANIC_DURATION, panicExtendDuration); // Update initial panic durations
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            detectedEnemies.Add(other.gameObject);
+            GameObject enemy = other.gameObject;
+            detectedEnemies.Add(enemy);
+
+            int currentHealth = enemy.GetComponent<HealthSystem>().GetCurrentHealth();
+            if (!enemyHealthBackup.ContainsKey(enemy))
+            {
+                enemyHealthBackup.Add(enemy, currentHealth);
+            }
+
+            if (isInPanicMode)
+            {
+                enemy.GetComponent<HealthSystem>().SetHealth(1);
+            }
         }
     }
 
@@ -26,7 +47,9 @@ public class EnemyDetectorArea : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && detectedEnemies.Contains(other.gameObject))
         {
-            detectedEnemies.Remove(other.gameObject);
+            GameObject enemy = other.gameObject;
+            detectedEnemies.Remove(enemy);
+            enemyHealthBackup.Remove(enemy);
         }
     }
 
@@ -41,11 +64,18 @@ public class EnemyDetectorArea : MonoBehaviour
                 enemyHealthBackup.Add(enemy, enemy.GetComponent<HealthSystem>().GetCurrentHealth());
             }
 
-            ICombo.Instance.IncreaseCombo();
+            comboManager.IncreaseCombo();
 
-            if (ICombo.Instance.hitcombo >= PANIC_COMBO_THRESHOLD)
+            if (comboManager.GetComboCount() >= PANIC_COMBO_THRESHOLD)
             {
-                StartPanicMode();
+                if (isInPanicMode)
+                {
+                    ExtendPanicMode();
+                }
+                else
+                {
+                    StartPanicMode();
+                }
             }
             else
             {
@@ -60,16 +90,30 @@ public class EnemyDetectorArea : MonoBehaviour
         {
             isInPanicMode = true;
             panicTimer = 0f;
-            foreach (var enemy in detectedEnemies)
+
+            foreach (GameObject enemy in detectedEnemies)
             {
-                enemyHealthBackup[enemy] = enemy.GetComponent<HealthSystem>().GetCurrentHealth();
-                enemy.GetComponent<HealthSystem>().SetHealth(1);
+                if (enemy != null)
+                {
+                    enemyHealthBackup[enemy] = enemy.GetComponent<HealthSystem>().GetCurrentHealth();
+                    enemy.GetComponent<StatusManager>().ApplyStatus(StatusManager.Status.Panic,true);
+                    enemy.GetComponent<HealthSystem>().SetHealth(1);
+                }
             }
-            foreach (var speedline in _speedlinePS)
+
+            foreach (var speedline in speedlinePS)
             {
                 speedline.Play();
             }
+
+            comboManager.SetPanicMode(true);
         }
+    }
+
+    private void ExtendPanicMode()
+    {
+        panicTimer -= panicExtendDuration;
+        panicTimer = Mathf.Max(panicTimer, 0f);
     }
 
     private void EndPanicMode()
@@ -77,15 +121,24 @@ public class EnemyDetectorArea : MonoBehaviour
         if (isInPanicMode)
         {
             isInPanicMode = false;
-            foreach (var enemy in detectedEnemies)
+
+            foreach (GameObject enemy in detectedEnemies)
             {
-                enemy.GetComponent<HealthSystem>().SetHealth(enemyHealthBackup[enemy]);
+                if (enemy != null && enemyHealthBackup.ContainsKey(enemy))
+                {
+                    enemy.GetComponent<StatusManager>().ApplyStatus(StatusManager.Status.Panic, false);
+                    enemy.GetComponent<HealthSystem>().SetHealth(enemyHealthBackup[enemy]);
+                }
             }
+
             enemyHealthBackup.Clear();
-            foreach (var speedline in _speedlinePS)
+
+            foreach (var speedline in speedlinePS)
             {
                 speedline.Stop();
             }
+
+            comboManager.SetPanicMode(false);
         }
     }
 
@@ -100,8 +153,8 @@ public class EnemyDetectorArea : MonoBehaviour
             }
         }
     }
-    
-    public int GetCurrentEnemy()
+
+    public int GetCurrentEnemyCount()
     {
         return detectedEnemies.Count;
     }
