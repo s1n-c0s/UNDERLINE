@@ -8,9 +8,9 @@ public class FallPlatform : MonoBehaviour
     [SerializeField] private float Cooldown = 5f; // Time before the platform resets
     [SerializeField] private GameObject _platform;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.CompareTag("Player") && canFall)
+        if (collision.gameObject.CompareTag("Player") && canFall)
         {
             StartCoroutine(CountdownToFall());
         }

@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6935079471207478761}
-  - component: {fileID: 5342132591213286610}
   - component: {fileID: 2320196585193243858}
+  - component: {fileID: 5259649934784834694}
   m_Layer: 0
   m_Name: FallPlatform
   m_TagString: Untagged
@@ -34,27 +34,6 @@ Transform:
   - {fileID: 1138010119562295632}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5342132591213286610
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2350616342565988678}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 10, y: 2, z: 10}
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &2320196585193243858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,6 +50,27 @@ MonoBehaviour:
   Countdown: 2
   Cooldown: 5
   _platform: {fileID: 7268392751948682269}
+--- !u!65 &5259649934784834694
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2350616342565988678}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 11.311321, y: 1.5084515, z: 11.183908}
+  m_Center: {x: 0, y: -0.69809437, z: 0}
 --- !u!1 &7268392751948682269
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,7 +82,6 @@ GameObject:
   - component: {fileID: 1138010119562295632}
   - component: {fileID: 2555926049839410895}
   - component: {fileID: 3146050979821063900}
-  - component: {fileID: 500036037594268612}
   m_Layer: 0
   m_Name: g_ground1
   m_TagString: Untagged
@@ -155,24 +154,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &500036037594268612
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7268392751948682269}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 11.311321, y: 14.527395, z: 11.183908}
-  m_Center: {x: 0, y: 0, z: 0}
