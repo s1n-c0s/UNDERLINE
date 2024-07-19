@@ -59,7 +59,7 @@ public class OilTank : MonoBehaviour
         }
         else
         {
-            fx_bombs[0].SetActive(true);
+            fx_bombs[1].SetActive(true);
             StartCoroutine(ExplosionCoroutine(Detonate, 2f, radius));
         }
     }
