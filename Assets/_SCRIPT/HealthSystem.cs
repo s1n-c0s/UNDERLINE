@@ -80,24 +80,23 @@ public class HealthSystem : MonoBehaviour
     
     public void Die()
     {
-        switch (gameObject.tag)
+        if (CompareTag("Player"))
         {
-            case "Player":
-                gameObject.SetActive(false); 
-                LeanPool.Spawn(fx_die, transform.position, Quaternion.identity);
-                break;
-            case "Enemy":
-                _enemyDetectorArea.DecreaseEnemy(gameObject);
-                
-                OnEnemyDeath?.Invoke(this);
-                Destroy(gameObject);
-                CameraShake.Shake(0.6f, 5);
-                ParticleSystem fxInstance = LeanPool.Spawn(fx_die, Vector3.up + transform.position, Quaternion.identity);
-                LeanPool.Despawn(fxInstance, 3f);
-                break;
-            case "Wall":
-                Destroy(gameObject);
-                break;
+            gameObject.SetActive(false);
+            LeanPool.Spawn(fx_die, transform.position, Quaternion.identity);
+        }
+        else if (CompareTag("Enemy"))
+        {
+            _enemyDetectorArea.DecreaseEnemy(gameObject);
+            OnEnemyDeath?.Invoke(this);
+            Destroy(gameObject);
+            CameraShake.Shake(0.6f, 5);
+            ParticleSystem fxInstance = LeanPool.Spawn(fx_die, Vector3.up + transform.position, Quaternion.identity);
+            LeanPool.Despawn(fxInstance, 3f);
+        }
+        else if (CompareTag("Wall"))
+        {
+            Destroy(gameObject);
         }
     }
 
