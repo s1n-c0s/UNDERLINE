@@ -13,18 +13,11 @@ public class HealBook : MonoBehaviour
         if (other.CompareTag("Player") && !other.GetComponent<ShadowLife>())
         {
             var playerHealth = other.GetComponent<HealthSystem>();
-            var statusManager = other.GetComponent<StatusManager>();
             
             if (playerHealth != null)
             {
                 // Heal the player by specified heal points
-                playerHealth.Heal(healPoint);
-            }
-            
-            if (statusManager != null)
-            {
-                // Apply the heal status with the specified duration
-                statusManager.ApplyStatus(StatusManager.Status.Heal, true, healDuration: healDuration);
+                playerHealth.Heal(healPoint, healDuration);
             }
             
             // Destroy the HealBook object after use
