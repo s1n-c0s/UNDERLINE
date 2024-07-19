@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Lean.Pool;
 using UnityEngine;
@@ -8,25 +7,35 @@ public class OilTank : MonoBehaviour
 {
     [SerializeField] private bool isFireTank;
     [SerializeField] private GameObject FireArea;
-
     [SerializeField] private int damage = 3;
     [SerializeField] private float power = 10.0f;
     [SerializeField] private float upforce = 1.0f;
     [SerializeField] private float forceRadius = 20.0f;
     [SerializeField] private float checkRadius = 7.0f;
+    [SerializeField] private float checkInterval = 0.5f; // Check every 0.5 seconds
 
     [Header("VFX")]
-    [SerializeField] private List<GameObject> fx_bombs;
-    [SerializeField] private ParticleSystem fx_explosion;
+    [SerializeField] private List<GameObject> fx_Bombs;
+    [SerializeField] private ParticleSystem fx_Explosion;
     [SerializeField] private Color drawColor = Color.yellow;
 
     private bool hasExploded = false;
+    private float nextCheckTime = 0f;
 
     private void Start()
     {
-        foreach (var fxBomb in fx_bombs)
+        foreach (var fxBomb in fx_Bombs)
         {
             fxBomb.SetActive(false);
+        }
+    }
+
+    private void Update()
+    {
+        if (!hasExploded && Time.time >= nextCheckTime)
+        {
+            nextCheckTime = Time.time + checkInterval;
+            CheckForFireObjects();
         }
     }
 
@@ -54,12 +63,12 @@ public class OilTank : MonoBehaviour
 
         if (isFireTank)
         {
-            fx_bombs[0].SetActive(true);
+            fx_Bombs[0].SetActive(true);
             StartCoroutine(ExplosionCoroutine(FireBomb, 2f, radius));
         }
         else
         {
-            fx_bombs[1].SetActive(true);
+            fx_Bombs[1].SetActive(true);
             StartCoroutine(ExplosionCoroutine(Detonate, 2f, radius));
         }
     }
@@ -90,7 +99,6 @@ public class OilTank : MonoBehaviour
     {
         CheckNearbyOilTanks(position, checkRadius);
         ApplyForceToNearbyObjects(position, applyDamage);
-
         SpawnExplosionEffects(position, rotation);
     }
 
@@ -102,6 +110,19 @@ public class OilTank : MonoBehaviour
             if (hit.CompareTag("OilTank") && !hit.GetComponent<OilTank>().hasExploded)
             {
                 hit.GetComponent<OilTank>().TriggerExplosion(checkRadius);
+            }
+        }
+    }
+
+    private void CheckForFireObjects()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, checkRadius);
+        foreach (Collider hit in colliders)
+        {
+            if (hit.CompareTag("Fire"))
+            {
+                TriggerExplosion(checkRadius);
+                break; // Exit the loop as we only need one fire object to trigger the explosion
             }
         }
     }
@@ -139,7 +160,7 @@ public class OilTank : MonoBehaviour
 
     private void SpawnExplosionEffects(Vector3 position, Quaternion rotation)
     {
-        ParticleSystem explosionEffect = LeanPool.Spawn(fx_explosion, position, rotation);
+        ParticleSystem explosionEffect = LeanPool.Spawn(fx_Explosion, position, rotation);
         LeanPool.Despawn(explosionEffect, 3f);
         CameraShake.Shake(1f, 5);
     }

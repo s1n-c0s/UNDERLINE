@@ -14581,10 +14581,11 @@ MonoBehaviour:
   upforce: 0.5
   forceRadius: 15
   checkRadius: 5
-  fx_bombs:
+  checkInterval: 0.5
+  fx_Bombs:
   - {fileID: 2378508960385590020}
   - {fileID: 8369744795456547150}
-  fx_explosion: {fileID: 1783276646780061819, guid: 1c0520325bd5b534188c40bef406dc5c,
+  fx_Explosion: {fileID: 1783276646780061819, guid: 1c0520325bd5b534188c40bef406dc5c,
     type: 3}
   drawColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!65 &3598665362542421538
