@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Lean.Pool;
 using UnityEngine;
@@ -20,6 +21,14 @@ public class OilTank : MonoBehaviour
     [SerializeField] private Color drawColor = Color.yellow;
 
     private bool hasExploded = false;
+
+    private void Start()
+    {
+        foreach (var fxBomb in fx_bombs)
+        {
+            fxBomb.SetActive(false);
+        }
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -45,10 +54,12 @@ public class OilTank : MonoBehaviour
 
         if (isFireTank)
         {
+            fx_bombs[0].SetActive(true);
             StartCoroutine(ExplosionCoroutine(FireBomb, 2f, radius));
         }
         else
         {
+            fx_bombs[0].SetActive(true);
             StartCoroutine(ExplosionCoroutine(Detonate, 2f, radius));
         }
     }
