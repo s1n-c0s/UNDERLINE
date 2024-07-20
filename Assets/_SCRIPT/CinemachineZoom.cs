@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Cinemachine;
@@ -17,10 +18,14 @@ public class CinemachineZoom : MonoBehaviour
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
         virtualCamera.m_Lens.FieldOfView = NormalFOV;
         initialRotation = virtualCamera.transform.localRotation; // Store the initial rotation
+    }
+
+    private void OnEnable()
+    {
         GameManager.OnGameEnd += HandleGameOver;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         GameManager.OnGameEnd -= HandleGameOver;
     }

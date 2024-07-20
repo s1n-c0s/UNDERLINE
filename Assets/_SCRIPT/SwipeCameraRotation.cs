@@ -37,14 +37,17 @@ public class SwipeCameraRotation : MonoBehaviour
 
         rotationY = virtualCamera.transform.localEulerAngles.y;
         canDrag = true;
+    }
 
+    private void OnEnable()
+    {
         // Subscribe to player switch event
         PlayerSwitcher.OnPlayerSwitch += OnPlayerSwitch;
         // Subscribe to game over event
         GameManager.OnGameEnd += OnGameEnd;
     }
 
-    void OnDestroy()
+    void OnDisable()
     {
         PlayerSwitcher.OnPlayerSwitch -= OnPlayerSwitch;
         GameManager.OnGameEnd -= OnGameEnd;
