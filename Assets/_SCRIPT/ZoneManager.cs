@@ -33,7 +33,7 @@ public class ZoneManager : MonoBehaviour
         SetDoorsActive(false);
     }
 
-    private void LateUpdate()
+    /*private void LateUpdate()
     {
         if (isZoneStart && !isClear)
         {
@@ -47,7 +47,7 @@ public class ZoneManager : MonoBehaviour
         {
             ZoneClear();
         }
-    }
+    }*/
 
     public void ActivateEnemies(bool isActive)
     {
@@ -110,7 +110,7 @@ public class ZoneManager : MonoBehaviour
         enemy.OnEnemyDeath -= HandleEnemyDeath;
         activeEnemies.Remove(enemy.gameObject);
 
-        if (activeEnemies.Count == 0)
+        if (activeEnemies.Count == 0 && !isClear)
         {
             ZoneClear();
         }
@@ -125,7 +125,7 @@ public class ZoneManager : MonoBehaviour
     private void ZoneClear()
     {
         isClear = true;
-        FadeOutDoors();
+        FadeOutDoors();   
         OnZoneClear?.Invoke(this);
     }
 
@@ -178,9 +178,10 @@ public class ZoneManager : MonoBehaviour
                 isPlayerIn = true;
                 StartCoroutine(ToggleDoorCollisionWithPlayer(false, 0.75f));
             }
-            if (!isClear && !isZoneStart)
+            if (!isZoneStart)
             {
                 ZoneStart();
+                isZoneStart = true;
             }
         }
     }
