@@ -53,7 +53,7 @@ public class IZoneProgress : MonoBehaviour
     {
         Graphic background = toggle.targetGraphic;
         Color color = background.color;
-        color.a = zone.isClear ? activeAlpha : inactiveAlpha;
+        color.a = zone.currentState == ZoneManager.ZoneState.Cleared ? activeAlpha : inactiveAlpha;
         background.color = color;
     }
 
