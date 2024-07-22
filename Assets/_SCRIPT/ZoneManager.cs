@@ -17,8 +17,8 @@ public class ZoneManager : MonoBehaviour
         public float activeChancePercent;
     }
 
-    public bool isClear;
-    public bool isPlayed;
+    public bool isClear = true;
+    public bool isZoneStart = true;
 
     private bool isPlayerIn = false;
     [SerializeField] private List<GameObject> doors;
@@ -29,18 +29,21 @@ public class ZoneManager : MonoBehaviour
     private void Start()
     {
         isClear = false;
-        isPlayed = false;
+        isZoneStart = false;
         SetDoorsActive(false);
     }
 
     private void LateUpdate()
     {
-        CheckEnemies();
+        if (isZoneStart && !isClear)
+        {
+            CheckEnemies();
+        }
     }
 
     private void CheckEnemies()
     {
-        if (activeEnemies.Count == 0 && !isClear && isPlayed)
+        if (activeEnemies.Count == 0)
         {
             ZoneClear();
         }
@@ -115,11 +118,8 @@ public class ZoneManager : MonoBehaviour
 
     public void ZoneStart()
     {
-        if (!isClear)
-        {
-            SetDoorsActive(true);
-            StartCoroutine(ToggleDoorCollisionWithPlayer(!isPlayerIn, 0.75f));
-        }
+        SetDoorsActive(true);
+        StartCoroutine(ToggleDoorCollisionWithPlayer(!isPlayerIn, 0.75f));
     }
 
     private void ZoneClear()
@@ -178,8 +178,10 @@ public class ZoneManager : MonoBehaviour
                 isPlayerIn = true;
                 StartCoroutine(ToggleDoorCollisionWithPlayer(false, 0.75f));
             }
-            ZoneStart();
-            isPlayed = true;
+            if (!isClear && !isZoneStart)
+            {
+                ZoneStart();
+            }
         }
     }
 
