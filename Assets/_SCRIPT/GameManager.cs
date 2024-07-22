@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
 
     private bool AllZonesClear()
     {
-        return Zones.TrueForAll(zone => zone.isClear);
+        return Zones.TrueForAll(zone => zone.currentState == ZoneManager.ZoneState.Cleared);
     }
 
     private bool AllJailsUnlocked()

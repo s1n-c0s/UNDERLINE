@@ -17,8 +17,14 @@ public class ZoneManager : MonoBehaviour
         public float activeChancePercent;
     }
 
-    public bool isClear = true;
-    public bool isZoneStart = true;
+    public enum ZoneState
+    {
+        NotStarted,
+        Active,
+        Cleared
+    }
+
+    public ZoneState currentState = ZoneState.NotStarted;
 
     private bool isPlayerIn = false;
     [SerializeField] private List<GameObject> doors;
@@ -28,26 +34,8 @@ public class ZoneManager : MonoBehaviour
 
     private void Start()
     {
-        isClear = false;
-        isZoneStart = false;
         SetDoorsActive(false);
     }
-
-    /*private void LateUpdate()
-    {
-        if (isZoneStart && !isClear)
-        {
-            CheckEnemies();
-        }
-    }
-
-    private void CheckEnemies()
-    {
-        if (activeEnemies.Count == 0)
-        {
-            ZoneClear();
-        }
-    }*/
 
     public void ActivateEnemies(bool isActive)
     {
@@ -110,7 +98,7 @@ public class ZoneManager : MonoBehaviour
         enemy.OnEnemyDeath -= HandleEnemyDeath;
         activeEnemies.Remove(enemy.gameObject);
 
-        if (activeEnemies.Count == 0 && !isClear)
+        if (activeEnemies.Count == 0 && currentState != ZoneState.Cleared)
         {
             ZoneClear();
         }
@@ -118,13 +106,17 @@ public class ZoneManager : MonoBehaviour
 
     public void ZoneStart()
     {
-        SetDoorsActive(true);
-        StartCoroutine(ToggleDoorCollisionWithPlayer(!isPlayerIn, 0.75f));
+        if (currentState == ZoneState.NotStarted)
+        {
+            SetDoorsActive(true);
+            StartCoroutine(ToggleDoorCollisionWithPlayer(!isPlayerIn, 0.75f));
+            currentState = ZoneState.Active;
+        }
     }
 
     private void ZoneClear()
     {
-        isClear = true;
+        currentState = ZoneState.Cleared;
         FadeOutDoors();   
         OnZoneClear?.Invoke(this);
     }
@@ -178,10 +170,9 @@ public class ZoneManager : MonoBehaviour
                 isPlayerIn = true;
                 StartCoroutine(ToggleDoorCollisionWithPlayer(false, 0.75f));
             }
-            if (!isZoneStart)
+            if (currentState == ZoneState.NotStarted)
             {
                 ZoneStart();
-                isZoneStart = true;
             }
         }
     }
