@@ -106,7 +106,7 @@ public class ZoneManager : MonoBehaviour
 
     public void ZoneStart()
     {
-        if (currentState == ZoneState.NotStarted)
+        if (currentState == ZoneState.NotStarted && GameManager.Instance.CurrentZoneOrder == zoneOrder)
         {
             SetDoorsActive(true);
             StartCoroutine(ToggleDoorCollisionWithPlayer(!isPlayerIn, 0.75f));
@@ -117,7 +117,7 @@ public class ZoneManager : MonoBehaviour
     private void ZoneClear()
     {
         currentState = ZoneState.Cleared;
-        FadeOutDoors();   
+        FadeOutDoors();
         OnZoneClear?.Invoke(this);
     }
 
@@ -170,7 +170,7 @@ public class ZoneManager : MonoBehaviour
                 isPlayerIn = true;
                 StartCoroutine(ToggleDoorCollisionWithPlayer(false, 0.75f));
             }
-            if (currentState == ZoneState.NotStarted)
+            if (currentState == ZoneState.NotStarted && GameManager.Instance.CurrentZoneOrder == zoneOrder)
             {
                 ZoneStart();
             }
