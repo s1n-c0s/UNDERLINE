@@ -4288,7 +4288,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &270660741
 MonoBehaviour:
@@ -4309,14 +4309,13 @@ MonoBehaviour:
   doors:
   - {fileID: 1328637192}
   - {fileID: 529031640}
-  Enemys:
+  enemies:
   - enemyPrefab: {fileID: 1599711073}
-    activeChancePercent: 57.8
+    activeChancePercent: 0
   - enemyPrefab: {fileID: 1717920288}
-    activeChancePercent: 33.3
+    activeChancePercent: 0
   - enemyPrefab: {fileID: 753529744}
-    activeChancePercent: 80.3
-  activeEnemies: []
+    activeChancePercent: 0
 --- !u!65 &270660742
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4336,8 +4335,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 36.74, y: 4.86, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 59.928936, y: 4.86, z: 63.646267}
+  m_Center: {x: 11.594469, y: 0, z: -26.635508}
 --- !u!4 &270660743
 Transform:
   m_ObjectHideFlags: 0
@@ -4369,7 +4368,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &319657905
 Transform:
@@ -4380,7 +4379,7 @@ Transform:
   m_GameObject: {fileID: 319657903}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.5, y: 32, z: -46.75}
+  m_LocalPosition: {x: 25.5, y: 26.9, z: -43.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4404,12 +4403,11 @@ MonoBehaviour:
   isPlayed: 0
   doors:
   - {fileID: 2370009811680666781}
-  Enemys:
+  enemies:
   - enemyPrefab: {fileID: 811302581}
-    activeChancePercent: 46.9
+    activeChancePercent: 0
   - enemyPrefab: {fileID: 654737664}
-    activeChancePercent: 48.8
-  activeEnemies: []
+    activeChancePercent: 0
 --- !u!65 &319657907
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4429,8 +4427,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 36.74, y: 4.86, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 36.74, y: 4.86, z: 54.274933}
+  m_Center: {x: 0, y: 0, z: 26.637466}
 --- !u!225 &323446869 stripped
 CanvasGroup:
   m_CorrespondingSourceObject: {fileID: 4510222288621820647, guid: 706d31185e0563b41a9a569bc0ed25c3,
@@ -28780,7 +28778,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &2131038147
 MonoBehaviour:
@@ -28801,14 +28799,13 @@ MonoBehaviour:
   doors:
   - {fileID: 1870052992}
   - {fileID: 1328637192}
-  Enemys:
-  - enemyPrefab: {fileID: 343459468}
-    activeChancePercent: 40.1
+  enemies:
   - enemyPrefab: {fileID: 1338885494}
-    activeChancePercent: 77.2
+    activeChancePercent: 0
+  - enemyPrefab: {fileID: 343459468}
+    activeChancePercent: 0
   - enemyPrefab: {fileID: 1117393992}
     activeChancePercent: 0
-  activeEnemies: []
 --- !u!65 &2131038148
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28828,8 +28825,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 36.74, y: 4.86, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 79.67467, y: 11.90601, z: 50.560062}
+  m_Center: {x: -23.594711, y: 3.5230045, z: 24.780031}
 --- !u!4 &2131038149
 Transform:
   m_ObjectHideFlags: 0
@@ -28839,7 +28836,7 @@ Transform:
   m_GameObject: {fileID: 2131038146}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 117.5, y: 31.5, z: 41}
+  m_LocalPosition: {x: 117.5, y: 31.5, z: 36.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
