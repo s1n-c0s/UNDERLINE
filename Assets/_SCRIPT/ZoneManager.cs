@@ -17,8 +17,14 @@ public class ZoneManager : MonoBehaviour
         public float activeChancePercent;
     }
 
-    public bool isClear;
-    public bool isPlayed;
+    public enum ZoneState
+    {
+        NotStarted,
+        Active,
+        Cleared
+    }
+
+    public ZoneState currentState = ZoneState.NotStarted;
 
     private bool isPlayerIn = false;
     [SerializeField] private List<GameObject> doors;
@@ -28,22 +34,7 @@ public class ZoneManager : MonoBehaviour
 
     private void Start()
     {
-        isClear = false;
-        isPlayed = false;
         SetDoorsActive(false);
-    }
-
-    private void LateUpdate()
-    {
-        CheckEnemies();
-    }
-
-    private void CheckEnemies()
-    {
-        if (activeEnemies.Count == 0 && !isClear && isPlayed)
-        {
-            ZoneClear();
-        }
     }
 
     public void ActivateEnemies(bool isActive)
@@ -107,7 +98,7 @@ public class ZoneManager : MonoBehaviour
         enemy.OnEnemyDeath -= HandleEnemyDeath;
         activeEnemies.Remove(enemy.gameObject);
 
-        if (activeEnemies.Count == 0)
+        if (activeEnemies.Count == 0 && currentState != ZoneState.Cleared)
         {
             ZoneClear();
         }
@@ -115,16 +106,17 @@ public class ZoneManager : MonoBehaviour
 
     public void ZoneStart()
     {
-        if (!isClear)
+        if (currentState == ZoneState.NotStarted && GameManager.Instance.CurrentZoneOrder == zoneOrder)
         {
             SetDoorsActive(true);
             StartCoroutine(ToggleDoorCollisionWithPlayer(!isPlayerIn, 0.75f));
+            currentState = ZoneState.Active;
         }
     }
 
     private void ZoneClear()
     {
-        isClear = true;
+        currentState = ZoneState.Cleared;
         FadeOutDoors();
         OnZoneClear?.Invoke(this);
     }
@@ -178,8 +170,10 @@ public class ZoneManager : MonoBehaviour
                 isPlayerIn = true;
                 StartCoroutine(ToggleDoorCollisionWithPlayer(false, 0.75f));
             }
-            ZoneStart();
-            isPlayed = true;
+            if (currentState == ZoneState.NotStarted && GameManager.Instance.CurrentZoneOrder == zoneOrder)
+            {
+                ZoneStart();
+            }
         }
     }
 
