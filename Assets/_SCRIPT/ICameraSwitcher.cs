@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; // Import the UI namespace
@@ -24,10 +22,7 @@ public class ICameraSwitcher : MonoBehaviour
         
         findPlayer(GameObject.FindGameObjectWithTag("Player"));
 
-        // Load the selected camera index from PlayerPrefs, default to 0 if not set
-        currentCameraIndex = PlayerPrefs.GetInt("SelectedCameraIndex", 0);
-
-        // Disable all cameras except the saved one
+        // Disable all cameras except the first one
         for (int i = 0; i < cameras.Count; i++)
         {
             cameras[i].SetActive(i == currentCameraIndex);
@@ -49,9 +44,5 @@ public class ICameraSwitcher : MonoBehaviour
 
         // Enable the new current camera
         cameras[currentCameraIndex].SetActive(true);
-
-        // Save the selected camera index to PlayerPrefs
-        PlayerPrefs.SetInt("SelectedCameraIndex", currentCameraIndex);
-        PlayerPrefs.Save(); // Save the PlayerPrefs data
     }
 }
