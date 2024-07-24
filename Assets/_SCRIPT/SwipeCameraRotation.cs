@@ -235,14 +235,12 @@ public class SwipeCameraRotation : MonoBehaviour
         {
             virtualCamera = GetComponent<CinemachineVirtualCamera>();
         }
-
-        if (player == null)
+        
+       
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
         {
-            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null)
-            {
-                player = playerObj.transform;
-            }
+            player = playerObj.transform;
         }
 
         if (virtualCamera != null && player != null)
