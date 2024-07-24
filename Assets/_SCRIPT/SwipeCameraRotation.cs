@@ -14,10 +14,10 @@ public class SwipeCameraRotation : MonoBehaviour
     }
 
     public float rotationSpeed = 10f;
-    public float swipeSensitivity = 100f;
-    public float inactivityThreshold = 3f;
+    public float swipeSensitivity = 3f;
+    public float inactivityThreshold = 5f;
     public float resetDuration = 2f;
-    public float countdownBeforeReset = 5f;
+    public float countdownBeforeReset = 0f;
 
     public CinemachineVirtualCamera virtualCamera;
     public Transform player;
