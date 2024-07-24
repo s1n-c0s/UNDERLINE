@@ -71,8 +71,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8da5ccb6b99c49c43ab33bb238be9e17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLock: 1
+  currentState: 0
   Door: {fileID: 6796107510931082490}
+  CatModel: {fileID: 4841609764638112741}
   fxUnlock: {fileID: 6052666936668078985, guid: ba9155f32891f114091322a2f1c66a2a,
     type: 3}
   fxSlash: {fileID: 6442238969932954468, guid: 7bf74c653d563334b9ae131881d7b000, type: 3}
@@ -5281,13 +5282,19 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 850eff0f6071bad429b4f4c86e45ce56,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 850eff0f6071bad429b4f4c86e45ce56, type: 3}
+--- !u!1 &4841609764638112741 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 850eff0f6071bad429b4f4c86e45ce56,
+    type: 3}
+  m_PrefabInstance: {fileID: 5760583019330799284}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5222780018133918047 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 850eff0f6071bad429b4f4c86e45ce56,
