@@ -14,8 +14,8 @@ public class SwipeCameraRotation : MonoBehaviour
     }
 
     public float rotationSpeed = 10f;
-    public float swipeSensitivity = 3f;
-    public float inactivityThreshold = 5f;
+    public float swipeSensitivity = 1;
+    public float inactivityThreshold = 4f;
     public float resetDuration = 2f;
     public float countdownBeforeReset = 0f;
 
