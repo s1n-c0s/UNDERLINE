@@ -287,7 +287,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 14.2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -606,7 +606,7 @@ ParticleSystem:
     gravitySource: 0
     maxNumParticles: 1
     customEmitterVelocity: {x: 0, y: 0, z: 0}
-    size3D: 1
+    size3D: 0
     rotation3D: 0
     gravityModifier:
       serializedVersion: 2
@@ -994,6 +994,15 @@ ParticleSystem:
           weightedMode: 0
           inWeight: 0.33333334
           outWeight: 0.38058227
+        - serializedVersion: 3
+          time: 0.15927793
+          value: 0.89141315
+          inSlope: -0.015559117
+          outSlope: -0.015559117
+          tangentMode: 1
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
         - serializedVersion: 3
           time: 0.32389072
           value: 1
@@ -4798,7 +4807,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_RenderMode: 2
+  m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -4809,7 +4818,7 @@ ParticleSystemRenderer:
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_ShadowBias: 0
-  m_RenderAlignment: 0
+  m_RenderAlignment: 2
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
   m_EnableGPUInstancing: 1
