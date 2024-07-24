@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
@@ -34,6 +35,8 @@ public class GameManager : MonoBehaviour
 
     public GameState CurrentGameState { get; private set; }
     public int CurrentZoneOrder { get; private set; } = 0;
+
+    public static event Action OnGameEnd;
 
     private float countdownTimer;
     private const float CountdownDuration = 2f;
@@ -128,9 +131,11 @@ public class GameManager : MonoBehaviour
         {
             case GameState.Clear:
                 EndGame(_gameclearUI);
+                OnGameEnd?.Invoke();
                 break;
             case GameState.GameOver:
                 EndGame(_gameoverUI);
+                OnGameEnd?.Invoke();
                 break;
         }
     }

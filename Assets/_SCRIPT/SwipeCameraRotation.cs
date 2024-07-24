@@ -14,7 +14,7 @@ public class SwipeCameraRotation : MonoBehaviour
     }
 
     public float rotationSpeed = 10f;
-    public float swipeSensitivity = 1;
+    public float swipeSensitivity = 1f;
     public float inactivityThreshold = 4f;
     public float resetDuration = 2f;
     public float countdownBeforeReset = 0f;
@@ -29,11 +29,11 @@ public class SwipeCameraRotation : MonoBehaviour
     private Coroutine resetCoroutine;
     private Coroutine countdownCoroutine;
 
+    private bool isGameEnd = false; // Flag to indicate game over state
+
     void Start()
     {
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
-
-        // Find initial player and set follow target
         player = GameObject.FindGameObjectWithTag("Player").transform;
         virtualCamera.Follow = player;
 
@@ -44,14 +44,24 @@ public class SwipeCameraRotation : MonoBehaviour
         PlayerSwitcher.OnPlayerSwitch += OnPlayerSwitch;
     }
 
-    void OnDestroy()
+    private void OnEnable()
     {
-        // Unsubscribe from player switch event
+        // Subscribe to player switch event
+        PlayerSwitcher.OnPlayerSwitch += OnPlayerSwitch;
+        // Subscribe to game over event
+        GameManager.OnGameEnd += OnGameEnd;
+    }
+
+    void OnDisable()
+    {
         PlayerSwitcher.OnPlayerSwitch -= OnPlayerSwitch;
+        GameManager.OnGameEnd -= OnGameEnd;
     }
 
     void Update()
     {
+        if (isGameEnd) return; // Skip updates if the game is over
+
         if (canSwipe)
         {
             HandleInput();
@@ -214,5 +224,10 @@ public class SwipeCameraRotation : MonoBehaviour
         // Immediately reset rotation to match the new player
         currentRotationY = virtualCamera.transform.localEulerAngles.y;
         ResetInactivityTimer();
+    }
+
+    void OnGameEnd()
+    {
+        isGameEnd = true; // Set flag when the game is over
     }
 }
