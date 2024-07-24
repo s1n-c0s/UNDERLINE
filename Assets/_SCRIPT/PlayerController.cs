@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
             
             foreach (SwipeCameraRotation camera in _swipeCameraRotation)
             {
-                camera.iscanDrag = false;
+                camera.CanSwipe = false;
             }
         }
 
@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
             
             foreach (SwipeCameraRotation camera in _swipeCameraRotation)
             {
-                camera.iscanDrag = true;
+                camera.CanSwipe = true;
             }
         }
     }
