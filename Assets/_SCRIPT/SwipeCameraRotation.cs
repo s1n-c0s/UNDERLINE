@@ -29,6 +29,8 @@ public class SwipeCameraRotation : MonoBehaviour
     private Coroutine resetCoroutine;
     private Coroutine countdownCoroutine;
 
+    private bool isGameEnded = false; // New flag to check if the game has ended
+
     void Start()
     {
         // Initialize virtualCamera and player
@@ -42,16 +44,24 @@ public class SwipeCameraRotation : MonoBehaviour
 
         // Subscribe to player switch event
         PlayerSwitcher.OnPlayerSwitch += OnPlayerSwitch;
+
+        // Subscribe to game end event
+        GameManager.OnGameEnd += OnGameEnd;
     }
 
     void OnDestroy()
     {
         // Unsubscribe from player switch event
         PlayerSwitcher.OnPlayerSwitch -= OnPlayerSwitch;
+
+        // Unsubscribe from game end event
+        GameManager.OnGameEnd -= OnGameEnd;
     }
 
     void Update()
     {
+        if (isGameEnded) return; // Skip updating if the game has ended
+
         if (canSwipe)
         {
             HandleInput();
@@ -220,5 +230,12 @@ public class SwipeCameraRotation : MonoBehaviour
         // Immediately reset rotation to match the new player
         rotationY = virtualCamera?.transform.localEulerAngles.y ?? 0f;
         ResetInactivityTimer();
+    }
+
+    void OnGameEnd()
+    {
+        isGameEnded = true;
+        // Optionally, you could reset or finalize camera rotation here
+        // E.g., set rotationY to a default value or lock the camera
     }
 }
