@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4419982093876167879}
   - component: {fileID: 8241366136493471788}
   - component: {fileID: 4361861302007989961}
+  - component: {fileID: 6887708875342152528}
   m_Layer: 0
   m_Name: cam-ZoomOut
   m_TagString: Untagged
@@ -124,6 +125,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6efdb9bde2e4af4b8b6feabe132df50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6887708875342152528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3888061851179845893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45b0b3ebda7144f5bd142e314563e177, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  virtualCamera: {fileID: 0}
+  zoomOutFOV: 3
+  NormalFOV: 50
+  zoomSpeed: 5
+  rotationSpeed: 10
 --- !u!1 &5076174323464425549
 GameObject:
   m_ObjectHideFlags: 0
@@ -5220,6 +5238,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1608326140957292654}
+    - targetCorrespondingSourceObject: {fileID: 4414130881438325083, guid: c67cf92428b9c7b49a0409ee4479fee0,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4199286223663756287}
   m_SourcePrefab: {fileID: 100100000, guid: c67cf92428b9c7b49a0409ee4479fee0, type: 3}
 --- !u!4 &1108345975576516773 stripped
 Transform:
@@ -5276,6 +5298,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6efdb9bde2e4af4b8b6feabe132df50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4199286223663756287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3583149215366260406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45b0b3ebda7144f5bd142e314563e177, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  virtualCamera: {fileID: 0}
+  zoomOutFOV: 3
+  NormalFOV: 50
+  zoomSpeed: 5
+  rotationSpeed: 10
 --- !u!198 &5082625963815319867 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 5364595292017854166, guid: c67cf92428b9c7b49a0409ee4479fee0,
