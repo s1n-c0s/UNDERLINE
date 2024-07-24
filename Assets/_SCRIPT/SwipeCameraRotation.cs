@@ -6,26 +6,28 @@ using System.Collections;
 public class SwipeCameraRotation : MonoBehaviour
 {
     [Header("Settings")]
-    private static bool canDrag;
-    public bool iscanDrag
+    private static bool canSwipe;
+    public bool CanSwipe
     {
-        get => canDrag;
-        set => canDrag = value;
+        get => canSwipe;
+        set => canSwipe = value;
     }
 
     public float rotationSpeed = 10f;
-    public float touchSensitivity = 100f;
-    public float resetTime = 3f;
+    public float swipeSensitivity = 1f;
+    public float inactivityThreshold = 4f;
     public float resetDuration = 2f;
+    public float countdownBeforeReset = 0f;
 
     public CinemachineVirtualCamera virtualCamera;
     public Transform player;
-    
-    private float rotationY;
-    private Vector2 startTouchPosition;
-    private bool isDragging = false;
+
+    private float currentRotationY;
+    private Vector2 initialTouchPosition;
+    private bool isSwiping = false;
     private float inactivityTimer = 0f;
     private Coroutine resetCoroutine;
+    private Coroutine countdownCoroutine;
 
     private bool isGameEnd = false; // Flag to indicate game over state
 
@@ -35,8 +37,11 @@ public class SwipeCameraRotation : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         virtualCamera.Follow = player;
 
-        rotationY = virtualCamera.transform.localEulerAngles.y;
-        canDrag = true;
+        currentRotationY = virtualCamera.transform.localEulerAngles.y;
+        canSwipe = true;
+
+        // Subscribe to player switch event
+        PlayerSwitcher.OnPlayerSwitch += OnPlayerSwitch;
     }
 
     private void OnEnable()
@@ -57,7 +62,7 @@ public class SwipeCameraRotation : MonoBehaviour
     {
         if (isGameEnd) return; // Skip updates if the game is over
 
-        if (canDrag)
+        if (canSwipe)
         {
             HandleInput();
             HandleInactivity();
@@ -73,15 +78,15 @@ public class SwipeCameraRotation : MonoBehaviour
             switch (touch.phase)
             {
                 case TouchPhase.Began:
-                    StartTouchInput(touch.position);
+                    StartSwipe(touch.position);
                     break;
                 case TouchPhase.Moved:
-                    if (isDragging)
+                    if (isSwiping)
                         UpdateRotation(touch.position);
                     break;
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
-                    EndTouchInput();
+                    EndSwipe();
                     break;
             }
         }
@@ -91,35 +96,35 @@ public class SwipeCameraRotation : MonoBehaviour
         }
     }
 
-    void StartTouchInput(Vector2 position)
+    void StartSwipe(Vector2 position)
     {
-        startTouchPosition = position;
-        isDragging = true;
+        initialTouchPosition = position;
+        isSwiping = true;
         ResetInactivityTimer();
     }
 
     void UpdateRotation(Vector2 currentPosition)
     {
-        Vector2 touchDelta = currentPosition - startTouchPosition;
-        float delta = touchDelta.x * touchSensitivity * rotationSpeed * Time.deltaTime;
-        rotationY += delta;
-        rotationY = NormalizeAngle(rotationY);
+        Vector2 touchDelta = currentPosition - initialTouchPosition;
+        float deltaRotation = touchDelta.x * swipeSensitivity * rotationSpeed * Time.deltaTime;
+        currentRotationY += deltaRotation;
+        currentRotationY = NormalizeAngle(currentRotationY);
         ApplyCameraRotation();
-        startTouchPosition = currentPosition;
+        initialTouchPosition = currentPosition;
         ResetInactivityTimer();
     }
 
-    void EndTouchInput()
+    void EndSwipe()
     {
-        isDragging = false;
+        isSwiping = false;
     }
 
     void HandleKeyboardInput()
     {
-        float delta = Input.GetKey(KeyCode.Q) ? rotationSpeed * 10f : -rotationSpeed * 10f; // Increase rotation speed for keyboard input
-        delta *= Time.deltaTime;
-        rotationY += delta;
-        rotationY = NormalizeAngle(rotationY);
+        float deltaRotation = Input.GetKey(KeyCode.Q) ? rotationSpeed * 10f : -rotationSpeed * 10f; // Increase rotation speed for keyboard input
+        deltaRotation *= Time.deltaTime;
+        currentRotationY += deltaRotation;
+        currentRotationY = NormalizeAngle(currentRotationY);
         ApplyCameraRotation();
         ResetInactivityTimer();
     }
@@ -127,28 +132,40 @@ public class SwipeCameraRotation : MonoBehaviour
     void HandleInactivity()
     {
         inactivityTimer += Time.deltaTime;
-        if (inactivityTimer >= resetTime && resetCoroutine == null)
+        if (inactivityTimer >= inactivityThreshold && resetCoroutine == null && countdownCoroutine == null)
         {
-            resetCoroutine = StartCoroutine(SmoothResetRotation());
+            countdownCoroutine = StartCoroutine(StartCountdown());
         }
+    }
+
+    IEnumerator StartCountdown()
+    {
+        float countdown = countdownBeforeReset;
+        while (countdown > 0f)
+        {
+            yield return new WaitForSeconds(1f);
+            countdown -= 1f;
+        }
+        resetCoroutine = StartCoroutine(SmoothResetRotation());
+        countdownCoroutine = null;
     }
 
     IEnumerator SmoothResetRotation()
     {
-        float initialRotationY = rotationY;
+        float initialRotationY = currentRotationY;
         float targetRotationY = GetNearestAngle(player.eulerAngles.y);
 
         float elapsedTime = 0f;
         while (elapsedTime < resetDuration)
         {
             float t = elapsedTime / resetDuration;
-            rotationY = Mathf.Lerp(initialRotationY, targetRotationY, Mathf.SmoothStep(0f, 1f, t));
+            currentRotationY = Mathf.Lerp(initialRotationY, targetRotationY, Mathf.SmoothStep(0f, 1f, t));
             ApplyCameraRotation();
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        rotationY = targetRotationY;
+        currentRotationY = targetRotationY;
         ApplyCameraRotation();
         resetCoroutine = null;
         ResetInactivityTimer();
@@ -161,6 +178,11 @@ public class SwipeCameraRotation : MonoBehaviour
         {
             StopCoroutine(resetCoroutine);
             resetCoroutine = null;
+        }
+        if (countdownCoroutine != null)
+        {
+            StopCoroutine(countdownCoroutine);
+            countdownCoroutine = null;
         }
     }
 
@@ -180,17 +202,17 @@ public class SwipeCameraRotation : MonoBehaviour
 
     float GetNearestAngle(float targetAngle)
     {
-        float currentAngle = rotationY;
+        float currentAngle = currentRotationY;
         float normalizedTargetAngle = NormalizeAngle(targetAngle);
-        float difference = Mathf.DeltaAngle(currentAngle, normalizedTargetAngle);
-        float nearestAngle = currentAngle + difference;
+        float angleDifference = Mathf.DeltaAngle(currentAngle, normalizedTargetAngle);
+        float nearestAngle = currentAngle + angleDifference;
         return nearestAngle;
     }
 
     void ApplyCameraRotation()
     {
         Vector3 currentRotation = virtualCamera.transform.localEulerAngles;
-        currentRotation.y = rotationY;
+        currentRotation.y = currentRotationY;
         virtualCamera.transform.localRotation = Quaternion.Euler(currentRotation);
     }
 
@@ -200,7 +222,7 @@ public class SwipeCameraRotation : MonoBehaviour
         virtualCamera.Follow = player;
 
         // Immediately reset rotation to match the new player
-        rotationY = virtualCamera.transform.localEulerAngles.y;
+        currentRotationY = virtualCamera.transform.localEulerAngles.y;
         ResetInactivityTimer();
     }
 

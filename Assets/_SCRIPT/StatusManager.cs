@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class StatusManager : MonoBehaviour
@@ -19,16 +18,25 @@ public class StatusManager : MonoBehaviour
     private HealthSystem _healthSystem;
     private Coroutine burnCoroutine;
     private Coroutine healCoroutine;
+    private EnemyDetectorArea enemyDetectorArea;
 
     private void Start()
     {
         _healthSystem = GetComponent<HealthSystem>();
+        enemyDetectorArea = FindObjectOfType<EnemyDetectorArea>();
+        
         foreach (var _vfx in fx_groups)
         {
             if (_vfx != null)
             {
                 _vfx.SetActive(false);
             }
+        }
+
+        // Check if the panic mode is already active and apply it
+        if (enemyDetectorArea != null && enemyDetectorArea.IsInPanicMode() && !CompareTag("Player"))
+        {
+            ApplyStatus(Status.Panic, true);
         }
     }
 
@@ -71,7 +79,7 @@ public class StatusManager : MonoBehaviour
 
     private void EnableBarrier(bool enable)
     {
-        fx_groups[0].gameObject.SetActive(enable);
+        fx_groups[0].SetActive(enable);
         _healthSystem.SetProtection(enable);
     }
 

@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     }
 
     public GameState CurrentGameState { get; private set; }
+    public int CurrentZoneOrder { get; private set; } = 0;
 
     public static event Action OnGameEnd;
 
@@ -145,6 +146,8 @@ public class GameManager : MonoBehaviour
         int clearedZoneIndex = Zones.IndexOf(zone);
         if (clearedZoneIndex != -1 && clearedZoneIndex < Zones.Count - 1)
         {
+            // Update the current zone order
+            CurrentZoneOrder = Zones[clearedZoneIndex + 1].zoneOrder;
             // Activate enemies in the next zone
             Zones[clearedZoneIndex + 1].ActivateEnemies(true);
         }
@@ -167,7 +170,7 @@ public class GameManager : MonoBehaviour
 
     private bool AllZonesClear()
     {
-        return Zones.TrueForAll(zone => zone.isClear);
+        return Zones.TrueForAll(zone => zone.currentState == ZoneManager.ZoneState.Cleared);
     }
 
     private bool AllJailsUnlocked()

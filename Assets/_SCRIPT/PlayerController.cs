@@ -37,7 +37,9 @@ public class PlayerController : MonoBehaviour
     public float timeIntervalinPoints = 0.1f;
     public float maxDistance = 170f;
 
-    [Header("VFX")] [SerializeField] private List<GameObject> Prefabfx;
+    [Header("VFX")] 
+    [SerializeField] private List<GameObject> Prefabfx;
+    [SerializeField] private PunchObj _punchObj;
     
     private Vector3 lastStartPosition;
 
@@ -106,7 +108,7 @@ public class PlayerController : MonoBehaviour
             
             foreach (SwipeCameraRotation camera in _swipeCameraRotation)
             {
-                camera.iscanDrag = false;
+                camera.CanSwipe = false;
             }
         }
 
@@ -117,7 +119,7 @@ public class PlayerController : MonoBehaviour
             
             foreach (SwipeCameraRotation camera in _swipeCameraRotation)
             {
-                camera.iscanDrag = true;
+                camera.CanSwipe = true;
             }
         }
     }
@@ -131,6 +133,8 @@ public class PlayerController : MonoBehaviour
         {
             LineisRunning = true;
             startPosition = playerTransform.position;
+            
+            _punchObj.startBounce();
         }
     }
 

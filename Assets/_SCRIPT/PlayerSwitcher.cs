@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Lean.Pool;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerSwitcher : MonoBehaviour
@@ -10,6 +12,8 @@ public class PlayerSwitcher : MonoBehaviour
     [SerializeField] private int currentPlayerIndex = 0;
     [SerializeField] private float radius = 20f;
     [SerializeField] private int forwardOffset = 5;
+
+    [Header("VFX")] [SerializeField] private ParticleSystem fx_switch;
 
     private void Start()
     {
@@ -62,6 +66,9 @@ public class PlayerSwitcher : MonoBehaviour
 
         if (newIndex == 1)
         {
+            ParticleSystem fx_init = LeanPool.Spawn(fx_switch, players[1].transform.position, quaternion.identity);
+            LeanPool.Despawn(fx_init, 3f);
+            
             shadowRb.constraints = RigidbodyConstraints.FreezeRotation;
             shadowCollider.isTrigger = false;
         }
