@@ -6733,12 +6733,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoneOrder: 2
   usingChance: 0
-  isClear: 0
-  isPlayed: 0
+  currentState: 0
   doors:
   - {fileID: 1328637192}
   - {fileID: 529031640}
-  enemies: []
+  enemies:
+  - enemyPrefab: {fileID: 604226337}
+    activeChancePercent: 0
+  - enemyPrefab: {fileID: 1740335602}
+    activeChancePercent: 0
+  - enemyPrefab: {fileID: 1184348230}
+    activeChancePercent: 0
 --- !u!65 &270660742
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6758,8 +6763,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 36.74, y: 4.86, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 59.41768, y: 4.86, z: 63.250027}
+  m_Center: {x: 11.338844, y: 0, z: -26.74866}
 --- !u!4 &270660743
 Transform:
   m_ObjectHideFlags: 0
@@ -6950,7 +6955,7 @@ Transform:
   m_GameObject: {fileID: 319657903}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.5, y: 32, z: -46.75}
+  m_LocalPosition: {x: 25.5, y: 27.9, z: -42.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6970,11 +6975,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoneOrder: 0
   usingChance: 0
-  isClear: 0
-  isPlayed: 0
+  currentState: 0
   doors:
   - {fileID: 2370009811680666781}
-  enemies: []
+  enemies:
+  - enemyPrefab: {fileID: 1098118063}
+    activeChancePercent: 0
+  - enemyPrefab: {fileID: 437477245}
+    activeChancePercent: 0
 --- !u!65 &319657907
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6994,8 +7002,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 36.74, y: 4.86, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 39.619106, y: 4.86, z: 53.56276}
+  m_Center: {x: 1.4395542, y: 0, z: 26.28138}
 --- !u!225 &323446869 stripped
 CanvasGroup:
   m_CorrespondingSourceObject: {fileID: 4510222288621820647, guid: 706d31185e0563b41a9a569bc0ed25c3,
@@ -11569,6 +11577,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5c3a2cfc0c0abf4cab994c85ed19b23, type: 3}
+--- !u!1 &437477245 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6576880398642072795, guid: b5c3a2cfc0c0abf4cab994c85ed19b23,
+    type: 3}
+  m_PrefabInstance: {fileID: 437477244}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &437491480
 Mesh:
   m_ObjectHideFlags: 0
@@ -15132,6 +15146,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5c3a2cfc0c0abf4cab994c85ed19b23, type: 3}
+--- !u!1 &604226337 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6576880398642072795, guid: b5c3a2cfc0c0abf4cab994c85ed19b23,
+    type: 3}
+  m_PrefabInstance: {fileID: 604226336}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &627779736
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25675,6 +25695,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5c3a2cfc0c0abf4cab994c85ed19b23, type: 3}
+--- !u!1 &1058031181 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6576880398642072795, guid: b5c3a2cfc0c0abf4cab994c85ed19b23,
+    type: 3}
+  m_PrefabInstance: {fileID: 1058031180}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1060177888
 GameObject:
   m_ObjectHideFlags: 0
@@ -27049,6 +27075,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5c3a2cfc0c0abf4cab994c85ed19b23, type: 3}
+--- !u!1 &1098118063 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6576880398642072795, guid: b5c3a2cfc0c0abf4cab994c85ed19b23,
+    type: 3}
+  m_PrefabInstance: {fileID: 1098118062}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1102894457
 Mesh:
   m_ObjectHideFlags: 0
@@ -29747,6 +29779,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5c3a2cfc0c0abf4cab994c85ed19b23, type: 3}
+--- !u!1 &1184348230 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6576880398642072795, guid: b5c3a2cfc0c0abf4cab994c85ed19b23,
+    type: 3}
+  m_PrefabInstance: {fileID: 1184348229}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1193110453
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41682,6 +41720,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5c3a2cfc0c0abf4cab994c85ed19b23, type: 3}
+--- !u!1 &1646935540 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6576880398642072795, guid: b5c3a2cfc0c0abf4cab994c85ed19b23,
+    type: 3}
+  m_PrefabInstance: {fileID: 1646935539}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1648684960
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45930,6 +45974,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5c3a2cfc0c0abf4cab994c85ed19b23, type: 3}
+--- !u!1 &1740335602 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6576880398642072795, guid: b5c3a2cfc0c0abf4cab994c85ed19b23,
+    type: 3}
+  m_PrefabInstance: {fileID: 1740335601}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1745534195
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -53305,6 +53355,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5c3a2cfc0c0abf4cab994c85ed19b23, type: 3}
+--- !u!1 &2071919008 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6576880398642072795, guid: b5c3a2cfc0c0abf4cab994c85ed19b23,
+    type: 3}
+  m_PrefabInstance: {fileID: 2071919007}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &2075096382
 Mesh:
   m_ObjectHideFlags: 0
@@ -55406,12 +55462,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoneOrder: 1
   usingChance: 0
-  isClear: 0
-  isPlayed: 0
+  currentState: 0
   doors:
   - {fileID: 1870052992}
   - {fileID: 1328637192}
-  enemies: []
+  enemies:
+  - enemyPrefab: {fileID: 2071919008}
+    activeChancePercent: 0
+  - enemyPrefab: {fileID: 1058031181}
+    activeChancePercent: 0
+  - enemyPrefab: {fileID: 1646935540}
+    activeChancePercent: 0
 --- !u!65 &2131038148
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -55431,8 +55492,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 36.74, y: 4.86, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 82.75838, y: 10.704876, z: 50.631817}
+  m_Center: {x: -23.009178, y: 2.9224377, z: 20.027544}
 --- !u!4 &2131038149
 Transform:
   m_ObjectHideFlags: 0
@@ -55977,7 +56038,7 @@ PrefabInstance:
     - target: {fileID: 177373356394683017, guid: 6614de5ef6032d64ba01b0fab55a9a5e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 44.75
+      value: 47.9
       objectReference: {fileID: 0}
     - target: {fileID: 177373356394683017, guid: 6614de5ef6032d64ba01b0fab55a9a5e,
         type: 3}
