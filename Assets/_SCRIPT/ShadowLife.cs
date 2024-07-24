@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Lean.Pool;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class ShadowLife : MonoBehaviour
@@ -9,6 +10,9 @@ public class ShadowLife : MonoBehaviour
     [SerializeField] private ParticleSystem shadowDieFx;
     [SerializeField] private int cooldownToResetHealth = 2;
 
+    [Header("VFX")]
+    [SerializeField] private ParticleSystem fx_switch;
+    
     private bool isDuringCooldown;
     private int currentCooldown;
     private HealthSystem healthSystem;
@@ -73,6 +77,8 @@ public class ShadowLife : MonoBehaviour
     private void ActivateShadowModels()
     {
         SetShadowModelsActive(true);
+        ParticleSystem fx_init = LeanPool.Spawn(fx_switch, transform.position, quaternion.identity);
+        LeanPool.Despawn(fx_init, 3f);
     }
 
     private void DeactivateShadowModels()
