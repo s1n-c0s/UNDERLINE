@@ -37,7 +37,9 @@ public class PlayerController : MonoBehaviour
     public float timeIntervalinPoints = 0.1f;
     public float maxDistance = 170f;
 
-    [Header("VFX")] [SerializeField] private List<GameObject> Prefabfx;
+    [Header("VFX")] 
+    [SerializeField] private List<GameObject> Prefabfx;
+    [SerializeField] private PunchObj _punchObj;
     
     private Vector3 lastStartPosition;
 
@@ -131,6 +133,8 @@ public class PlayerController : MonoBehaviour
         {
             LineisRunning = true;
             startPosition = playerTransform.position;
+            
+            _punchObj.startBounce();
         }
     }
 
