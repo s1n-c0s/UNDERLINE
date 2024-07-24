@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Lean.Pool;
-using Unity.Mathematics;
 using UnityEngine;
 using DG.Tweening; // Import DoTween namespace
 
@@ -20,7 +19,7 @@ public class JailObj : MonoBehaviour
     [Header("VFX")]
     [SerializeField] private ParticleSystem fxUnlock;
     [SerializeField] private ParticleSystem fxSlash;
-    [SerializeField] private List<GameObject> fx_groupLock;
+    [SerializeField] private GameObject fxGroupLock;
 
     public event Action<JailObj> OnJailUnlock; // Instance event
 
@@ -70,10 +69,7 @@ public class JailObj : MonoBehaviour
         currentState = JailState.Unlocked;
         Door.SetActive(false);
         
-        foreach (var fx_lock in fx_groupLock)
-        {
-            fx_lock.SetActive(false);
-        }
+        fxGroupLock.SetActive(false);
 
         OnJailUnlock?.Invoke(this); // Notify the GameManager
     }
@@ -85,14 +81,17 @@ public class JailObj : MonoBehaviour
             Vector3 objPosition = transform.position;
             objPosition.y += 2f;
 
-            Quaternion backwardRotation = Quaternion.Euler(0, 180, 0); // Rotate 180 degrees around the Y-axis
+            Quaternion invertedRotation = Quaternion.LookRotation(-transform.forward); // Invert the facing direction of this object
 
-            ParticleSystem unlockEffect = LeanPool.Spawn(fxUnlock, objPosition, backwardRotation);
-            LeanPool.Despawn(unlockEffect, 5f);
-            
-            ParticleSystem slashEffect = LeanPool.Spawn(fxSlash, objPosition, Quaternion.identity);
-            LeanPool.Despawn(slashEffect, 3f);
+            SpawnAndDespawnEffect(fxUnlock, objPosition, invertedRotation, 5f);
+            SpawnAndDespawnEffect(fxSlash, objPosition, invertedRotation, 3f);
         }
+    }
+
+    private void SpawnAndDespawnEffect(ParticleSystem effect, Vector3 position, Quaternion rotation, float despawnTime)
+    {
+        ParticleSystem spawnedEffect = LeanPool.Spawn(effect, position, rotation);
+        LeanPool.Despawn(spawnedEffect, despawnTime);
     }
 
     private void AnimateCatOnUnlock()
