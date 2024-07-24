@@ -33,15 +33,7 @@ public class SwipeCameraRotation : MonoBehaviour
 
     void Start()
     {
-        virtualCamera = GetComponent<CinemachineVirtualCamera>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        virtualCamera.Follow = player;
-
-        currentRotationY = virtualCamera.transform.localEulerAngles.y;
-        canSwipe = true;
-
-        // Subscribe to player switch event
-        PlayerSwitcher.OnPlayerSwitch += OnPlayerSwitch;
+        Initialize();
     }
 
     private void OnEnable()
@@ -211,23 +203,54 @@ public class SwipeCameraRotation : MonoBehaviour
 
     void ApplyCameraRotation()
     {
-        Vector3 currentRotation = virtualCamera.transform.localEulerAngles;
-        currentRotation.y = currentRotationY;
-        virtualCamera.transform.localRotation = Quaternion.Euler(currentRotation);
+        if (virtualCamera != null)
+        {
+            Vector3 currentRotation = virtualCamera.transform.localEulerAngles;
+            currentRotation.y = currentRotationY;
+            virtualCamera.transform.localRotation = Quaternion.Euler(currentRotation);
+        }
     }
 
     void OnPlayerSwitch(GameObject newPlayer)
     {
         player = newPlayer.transform;
-        virtualCamera.Follow = player;
+        if (virtualCamera != null)
+        {
+            virtualCamera.Follow = player;
+        }
 
         // Immediately reset rotation to match the new player
-        currentRotationY = virtualCamera.transform.localEulerAngles.y;
+        currentRotationY = virtualCamera?.transform.localEulerAngles.y ?? 0f;
         ResetInactivityTimer();
     }
 
     void OnGameEnd()
     {
         isGameEnd = true; // Set flag when the game is over
+    }
+
+    private void Initialize()
+    {
+        if (virtualCamera == null)
+        {
+            virtualCamera = GetComponent<CinemachineVirtualCamera>();
+        }
+
+        if (player == null)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+            {
+                player = playerObj.transform;
+            }
+        }
+
+        if (virtualCamera != null && player != null)
+        {
+            virtualCamera.Follow = player;
+            currentRotationY = virtualCamera.transform.localEulerAngles.y;
+        }
+
+        canSwipe = true;
     }
 }
