@@ -14,7 +14,7 @@ public class SwipeCameraRotation : MonoBehaviour
     }
 
     public float rotationSpeed = 10f;
-    public float swipeSensitivity = 1f;
+    public float swipeSensitivity = 1;
     public float inactivityThreshold = 4f;
     public float resetDuration = 2f;
     public float countdownBeforeReset = 0f;
@@ -29,31 +29,29 @@ public class SwipeCameraRotation : MonoBehaviour
     private Coroutine resetCoroutine;
     private Coroutine countdownCoroutine;
 
-    private bool isGameEnd = false; // Flag to indicate game over state
-
     void Start()
     {
-        Initialize();
-    }
+        virtualCamera = GetComponent<CinemachineVirtualCamera>();
 
-    private void OnEnable()
-    {
+        // Find initial player and set follow target
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        virtualCamera.Follow = player;
+
+        currentRotationY = virtualCamera.transform.localEulerAngles.y;
+        canSwipe = true;
+
         // Subscribe to player switch event
         PlayerSwitcher.OnPlayerSwitch += OnPlayerSwitch;
-        // Subscribe to game over event
-        GameManager.OnGameEnd += OnGameEnd;
     }
 
-    void OnDisable()
+    void OnDestroy()
     {
+        // Unsubscribe from player switch event
         PlayerSwitcher.OnPlayerSwitch -= OnPlayerSwitch;
-        GameManager.OnGameEnd -= OnGameEnd;
     }
 
     void Update()
     {
-        if (isGameEnd) return; // Skip updates if the game is over
-
         if (canSwipe)
         {
             HandleInput();
@@ -203,54 +201,18 @@ public class SwipeCameraRotation : MonoBehaviour
 
     void ApplyCameraRotation()
     {
-        if (virtualCamera != null)
-        {
-            Vector3 currentRotation = virtualCamera.transform.localEulerAngles;
-            currentRotation.y = currentRotationY;
-            virtualCamera.transform.localRotation = Quaternion.Euler(currentRotation);
-        }
+        Vector3 currentRotation = virtualCamera.transform.localEulerAngles;
+        currentRotation.y = currentRotationY;
+        virtualCamera.transform.localRotation = Quaternion.Euler(currentRotation);
     }
 
     void OnPlayerSwitch(GameObject newPlayer)
     {
         player = newPlayer.transform;
-        if (virtualCamera != null)
-        {
-            virtualCamera.Follow = player;
-        }
+        virtualCamera.Follow = player;
 
         // Immediately reset rotation to match the new player
-        currentRotationY = virtualCamera?.transform.localEulerAngles.y ?? 0f;
+        currentRotationY = virtualCamera.transform.localEulerAngles.y;
         ResetInactivityTimer();
-    }
-
-    void OnGameEnd()
-    {
-        isGameEnd = true; // Set flag when the game is over
-    }
-
-    private void Initialize()
-    {
-        if (virtualCamera == null)
-        {
-            virtualCamera = GetComponent<CinemachineVirtualCamera>();
-        }
-
-        if (player == null)
-        {
-            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null)
-            {
-                player = playerObj.transform;
-            }
-        }
-
-        if (virtualCamera != null && player != null)
-        {
-            virtualCamera.Follow = player;
-            currentRotationY = virtualCamera.transform.localEulerAngles.y;
-        }
-
-        canSwipe = true;
     }
 }
