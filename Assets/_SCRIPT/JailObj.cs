@@ -36,11 +36,11 @@ public class JailObj : MonoBehaviour
                 Vector3 objPosition = transform.position;
                 objPosition.y += 2f;
 
-                Quaternion backwardRotation = Quaternion.Euler(0, 180, 0); // Rotate 180 degrees around the Y-axis
+                Quaternion invertedRotation = Quaternion.LookRotation(-transform.forward); // Invert the facing direction of this object
 
-                ParticleSystem _fxUnlock = LeanPool.Spawn(fxUnlock, objPosition, backwardRotation);
+                ParticleSystem _fxUnlock = LeanPool.Spawn(fxUnlock, objPosition, invertedRotation);
                 LeanPool.Despawn(_fxUnlock, 5f);
-                ParticleSystem fxinit = LeanPool.Spawn(fxSlash, objPosition, Quaternion.identity);
+                ParticleSystem fxinit = LeanPool.Spawn(fxSlash, objPosition, invertedRotation);
                 LeanPool.Despawn(fxinit, 3f);
             }
         }
