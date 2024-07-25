@@ -46,6 +46,8 @@ public class HitBox : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             _healthSystem.TakeDamage(_damage);
+            SFXManager.instance.PlaySoundEffect(0);
+            
             HealthSystem playerHP = other.GetComponent<HealthSystem>();
             if (_playerHeal && playerHP != null)
             {
@@ -58,6 +60,7 @@ public class HitBox : MonoBehaviour
         if (other.CompareTag("Shuriken"))
         {
             _healthSystem.TakeDamage(1);
+            SFXManager.instance.PlaySoundEffect(0);
         }
     }
 }
