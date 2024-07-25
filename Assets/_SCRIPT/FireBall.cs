@@ -7,33 +7,32 @@ public class Fireball : MonoBehaviour
 {
     [SerializeField] private float lifetime = 3f; // Assign a default lifetime if not set in the Inspector
     [SerializeField] private bool isArea = false;
+    [SerializeField] private float despawnRadius = 15f; // Radius for despawn detection
     
-    /*[Header("VFX")]
-    [SerializeField] private ParticleSystem fx_hit;*/
-
     [Header("Burn Effect")]
     [SerializeField] private float burnDuration = 2f;
     [SerializeField] private int burnDamagePerSecond = 1;
 
+    private Vector3 initialPosition;
     private Vector3 lastPosition;
 
     private void Start()
     {
         if (!isArea)
         {
+            initialPosition = transform.position;
             lastPosition = transform.position;
         }
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         if (!isArea)
         {
-            if (Vector3.Distance(lastPosition, transform.position) > 0.01f)
+            if (Vector3.Distance(initialPosition, transform.position) > despawnRadius)
             {
                 afterShoot();
             }
-            lastPosition = transform.position;
         }
     }
 
@@ -53,31 +52,10 @@ public class Fireball : MonoBehaviour
             {
                 statusManager.ApplyStatus(StatusManager.Status.Burn, true, burnDamagePerSecond, burnDuration);
             }
-            /*else
-            {
-                healthSystem.TakeDamage(2);
-            }*/
-            /*PlayHitEffect();*/
             if (!isArea)
             {
                 LeanPool.Despawn(gameObject);
             }
         }
-        
-        /*if (other.CompareTag("Wall"))
-        {
-            PlayHitEffect();
-            LeanPool.Despawn(gameObject);
-        }*/
     }
-
-    /*private void PlayHitEffect()
-    {
-        if (fx_hit != null)
-        {
-            ParticleSystem hitEffect = LeanPool.Spawn(fx_hit, transform.position, Quaternion.identity);
-            hitEffect.Play();
-            LeanPool.Despawn(hitEffect.gameObject, hitEffect.main.duration);
-        }
-    }*/
 }

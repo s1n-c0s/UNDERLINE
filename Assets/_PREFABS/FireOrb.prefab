@@ -102,7 +102,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 010d240a5e398d34db87db6b0ac46596, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fx_hit: {fileID: 0}
+  lifetime: 3
+  isArea: 0
+  despawnRadius: 15
   burnDuration: 2
   burnDamagePerSecond: 1
 --- !u!54 &-303318932169807944
