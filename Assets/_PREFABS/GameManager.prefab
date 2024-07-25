@@ -238,8 +238,9 @@ MonoBehaviour:
   currentPlayerIndex: 0
   radius: 70
   forwardOffset: 5
-  fx_switch: {fileID: 8440207569764824981, guid: 741fc0148b91d5b439274019fdf68312,
-    type: 3}
+  fx_switch:
+  - {fileID: 5490674421206928081, guid: 657f0effd62ca4e4584573d6ad4bef75, type: 3}
+  - {fileID: 8440207569764824981, guid: 741fc0148b91d5b439274019fdf68312, type: 3}
 --- !u!1 &5352119254873259287
 GameObject:
   m_ObjectHideFlags: 0

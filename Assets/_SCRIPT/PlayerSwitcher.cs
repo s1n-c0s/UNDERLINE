@@ -13,7 +13,8 @@ public class PlayerSwitcher : MonoBehaviour
     [SerializeField] private float radius = 20f;
     [SerializeField] private int forwardOffset = 5;
 
-    [Header("VFX")] [SerializeField] private ParticleSystem fx_switch;
+    [Header("VFX")]
+    [SerializeField] private List<ParticleSystem> fx_switch;
 
     private void Start()
     {
@@ -66,9 +67,6 @@ public class PlayerSwitcher : MonoBehaviour
 
         if (newIndex == 1)
         {
-            ParticleSystem fx_init = LeanPool.Spawn(fx_switch, players[1].transform.position, quaternion.identity);
-            LeanPool.Despawn(fx_init, 3f);
-            
             shadowRb.constraints = RigidbodyConstraints.FreezeRotation;
             shadowCollider.isTrigger = false;
         }
@@ -89,6 +87,9 @@ public class PlayerSwitcher : MonoBehaviour
     public void SwitchToNextPlayer()
     {
         int nextPlayerIndex = (currentPlayerIndex + 1) % players.Count;
+        
+        ParticleSystem fx_init = LeanPool.Spawn(fx_switch[nextPlayerIndex], players[nextPlayerIndex].transform.position, quaternion.identity);
+        LeanPool.Despawn(fx_init, 3f);
         SwitchPlayer(nextPlayerIndex);
     }
 
