@@ -94,7 +94,7 @@ public class EnemyDetectorArea : MonoBehaviour
 
             foreach (GameObject enemy in detectedEnemies)
             {
-                if (enemy != null)
+                if (enemy != null && enemy.GetComponent<StatusManager>())
                 {
                     enemyHealthBackup[enemy] = enemy.GetComponent<HealthSystem>().GetCurrentHealth();
                     enemy.GetComponent<StatusManager>().ApplyStatus(StatusManager.Status.Panic, true);
@@ -125,7 +125,7 @@ public class EnemyDetectorArea : MonoBehaviour
 
             foreach (GameObject enemy in detectedEnemies)
             {
-                if (enemy != null && enemyHealthBackup.ContainsKey(enemy))
+                if (enemy != null && enemyHealthBackup.ContainsKey(enemy) && enemy.GetComponent<StatusManager>())
                 {
                     enemy.GetComponent<StatusManager>().ApplyStatus(StatusManager.Status.Panic, false);
                     enemy.GetComponent<HealthSystem>().SetHealth(enemyHealthBackup[enemy]);
