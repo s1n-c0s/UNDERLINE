@@ -7,8 +7,13 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource audioSource;
     public AudioClip[] zone;
+
     private int currentZoneIndex = -1;
     private AudioClip previousClip;
+    private bool isMuted;
+    private const string MutePrefKey = "MuteAudio";
+
+    public bool IsMuted => isMuted; // Public getter for the mute state
 
     void Awake()
     {
@@ -16,6 +21,7 @@ public class AudioManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            LoadMutePreference();
         }
         else
         {
@@ -25,84 +31,63 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        if (audioSource == null)
-        {
-            audioSource = GetComponent<AudioSource>();
-        }
-
+        audioSource ??= GetComponent<AudioSource>();
         SceneManager.sceneLoaded += OnSceneLoaded;
         PlayLevelMusic(SceneManager.GetActiveScene().buildIndex);
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        int levelIndex = scene.buildIndex;
-        PlayLevelMusic(levelIndex);
-
-        // Check if the main menu scene is loaded
-        if (IsMainMenuScene(levelIndex))
-        {
-            Destroy(gameObject);
-        }
+        PlayLevelMusic(scene.buildIndex);
+        if (IsMainMenuScene(scene.buildIndex)) Destroy(gameObject);
     }
 
     void PlayLevelMusic(int levelIndex)
     {
-        if (levelIndex >= 0 && levelIndex < SceneManager.sceneCountInBuildSettings)
-        {
-            int zoneIndex = GetZoneIndexForLevel(levelIndex);
-
-            if (zoneIndex != currentZoneIndex)
-            {
-                AudioClip musicToPlay = zone[zoneIndex];
-
-                if (musicToPlay == null && previousClip != null)
-                {
-                    // Play the previous valid AudioClip
-                    audioSource.clip = previousClip;
-                }
-                else
-                {
-                    audioSource.clip = musicToPlay;
-                }
-
-                audioSource.Play();
-                currentZoneIndex = zoneIndex;
-                previousClip = musicToPlay; // Store the current clip as the previous valid clip
-            }
-        }
-        else
+        if (levelIndex < 0 || levelIndex >= SceneManager.sceneCountInBuildSettings)
         {
             Debug.LogError("Invalid level index: " + levelIndex);
+            return;
         }
+
+        int zoneIndex = GetZoneIndexForLevel(levelIndex);
+        if (zoneIndex == currentZoneIndex) return;
+
+        AudioClip musicToPlay = zone[zoneIndex];
+        audioSource.clip = musicToPlay ?? previousClip;
+        audioSource.Play();
+        currentZoneIndex = zoneIndex;
+        previousClip = musicToPlay;
+        audioSource.mute = isMuted;
     }
 
-    int GetZoneIndexForLevel(int levelIndex)
+    int GetZoneIndexForLevel(int levelIndex) =>
+        levelIndex switch
+        {
+            >= 1 and <= 3 => 0,
+            >= 4 and <= 6 => 1,
+            _ => 0,
+        };
+
+    bool IsMainMenuScene(int levelIndex) => levelIndex == 0;
+
+    void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
+
+    public void ToggleMute()
     {
-        if (levelIndex >= 1 && levelIndex <= 3)
-        {
-            return 0; // Zone 1
-        }
-        else if (levelIndex >= 4 && levelIndex <= 6)
-        {
-            return 1; // Zone 2
-        }
-        else
-        {
-            // Handle other cases as needed
-            return 0; // Default to Zone 1 for unknown levels
-        }
+        isMuted = !isMuted;
+        audioSource.mute = isMuted;
+        SaveMutePreference();
     }
 
-    bool IsMainMenuScene(int levelIndex)
+    void SaveMutePreference()
     {
-        // Adjust this logic based on the actual build index of your main menu scene
-        return levelIndex == 0;
+        PlayerPrefs.SetInt(MutePrefKey, isMuted ? 1 : 0);
+        PlayerPrefs.Save();
     }
 
-    // Add this method to reset audioSource when a new scene is loaded
-    void OnDisable()
+    void LoadMutePreference()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        isMuted = PlayerPrefs.GetInt(MutePrefKey, 0) == 1;
     }
 }
