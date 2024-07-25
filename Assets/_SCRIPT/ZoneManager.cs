@@ -30,7 +30,7 @@ public class ZoneManager : MonoBehaviour
     [SerializeField] private List<GameObject> doors;
     [SerializeField] private List<EnemyPrefabs> enemies;
 
-    private List<GameObject> activeEnemies = new List<GameObject>();
+    [SerializeField] private List<GameObject> activeEnemies = new List<GameObject>();
 
     private void Start()
     {
@@ -38,13 +38,13 @@ public class ZoneManager : MonoBehaviour
     }
 
 
-    /*private void LateUpdate()
+    private void LateUpdate()
     {
-        if (activeEnemies.Count == 0 && currentState != ZoneState.NotStarted)
+        if (activeEnemies.Count == 0 && currentState == ZoneState.Active)
         {
             ZoneClear();
         }
-    }*/
+    }
 
     public void ActivateEnemies(bool isActive)
     {
