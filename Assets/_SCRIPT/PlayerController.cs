@@ -40,7 +40,8 @@ public class PlayerController : MonoBehaviour
     [Header("VFX")] 
     [SerializeField] private List<GameObject> Prefabfx;
     [SerializeField] private PunchObj _punchObj;
-    
+    [SerializeField] private ParticleSystem _CircleRing;
+
     private Vector3 lastStartPosition;
 
     private bool isGrounded; // To track if the character is grounded
@@ -49,6 +50,17 @@ public class PlayerController : MonoBehaviour
     private Transform playerTransform;
 
     private StringBuilder sb = new StringBuilder();
+    
+    
+    private void OnEnable()
+    {
+       _CircleRing.Play();
+    }
+
+    private void OnDisable()
+    {
+        _CircleRing.Stop();
+    }
 
     void Start()
     {
