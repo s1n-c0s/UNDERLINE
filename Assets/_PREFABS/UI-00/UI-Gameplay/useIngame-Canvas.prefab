@@ -3921,6 +3921,7 @@ GameObject:
   - component: {fileID: 9183485907085359604}
   - component: {fileID: 3232804975618088305}
   - component: {fileID: 8682351733808418727}
+  - component: {fileID: 2417365781393643138}
   m_Layer: 5
   m_Name: BT-Music
   m_TagString: Untagged
@@ -4019,6 +4020,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2417365781393643138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8276691159441618949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9374f4cce8cf0434fb5b44e1eed00143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleButton: {fileID: 0}
 --- !u!1 &8408664695125825234
 GameObject:
   m_ObjectHideFlags: 0

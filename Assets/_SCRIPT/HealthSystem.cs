@@ -93,6 +93,8 @@ public class HealthSystem : MonoBehaviour
             CameraShake.Shake(0.6f, 5);
             ParticleSystem fxInstance = LeanPool.Spawn(fx_die, Vector3.up + transform.position, Quaternion.identity);
             LeanPool.Despawn(fxInstance, 3f);
+            
+            SFXManager.instance.PlaySoundEffect(1);
         }
         else if (CompareTag("Wall"))
         {
