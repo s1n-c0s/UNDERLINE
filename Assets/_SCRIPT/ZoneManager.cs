@@ -30,11 +30,20 @@ public class ZoneManager : MonoBehaviour
     [SerializeField] private List<GameObject> doors;
     [SerializeField] private List<EnemyPrefabs> enemies;
 
-    private List<GameObject> activeEnemies = new List<GameObject>();
+    [SerializeField] private List<GameObject> activeEnemies = new List<GameObject>();
 
     private void Start()
     {
         SetDoorsActive(false);
+    }
+
+
+    private void LateUpdate()
+    {
+        if (activeEnemies.Count == 0 && currentState == ZoneState.Active)
+        {
+            ZoneClear();
+        }
     }
 
     public void ActivateEnemies(bool isActive)
@@ -123,20 +132,23 @@ public class ZoneManager : MonoBehaviour
 
     private void SetDoorsActive(bool isActive)
     {
-        foreach (var door in doors)
+        if (doors != null)
         {
-            door.SetActive(isActive);
-            shaderFadeWall fadeController = door.GetComponent<shaderFadeWall>();
-            if (fadeController != null)
+            foreach (var door in doors)
             {
-                if (isActive)
+                door.SetActive(isActive);
+                shaderFadeWall fadeController = door.GetComponent<shaderFadeWall>();
+                if (fadeController != null)
                 {
-                    fadeController.StartFadeIn();
-                }
-                else
-                {
-                    fadeController.ResetScale();
-                    fadeController.enabled = false;
+                    if (isActive)
+                    {
+                        fadeController.StartFadeIn();
+                    }
+                    else
+                    {
+                        fadeController.ResetScale();
+                        fadeController.enabled = false;
+                    }
                 }
             }
         }
