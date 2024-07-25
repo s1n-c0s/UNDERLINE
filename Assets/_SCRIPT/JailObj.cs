@@ -103,7 +103,9 @@ public class JailObj : MonoBehaviour
         Sequence unlockSequence = DOTween.Sequence()
             .Append(CatModel.transform.DOJump(CatModel.transform.position, originalJumpHeight * 1.5f, 1, 0.5f).SetLoops(6, LoopType.Restart)) // Faster jump with increased height
             .Join(CatModel.transform.DORotate(new Vector3(0, 180, 0), 0.5f).SetLoops(6, LoopType.Yoyo)) // Rotate right to left
-            .OnComplete(ResetCatAnimation);
+            .Append(gameObject.transform.DOScale(Vector3.one * 1.2f, 0.3f)) // Punch effect
+            .Append(gameObject.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.OutBack)) // Scale down with easing
+            .OnComplete(() => Destroy(gameObject)); // Destroy the GameObject
 
         unlockSequence.Play();
     }
