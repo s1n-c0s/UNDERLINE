@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5657978163302254576
 Transform:
@@ -48,7 +48,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7843584904237410277
 Transform:
@@ -4956,13 +4956,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4444240093208892525}
-  - component: {fileID: 5109707256924348033}
   m_Layer: 0
   m_Name: Model
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4444240093208892525
 Transform:
@@ -4981,29 +4980,6 @@ Transform:
   - {fileID: 6035971082233749752}
   m_Father: {fileID: 4360399539140765564}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &5109707256924348033
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5794416896909339620}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.0814756
-  m_Height: 3.9193091
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.903862, z: -0}
 --- !u!1 &6576880398642072795
 GameObject:
   m_ObjectHideFlags: 0
@@ -5017,12 +4993,13 @@ GameObject:
   - component: {fileID: 8514019350733670213}
   - component: {fileID: 6431408426437328685}
   - component: {fileID: 8006796926834433843}
+  - component: {fileID: 4731513917337018850}
   m_Layer: 6
   m_Name: _UseTotem
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4360399539140765564
 Transform:
@@ -5073,7 +5050,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyDetectorArea: {fileID: 0}
   _statusManager: {fileID: 0}
-  maxHealth: 5
+  maxHealth: 2
   currentHealth: 0
   isProtected: 0
   fx_die: {fileID: 6956630374977491175, guid: 36fbba032cf0e7241843823724aaa79a, type: 3}
@@ -5122,6 +5099,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
+--- !u!136 &4731513917337018850
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6576880398642072795}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.0814756
+  m_Height: 3.9193091
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.903862, z: -0}
 --- !u!1 &7866421552274813134
 GameObject:
   m_ObjectHideFlags: 0
@@ -5138,7 +5138,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8969070204336060012
 Transform:
@@ -10036,7 +10036,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6599164432247621162
 Transform:
@@ -14925,6 +14925,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4360399539140765564}
     m_Modifications:
+    - target: {fileID: 71704646002633679, guid: 56cdfc9bba9e2ca46acacb585a72af97,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1041293992650842074, guid: 56cdfc9bba9e2ca46acacb585a72af97,
         type: 3}
       propertyPath: _healthSystem
@@ -14995,6 +15000,11 @@ PrefabInstance:
       propertyPath: randomDamagesManager
       value: 
       objectReference: {fileID: 6431408426437328685}
+    - target: {fileID: 3030028158710483925, guid: 56cdfc9bba9e2ca46acacb585a72af97,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4404912923068019361, guid: 56cdfc9bba9e2ca46acacb585a72af97,
         type: 3}
       propertyPath: _healthSystem
@@ -15009,6 +15019,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WeakPoint_System
+      objectReference: {fileID: 0}
+    - target: {fileID: 4951650434015710293, guid: 56cdfc9bba9e2ca46acacb585a72af97,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276854060727911500, guid: 56cdfc9bba9e2ca46acacb585a72af97,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641815332090823377, guid: 56cdfc9bba9e2ca46acacb585a72af97,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 7312758432405793233, guid: 56cdfc9bba9e2ca46acacb585a72af97,
         type: 3}
@@ -15099,6 +15124,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9e5807ae730b5df4fa6417c5d2947f9d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15127,6 +15157,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2957970486444369618, guid: d7772befc5a0b6644bdfdb74a1c17266,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755046287545546369, guid: d7772befc5a0b6644bdfdb74a1c17266,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5804858592227354106, guid: d7772befc5a0b6644bdfdb74a1c17266,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136356984502959754, guid: d7772befc5a0b6644bdfdb74a1c17266,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6546563379943947421, guid: d7772befc5a0b6644bdfdb74a1c17266,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 6577251157452747152, guid: d7772befc5a0b6644bdfdb74a1c17266,
         type: 3}
@@ -15193,10 +15248,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8473269029889361964, guid: d7772befc5a0b6644bdfdb74a1c17266,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 9216239380987541540, guid: d7772befc5a0b6644bdfdb74a1c17266,
         type: 3}
       propertyPath: m_Name
       value: UI-HeadSlot-Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216239380987541540, guid: d7772befc5a0b6644bdfdb74a1c17266,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
