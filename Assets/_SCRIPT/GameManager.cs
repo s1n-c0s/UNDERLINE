@@ -78,6 +78,8 @@ public class GameManager : MonoBehaviour
     {
         ClearUI();
         SetGameState(GameState.Playing);
+        
+        SFXManager.instance.ClearAllSoundEffects();
         AudioManager.instance.audioSource.Play();
         
         FadeUI(_introPanel, true, 1f, () =>
@@ -133,6 +135,8 @@ public class GameManager : MonoBehaviour
         {
             case GameState.Clear:
                 EndGame(_gameclearUI);
+                AudioManager.instance.audioSource.Stop();
+                SFXManager.instance.PlaySoundEffect(3);
                 OnGameEnd?.Invoke();
                 break;
             case GameState.GameOver:
