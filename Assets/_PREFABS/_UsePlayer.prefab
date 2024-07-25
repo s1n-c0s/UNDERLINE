@@ -145,6 +145,7 @@ MonoBehaviour:
   - {fileID: 7549610157218908158, guid: 58189eb855709c4429e042b9d3554101, type: 3}
   - {fileID: 3144315092134922679, guid: 1a5c5e4084b164344aee5754ba623316, type: 3}
   _punchObj: {fileID: 3372218094598565718}
+  _CircleRing: {fileID: 5150700409689435456}
 --- !u!114 &5837200393219211812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -945,6 +946,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b875be4fd68450946a1ab03b890cb23b, type: 3}
+--- !u!198 &5150700409689435456 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6449469721916827527, guid: b875be4fd68450946a1ab03b890cb23b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2232633338307414727}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6976715713709561702 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9090988410298523041, guid: b875be4fd68450946a1ab03b890cb23b,
