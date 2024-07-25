@@ -1027,8 +1027,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1396327244158024010, guid: 56cdfc9bba9e2ca46acacb585a72af97,
         type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396327244158024010, guid: 56cdfc9bba9e2ca46acacb585a72af97,
+        type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1740552515348122070, guid: 56cdfc9bba9e2ca46acacb585a72af97,
         type: 3}
@@ -1063,13 +1068,18 @@ PrefabInstance:
     - target: {fileID: 2501551587160569463, guid: 56cdfc9bba9e2ca46acacb585a72af97,
         type: 3}
       propertyPath: m_Flip.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2501551587160569463, guid: 56cdfc9bba9e2ca46acacb585a72af97,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c2f6f5c32e5a0f64e92480c1ff33cba1, type: 2}
+    - target: {fileID: 3430521391484011271, guid: 56cdfc9bba9e2ca46acacb585a72af97,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 3430521391484011271, guid: 56cdfc9bba9e2ca46acacb585a72af97,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
@@ -1084,6 +1094,11 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
       value: 0.824035
+      objectReference: {fileID: 0}
+    - target: {fileID: 4219019707225671066, guid: 56cdfc9bba9e2ca46acacb585a72af97,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 4404912923068019361, guid: 56cdfc9bba9e2ca46acacb585a72af97,
         type: 3}
@@ -1105,6 +1120,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WeakPoint_System
       objectReference: {fileID: 0}
+    - target: {fileID: 6465775240970652163, guid: 56cdfc9bba9e2ca46acacb585a72af97,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 7312758432405793233, guid: 56cdfc9bba9e2ca46acacb585a72af97,
         type: 3}
       propertyPath: _isRandom
@@ -1120,6 +1140,11 @@ PrefabInstance:
       propertyPath: randomDamagesManager
       value: 
       objectReference: {fileID: 5451274937827716806}
+    - target: {fileID: 8307276693408033305, guid: 56cdfc9bba9e2ca46acacb585a72af97,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
