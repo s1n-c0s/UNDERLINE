@@ -588,7 +588,6 @@ MonoBehaviour:
   shadowModels:
   - {fileID: 3852967714831978939}
   - {fileID: 1853208285305440570}
-  - {fileID: 4100991191988485788}
   shadowDieFx: {fileID: 0}
   cooldownToResetHealth: 2
   fx_switch: {fileID: 8440207569764824981, guid: 741fc0148b91d5b439274019fdf68312,
@@ -2200,12 +2199,6 @@ PrefabInstance:
 --- !u!198 &2134516022426135365 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 6449469721916827527, guid: b875be4fd68450946a1ab03b890cb23b,
-    type: 3}
-  m_PrefabInstance: {fileID: 4908445898719857858}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4100991191988485788 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9004921389459780190, guid: b875be4fd68450946a1ab03b890cb23b,
     type: 3}
   m_PrefabInstance: {fileID: 4908445898719857858}
   m_PrefabAsset: {fileID: 0}

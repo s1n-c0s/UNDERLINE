@@ -70,6 +70,7 @@ public class ShadowLife : MonoBehaviour
     {
         gameObject.tag = "Untagged";
         activeShadowDieFx = LeanPool.Spawn(shadowDieFx, transform.position, Quaternion.identity);
+        activeShadowDieFx.transform.SetParent(transform); // Set parent to this game object
         DeactivateShadowModels();
         isDuringCooldown = true;
     }
