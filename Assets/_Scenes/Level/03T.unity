@@ -3443,6 +3443,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &433898195 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6576880398642072795, guid: ce32a392f1182244abc533fab876482f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1974861167}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &437242070 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6935079471207478761, guid: d215c615685111a4f9b2377be510e149,
@@ -8650,7 +8656,7 @@ PrefabInstance:
     - target: {fileID: 3900307719312223934, guid: 5cc16e38c42e19b41b350313a2d11bda,
         type: 3}
       propertyPath: enemies.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3900307719312223934, guid: 5cc16e38c42e19b41b350313a2d11bda,
         type: 3}
@@ -8691,7 +8697,7 @@ PrefabInstance:
         type: 3}
       propertyPath: enemies.Array.data[5].enemyPrefab
       value: 
-      objectReference: {fileID: 1919692749}
+      objectReference: {fileID: 433898195}
     - target: {fileID: 3900307719312223934, guid: 5cc16e38c42e19b41b350313a2d11bda,
         type: 3}
       propertyPath: enemies.Array.data[6].enemyPrefab
@@ -8705,7 +8711,7 @@ PrefabInstance:
     - target: {fileID: 3900307719312223934, guid: 5cc16e38c42e19b41b350313a2d11bda,
         type: 3}
       propertyPath: enemies.Array.data[0].activeChancePercent
-      value: 57.7
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3900307719312223934, guid: 5cc16e38c42e19b41b350313a2d11bda,
         type: 3}
@@ -8725,12 +8731,12 @@ PrefabInstance:
     - target: {fileID: 3900307719312223934, guid: 5cc16e38c42e19b41b350313a2d11bda,
         type: 3}
       propertyPath: enemies.Array.data[4].activeChancePercent
-      value: 76.5
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3900307719312223934, guid: 5cc16e38c42e19b41b350313a2d11bda,
         type: 3}
       propertyPath: enemies.Array.data[5].activeChancePercent
-      value: 72.3
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3900307719312223934, guid: 5cc16e38c42e19b41b350313a2d11bda,
         type: 3}
@@ -13438,6 +13444,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4227850344573735634, guid: ce32a392f1182244abc533fab876482f,
+        type: 3}
+      propertyPath: targets.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227850344573735634, guid: ce32a392f1182244abc533fab876482f,
+        type: 3}
+      propertyPath: targets.Array.data[0]
+      value: 
+      objectReference: {fileID: 1078353021}
+    - target: {fileID: 4227850344573735634, guid: ce32a392f1182244abc533fab876482f,
+        type: 3}
+      propertyPath: targets.Array.data[1]
+      value: 
+      objectReference: {fileID: 1781313772}
     - target: {fileID: 4360399539140765564, guid: ce32a392f1182244abc533fab876482f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13492,6 +13513,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: _UseTotem
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576880398642072795, guid: ce32a392f1182244abc533fab876482f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17109,7 +17135,7 @@ PrefabInstance:
     - target: {fileID: 1251650277387731860, guid: 36aec9bcaf89f9f49b8042184a141890,
         type: 3}
       propertyPath: m_Lens.FieldOfView
-      value: 3.000594
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1260003991168824826, guid: 36aec9bcaf89f9f49b8042184a141890,
         type: 3}
