@@ -1,17 +1,22 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class enemyDimyoRollTime : MonoBehaviour
 {
-    public float rotationAngle = 90f; // องศาที่จะหมุน
-    public float delayBetweenRotations = 1f; // ระยะเวลาหยุดหมุน
+    public float rotationAngle = 90f; // Degrees to rotate
+    public float delayBetweenRotations = 1f; // Delay between rotations
 
     private bool isRotating = false;
 
-    private void Start()
+    private void OnEnable()
     {
         StartCoroutine(RotateRepeatedly());
+    }
+
+    private void OnDisable()
+    {
+        StopCoroutine(RotateRepeatedly());
+        isRotating = false;
     }
 
     IEnumerator RotateRepeatedly()
