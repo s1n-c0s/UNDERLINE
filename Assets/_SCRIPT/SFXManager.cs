@@ -68,6 +68,18 @@ public class SFXManager : MonoBehaviour
         }
     }
 
+    // Stop all currently playing sound effects
+    public void ClearAllSoundEffects()
+    {
+        foreach (AudioSource source in audioSources)
+        {
+            if (source.isPlaying)
+            {
+                source.Stop();
+            }
+        }
+    }
+
     // Get an available AudioSource
     private AudioSource GetAvailableAudioSource()
     {
