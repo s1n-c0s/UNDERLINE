@@ -12053,7 +12053,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1176279870}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 1128c861a9758824b8ef467d6dc9346f,
         type: 3}
@@ -12105,16 +12105,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 1128c861a9758824b8ef467d6dc9346f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1128c861a9758824b8ef467d6dc9346f,
         type: 3}
       propertyPath: m_Name
       value: m_lv_islandStone_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1128c861a9758824b8ef467d6dc9346f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1128c861a9758824b8ef467d6dc9346f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1128c861a9758824b8ef467d6dc9346f, type: 3}
+--- !u!4 &741626540 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1128c861a9758824b8ef467d6dc9346f,
+    type: 3}
+  m_PrefabInstance: {fileID: 741626539}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &766944910
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12723,7 +12744,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1176279870}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 50cdb84644b02da428c0dd5acfebf917,
         type: 3}
@@ -12748,7 +12769,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 50cdb84644b02da428c0dd5acfebf917,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 50cdb84644b02da428c0dd5acfebf917,
         type: 3}
@@ -12775,16 +12796,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 50cdb84644b02da428c0dd5acfebf917,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 50cdb84644b02da428c0dd5acfebf917,
         type: 3}
       propertyPath: m_Name
       value: m_lv_islandStone_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 50cdb84644b02da428c0dd5acfebf917,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 50cdb84644b02da428c0dd5acfebf917,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50cdb84644b02da428c0dd5acfebf917, type: 3}
+--- !u!4 &788263346 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 50cdb84644b02da428c0dd5acfebf917,
+    type: 3}
+  m_PrefabInstance: {fileID: 788263345}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &799801818
 GameObject:
   m_ObjectHideFlags: 0
@@ -13252,7 +13294,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1176279870}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 1128c861a9758824b8ef467d6dc9346f,
         type: 3}
@@ -13292,7 +13334,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1128c861a9758824b8ef467d6dc9346f,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1128c861a9758824b8ef467d6dc9346f,
         type: 3}
@@ -13319,16 +13361,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 1128c861a9758824b8ef467d6dc9346f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1128c861a9758824b8ef467d6dc9346f,
         type: 3}
       propertyPath: m_Name
       value: m_lv_islandStone_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1128c861a9758824b8ef467d6dc9346f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1128c861a9758824b8ef467d6dc9346f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1128c861a9758824b8ef467d6dc9346f, type: 3}
+--- !u!4 &824539911 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1128c861a9758824b8ef467d6dc9346f,
+    type: 3}
+  m_PrefabInstance: {fileID: 824539910}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &830661229
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16798,7 +16861,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1176279870}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 357b6642e503f1246a7b7868373a5379,
         type: 3}
@@ -16823,7 +16886,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 357b6642e503f1246a7b7868373a5379,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 357b6642e503f1246a7b7868373a5379,
         type: 3}
@@ -16850,16 +16913,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 357b6642e503f1246a7b7868373a5379,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 357b6642e503f1246a7b7868373a5379,
         type: 3}
       propertyPath: m_Name
       value: m_lv_islandStone_06
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 357b6642e503f1246a7b7868373a5379,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 357b6642e503f1246a7b7868373a5379,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 357b6642e503f1246a7b7868373a5379, type: 3}
+--- !u!4 &1076001995 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 357b6642e503f1246a7b7868373a5379,
+    type: 3}
+  m_PrefabInstance: {fileID: 1076001994}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1080132724
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17665,6 +17749,11 @@ Transform:
   - {fileID: 1151297708}
   - {fileID: 164723310}
   - {fileID: 518649054}
+  - {fileID: 824539911}
+  - {fileID: 1076001995}
+  - {fileID: 741626540}
+  - {fileID: 1355757048}
+  - {fileID: 788263346}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1176279871
@@ -17713,6 +17802,10 @@ MeshRenderer:
   - {fileID: 2100000, guid: e6beb465876b24248af5fe34b990b67b, type: 2}
   - {fileID: 2100000, guid: fdf084acee1e28a4494477ea8783320e, type: 2}
   - {fileID: 2100000, guid: 37033e5741343e641abcdb177e915ce3, type: 2}
+  - {fileID: 2100000, guid: 2c176d8bec1edd4469764c11ada41d1d, type: 2}
+  - {fileID: 2100000, guid: bb1635c376104814e8acc043b9cdd027, type: 2}
+  - {fileID: 2100000, guid: 3e114bc0549d2014ab675b034d3fb34f, type: 2}
+  - {fileID: 2100000, guid: 57a4a35af3e0e5540845b13cd19b409b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -17741,7 +17834,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1176279869}
-  m_Mesh: {fileID: 4300000, guid: e744a354e44e06f44a6c87629c6ed133, type: 2}
+  m_Mesh: {fileID: 4300000, guid: d0571c5f74484d84b80b3209e48295db, type: 2}
 --- !u!1001 &1176592045
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21519,7 +21612,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1176279870}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 489b88d4e9e6f464fa6d66d5a5239856,
         type: 3}
@@ -21544,7 +21637,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 489b88d4e9e6f464fa6d66d5a5239856,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 489b88d4e9e6f464fa6d66d5a5239856,
         type: 3}
@@ -21571,16 +21664,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 489b88d4e9e6f464fa6d66d5a5239856,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 489b88d4e9e6f464fa6d66d5a5239856,
         type: 3}
       propertyPath: m_Name
       value: m_lv_islandStone_05
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 489b88d4e9e6f464fa6d66d5a5239856,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 489b88d4e9e6f464fa6d66d5a5239856,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 489b88d4e9e6f464fa6d66d5a5239856, type: 3}
+--- !u!4 &1355757048 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 489b88d4e9e6f464fa6d66d5a5239856,
+    type: 3}
+  m_PrefabInstance: {fileID: 1355757047}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1361476747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33101,8 +33215,3 @@ SceneRoots:
   - {fileID: 668226821}
   - {fileID: 1785122059}
   - {fileID: 324799898}
-  - {fileID: 824539910}
-  - {fileID: 1076001994}
-  - {fileID: 741626539}
-  - {fileID: 1355757047}
-  - {fileID: 788263345}
