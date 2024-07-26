@@ -40,6 +40,7 @@ public class JailObj : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && IsLocked)
         {
             UnlockJail();
+            collision.gameObject.GetComponent<HealthSystem>().Heal(2);
         }
     }
 
