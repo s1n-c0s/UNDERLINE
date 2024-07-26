@@ -180,7 +180,7 @@ public class ZoneManager : MonoBehaviour
             if (!other.GetComponent<ShadowLife>())
             {
                 isPlayerIn = true;
-                StartCoroutine(ToggleDoorCollisionWithPlayer(false, 0.75f));
+                StartCoroutine(ToggleDoorCollisionWithPlayer(false, 1f));
             }
             if (currentState == ZoneState.NotStarted && GameManager.Instance.CurrentZoneOrder == zoneOrder)
             {
@@ -194,7 +194,7 @@ public class ZoneManager : MonoBehaviour
         if (other.CompareTag("Player") && !other.GetComponent<ShadowLife>())
         {
             isPlayerIn = false;
-            StartCoroutine(ToggleDoorCollisionWithPlayer(true, 0.75f));
+            StartCoroutine(ToggleDoorCollisionWithPlayer(true, 1f));
         }
     }
 
