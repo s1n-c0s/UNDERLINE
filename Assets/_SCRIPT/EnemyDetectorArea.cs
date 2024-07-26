@@ -38,8 +38,11 @@ public class EnemyDetectorArea : MonoBehaviour
 
             if (isInPanicMode)
             {
-                enemy.GetComponent<StatusManager>().ApplyStatus(StatusManager.Status.Panic, true);
-                enemy.GetComponent<HealthSystem>().SetHealth(1);
+                if (enemy.GetComponent<StatusManager>())
+                {
+                    enemy.GetComponent<StatusManager>().ApplyStatus(StatusManager.Status.Panic, true);
+                    enemy.GetComponent<HealthSystem>().SetHealth(1);
+                }
             }
         }
     }
