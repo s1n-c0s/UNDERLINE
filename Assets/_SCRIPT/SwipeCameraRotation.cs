@@ -28,39 +28,36 @@ public class SwipeCameraRotation : MonoBehaviour
     private float inactivityTimer = 0f;
     private Coroutine resetCoroutine;
     private Coroutine countdownCoroutine;
+    private bool isShaking = false;
 
-    private bool isGameEnded = false; // New flag to check if the game has ended
+    private bool isGameEnded = false;
 
     void Start()
     {
-        // Initialize virtualCamera and player
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
-        // Set virtualCamera follow target
         virtualCamera.Follow = player;
         rotationY = virtualCamera.transform.localEulerAngles.y;
         canSwipe = true;
 
-        // Subscribe to player switch event
         PlayerSwitcher.OnPlayerSwitch += OnPlayerSwitch;
-
-        // Subscribe to game end event
         GameManager.OnGameEnd += OnGameEnd;
+        CameraShake.OnShakeStart += OnShakeStart;
+        CameraShake.OnShakeEnd += OnShakeEnd;
     }
 
     void OnDestroy()
     {
-        // Unsubscribe from player switch event
         PlayerSwitcher.OnPlayerSwitch -= OnPlayerSwitch;
-
-        // Unsubscribe from game end event
         GameManager.OnGameEnd -= OnGameEnd;
+        CameraShake.OnShakeStart -= OnShakeStart;
+        CameraShake.OnShakeEnd -= OnShakeEnd;
     }
 
     void Update()
     {
-        if (isGameEnded) return; // Skip updating if the game has ended
+        if (isGameEnded || isShaking) return;
 
         if (canSwipe)
         {
@@ -121,7 +118,7 @@ public class SwipeCameraRotation : MonoBehaviour
 
     void HandleKeyboardInput()
     {
-        float deltaRotation = Input.GetKey(KeyCode.Q) ? rotationSpeed * 10f : -rotationSpeed * 10f; // Increase rotation speed for keyboard input
+        float deltaRotation = Input.GetKey(KeyCode.Q) ? rotationSpeed * 10f : -rotationSpeed * 10f;
         deltaRotation *= Time.deltaTime;
         rotationY += deltaRotation;
         rotationY = NormalizeAngle(rotationY);
@@ -146,7 +143,10 @@ public class SwipeCameraRotation : MonoBehaviour
             yield return new WaitForSeconds(1f);
             countdown -= 1f;
         }
-        resetCoroutine = StartCoroutine(SmoothResetRotation());
+        if (!isShaking)
+        {
+            resetCoroutine = StartCoroutine(SmoothResetRotation());
+        }
         countdownCoroutine = null;
     }
 
@@ -227,7 +227,6 @@ public class SwipeCameraRotation : MonoBehaviour
             virtualCamera.Follow = player;
         }
 
-        // Immediately reset rotation to match the new player
         rotationY = virtualCamera?.transform.localEulerAngles.y ?? 0f;
         ResetInactivityTimer();
     }
@@ -235,7 +234,15 @@ public class SwipeCameraRotation : MonoBehaviour
     void OnGameEnd()
     {
         isGameEnded = true;
-        // Optionally, you could reset or finalize camera rotation here
-        // E.g., set rotationY to a default value or lock the camera
+    }
+
+    void OnShakeStart()
+    {
+        isShaking = true;
+    }
+
+    void OnShakeEnd()
+    {
+        isShaking = false;
     }
 }
