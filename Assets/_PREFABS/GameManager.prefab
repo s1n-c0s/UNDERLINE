@@ -108,8 +108,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 10
   swipeSensitivity: 1
-  inactivityThreshold: 4
-  resetDuration: 2
+  inactivityThreshold: 10
+  resetDuration: 5
   countdownBeforeReset: 0
   virtualCamera: {fileID: 1518291240536615975}
   player: {fileID: 0}
@@ -5282,8 +5282,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 10
   swipeSensitivity: 1
-  inactivityThreshold: 3.5
-  resetDuration: 2
+  inactivityThreshold: 10
+  resetDuration: 5
   countdownBeforeReset: 0
   virtualCamera: {fileID: 1251650277387731860}
   player: {fileID: 0}
