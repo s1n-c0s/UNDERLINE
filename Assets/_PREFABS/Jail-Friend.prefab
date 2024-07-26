@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5528594760696127685}
-  - component: {fileID: 3702679389061407977}
   - component: {fileID: 7389966272312495607}
+  - component: {fileID: 8930919949100876245}
   m_Layer: 0
   m_Name: Jail-Friend
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38,27 +38,6 @@ Transform:
   - {fileID: 1431978999336056705}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3702679389061407977
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347525014060011580}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 6.072073, y: 4.050915, z: 1.045598}
-  m_Center: {x: -1.5712556e-14, y: 2.0659895, z: -2.9735818}
 --- !u!114 &7389966272312495607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,6 +57,27 @@ MonoBehaviour:
     type: 3}
   fxSlash: {fileID: 6442238969932954468, guid: 7bf74c653d563334b9ae131881d7b000, type: 3}
   fxGroupLock: {fileID: 6827922603266962437}
+--- !u!65 &8930919949100876245
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347525014060011580}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5.8107414, y: 4.1377773, z: 6.422197}
+  m_Center: {x: -0.000000003902448, y: 2.0205345, z: 0.105859876}
 --- !u!1 &5583852699039137234
 GameObject:
   m_ObjectHideFlags: 0
@@ -5349,24 +5349,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: m_jail
       objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 6b0e2e89c5764ad4091e5d307a474f34,
-        type: 3}
-      propertyPath: m_TagString
-      value: Wall
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 6b0e2e89c5764ad4091e5d307a474f34,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b0e2e89c5764ad4091e5d307a474f34,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 904700564973540712}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b0e2e89c5764ad4091e5d307a474f34, type: 3}
 --- !u!4 &7388156569868462944 stripped
 Transform:
@@ -5374,33 +5360,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6990352143450836107}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7909396186586034650 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b0e2e89c5764ad4091e5d307a474f34,
-    type: 3}
-  m_PrefabInstance: {fileID: 6990352143450836107}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &904700564973540712
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7909396186586034650}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 5.6484976, y: 4.1377773, z: 5.4911575}
-  m_Center: {x: 9.711416e-15, y: 2.0205345, z: -0.073177814}
 --- !u!1001 &7879212802564800602
 PrefabInstance:
   m_ObjectHideFlags: 0

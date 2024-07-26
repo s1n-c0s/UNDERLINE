@@ -108,8 +108,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 10
   swipeSensitivity: 1
-  inactivityThreshold: 4
-  resetDuration: 2
+  inactivityThreshold: 10
+  resetDuration: 5
   countdownBeforeReset: 0
   virtualCamera: {fileID: 1518291240536615975}
   player: {fileID: 0}
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 0}
-  zoomOutFOV: 3
+  zoomOutFOV: 30
   NormalFOV: 50
   zoomSpeed: 5
   rotationSpeed: 10
@@ -236,7 +236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   players: []
   currentPlayerIndex: 0
-  radius: 70
+  radius: 40
   forwardOffset: 5
   fx_switch:
   - {fileID: 5490674421206928081, guid: 657f0effd62ca4e4584573d6ad4bef75, type: 3}
@@ -5282,8 +5282,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 10
   swipeSensitivity: 1
-  inactivityThreshold: 3.5
-  resetDuration: 2
+  inactivityThreshold: 10
+  resetDuration: 5
   countdownBeforeReset: 0
   virtualCamera: {fileID: 1251650277387731860}
   player: {fileID: 0}
@@ -5312,7 +5312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 0}
-  zoomOutFOV: 3
+  zoomOutFOV: 30
   NormalFOV: 50
   zoomSpeed: 5
   rotationSpeed: 10
