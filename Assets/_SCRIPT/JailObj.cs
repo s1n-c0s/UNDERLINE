@@ -35,9 +35,9 @@ public class JailObj : MonoBehaviour
         InitializeCatJump();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.CompareTag("Player") && IsLocked)
+        if (collision.gameObject.CompareTag("Player") && IsLocked)
         {
             UnlockJail();
         }
