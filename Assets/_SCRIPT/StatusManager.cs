@@ -60,7 +60,10 @@ public class StatusManager : MonoBehaviour
                 }
                 break;
             case Status.Panic:
-                isPanic(enable);
+                if (fx_groups[2] != null)
+                {
+                    isPanic(enable);
+                }
                 break;
             case Status.Heal:
                 if (enable)
