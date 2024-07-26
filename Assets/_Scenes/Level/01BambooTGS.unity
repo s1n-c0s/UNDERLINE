@@ -3585,7 +3585,7 @@ PrefabInstance:
     - target: {fileID: 3447634732746437221, guid: 5cc16e38c42e19b41b350313a2d11bda,
         type: 3}
       propertyPath: m_Size.z
-      value: 56.00845
+      value: 54.119984
       objectReference: {fileID: 0}
     - target: {fileID: 3447634732746437221, guid: 5cc16e38c42e19b41b350313a2d11bda,
         type: 3}
@@ -3595,7 +3595,7 @@ PrefabInstance:
     - target: {fileID: 3447634732746437221, guid: 5cc16e38c42e19b41b350313a2d11bda,
         type: 3}
       propertyPath: m_Center.z
-      value: -0.86307335
+      value: 0.08115959
       objectReference: {fileID: 0}
     - target: {fileID: 3900307719312223934, guid: 5cc16e38c42e19b41b350313a2d11bda,
         type: 3}
@@ -31659,6 +31659,11 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 31907447}
+    - target: {fileID: 1251650277387731860, guid: 36aec9bcaf89f9f49b8042184a141890,
+        type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 30.00017
+      objectReference: {fileID: 0}
     - target: {fileID: 1260003991168824826, guid: 36aec9bcaf89f9f49b8042184a141890,
         type: 3}
       propertyPath: switchCameraButton
