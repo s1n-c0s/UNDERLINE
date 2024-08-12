@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Lean.Pool;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
@@ -7,22 +8,15 @@ public class Spawner : MonoBehaviour
     public class LootItem
     {
         public GameObject itemPrefab;
-        public float dropChance; // Used as a weight for the likelihood of spawning.
+        [Range(0, 100)] // This attribute ensures dropChance is between 0 and 100
+        public float dropChancePercent; // Represents drop chance in percentage
     }
 
     public List<LootItem> lootTable = new List<LootItem>();
     public float spawnRadius = 5f;
     public Vector2 forceRange = new Vector2(1000, 1500);
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SpawnItemsBasedOnChance();
-        }
-    }
-
-    void SpawnItemsBasedOnChance()
+    public void SpawnItemsBasedOnChance()
     {
         for (int i = 0; i < lootTable.Count; i++)
         {
@@ -30,7 +24,7 @@ public class Spawner : MonoBehaviour
             if (selectedLootItem != null)
             {
                 Vector3 spawnPos = GetRandomSpawnPosition();
-                GameObject spawnedItem = Instantiate(selectedLootItem.itemPrefab, spawnPos, Quaternion.identity);
+                GameObject spawnedItem = LeanPool.Spawn(selectedLootItem.itemPrefab, spawnPos, Quaternion.identity);
                 AddForceToItem(spawnedItem);
             }
         }
@@ -41,15 +35,15 @@ public class Spawner : MonoBehaviour
         float totalWeight = 0f;
         foreach (var lootItem in lootTable)
         {
-            totalWeight += lootItem.dropChance;
+            totalWeight += lootItem.dropChancePercent; // Adjusted to use dropChancePercent
         }
 
-        float randomValue = Random.Range(0, totalWeight);
+        float randomValue = Random.Range(0, 100); // Adjusted to generate random value between 0 and 100
         float currentWeight = 0f;
 
         foreach (var lootItem in lootTable)
         {
-            currentWeight += lootItem.dropChance;
+            currentWeight += lootItem.dropChancePercent;
             if (randomValue <= currentWeight)
             {
                 return lootItem;
